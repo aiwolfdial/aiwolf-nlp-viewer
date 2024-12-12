@@ -1,3 +1,22 @@
+:root {
+  /* Colors */
+  --color-primary: #333;
+  --color-secondary: #555;
+  --color-border: #e0e0e0;
+  --color-background: #f4f4f4;
+  --color-hover: #f5f5f5;
+
+  /* Spacing */
+  --spacing-sm: 8px;
+  --spacing-md: 15px;
+  --spacing-lg: 20px;
+
+  /* Border radius */
+  --border-radius: 5px;
+  --border-radius-lg: 8px;
+}
+
+/* Layout */
 .werewolf-log-viewer {
   width: 100%;
   overflow-x: auto;
@@ -5,8 +24,8 @@
 
 .days-container {
   display: flex;
-  gap: 20px;
-  padding: 20px;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
 }
 
 .day-column {
@@ -16,57 +35,134 @@
 .scrollable-content {
   height: calc(100vh - 200px);
   overflow-y: auto;
-  padding-right: 10px;
+  padding-right: var(--spacing-sm);
 }
 
-.file-input {
-  margin-bottom: 20px;
+/* Cards and Sections */
+.day-section,
+.file-input-container {
+  background-color: var(--color-background);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
 }
 
-.day-section {
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 20px;
-}
-
-section {
-  margin: 15px 0;
-}
-
-.talk {
+.talk,
+li {
   background-color: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
 }
 
-.over {
-  background-color: #f0f0f0;
-  color: #666;
-}
-
+/* Typography */
 h2 {
-  color: #333;
-  border-bottom: 2px solid #666;
-  padding-bottom: 10px;
+  color: var(--color-primary);
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: var(--spacing-sm);
 }
 
 h3 {
-  color: #555;
-  margin-top: 15px;
+  color: var(--color-secondary);
+  margin-top: var(--spacing-md);
 }
 
+.title {
+  font-size: 2em;
+}
+
+/* Lists */
 ul {
   list-style-type: none;
   padding: 0;
 }
 
-li {
-  background-color: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  padding: 8px;
-  margin-bottom: 5px;
+/* States */
+.over {
+  background-color: var(--color-background);
+  color: #666;
+}
+
+/* File Input */
+.file-input-container {
+  height: 100%;
+  border: 2px dashed #ccc;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.file-input-container:hover {
+  border-color: var(--color-primary);
+  background: var(--color-hover);
+}
+
+.file-input-label {
+  display: block;
+  text-align: center;
+  cursor: pointer;
+}
+
+.file-input-label input[type="file"] {
+  display: none;
+}
+
+/* Tabs */
+main {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.tabs-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.tabs {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  min-width: 100%;
+  width: fit-content;
+}
+
+.tab-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.tab-wrapper.active {
+  background: var(--color-hover);
+}
+
+.tab-button {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tab-wrapper.active .tab-button {
+  font-weight: bold;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px var(--spacing-sm);
+  font-size: 0.8em;
+  color: #666;
+  transition: background-color 0.2s;
+}
+
+.close-button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }

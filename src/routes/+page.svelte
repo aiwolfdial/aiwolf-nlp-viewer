@@ -1,163 +1,71 @@
 <script lang="ts">
   import { base } from "$app/paths";
-  import "./+layout";
+  import DayColumn from "$lib/components/day-column.svelte";
+  import { processLogs } from "$lib/utils/processor";
 
-  interface AgentStatus {
-    role: string;
-    status: string;
+  type LogFile = {
     name: string;
-  }
+    data: string[];
+    processed: Record<string, any>;
+  };
 
-  interface Talk {
-    talkIdx: string;
-    turn: string;
-    agentIdx: string;
-    text: string;
-  }
-
-  interface Vote {
-    voteAgentIdx: string;
-    targetAgentIdx: string;
-  }
-
-  interface Execution {
-    agentIdx: string;
-    role: string;
-  }
-
-  interface Divine {
-    agentIdx: string;
-    targetAgentIdx: string;
-    result: string;
-  }
-
-  interface Attack {
-    agentIdx: string;
-    isSuccessful: boolean;
-  }
-
-  interface GameResult {
-    villagers: string;
-    werewolves: string;
-    winSide: string;
-  }
-
-  interface DayLog {
-    status: Record<string, AgentStatus>;
-    talks: Talk[];
-    votes: Vote[];
-    execution: Execution | null;
-    divine: Divine | null;
-    attackVotes: Vote[];
-    attack: Attack | null;
-    result: GameResult | null;
-  }
-
-  export let logData: string[] = [];
-  let selectedFile: File | null = null;
-
-  $: processedLogs = processLogs(logData);
+  let logFiles: LogFile[] = [];
+  let selectedTabIndex = 0;
 
   function handleFileSelect(event: Event): void {
     const target = event.target as HTMLInputElement;
-    const file = target.files?.[0];
-    selectedFile = file ?? null;
+    const files = Array.from(target.files || []);
 
-    if (file) {
+    files.forEach((file) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         const content = (e.target?.result as string) ?? "";
-        logData = content.split("\n").filter((line) => line.trim());
+        const data = content.split("\n").filter((line) => line.trim());
+        logFiles = [
+          ...logFiles,
+          {
+            name: file.name,
+            data: data,
+            processed: processLogs(data),
+          },
+        ];
+        // Automatically select the newly added tab
+        selectedTabIndex = logFiles.length - 1;
       };
       reader.readAsText(file);
-    }
-  }
-
-  function processLogs(logs: string[]): Record<string, DayLog> {
-    const dayLogs: Record<string, DayLog> = {};
-
-    logs.forEach((log) => {
-      const [day, type, ...rest] = log.split(",");
-
-      if (!dayLogs[day]) {
-        dayLogs[day] = initializeDayLog();
-      }
-
-      processLogEntry(dayLogs[day], type, rest);
     });
-
-    return dayLogs;
   }
 
-  function initializeDayLog(): DayLog {
-    return {
-      status: {},
-      talks: [],
-      votes: [],
-      execution: null,
-      divine: null,
-      attackVotes: [],
-      attack: null,
-      result: null,
-    };
+  function handleDrop(event: DragEvent) {
+    const files = Array.from(event.dataTransfer?.files || []);
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = (e.target?.result as string) ?? "";
+        const data = content.split("\n").filter((line) => line.trim());
+        logFiles = [
+          ...logFiles,
+          {
+            name: file.name,
+            data: data,
+            processed: processLogs(data),
+          },
+        ];
+        // Automatically select the newly added tab
+        selectedTabIndex = logFiles.length - 1;
+      };
+      reader.readAsText(file);
+    });
   }
 
-  function processLogEntry(dayLog: DayLog, type: string, data: string[]): void {
-    const handlers: Record<string, (data: string[]) => void> = {
-      status: ([idx, role, status, name]) => {
-        dayLog.status[idx] = { role, status, name };
-      },
-      talk: ([talkIdx, turn, agentIdx, text]) => {
-        dayLog.talks.push({ talkIdx, turn, agentIdx, text });
-      },
-      vote: ([voteAgentIdx, targetAgentIdx]) => {
-        dayLog.votes.push({ voteAgentIdx, targetAgentIdx });
-      },
-      execute: ([executedAgentIdx, executedRole]) => {
-        dayLog.execution = { agentIdx: executedAgentIdx, role: executedRole };
-      },
-      divine: ([divineAgentIdx, divineTargetAgentIdx, divineResult]) => {
-        dayLog.divine = {
-          agentIdx: divineAgentIdx,
-          targetAgentIdx: divineTargetAgentIdx,
-          result: divineResult,
-        };
-      },
-      attackVote: ([attackVoteAgentIdx, attackTargetAgentIdx]) => {
-        dayLog.attackVotes.push({
-          voteAgentIdx: attackVoteAgentIdx,
-          targetAgentIdx: attackTargetAgentIdx,
-        });
-      },
-      attack: ([attackedAgentIdx, isSuccessful]) => {
-        dayLog.attack = {
-          agentIdx: attackedAgentIdx,
-          isSuccessful: isSuccessful === "true",
-        };
-      },
-      result: ([villagers, werewolves, winSide]) => {
-        dayLog.result = { villagers, werewolves, winSide };
-      },
-    };
+  function closeTab(indexToRemove: number) {
+    // Remove the tab and adjust the selected tab index
+    logFiles = logFiles.filter((_, index) => index !== indexToRemove);
 
-    const handler = handlers[type];
-    if (handler) {
-      handler(data);
+    // Adjust selected tab index
+    if (selectedTabIndex >= logFiles.length) {
+      selectedTabIndex = logFiles.length - 1;
     }
-  }
-
-  function getAgentName(day: string, agentIdx: string): string {
-    const status = processedLogs[day]?.status[agentIdx];
-    return status
-      ? `Agent[${agentIdx}] (${status.name})`
-      : `Agent[${agentIdx}]`;
-  }
-
-  function formatTalkText(text: string): string {
-    const replyMatch = text.match(/>>Agent\[\d+\]/);
-    return replyMatch
-      ? text.replace(replyMatch[0], `<strong>${replyMatch[0]}</strong>`).trim()
-      : text.trim();
   }
 </script>
 
@@ -166,92 +74,58 @@
   <link rel="stylesheet" href="{base}/global.css" />
 </svelte:head>
 
+<svelte:window on:dragover|preventDefault on:drop|preventDefault={handleDrop} />
+
 <main>
-  <div class="file-input">
-    <input type="file" accept=".log" on:change={handleFileSelect} />
-  </div>
-  {#if selectedFile}
+  <pre class="title">aiwolf-nlp-server</pre>
+  {#if logFiles.length === 0}
+    <div
+      tabindex="0"
+      class="file-input-container"
+      role="button"
+      on:dragover|preventDefault
+      on:drop|preventDefault={handleDrop}
+    >
+      <label class="file-input-label">
+        <input
+          type="file"
+          accept=".log"
+          multiple
+          on:change={handleFileSelect}
+        />
+        <span>ファイルを選択もしくはドラッグアンドドロップしてください</span>
+      </label>
+    </div>
+  {/if}
+
+  {#if logFiles.length > 0}
+    <div class="tabs-container">
+      <div class="tabs">
+        {#each logFiles as file, i}
+          <div class="tab-wrapper" class:active={selectedTabIndex === i}>
+            <button class="tab-button" on:click={() => (selectedTabIndex = i)}>
+              {file.name}
+            </button>
+            <button
+              class="close-button"
+              on:click={() => closeTab(i)}
+              aria-label="Close tab"
+            >
+              ✕
+            </button>
+          </div>
+        {/each}
+      </div>
+    </div>
+
     <div class="werewolf-log-viewer">
       <div class="days-container">
-        {#each Object.entries(processedLogs) as [day, dayLog]}
-          <div class="day-column">
-            <div class="day-section">
-              <h2>Day {day}</h2>
-              <div class="scrollable-content">
-                {#if Object.keys(dayLog.status).length > 0}
-                  <section class="status-section">
-                    <h3>エージェント</h3>
-                    <ul>
-                      {#each Object.entries(dayLog.status) as [idx, status]}
-                        <li class:over={status.status !== "ALIVE"}>
-                          <strong>{getAgentName(day, idx)}</strong>
-                          {status.role} -
-                          {status.status === "ALIVE" ? "生存" : "死亡"}
-                        </li>
-                      {/each}
-                    </ul>
-                  </section>
-                {/if}
-
-                {#if dayLog.divine || dayLog.attack || dayLog.execution}
-                  <section class="game-events">
-                    {#if dayLog.divine}
-                      <div class="divine-section">
-                        <h3>占い結果</h3>
-                        <p>
-                          {getAgentName(day, dayLog.divine.agentIdx)} が
-                          {getAgentName(day, dayLog.divine.targetAgentIdx)} を占った結果:
-                          {dayLog.divine.result}
-                        </p>
-                      </div>
-                    {/if}
-
-                    {#if dayLog.attack}
-                      <div class="attack-section">
-                        <h3>襲撃結果</h3>
-                        <p>
-                          {getAgentName(day, dayLog.attack.agentIdx)} への襲撃:
-                          {dayLog.attack.isSuccessful ? "成功" : "失敗"}
-                        </p>
-                      </div>
-                    {/if}
-
-                    {#if dayLog.execution}
-                      <div class="execution-section">
-                        <h3>追放結果</h3>
-                        <p>
-                          {getAgentName(day, dayLog.execution.agentIdx)} が追放されました
-                          (役職: {dayLog.execution.role})
-                        </p>
-                      </div>
-                    {/if}
-                  </section>
-                {/if}
-
-                <section class="talks-section">
-                  <h3>会話ログ</h3>
-                  <div class="talks">
-                    {#each dayLog.talks as talk}
-                      <div class="talk" class:over={talk.text === "Over"}>
-                        <strong>{getAgentName(day, talk.agentIdx)}</strong>
-                        {@html formatTalkText(talk.text)}
-                      </div>
-                    {/each}
-                  </div>
-                </section>
-
-                {#if dayLog.result}
-                  <section class="game-result-section">
-                    <h3>ゲーム結果</h3>
-                    <p>
-                      村人: {dayLog.result.villagers}人 人狼: {dayLog.result
-                        .werewolves}人 勝利陣営: {dayLog.result.winSide}
-                    </p>
-                  </section>
-                {/if}
-              </div>
-            </div>
-          </div>
+        {#each Object.entries(logFiles[selectedTabIndex].processed) as [day, dayLog]}
+          <DayColumn
+            {day}
+            {dayLog}
+            processedLogs={logFiles[selectedTabIndex].processed}
+          />
         {/each}
       </div>
     </div>
