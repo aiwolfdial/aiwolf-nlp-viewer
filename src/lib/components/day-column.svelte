@@ -5,6 +5,38 @@
   export let day: string;
   export let dayLog: DayLog;
   export let processedLogs: Record<string, DayLog>;
+
+  function formatRole(role: string): string {
+    switch (role) {
+      case "VILLAGER":
+        return "村人";
+      case "SEER":
+        return "占い師";
+      case "MEDIUM":
+        return "霊能者";
+      case "BODYGUARD":
+        return "狩人";
+      case "WEREWOLF":
+        return "人狼";
+      case "POSSESSED":
+        return "狂人";
+      case "FOX":
+        return "妖狐";
+      default:
+        return role;
+    }
+  }
+
+  function formatStatus(status: string): string {
+    switch (status) {
+      case "ALIVE":
+        return "生存";
+      case "DEAD":
+        return "死亡";
+      default:
+        return status;
+    }
+  }
 </script>
 
 <div class="day-column">
@@ -18,8 +50,8 @@
             {#each Object.entries(dayLog.status) as [idx, status]}
               <li class:over={status.status !== "ALIVE"}>
                 <strong>{getAgentName(processedLogs, day, idx)}</strong>
-                {status.role} -
-                {status.status === "ALIVE" ? "生存" : "死亡"}
+                {formatRole(status.role)} -
+                {formatStatus(status.status)}
               </li>
             {/each}
           </ul>
@@ -55,7 +87,7 @@
               <h3>追放結果</h3>
               <p>
                 {getAgentName(processedLogs, day, dayLog.execution.agentIdx)} が追放されました
-                (役職: {dayLog.execution.role})
+                (役職: {formatRole(dayLog.execution.role)})
               </p>
             </div>
           {/if}
