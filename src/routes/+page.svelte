@@ -77,7 +77,7 @@
 <svelte:window on:dragover|preventDefault on:drop|preventDefault={handleDrop} />
 
 <main>
-  <pre class="title">aiwolf-nlp-server</pre>
+  <pre class="title">aiwolf-nlp-viewer</pre>
   {#if logFiles.length === 0}
     <div
       tabindex="0"
