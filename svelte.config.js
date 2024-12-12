@@ -11,7 +11,7 @@ const config = {
 			fallback: null,
 		}),
 		paths: {
-			// base: process.env.NODE_ENV === 'production' ? '/aiwolf-nlp-viewer' : '',
+			base: process.env.NODE_ENV === 'production' ? '/aiwolf-nlp-viewer' : '',
 		}
 	}
 };
