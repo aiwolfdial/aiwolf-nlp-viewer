@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { base } from "$app/paths";
+  import "./+layout";
+
   interface AgentStatus {
     role: string;
     status: string;
@@ -160,6 +163,7 @@
 
 <svelte:head>
   <title>AIWolf Log Viewer</title>
+  <link rel="stylesheet" href="{base}/global.css" />
 </svelte:head>
 
 <main>
@@ -253,78 +257,3 @@
     </div>
   {/if}
 </main>
-
-<style>
-  .werewolf-log-viewer {
-    width: 100%;
-    overflow-x: auto;
-  }
-
-  .days-container {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-  }
-
-  .day-column {
-    flex: 0 0 400px;
-  }
-
-  .scrollable-content {
-    height: calc(100vh - 200px);
-    overflow-y: auto;
-    padding-right: 10px;
-  }
-
-  .file-input {
-    margin-bottom: 20px;
-  }
-
-  .day-section {
-    background-color: #f4f4f4;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 20px;
-  }
-
-  section {
-    margin: 15px 0;
-  }
-
-  .talk {
-    background-color: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-
-  .over {
-    background-color: #f0f0f0;
-    color: #666;
-  }
-
-  h2 {
-    color: #333;
-    border-bottom: 2px solid #666;
-    padding-bottom: 10px;
-  }
-
-  h3 {
-    color: #555;
-    margin-top: 15px;
-  }
-
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  li {
-    background-color: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    padding: 8px;
-    margin-bottom: 5px;
-  }
-</style>
