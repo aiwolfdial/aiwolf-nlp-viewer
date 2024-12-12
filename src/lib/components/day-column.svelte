@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { RoleMap, StatusMap } from "$lib/constants/translate";
   import type { DayLog } from "$lib/types/aiwolf";
   import { formatTalkText, getAgentName } from "$lib/utils/processor";
 
@@ -6,35 +7,20 @@
   export let dayLog: DayLog;
   export let processedLogs: Record<string, DayLog>;
 
-  function formatRole(role: string): string {
-    switch (role) {
-      case "VILLAGER":
-        return "村人";
-      case "SEER":
-        return "占い師";
-      case "MEDIUM":
-        return "霊能者";
-      case "BODYGUARD":
-        return "狩人";
-      case "WEREWOLF":
-        return "人狼";
-      case "POSSESSED":
-        return "狂人";
-      case "FOX":
-        return "妖狐";
+  function agentColor(idx: string): string {
+    switch (idx) {
+      case "1":
+        return "red";
+      case "2":
+        return "blue";
+      case "3":
+        return "green";
+      case "4":
+        return "yellow";
+      case "5":
+        return "purple";
       default:
-        return role;
-    }
-  }
-
-  function formatStatus(status: string): string {
-    switch (status) {
-      case "ALIVE":
-        return "生存";
-      case "DEAD":
-        return "死亡";
-      default:
-        return status;
+        return "black";
     }
   }
 </script>
@@ -50,8 +36,8 @@
             {#each Object.entries(dayLog.status) as [idx, status]}
               <li class:over={status.status !== "ALIVE"}>
                 <strong>{getAgentName(processedLogs, day, idx)}</strong>
-                {formatRole(status.role)} -
-                {formatStatus(status.status)}
+                {RoleMap[status.role as keyof typeof RoleMap] ?? "NULL"} -
+                {StatusMap[status.status as keyof typeof StatusMap] ?? "NULL"}
               </li>
             {/each}
           </ul>
@@ -87,7 +73,9 @@
               <h3>追放結果</h3>
               <p>
                 {getAgentName(processedLogs, day, dayLog.execution.agentIdx)} が追放されました
-                (役職: {formatRole(dayLog.execution.role)})
+                (役職: {RoleMap[
+                  dayLog.execution.role as keyof typeof RoleMap
+                ] ?? "NULL"})
               </p>
             </div>
           {/if}

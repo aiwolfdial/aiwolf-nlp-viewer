@@ -1,4 +1,3 @@
-// src/lib/types/aiwolf.ts
 export interface AgentStatus {
     role: string;
     status: string;
