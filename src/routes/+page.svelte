@@ -70,7 +70,7 @@
 </script>
 
 <svelte:head>
-  <title>AIWolf Log Viewer</title>
+  <title>aiwolf-nlp-viewer</title>
   <link rel="stylesheet" href="{base}/global.css" />
 </svelte:head>
 
