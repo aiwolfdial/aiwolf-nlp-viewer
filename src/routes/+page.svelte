@@ -254,7 +254,7 @@
   {/if}
 </main>
 
-<style lang="css">
+<style>
   .werewolf-log-viewer {
     width: 100%;
     overflow-x: auto;
