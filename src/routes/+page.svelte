@@ -99,26 +99,28 @@
   {/if}
 
   {#if logFiles.length > 0}
-    <div class="tabs-container">
-      <div class="tabs">
-        {#each logFiles as file, i}
-          <div class="tab-wrapper" class:active={selectedTabIndex === i}>
-            <button class="tab-button" on:click={() => (selectedTabIndex = i)}>
-              {file.name}
-            </button>
-            <button
-              class="close-button"
-              on:click={() => closeTab(i)}
-              aria-label="Close tab"
-            >
-              ✕
-            </button>
-          </div>
-        {/each}
+    <div class="log-container">
+      <div class="tabs-container">
+        <div class="tabs">
+          {#each logFiles as file, i}
+            <div class="tab-wrapper" class:active={selectedTabIndex === i}>
+              <button
+                class="tab-button"
+                on:click={() => (selectedTabIndex = i)}
+              >
+                {file.name}
+              </button>
+              <button
+                class="close-button"
+                on:click={() => closeTab(i)}
+                aria-label="Close tab"
+              >
+                ✕
+              </button>
+            </div>
+          {/each}
+        </div>
       </div>
-    </div>
-
-    <div class="werewolf-log-viewer">
       <div class="days-container">
         {#each Object.entries(logFiles[selectedTabIndex].processed) as [day, dayLog]}
           <DayColumn
