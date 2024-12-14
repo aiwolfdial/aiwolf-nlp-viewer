@@ -11,3 +11,13 @@ export const StatusMap = {
     "ALIVE": "生存",
     "DEAD": "死亡",
 }
+
+export const SpecieMap = {
+    "HUMAN": "人間",
+    "WEREWOLF": "人狼",
+}
+
+export const TeamMap = {
+    "VILLAGER": "村人陣営",
+    "WEREWOLF": "人狼陣営",
+}

@@ -1,4 +1,4 @@
-export interface AgentStatus {
+export interface Agent {
     role: string;
     status: string;
     name: string;
@@ -6,14 +6,14 @@ export interface AgentStatus {
 
 export interface Talk {
     talkIdx: string;
-    turn: string;
+    turnIdx: string;
     agentIdx: string;
     text: string;
 }
 
 export interface Vote {
-    voteAgentIdx: string;
-    targetAgentIdx: string;
+    agentIdx: string;
+    targetIdx: string;
 }
 
 export interface Execution {
@@ -23,28 +23,28 @@ export interface Execution {
 
 export interface Divine {
     agentIdx: string;
-    targetAgentIdx: string;
+    targetIdx: string;
     result: string;
 }
 
 export interface Attack {
-    agentIdx: string;
+    targetIdx: string;
     isSuccessful: boolean;
 }
 
-export interface GameResult {
+export interface Result {
     villagers: string;
     werewolves: string;
     winSide: string;
 }
 
-export interface DayLog {
-    status: Record<string, AgentStatus>;
+export interface DayStatus {
+    agents: Record<string, Agent>;
     talks: Talk[];
     votes: Vote[];
     execution: Execution | null;
     divine: Divine | null;
     attackVotes: Vote[];
     attack: Attack | null;
-    result: GameResult | null;
+    result: Result | null;
 }

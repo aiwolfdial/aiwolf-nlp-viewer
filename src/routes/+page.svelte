@@ -29,7 +29,6 @@
             processed: processLogs(data),
           },
         ];
-        // Automatically select the newly added tab
         selectedTabIndex = logFiles.length - 1;
       };
       reader.readAsText(file);
@@ -51,7 +50,6 @@
             processed: processLogs(data),
           },
         ];
-        // Automatically select the newly added tab
         selectedTabIndex = logFiles.length - 1;
       };
       reader.readAsText(file);
@@ -59,10 +57,8 @@
   }
 
   function closeTab(indexToRemove: number) {
-    // Remove the tab and adjust the selected tab index
     logFiles = logFiles.filter((_, index) => index !== indexToRemove);
 
-    // Adjust selected tab index
     if (selectedTabIndex >= logFiles.length) {
       selectedTabIndex = logFiles.length - 1;
     }
@@ -124,9 +120,9 @@
       <div class="days-container">
         {#each Object.entries(logFiles[selectedTabIndex].processed) as [day, dayLog]}
           <DayColumn
-            {day}
-            {dayLog}
-            processedLogs={logFiles[selectedTabIndex].processed}
+            dayIdx={day}
+            dayStatus={dayLog}
+            dayStatuses={logFiles[selectedTabIndex].processed}
           />
         {/each}
       </div>

@@ -1,41 +1,29 @@
 <script lang="ts">
-  import { RoleMap, StatusMap } from "$lib/constants/translate";
-  import type { DayLog } from "$lib/types/aiwolf";
+  import {
+    RoleMap,
+    SpecieMap,
+    StatusMap,
+    TeamMap,
+  } from "$lib/constants/translate";
+  import type { DayStatus } from "$lib/types/aiwolf";
   import { formatTalkText, getAgentName } from "$lib/utils/processor";
 
-  export let day: string;
-  export let dayLog: DayLog;
-  export let processedLogs: Record<string, DayLog>;
-
-  function agentColor(idx: string): string {
-    switch (idx) {
-      case "1":
-        return "red";
-      case "2":
-        return "blue";
-      case "3":
-        return "green";
-      case "4":
-        return "yellow";
-      case "5":
-        return "purple";
-      default:
-        return "black";
-    }
-  }
+  export let dayIdx: string;
+  export let dayStatus: DayStatus;
+  export let dayStatuses: Record<string, DayStatus>;
 </script>
 
 <div class="day-column">
   <div class="day-section">
-    <h2>Day {day}</h2>
+    <h2>Day {dayIdx}</h2>
     <div class="scrollable-content">
-      {#if Object.keys(dayLog.status).length > 0}
-        <section class="status-section">
+      {#if Object.keys(dayStatus.agents).length > 0}
+        <section class="agent-section">
           <h3>エージェント</h3>
           <ul>
-            {#each Object.entries(dayLog.status) as [idx, status]}
+            {#each Object.entries(dayStatus.agents) as [idx, status]}
               <li class:over={status.status !== "ALIVE"}>
-                <strong>{getAgentName(processedLogs, day, idx)}</strong>
+                <strong>{getAgentName(dayStatuses, dayIdx, idx)}</strong>
                 {RoleMap[status.role as keyof typeof RoleMap] ?? "NULL"} -
                 {StatusMap[status.status as keyof typeof StatusMap] ?? "NULL"}
               </li>
@@ -44,62 +32,135 @@
         </section>
       {/if}
 
-      {#if dayLog.divine || dayLog.attack || dayLog.execution}
-        <section class="game-events">
-          {#if dayLog.divine}
-            <div class="divine-section">
-              <h3>占い結果</h3>
-              <p>
-                {getAgentName(processedLogs, day, dayLog.divine.agentIdx)} が
-                {getAgentName(processedLogs, day, dayLog.divine.targetAgentIdx)}
-                を占った結果:
-                {dayLog.divine.result}
-              </p>
-            </div>
-          {/if}
+      {#if dayStatus.talks.length > 0}
+        <section class="talks-section">
+          <h3>会話</h3>
+          <div class="talks">
+            {#each dayStatus.talks as talk}
+              <div class="talk" class:over={talk.text === "Over"}>
+                <strong
+                  >{getAgentName(dayStatuses, dayIdx, talk.agentIdx)}</strong
+                >
+                {@html formatTalkText(talk.text)}
+              </div>
+            {/each}
+          </div>
+        </section>
+      {/if}
 
-          {#if dayLog.attack}
-            <div class="attack-section">
-              <h3>襲撃結果</h3>
-              <p>
-                {getAgentName(processedLogs, day, dayLog.attack.agentIdx)} への襲撃:
-                {dayLog.attack.isSuccessful ? "成功" : "失敗"}
-              </p>
-            </div>
-          {/if}
+      {#if dayStatus.votes.length > 0}
+        <section class="votes-section">
+          <h3>投票</h3>
+          <ul>
+            {#each dayStatus.votes as vote}
+              <li>
+                <strong
+                  >{getAgentName(dayStatuses, dayIdx, vote.agentIdx)}</strong
+                >
+                が
+                <strong
+                  >{getAgentName(dayStatuses, dayIdx, vote.targetIdx)}</strong
+                >
+                に投票
+              </li>
+            {/each}
+          </ul>
+        </section>
+      {/if}
 
-          {#if dayLog.execution}
-            <div class="execution-section">
-              <h3>追放結果</h3>
-              <p>
-                {getAgentName(processedLogs, day, dayLog.execution.agentIdx)} が追放されました
-                (役職: {RoleMap[
-                  dayLog.execution.role as keyof typeof RoleMap
-                ] ?? "NULL"})
-              </p>
-            </div>
+      {#if dayStatus.execution}
+        <section class="execution-section">
+          <h3>追放</h3>
+          <p>
+            <strong>
+              {getAgentName(
+                dayStatuses,
+                dayIdx,
+                dayStatus.execution.agentIdx
+              )}</strong
+            >
+            を追放
+          </p>
+        </section>
+      {/if}
+
+      {#if dayStatus.attackVotes.length > 0}
+        <section class="attack-votes-section">
+          <h3>襲撃投票</h3>
+          <ul>
+            {#each dayStatus.attackVotes as vote}
+              <li>
+                <strong
+                  >{getAgentName(dayStatuses, dayIdx, vote.agentIdx)}</strong
+                >
+                が
+                <strong
+                  >{getAgentName(dayStatuses, dayIdx, vote.targetIdx)}</strong
+                >
+                に投票
+              </li>
+            {/each}
+          </ul>
+        </section>
+      {/if}
+
+      {#if dayStatus.attack}
+        <section class="attack-section">
+          <h3>襲撃</h3>
+          {#if dayStatus.attack.targetIdx !== "-1"}
+            <p>
+              <strong>
+                {getAgentName(
+                  dayStatuses,
+                  dayIdx,
+                  dayStatus.attack.targetIdx
+                )}</strong
+              >
+              を襲撃:
+              <strong>
+                {dayStatus.attack.isSuccessful ? "成功" : "失敗"}
+              </strong>
+            </p>
+          {:else}
+            <p>襲撃対象なし</p>
           {/if}
         </section>
       {/if}
 
-      <section class="talks-section">
-        <h3>会話ログ</h3>
-        <div class="talks">
-          {#each dayLog.talks as talk}
-            <div class="talk" class:over={talk.text === "Over"}>
-              <strong>{getAgentName(processedLogs, day, talk.agentIdx)}</strong>
-              {@html formatTalkText(talk.text)}
-            </div>
-          {/each}
-        </div>
-      </section>
-
-      {#if dayLog.result}
-        <section class="game-result-section">
-          <h3>ゲーム結果</h3>
+      {#if dayStatus.divine}
+        <section class="divine-section">
+          <h3>占い</h3>
           <p>
-            村人: {dayLog.result.villagers}人 人狼: {dayLog.result.werewolves}人
-            勝利陣営: {dayLog.result.winSide}
+            <strong>
+              {getAgentName(
+                dayStatuses,
+                dayIdx,
+                dayStatus.divine.agentIdx
+              )}</strong
+            >
+            が
+            <strong>
+              {getAgentName(dayStatuses, dayIdx, dayStatus.divine.targetIdx)}
+            </strong>
+            を占い:
+            <strong>
+              {SpecieMap[dayStatus.divine.result as keyof typeof SpecieMap] ??
+                "NULL"}
+            </strong>
+          </p>
+        </section>
+      {/if}
+
+      {#if dayStatus.result}
+        <section class="result-section">
+          <h3>結果</h3>
+          <p>
+            <strong
+              >{TeamMap[
+                dayStatus.result.winSide as keyof typeof TeamMap
+              ]}</strong
+            >
+            が勝利
           </p>
         </section>
       {/if}

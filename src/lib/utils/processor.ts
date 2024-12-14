@@ -1,7 +1,7 @@
-import type { DayLog } from '$lib/types/aiwolf';
+import type { DayStatus } from '$lib/types/aiwolf';
 
-export function processLogs(logs: string[]): Record<string, DayLog> {
-    const dayLogs: Record<string, DayLog> = {};
+export function processLogs(logs: string[]): Record<string, DayStatus> {
+    const dayLogs: Record<string, DayStatus> = {};
 
     logs.forEach((log) => {
         const [day, type, ...rest] = log.split(",");
@@ -16,9 +16,9 @@ export function processLogs(logs: string[]): Record<string, DayLog> {
     return dayLogs;
 }
 
-function initializeDayLog(): DayLog {
+function initializeDayLog(): DayStatus {
     return {
-        status: {},
+        agents: {},
         talks: [],
         votes: [],
         execution: null,
@@ -29,16 +29,16 @@ function initializeDayLog(): DayLog {
     };
 }
 
-function processLogEntry(dayLog: DayLog, type: string, data: string[]): void {
+function processLogEntry(dayLog: DayStatus, type: string, data: string[]): void {
     const handlers: Record<string, (data: string[]) => void> = {
         status: ([idx, role, status, name]) => {
-            dayLog.status[idx] = { role, status, name };
+            dayLog.agents[idx] = { role, status, name };
         },
         talk: ([talkIdx, turn, agentIdx, text]) => {
-            dayLog.talks.push({ talkIdx, turn, agentIdx, text });
+            dayLog.talks.push({ talkIdx, turnIdx: turn, agentIdx, text });
         },
         vote: ([voteAgentIdx, targetAgentIdx]) => {
-            dayLog.votes.push({ voteAgentIdx, targetAgentIdx });
+            dayLog.votes.push({ agentIdx: voteAgentIdx, targetIdx: targetAgentIdx });
         },
         execute: ([executedAgentIdx, executedRole]) => {
             dayLog.execution = { agentIdx: executedAgentIdx, role: executedRole };
@@ -46,19 +46,19 @@ function processLogEntry(dayLog: DayLog, type: string, data: string[]): void {
         divine: ([divineAgentIdx, divineTargetAgentIdx, divineResult]) => {
             dayLog.divine = {
                 agentIdx: divineAgentIdx,
-                targetAgentIdx: divineTargetAgentIdx,
+                targetIdx: divineTargetAgentIdx,
                 result: divineResult,
             };
         },
         attackVote: ([attackVoteAgentIdx, attackTargetAgentIdx]) => {
             dayLog.attackVotes.push({
-                voteAgentIdx: attackVoteAgentIdx,
-                targetAgentIdx: attackTargetAgentIdx,
+                agentIdx: attackVoteAgentIdx,
+                targetIdx: attackTargetAgentIdx,
             });
         },
         attack: ([attackedAgentIdx, isSuccessful]) => {
             dayLog.attack = {
-                agentIdx: attackedAgentIdx,
+                targetIdx: attackedAgentIdx,
                 isSuccessful: isSuccessful === "true",
             };
         },
@@ -73,9 +73,9 @@ function processLogEntry(dayLog: DayLog, type: string, data: string[]): void {
     }
 }
 
-export function getAgentName(processedLogs: Record<string, DayLog>, day: string, agentIdx: string): string {
-    const status = processedLogs[day]?.status[agentIdx];
-    return status
+export function getAgentName(processedLogs: Record<string, DayStatus>, day: string, agentIdx: string): string {
+    const status = processedLogs[day]?.agents[agentIdx];
+    return status && false
         ? `Agent[${agentIdx}] (${status.name})`
         : `Agent[${agentIdx}]`;
 }
