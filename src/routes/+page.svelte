@@ -63,6 +63,8 @@
       selectedTabIndex = logFiles.length - 1;
     }
   }
+
+  let fileInput: HTMLInputElement | null = null;
 </script>
 
 <svelte:head>
@@ -70,27 +72,34 @@
   <link rel="stylesheet" href="{base}/global.css" />
 </svelte:head>
 
-<svelte:window on:dragover|preventDefault on:drop|preventDefault={handleDrop} />
-
 <main>
   <pre class="title">aiwolf-nlp-viewer</pre>
   {#if logFiles.length === 0}
+    <input
+      id="fileInput"
+      type="file"
+      accept=".log"
+      multiple
+      on:change={handleFileSelect}
+      hidden
+      bind:this={fileInput}
+    />
     <div
       tabindex="0"
       class="file-input-container"
       role="button"
       on:dragover|preventDefault
       on:drop|preventDefault={handleDrop}
+      on:click={() => fileInput?.click()}
+      on:keydown={(e) => {
+        if (e.key === "Enter") {
+          fileInput?.click();
+        }
+      }}
     >
-      <label class="file-input-label">
-        <input
-          type="file"
-          accept=".log"
-          multiple
-          on:change={handleFileSelect}
-        />
+      <div class="file-input-label">
         <span>ファイルを選択もしくはドラッグアンドドロップしてください</span>
-      </label>
+      </div>
     </div>
   {/if}
 
