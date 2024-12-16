@@ -20,10 +20,7 @@
       const reader = new FileReader();
       reader.onload = (e) => {
         const content = (e.target?.result as string) ?? "";
-        const data = content
-          .replaceAll("\r", "")
-          .split("\n")
-          .filter((line) => line.trim());
+        const data = content.split(/\r?\n/).filter((line) => line.trim());
         logFiles = [
           ...logFiles,
           {
