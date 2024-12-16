@@ -75,9 +75,10 @@ function processLogEntry(dayLog: DayStatus, type: string, data: string[]): void 
 
 export function getAgentName(processedLogs: Record<string, DayStatus>, day: string, agentIdx: string): string {
     const status = processedLogs[day]?.agents[agentIdx];
+    const padIdx = agentIdx.padStart(2, "0");
     return status && false
-        ? `Agent[${agentIdx}] (${status.name})`
-        : `Agent[${agentIdx}]`;
+        ? `Agent[${padIdx}] (${status.name})`
+        : `Agent[${padIdx}]`;
 }
 
 export function formatTalkText(text: string): string {
