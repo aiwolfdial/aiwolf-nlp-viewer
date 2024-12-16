@@ -15,11 +15,34 @@
 
 <div class="day-column">
   <div class="day-section">
-    <h2>Day {dayIdx}</h2>
+    <h2>
+      Day {dayIdx}
+      {#if dayStatus.talks.length > 0}
+        <iconify-icon inline icon="mdi:conversation"></iconify-icon>
+      {/if}
+      {#if dayStatus.votes.length > 0}
+        <iconify-icon inline icon="mdi:vote"></iconify-icon>
+      {/if}
+      {#if dayStatus.execution}
+        <iconify-icon inline icon="mdi:account-remove"></iconify-icon>
+      {/if}
+      {#if dayStatus.attackVotes.length > 0}
+        <iconify-icon inline icon="mdi:vote"></iconify-icon>
+      {/if}
+      {#if dayStatus.attack}
+        <iconify-icon inline icon="mdi:sword"></iconify-icon>
+      {/if}
+      {#if dayStatus.divine}
+        <iconify-icon inline icon="mdi:account-eye"></iconify-icon>
+      {/if}
+      {#if dayStatus.result}
+        <iconify-icon inline icon="mdi:trophy"></iconify-icon>
+      {/if}
+    </h2>
     <div class="scrollable-content">
       {#if Object.keys(dayStatus.agents).length > 0}
         <section class="agent-section">
-          <h3>エージェント</h3>
+          <h3 style="margin-top: 0">エージェント</h3>
           <ul>
             {#each Object.entries(dayStatus.agents) as [idx, status]}
               <li class:over={status.status !== "ALIVE"}>
