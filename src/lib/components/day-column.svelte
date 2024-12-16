@@ -15,7 +15,7 @@
 
 <div class="day-column">
   <div class="day-section">
-    <h2>
+    <h2 style="margin-bottom: 0">
       Day {dayIdx}
       {#if dayStatus.talks.length > 0}
         <iconify-icon inline icon="mdi:conversation"></iconify-icon>
@@ -42,7 +42,7 @@
     <div class="scrollable-content">
       {#if Object.keys(dayStatus.agents).length > 0}
         <section class="agent-section">
-          <h3 style="margin-top: 0">エージェント</h3>
+          <h3>エージェント</h3>
           <ul>
             {#each Object.entries(dayStatus.agents) as [idx, status]}
               <li class:over={status.status !== "ALIVE"}>
