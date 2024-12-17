@@ -6,7 +6,8 @@
     TeamMap,
   } from "$lib/constants/translate";
   import type { DayStatus } from "$lib/types/aiwolf";
-  import { formatTalkText, getAgentName } from "$lib/utils/processor";
+  import AgentName from "./agent-name.svelte";
+  import FormatText from "./format-text.svelte";
 
   export let dayIdx: string;
   export let dayStatus: DayStatus;
@@ -45,8 +46,11 @@
           <h3>エージェント</h3>
           <ul>
             {#each Object.entries(dayStatus.agents) as [idx, status]}
-              <li class:over={status.status !== "ALIVE"}>
-                <strong>{getAgentName(dayStatuses, dayIdx, idx)}</strong>
+              <li
+                class:over={status.status !== "ALIVE"}
+                class={"agent" + idx.padStart(2, "0")}
+              >
+                <AgentName agentIdx={idx} />
                 {RoleMap[status.role as keyof typeof RoleMap] ?? "NULL"} -
                 {StatusMap[status.status as keyof typeof StatusMap] ?? "NULL"}
               </li>
@@ -58,16 +62,17 @@
       {#if dayStatus.talks.length > 0}
         <section class="talks-section">
           <h3>会話</h3>
-          <div class="talks">
+          <ul class="talks">
             {#each dayStatus.talks as talk}
-              <div class="talk" class:over={talk.text === "Over"}>
-                <strong
-                  >{getAgentName(dayStatuses, dayIdx, talk.agentIdx)}</strong
-                >
-                {@html formatTalkText(talk.text)}
-              </div>
+              <li
+                class:over={talk.text === "Over"}
+                class={"talk agent" + talk.agentIdx.padStart(2, "0")}
+              >
+                <AgentName agentIdx={talk.agentIdx} />
+                <FormatText text={talk.text} />
+              </li>
             {/each}
-          </div>
+          </ul>
         </section>
       {/if}
 
@@ -76,14 +81,10 @@
           <h3>投票</h3>
           <ul>
             {#each dayStatus.votes as vote}
-              <li>
-                <strong
-                  >{getAgentName(dayStatuses, dayIdx, vote.agentIdx)}</strong
-                >
+              <li class={"agent" + vote.agentIdx.padStart(2, "0")}>
+                <AgentName agentIdx={vote.agentIdx} />
                 が
-                <strong
-                  >{getAgentName(dayStatuses, dayIdx, vote.targetIdx)}</strong
-                >
+                <AgentName agentIdx={vote.targetIdx} highlight />
                 に投票
               </li>
             {/each}
@@ -95,13 +96,7 @@
         <section class="execution-section">
           <h3>追放</h3>
           <p>
-            <strong>
-              {getAgentName(
-                dayStatuses,
-                dayIdx,
-                dayStatus.execution.agentIdx
-              )}</strong
-            >
+            <AgentName agentIdx={dayStatus.execution.agentIdx} highlight />
             を追放
           </p>
         </section>
@@ -112,14 +107,10 @@
           <h3>襲撃投票</h3>
           <ul>
             {#each dayStatus.attackVotes as vote}
-              <li>
-                <strong
-                  >{getAgentName(dayStatuses, dayIdx, vote.agentIdx)}</strong
-                >
+              <li class={"agent" + vote.agentIdx.padStart(2, "0")}>
+                <AgentName agentIdx={vote.agentIdx} />
                 が
-                <strong
-                  >{getAgentName(dayStatuses, dayIdx, vote.targetIdx)}</strong
-                >
+                <AgentName agentIdx={vote.targetIdx} highlight />
                 に投票
               </li>
             {/each}
@@ -132,13 +123,7 @@
           <h3>襲撃</h3>
           {#if dayStatus.attack.targetIdx !== "-1"}
             <p>
-              <strong>
-                {getAgentName(
-                  dayStatuses,
-                  dayIdx,
-                  dayStatus.attack.targetIdx
-                )}</strong
-              >
+              <AgentName agentIdx={dayStatus.attack.targetIdx} highlight />
               を襲撃:
               <strong>
                 {dayStatus.attack.isSuccessful ? "成功" : "失敗"}
@@ -154,17 +139,9 @@
         <section class="divine-section">
           <h3>占い</h3>
           <p>
-            <strong>
-              {getAgentName(
-                dayStatuses,
-                dayIdx,
-                dayStatus.divine.agentIdx
-              )}</strong
-            >
+            <AgentName agentIdx={dayStatus.divine.agentIdx} />
             が
-            <strong>
-              {getAgentName(dayStatuses, dayIdx, dayStatus.divine.targetIdx)}
-            </strong>
+            <AgentName agentIdx={dayStatus.divine.targetIdx} />
             を占い:
             <strong>
               {SpecieMap[dayStatus.divine.result as keyof typeof SpecieMap] ??

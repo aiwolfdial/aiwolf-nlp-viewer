@@ -74,17 +74,3 @@ function processLogEntry(dayLog: DayStatus, type: string, data: string[]): void 
     }
 }
 
-export function getAgentName(processedLogs: Record<string, DayStatus>, day: string, agentIdx: string): string {
-    const status = processedLogs[day]?.agents[agentIdx];
-    const padIdx = agentIdx.padStart(2, "0");
-    return status && false
-        ? `Agent[${padIdx}] (${status.name})`
-        : `Agent[${padIdx}]`;
-}
-
-export function formatTalkText(text: string): string {
-    const replyMatch = text.match(/>>Agent\[\d+\]/);
-    return replyMatch
-        ? text.replace(replyMatch[0], `<strong>${replyMatch[0]}</strong>`).trim()
-        : text.trim();
-}
