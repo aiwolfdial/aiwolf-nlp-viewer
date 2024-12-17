@@ -30,6 +30,11 @@
       };
       reader.readAsText(file);
     });
+
+    // Reset the file input to allow selecting the same files again
+    if (target) {
+      target.value = "";
+    }
   }
 
   function handleDrop(event: DragEvent) {
@@ -78,7 +83,9 @@
         },
       ];
       selectedTabIndex = logFiles.length - 1;
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error loading asset log:", error);
+    }
   }
 
   let fileInput: HTMLInputElement | null = null;
@@ -90,9 +97,8 @@
 </svelte:head>
 
 <main>
-  <pre class="title">aiwolf-nlp-viewer</pre>
-  {#if logFiles.length === 0}
-    <div class="input-controls">
+  <div class="input-controls">
+    <div class="select-container">
       <select
         on:change={(e) => {
           const path = e.currentTarget.value;
@@ -105,38 +111,44 @@
           }
         }}
       >
-        <option value="">サンプルログを選択...</option>
+        <option value="">サンプルログを選択</option>
         {#each assetLogs as log}
           <option value={log.path}>{log.name}</option>
         {/each}
       </select>
-      <input
-        id="fileInput"
-        type="file"
-        accept=".log"
-        multiple
-        on:change={handleFileSelect}
-        hidden
-        bind:this={fileInput}
-      />
-      <div
-        tabindex="0"
-        class="file-input-container"
-        role="button"
-        on:dragover|preventDefault
-        on:drop|preventDefault={handleDrop}
-        on:click={() => fileInput?.click()}
-        on:keydown={(e) => {
-          if (e.key === "Enter") {
-            fileInput?.click();
-          }
-        }}
-      >
-        <div class="file-input-label"></div>
-        <span>ファイルを選択もしくはドラッグアンドドロップしてください</span>
+    </div>
+
+    <div
+      tabindex="0"
+      class="file-input-container"
+      role="button"
+      on:dragover|preventDefault
+      on:drop|preventDefault={handleDrop}
+      on:click={() => fileInput?.click()}
+      on:keydown={(e) => {
+        if (e.key === "Enter") {
+          fileInput?.click();
+        }
+      }}
+    >
+      <div class="file-input-label">
+        ファイルを選択もしくはドラッグアンドドロップしてください
       </div>
     </div>
-  {/if}
+
+    <input
+      id="fileInput"
+      type="file"
+      accept=".log"
+      multiple
+      on:change={handleFileSelect}
+      hidden
+      bind:this={fileInput}
+    />
+  </div>
+
+  <style>
+  </style>
 
   {#if logFiles.length > 0}
     <div class="log-container">
@@ -173,19 +185,3 @@
     </div>
   {/if}
 </main>
-
-<style>
-  .input-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  select {
-    padding: 0.5rem;
-    font-size: 1rem;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-</style>
