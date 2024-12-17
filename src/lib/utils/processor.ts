@@ -1,6 +1,7 @@
 import type { DayStatus } from '$lib/types/aiwolf';
 
-export function processLogs(logs: string[]): Record<string, DayStatus> {
+export function processLogs(data: string): Record<string, DayStatus> {
+    const logs = data.split(/\r?\n/).filter((line) => line.trim());
     const dayLogs: Record<string, DayStatus> = {};
 
     logs.forEach((log) => {

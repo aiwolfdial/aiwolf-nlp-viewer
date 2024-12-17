@@ -5,7 +5,6 @@
 
   type LogFile = {
     name: string;
-    data: string[];
     processed: Record<string, any>;
   };
 
@@ -19,13 +18,11 @@
     files.forEach((file) => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const content = (e.target?.result as string) ?? "";
-        const data = content.split(/\r?\n/).filter((line) => line.trim());
+        const data = (e.target?.result as string) ?? "";
         logFiles = [
           ...logFiles,
           {
             name: file.name,
-            data: data,
             processed: processLogs(data),
           },
         ];
@@ -40,13 +37,11 @@
     files.forEach((file) => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const content = (e.target?.result as string) ?? "";
-        const data = content.split("\n").filter((line) => line.trim());
+        const data = (e.target?.result as string) ?? "";
         logFiles = [
           ...logFiles,
           {
             name: file.name,
-            data: data,
             processed: processLogs(data),
           },
         ];
@@ -65,30 +60,25 @@
   }
 
   const assetLogs = Object.entries(
-    import.meta.glob("/static/assets/*.log", { eager: true, as: "raw" })
+    import.meta.glob("/static/assets/*.log", { query: "?raw" })
   ).map(([path, _]) => ({
     name: path.split("/").pop() || "",
     path: `${base}${path.replace("/static", "")}`,
   }));
 
-  // アセットのログファイルを読み込む関数
   async function loadAssetLog(path: string, name: string) {
     try {
       const response = await fetch(path);
-      const content = await response.text();
-      const data = content.split(/\r?\n/).filter((line) => line.trim());
+      const data = await response.text();
       logFiles = [
         ...logFiles,
         {
           name,
-          data,
           processed: processLogs(data),
         },
       ];
       selectedTabIndex = logFiles.length - 1;
-    } catch (error) {
-      console.error("Error loading asset log:", error);
-    }
+    } catch (error) {}
   }
 
   let fileInput: HTMLInputElement | null = null;
