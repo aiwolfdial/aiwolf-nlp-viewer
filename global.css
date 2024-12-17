@@ -124,7 +124,6 @@ main {
   padding: var(--spacing-md);
 }
 
-.talk,
 li {
   background-color: white;
   border: 1px solid var(--color-border);
@@ -157,8 +156,7 @@ ul {
 
 /* States */
 .over {
-  background-color: var(--color-background);
-  color: #666;
+  opacity: 0.4;
 }
 
 /* File Input */
@@ -230,4 +228,49 @@ ul {
 
 .close-button:hover {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+li.agent01 {
+  border-color: #942d40;
+  border-width: 3px;
+}
+
+li.agent02 {
+  border-color: #ec754f;
+  border-width: 3px;
+}
+
+li.agent03 {
+  border-color: #bcdaf2;
+  border-width: 3px;
+}
+
+li.agent04 {
+  border-color: #062d68;
+  border-width: 3px;
+}
+
+li.agent05 {
+  border-color: #ebdf83;
+  border-width: 3px;
+}
+
+strong.agent01 {
+  background: linear-gradient(transparent 60%, #942d40bb 60%);
+}
+
+strong.agent02 {
+  background: linear-gradient(transparent 60%, #ec754fbb 60%);
+}
+
+strong.agent03 {
+  background: linear-gradient(transparent 60%, #bcdaf2bb 60%);
+}
+
+strong.agent04 {
+  background: linear-gradient(transparent 60%, #062d68bb 60%);
+}
+
+strong.agent05 {
+  background: linear-gradient(transparent 60%, #ebdf83bb 60%);
 }
