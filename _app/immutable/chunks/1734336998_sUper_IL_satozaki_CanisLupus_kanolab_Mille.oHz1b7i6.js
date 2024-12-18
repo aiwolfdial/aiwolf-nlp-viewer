@@ -77,6 +77,6 @@ const t=`0,status,1,SEER,ALIVE,sUper_IL1\r
 3,status,1,SEER,DEAD,sUper_IL1\r
 3,status,2,VILLAGER,DEAD,satozaki1\r
 3,status,3,VILLAGER,ALIVE,CanisLupus1\r
-3,status,4,WEREWOLF,,kanolab1\r
+3,status,4,WEREWOLF,ALIVE,kanolab1\r
 3,status,5,POSSESSED,DEAD,Mille1\r
 3,result,1,1,WEREWOLF`;export{t as default};
