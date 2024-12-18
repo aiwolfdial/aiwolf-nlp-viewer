@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from "$app/paths";
   import { onMount } from "svelte";
 
   let stats: string[][] = [];
@@ -6,7 +7,7 @@
   let sortAscending = true;
 
   onMount(async () => {
-    const response = await fetch("/assets/stats.csv");
+    const response = await fetch(`${base}/assets/stats.csv`);
     const text = await response.text();
     stats = text.split("\n").map((row) => row.split(","));
   });
