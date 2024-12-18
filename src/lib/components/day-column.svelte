@@ -16,7 +16,7 @@
 
 <div class="day-column">
   <div class="day-section">
-    <h2 style="margin-bottom: 0">
+    <h2>
       Day {dayIdx}
       {#if dayStatus.talks.length > 0}
         <iconify-icon inline icon="mdi:conversation"></iconify-icon>
@@ -139,9 +139,9 @@
         <section class="divine-section">
           <h3>占い</h3>
           <p>
-            <AgentName agentIdx={dayStatus.divine.agentIdx} />
+            <AgentName agentIdx={dayStatus.divine.agentIdx} highlight />
             が
-            <AgentName agentIdx={dayStatus.divine.targetIdx} />
+            <AgentName agentIdx={dayStatus.divine.targetIdx} highlight />
             を占い:
             <strong>
               {SpecieMap[dayStatus.divine.result as keyof typeof SpecieMap] ??
@@ -167,3 +167,85 @@
     </div>
   </div>
 </div>
+
+<style>
+  li {
+    background-color: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  h2 {
+    color: var(--color-primary);
+    border-bottom: 2px solid var(--color-primary);
+    padding-bottom: var(--spacing-sm);
+  }
+
+  h3 {
+    color: var(--color-secondary);
+    margin-top: var(--spacing-md);
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .over {
+    opacity: var(--over-opacity);
+  }
+
+  .day-column {
+    flex: 0 0 400px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-background);
+    border-radius: var(--border-radius-lg);
+  }
+
+  .day-section {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    padding: var(--spacing-md);
+  }
+
+  .day-section > h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .scrollable-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: var(--spacing-sm);
+  }
+
+  li.agent01 {
+    border-color: var(--color-agent01);
+    border-width: var(--border-width-agent);
+  }
+
+  li.agent02 {
+    border-color: var(--color-agent02);
+    border-width: var(--border-width-agent);
+  }
+
+  li.agent03 {
+    border-color: var(--color-agent03);
+    border-width: var(--border-width-agent);
+  }
+
+  li.agent04 {
+    border-color: var(--color-agent04);
+    border-width: var(--border-width-agent);
+  }
+
+  li.agent05 {
+    border-color: var(--color-agent05);
+    border-width: var(--border-width-agent);
+  }
+</style>

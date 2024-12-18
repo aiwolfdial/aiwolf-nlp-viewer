@@ -31,7 +31,6 @@
       reader.readAsText(file);
     });
 
-    // Reset the file input to allow selecting the same files again
     if (target) {
       target.value = "";
     }
@@ -185,3 +184,137 @@
     </div>
   {/if}
 </main>
+
+<style>
+  main {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: var(--spacing-md);
+    box-sizing: border-box;
+  }
+
+  .input-controls {
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .select-container {
+    width: 100%;
+  }
+
+  .select-container select {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+
+  .file-input-container {
+    flex: 1;
+    padding: 1rem;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .log-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .tabs-container {
+    flex-shrink: 0;
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  .days-container {
+    display: flex;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    flex-grow: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .file-input-container {
+    background-color: var(--color-background);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-md);
+  }
+
+  .file-input-container {
+    height: 100%;
+    border: 2px dashed #ccc;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+
+  .file-input-container:hover {
+    border-color: var(--color-primary);
+    background: var(--color-hover);
+  }
+
+  .file-input-label {
+    display: block;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .tabs {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+    min-width: 100%;
+    width: fit-content;
+  }
+
+  .tab-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+  }
+
+  .tab-wrapper.active {
+    background: var(--color-hover);
+  }
+
+  .tab-button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .tab-wrapper.active .tab-button {
+    font-weight: bold;
+  }
+
+  .close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px var(--spacing-sm);
+    font-size: 0.8em;
+    color: #666;
+    transition: background-color 0.2s;
+  }
+
+  .close-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+</style>
