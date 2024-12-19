@@ -21,3 +21,5 @@ export const TeamMap = {
     "VILLAGER": "村人陣営",
     "WEREWOLF": "人狼陣営",
 }
+
+export const ReplaceWords = { "kanolab1": "[チーム名]" }

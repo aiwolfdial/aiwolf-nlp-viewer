@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { ReplaceWords } from "$lib/constants/translate";
   import AgentName from "./agent-name.svelte";
 
   export let text: string;
@@ -39,8 +40,12 @@
     }
 
     if (lastIndex < text.length) {
+      var replaceText = text.slice(lastIndex);
+      Object.entries(ReplaceWords).forEach(([key, value]: [string, string]) => {
+        replaceText = replaceText.replaceAll(key, value);
+      });
       parts.push({
-        text: text.slice(lastIndex),
+        text: replaceText,
         agentIdx: null,
         isAgentTag: false,
       });
