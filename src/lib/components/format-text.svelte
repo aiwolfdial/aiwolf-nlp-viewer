@@ -6,14 +6,14 @@
   export function formatTalkText(text: string): {
     parts: Array<{
       text: string;
-      agentId: number | null;
+      agentIdx: number | null;
       isAgentTag: boolean;
     }>;
   } {
     const regex = /Agent\[(\d+)\]/g;
     const parts: Array<{
       text: string;
-      agentId: number | null;
+      agentIdx: number | null;
       isAgentTag: boolean;
     }> = [];
 
@@ -24,14 +24,14 @@
       if (match.index > lastIndex) {
         parts.push({
           text: text.slice(lastIndex, match.index),
-          agentId: null,
+          agentIdx: null,
           isAgentTag: false,
         });
       }
 
       parts.push({
         text: match[0],
-        agentId: parseInt(match[1]),
+        agentIdx: parseInt(match[1]),
         isAgentTag: true,
       });
 
@@ -41,7 +41,7 @@
     if (lastIndex < text.length) {
       parts.push({
         text: text.slice(lastIndex),
-        agentId: null,
+        agentIdx: null,
         isAgentTag: false,
       });
     }
@@ -52,7 +52,7 @@
 
 {#each formatTalkText(text).parts as part}
   {#if part.isAgentTag}
-    <AgentName agentIdx={part.agentId?.toString() ?? ""} highlight />
+    <AgentName agentIdx={part.agentIdx?.toString() ?? ""} highlight />
   {:else}
     {part.text}
   {/if}

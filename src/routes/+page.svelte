@@ -1,15 +1,16 @@
 <script lang="ts">
   import { base } from "$app/paths";
   import DayColumn from "$lib/components/day-column.svelte";
-  import { processLogs } from "$lib/utils/processor";
+  import type { DayStatus } from "$lib/types/aiwolf";
+  import { processLog } from "$lib/utils/processor";
 
   type LogFile = {
     name: string;
-    processed: Record<string, any>;
+    data: Record<string, DayStatus>;
   };
 
   let logFiles: LogFile[] = [];
-  let selectedTabIndex = 0;
+  let selectedTabIdx = 0;
 
   function handleFileSelect(event: Event): void {
     const target = event.target as HTMLInputElement;
@@ -23,10 +24,10 @@
           ...logFiles,
           {
             name: file.name,
-            processed: processLogs(data),
+            data: processLog(data),
           },
         ];
-        selectedTabIndex = logFiles.length - 1;
+        selectedTabIdx = logFiles.length - 1;
       };
       reader.readAsText(file);
     });
@@ -46,20 +47,19 @@
           ...logFiles,
           {
             name: file.name,
-            processed: processLogs(data),
+            data: processLog(data),
           },
         ];
-        selectedTabIndex = logFiles.length - 1;
+        selectedTabIdx = logFiles.length - 1;
       };
       reader.readAsText(file);
     });
   }
 
-  function closeTab(indexToRemove: number) {
-    logFiles = logFiles.filter((_, index) => index !== indexToRemove);
-
-    if (selectedTabIndex >= logFiles.length) {
-      selectedTabIndex = logFiles.length - 1;
+  function closeTab(idx: number) {
+    logFiles = logFiles.filter((_, index) => index !== idx);
+    if (selectedTabIdx >= logFiles.length) {
+      selectedTabIdx = logFiles.length - 1;
     }
   }
 
@@ -78,10 +78,10 @@
         ...logFiles,
         {
           name,
-          processed: processLogs(data),
+          data: processLog(data),
         },
       ];
-      selectedTabIndex = logFiles.length - 1;
+      selectedTabIdx = logFiles.length - 1;
     } catch (error) {
       console.error("Error loading asset log:", error);
     }
@@ -154,11 +154,8 @@
       <div class="tabs-container">
         <div class="tabs">
           {#each logFiles as file, i}
-            <div class="tab-wrapper" class:active={selectedTabIndex === i}>
-              <button
-                class="tab-button"
-                on:click={() => (selectedTabIndex = i)}
-              >
+            <div class="tab-wrapper" class:active={selectedTabIdx === i}>
+              <button class="tab-button" on:click={() => (selectedTabIdx = i)}>
                 {file.name}
               </button>
               <button
@@ -173,12 +170,8 @@
         </div>
       </div>
       <div class="days-container">
-        {#each Object.entries(logFiles[selectedTabIndex].processed) as [day, dayLog]}
-          <DayColumn
-            dayIdx={day}
-            dayStatus={dayLog}
-            dayStatuses={logFiles[selectedTabIndex].processed}
-          />
+        {#each Object.entries(logFiles[selectedTabIdx].data) as [day, dayLog]}
+          <DayColumn dayIdx={day} dayStatus={dayLog} />
         {/each}
       </div>
     </div>

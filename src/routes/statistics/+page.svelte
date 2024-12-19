@@ -43,6 +43,11 @@
   }
 </script>
 
+<svelte:head>
+  <title>aiwolf-nlp-viewer</title>
+  <link rel="stylesheet" href="{base}/global.css" />
+</svelte:head>
+
 <div class="container">
   {#if stats.length > 0}
     <table class="table">

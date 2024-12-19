@@ -11,7 +11,6 @@
 
   export let dayIdx: string;
   export let dayStatus: DayStatus;
-  export const dayStatuses: Record<string, DayStatus> = {};
 </script>
 
 <div class="day-column">
