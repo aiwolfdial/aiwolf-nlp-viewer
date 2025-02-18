@@ -1,8 +1,8 @@
 <script lang="ts">
   import { base } from "$app/paths";
-  import DayColumn from "$lib/components/day-column.svelte";
-  import type { DayStatus } from "$lib/types/aiwolf";
-  import { processLog } from "$lib/utils/processor";
+  import DayColumn from "$lib/components/archive-log/day-column.svelte";
+  import type { DayStatus } from "$lib/types/archive-log";
+  import { processArchiveLog } from "$lib/utils/archive-log";
 
   type LogFile = {
     name: string;
@@ -24,7 +24,7 @@
           ...logFiles,
           {
             name: file.name,
-            data: processLog(data),
+            data: processArchiveLog(data),
           },
         ];
         selectedTabIdx = logFiles.length - 1;
@@ -47,7 +47,7 @@
           ...logFiles,
           {
             name: file.name,
-            data: processLog(data),
+            data: processArchiveLog(data),
           },
         ];
         selectedTabIdx = logFiles.length - 1;
@@ -78,7 +78,7 @@
         ...logFiles,
         {
           name,
-          data: processLog(data),
+          data: processArchiveLog(data),
         },
       ];
       selectedTabIdx = logFiles.length - 1;

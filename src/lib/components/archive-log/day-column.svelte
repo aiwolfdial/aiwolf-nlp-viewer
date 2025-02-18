@@ -5,7 +5,7 @@
     StatusMap,
     TeamMap,
   } from "$lib/constants/translate";
-  import type { DayStatus } from "$lib/types/aiwolf";
+  import type { DayStatus } from "$lib/types/archive-log";
   import AgentName from "./agent-name.svelte";
   import FormatText from "./format-text.svelte";
 

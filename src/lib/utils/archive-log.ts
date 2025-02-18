@@ -1,6 +1,6 @@
-import type { DayStatus } from '$lib/types/aiwolf';
+import type { DayStatus } from '$lib/types/archive-log';
 
-export function processLog(data: string): Record<string, DayStatus> {
+export function processArchiveLog(data: string): Record<string, DayStatus> {
     const lines = data.split(/\r?\n/).filter((line) => line.trim());
     const result: Record<string, DayStatus> = {};
 
