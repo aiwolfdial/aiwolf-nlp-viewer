@@ -1,4 +1,3 @@
-<!-- src/routes/+page.svelte -->
 <script lang="ts">
   import { base } from "$app/paths";
 
@@ -22,14 +21,6 @@
     },
   ];
 
-  interface PlayerEntry {
-    id: number;
-    name: string;
-    isAlive: boolean;
-    votes: number[];
-    speaking: boolean;
-  }
-
   interface GameLogEntry {
     type: "speak" | "vote" | "death";
     from?: number;
@@ -40,15 +31,14 @@
 
   let logs: GameLogEntry[] = [];
   let selectedLogIdx = -1;
-  let speechMessage = "";
-  let speakingPlayerId: number | null = null;
+  let message = "";
 
   let players = Array.from({ length: 13 }, (_, i) => ({
-    id: i + 1,
-    name: `Player ${i + 1}`,
-    isAlive: true,
-    votes: [],
-    speaking: false,
+    idx: i + 1,
+    label: `Player ${i + 1}`,
+    disabled: false,
+    targetIdx: -1,
+    center: false,
   }));
 
   function loadGameLog(data: string) {
@@ -64,40 +54,38 @@
   function resetGameState() {
     players = players.map((p) => ({
       ...p,
-      isAlive: true,
-      votes: [],
-      speaking: false,
+      targetIdx: -1,
+      center: false,
     }));
-    speechMessage = "";
-    speakingPlayerId = null;
+    message = "";
     drawArrows();
   }
 
   function applyLogEntry(entry: GameLogEntry) {
+    resetGameState();
     players = players.map((p) => {
       if (entry.type === "speak" && entry.from !== undefined) {
-        speechMessage = entry.message || "";
-        speakingPlayerId = entry.from;
+        message = entry.message || "";
         return {
           ...p,
-          speaking: p.id === entry.from,
+          center: p.idx === entry.from,
         };
       }
 
       if (entry.type === "vote") {
-        if (p.id === entry.from && entry.to !== undefined) {
+        if (p.idx === entry.from && entry.to !== undefined) {
           return {
             ...p,
-            votes: [...p.votes, entry.to],
+            targetIdx: entry.to,
           };
         }
       }
 
       if (entry.type === "death" && entry.to !== undefined) {
-        if (p.id === entry.to) {
+        if (p.idx === entry.to) {
           return {
             ...p,
-            isAlive: false,
+            disabled: false,
           };
         }
       }
@@ -139,34 +127,27 @@
     ctx.fillStyle = "red";
 
     players.forEach((player) => {
-      player.votes.forEach((targetId) => {
-        const fromEl = document.getElementById(`player-${player.id}`);
-        const toEl = document.getElementById(`player-${targetId}`);
-        if (fromEl && toEl) {
-          const fromRect = fromEl.getBoundingClientRect();
-          const toRect = toEl.getBoundingClientRect();
-          const x1 = fromRect.left + fromRect.width / 2 - rect.left;
-          const y1 = fromRect.top + fromRect.height / 2 - rect.top;
-          const x2 = toRect.left + toRect.width / 2 - rect.left;
-          const y2 = toRect.top + toRect.height / 2 - rect.top;
+      if (player.disabled) return;
+      const from = document.getElementById(`player-${player.idx}`);
+      if (!from) return;
+      const fromRect = from.getBoundingClientRect();
+      if (player.targetIdx !== -1) {
+        const to = document.getElementById(`player-${player.targetIdx}`);
+        if (!to) return;
+        const toRect = to.getBoundingClientRect();
+        const x1 = fromRect.left + fromRect.width / 2 - rect.left;
+        const y1 = fromRect.top + fromRect.height / 2 - rect.top;
+        const x2 = toRect.left + toRect.width / 2 - rect.left;
+        const y2 = toRect.top + toRect.height / 2 - rect.top;
 
-          ctx.beginPath();
-          ctx.moveTo(x1, y1);
-          ctx.lineTo(x2, y2);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.arc(x2, y2, 4, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      });
-    });
-
-    if (speakingPlayerId !== null) {
-      const playerEl = document.getElementById(`player-${speakingPlayerId}`);
-      if (playerEl) {
-        const playerRect = playerEl.getBoundingClientRect();
-        const x1 = playerRect.left + playerRect.width / 2 - rect.left;
-        const y1 = playerRect.top + playerRect.height / 2 - rect.top;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+      }
+      if (player.center) {
+        const x1 = fromRect.left + fromRect.width / 2 - rect.left;
+        const y1 = fromRect.top + fromRect.height / 2 - rect.top;
         const x2 = rect.width / 2;
         const y2 = rect.height / 2;
 
@@ -175,7 +156,7 @@
         ctx.lineTo(x2, y2);
         ctx.stroke();
       }
-    }
+    });
   }
 
   loadGameLog(JSON.stringify(exampleLog));
@@ -184,7 +165,6 @@
 <svelte:head>
   <title>aiwolf-nlp-viewer</title>
   <link rel="stylesheet" href="{base}/global.css" />
-  <!-- <script src="{base}/leader-line.min.js" defer></script> -->
 </svelte:head>
 
 <svelte:window on:resize={drawArrows} />
@@ -199,19 +179,19 @@
       id="speechBubble"
       style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 10px; border-radius: 10px; box-shadow: 0 0 5px rgba(0,0,0,0.3);"
     >
-      {speechMessage}
+      {message}
     </div>
     {#each players as player, i}
       <div
         class="player"
         style="--angle: {i * (360 / players.length)}"
-        id="player-{player.id}"
+        id="player-{player.idx}"
       >
         <img
-          src="/images/male/{player.id.toString().padStart(2, '0')}.png"
-          alt={player.name}
+          src="/images/male/{player.idx.toString().padStart(2, '0')}.png"
+          alt={player.label}
         />
-        <p>{player.name}</p>
+        <p>{player.label}</p>
       </div>
     {/each}
   </div>
