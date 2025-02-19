@@ -1,165 +1,132 @@
 <script lang="ts">
   import { base } from "$app/paths";
+  import Agent from "$lib/components/realtime/agent.svelte";
+  import AgentsCanvas from "$lib/components/realtime/agents-canvas.svelte";
+  import ConnectionPanel from "$lib/components/realtime/connection-panel.svelte";
+  import type { ReAgent, ReEntry } from "$lib/types/realtime";
+  import { realtimeSocketState } from "$lib/utils/realtime-socket";
+  import { onDestroy, onMount } from "svelte";
 
-  const exampleLog = [
-    {
-      type: "speak",
-      from: 1,
-      timestamp: "2024-02-13 10:00:00",
-      message: "おはようございます",
-    },
-    {
-      type: "vote",
-      from: 1,
-      to: 2,
-      timestamp: "2024-02-13 10:01:00",
-    },
-    {
-      type: "death",
-      to: 2,
-      timestamp: "2024-02-13 10:02:00",
-    },
-  ];
+  const agentCount = 5;
+  let text = "";
+  let entries: { [id: string]: ReEntry[] } = {};
+  let selectedId = "";
+  let selectedIdx = -1;
 
-  interface GameLogEntry {
-    type: "speak" | "vote" | "death";
-    from?: number;
-    to?: number;
-    timestamp: string;
-    message?: string;
-  }
+  let agents: ReAgent[] = initializePlayers();
 
-  let logs: GameLogEntry[] = [];
-  let selectedLogIdx = -1;
-  let message = "";
-
-  let players = Array.from({ length: 13 }, (_, i) => ({
-    idx: i + 1,
-    label: `Player ${i + 1}`,
-    disabled: false,
-    targetIdx: -1,
-    center: false,
-  }));
-
-  function loadGameLog(data: string) {
-    try {
-      logs = JSON.parse(data) as GameLogEntry[];
-      selectedLogIdx = -1;
-      resetGameState();
-    } catch (e) {
-      console.error("Invalid game log format:", e);
-    }
-  }
-
-  function resetGameState() {
-    players = players.map((p) => ({
-      ...p,
+  function initializePlayers(): ReAgent[] {
+    return Array.from({ length: agentCount }, (_, i) => ({
+      idx: i + 1,
+      label: `Player ${i + 1}`,
+      disabled: false,
       targetIdx: -1,
       center: false,
     }));
-    message = "";
-    drawArrows();
   }
 
-  function applyLogEntry(entry: GameLogEntry) {
-    resetGameState();
-    players = players.map((p) => {
-      if (entry.type === "speak" && entry.from !== undefined) {
-        message = entry.message || "";
-        return {
-          ...p,
-          center: p.idx === entry.from,
-        };
-      }
+  // ストアからのデータを購読
+  const unsubscribeEntries = realtimeSocketState.entries.subscribe((value) => {
+    entries = value;
+  });
 
-      if (entry.type === "vote") {
-        if (p.idx === entry.from && entry.to !== undefined) {
-          return {
+  const unsubscribeSelectedId = realtimeSocketState.selectedId.subscribe(
+    (value) => {
+      selectedId = value;
+    }
+  );
+
+  const unsubscribeSelectedIdx = realtimeSocketState.selectedIdx.subscribe(
+    (value) => {
+      selectedIdx = value;
+      if (selectedId && entries[selectedId] && selectedIdx >= 0) {
+        applyLogEntry(selectedIdx);
+      }
+    }
+  );
+
+  onDestroy(() => {
+    unsubscribeEntries();
+    unsubscribeSelectedId();
+    unsubscribeSelectedIdx();
+  });
+
+  onMount(() => {
+    realtimeSocketState.connect();
+  });
+
+  function applyLogEntry(idx: number) {
+    if (
+      !selectedId ||
+      idx < 0 ||
+      !entries[selectedId] ||
+      idx >= entries[selectedId].length
+    )
+      return;
+
+    agents = initializePlayers();
+    text = "";
+
+    for (let i = 0; i <= idx; i++) {
+      const entry = entries[selectedId][i];
+
+      if (i > 0) {
+        if (entry.action !== entries[selectedId][i - 1].action) {
+          text = "";
+          agents = agents.map((p) => ({
             ...p,
-            targetIdx: entry.to,
-          };
+            targetIdx: -1,
+            center: false,
+          }));
         }
       }
 
-      if (entry.type === "death" && entry.to !== undefined) {
-        if (p.idx === entry.to) {
-          return {
-            ...p,
-            disabled: false,
-          };
+      agents = agents.map((p) => {
+        switch (entry.action) {
+          case "execute":
+            if (p.idx === entry.agent) {
+              return {
+                ...p,
+                disabled: entry.result as boolean,
+              };
+            }
+            break;
+          case "attack":
+          case "divine":
+          case "guard":
+          case "vote":
+          case "attackVote":
+            if (p.idx === entry.agent) {
+              return {
+                ...p,
+                targetIdx: entry.target || -1,
+              };
+            }
+            break;
+          case "talk":
+          case "whisper":
+            text = entry.text || "";
+            return {
+              ...p,
+              center: p.idx === entry.agent,
+            };
         }
-      }
-
-      return p;
-    });
-    drawArrows();
+        return p;
+      });
+    }
   }
 
   function stepForward() {
-    selectedLogIdx += 1;
-    if (selectedLogIdx < logs.length) {
-      applyLogEntry(logs[selectedLogIdx]);
+    if (selectedId && selectedIdx < entries[selectedId].length - 1) {
+      realtimeSocketState.selectedIdx.update((idx) => idx + 1);
     }
   }
 
   function stepBackward() {
-    if (selectedLogIdx > -1) {
-      resetGameState();
-      for (let i = 0; i <= selectedLogIdx - 1; i++) {
-        applyLogEntry(logs[i]);
-      }
-      selectedLogIdx -= 1;
+    if (selectedIdx > 0) {
+      realtimeSocketState.selectedIdx.update((idx) => idx - 1);
     }
   }
-
-  function drawArrows() {
-    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const circle = document.querySelector(".circle") as HTMLDivElement;
-    const rect = circle.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = "red";
-    ctx.lineWidth = 2;
-    ctx.fillStyle = "red";
-
-    players.forEach((player) => {
-      if (player.disabled) return;
-      const from = document.getElementById(`player-${player.idx}`);
-      if (!from) return;
-      const fromRect = from.getBoundingClientRect();
-      if (player.targetIdx !== -1) {
-        const to = document.getElementById(`player-${player.targetIdx}`);
-        if (!to) return;
-        const toRect = to.getBoundingClientRect();
-        const x1 = fromRect.left + fromRect.width / 2 - rect.left;
-        const y1 = fromRect.top + fromRect.height / 2 - rect.top;
-        const x2 = toRect.left + toRect.width / 2 - rect.left;
-        const y2 = toRect.top + toRect.height / 2 - rect.top;
-
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
-        ctx.stroke();
-      }
-      if (player.center) {
-        const x1 = fromRect.left + fromRect.width / 2 - rect.left;
-        const y1 = fromRect.top + fromRect.height / 2 - rect.top;
-        const x2 = rect.width / 2;
-        const y2 = rect.height / 2;
-
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
-        ctx.stroke();
-      }
-    });
-  }
-
-  loadGameLog(JSON.stringify(exampleLog));
 </script>
 
 <svelte:head>
@@ -167,123 +134,97 @@
   <link rel="stylesheet" href="{base}/global.css" />
 </svelte:head>
 
-<svelte:window on:resize={drawArrows} />
-
 <main>
-  <div class="circle">
-    <canvas
-      id="canvas"
-      style="position: absolute; top: 0; left: 0; pointer-events: none;"
-    ></canvas>
-    <div
-      id="speechBubble"
-      style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 10px; border-radius: 10px; box-shadow: 0 0 5px rgba(0,0,0,0.3);"
-    >
-      {message}
-    </div>
-    {#each players as player, i}
-      <div
-        class="player"
-        style="--angle: {i * (360 / players.length)}"
-        id="player-{player.idx}"
-      >
-        <img
-          src="/images/male/{player.idx.toString().padStart(2, '0')}.png"
-          alt={player.label}
-        />
-        <p>{player.label}</p>
-      </div>
+  <ConnectionPanel />
+  <AgentsCanvas {agents} {text}>
+    {#each agents as agent, i}
+      <Agent {agent} index={i} total={agents.length} />
     {/each}
-  </div>
-
-  <div class="w-full bg-white border-t p-4">
-    <div class="flex flex-col gap-4">
-      <div class="flex justify-center gap-4">
+  </AgentsCanvas>
+  {#if selectedId !== ""}
+    <div class="controls-container">
+      <div class="controls">
         <button
-          class="px-4 py-2 bg-gray-500 text-white rounded-lg"
+          class="control-btn backward"
           on:click={stepBackward}
-          disabled={selectedLogIdx === -1}
+          disabled={selectedIdx <= 0}
         >
           前へ
         </button>
+
+        <div class="progress-info">
+          {#if entries[selectedId]}
+            {selectedIdx + 1} / {entries[selectedId].length}
+          {/if}
+        </div>
+
         <button
-          class="px-4 py-2 bg-gray-500 text-white rounded-lg"
+          class="control-btn forward"
           on:click={stepForward}
-          disabled={selectedLogIdx === logs.length - 1}
+          disabled={!entries[selectedId] ||
+            selectedIdx >= entries[selectedId].length - 1}
         >
           次へ
         </button>
       </div>
-
-      {#if selectedLogIdx >= 0 && selectedLogIdx < logs.length}
-        <div class="text-center">
-          <p class="text-gray-600">
-            {logs[selectedLogIdx].timestamp}:
-            {#if logs[selectedLogIdx].type === "speak"}
-              Player {logs[selectedLogIdx].from} が発言
-              {#if logs[selectedLogIdx].message}
-                「{logs[selectedLogIdx].message}」
-              {/if}
-            {:else if logs[selectedLogIdx].type === "vote"}
-              Player {logs[selectedLogIdx].from} が Player {logs[selectedLogIdx]
-                .to} に投票
-            {:else if logs[selectedLogIdx].type === "death"}
-              Player {logs[selectedLogIdx].to} が死亡
-            {/if}
-          </p>
-        </div>
-      {/if}
     </div>
-  </div>
+  {:else}
+    <div class="no-data-message">
+      WebSocket接続を待機中...データが到着すると表示されます
+    </div>
+  {/if}
 </main>
 
-<svg style="display: none">
-  <defs>
-    <marker
-      id="arrowhead"
-      markerWidth="10"
-      markerHeight="7"
-      refX="10"
-      refY="3.5"
-      orient="auto"
-    >
-      <polygon points="0 0, 10 3.5, 0 7" fill="red" />
-    </marker>
-  </defs>
-</svg>
-
 <style>
-  .circle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    width: min(80vw, 100vw);
-    height: min(64vh, 80vw);
-    /* border: 20px solid #ddd; */
-    margin: auto;
-    margin-top: 120px;
-    border-radius: 50%;
-    box-sizing: border-box;
+  .controls-container {
+    margin-top: 24px;
+    padding: 16px;
+    background-color: white;
+    border-top: 1px solid #eee;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
   }
 
-  .player {
-    position: absolute;
-    --angle2: calc(var(--angle) * 1deg - 90deg);
-    --x: calc(cos(var(--angle2)) * min(40vw, 50vw));
-    --y: calc(sin(var(--angle2)) * min(32vh, 40vw));
-    transform: translate(var(--x), var(--y));
-    transform-origin: center;
+  .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .control-btn {
+    padding: 10px 20px;
+    background-color: #4a5568;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+  }
+
+  .control-btn:hover:not(:disabled) {
+    background-color: #2d3748;
+  }
+
+  .control-btn:disabled {
+    background-color: #a0aec0;
+    cursor: not-allowed;
+  }
+
+  .progress-info {
+    font-size: 16px;
+    font-weight: 500;
+    color: #4a5568;
+    min-width: 80px;
     text-align: center;
   }
 
-  .player > img {
-    height: 12lvh;
-    border-radius: 12%;
-    border: 2px solid #ddd;
-  }
-
-  .player > p {
-    margin: 0;
+  .no-data-message {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    color: #666;
   }
 </style>

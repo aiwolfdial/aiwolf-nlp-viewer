@@ -1,12 +1,12 @@
 <script lang="ts">
   import { base } from "$app/paths";
-  import DayColumn from "$lib/components/archive-log/day-column.svelte";
-  import type { DayStatus } from "$lib/types/archive-log";
-  import { processArchiveLog } from "$lib/utils/archive-log";
+  import DayColumn from "$lib/components/archive/day-column.svelte";
+  import type { ArDayStatus } from "$lib/types/archive";
+  import { processArchiveLog } from "$lib/utils/archive";
 
   type LogFile = {
     name: string;
-    data: Record<string, DayStatus>;
+    data: Record<string, ArDayStatus>;
   };
 
   let logFiles: LogFile[] = [];

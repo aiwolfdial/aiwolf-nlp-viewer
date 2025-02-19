@@ -1,8 +1,8 @@
-import type { DayStatus } from '$lib/types/archive-log';
+import type { ArDayStatus } from '$lib/types/archive';
 
-export function processArchiveLog(data: string): Record<string, DayStatus> {
+export function processArchiveLog(data: string): Record<string, ArDayStatus> {
     const lines = data.split(/\r?\n/).filter((line) => line.trim());
-    const result: Record<string, DayStatus> = {};
+    const result: Record<string, ArDayStatus> = {};
 
     lines.forEach((log) => {
         const [day, type, ...rest] = log.split(",");
@@ -15,7 +15,7 @@ export function processArchiveLog(data: string): Record<string, DayStatus> {
     return result;
 }
 
-function initializeDayLog(): DayStatus {
+function initializeDayLog(): ArDayStatus {
     return {
         agents: {},
         talks: [],
@@ -28,7 +28,7 @@ function initializeDayLog(): DayStatus {
     };
 }
 
-function processLogEntry(dayLog: DayStatus, type: string, data: string[]): void {
+function processLogEntry(dayLog: ArDayStatus, type: string, data: string[]): void {
     const handlers: Record<string, (data: string[]) => void> = {
         status: ([idx, role, status, name]) => {
             dayLog.agents[idx] = { role, status, name };
