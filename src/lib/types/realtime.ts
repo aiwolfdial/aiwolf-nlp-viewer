@@ -19,8 +19,13 @@ export interface ReAgent {
     idx: number;
     label: string;
     disabled: boolean;
-    targetIdx: number;
+    targets: ReAgentArrow[];
     center: boolean;
+}
+
+export interface ReAgentArrow {
+    targetIdx: number;
+    color: string;
 }
 
 export interface ReMessage {

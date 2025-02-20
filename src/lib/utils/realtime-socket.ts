@@ -25,7 +25,6 @@ function createRealtimeSocket() {
             if (state.reconnectTimer) return state;
 
             const timer = setInterval(() => {
-                console.log('Attempting reconnect...');
                 connect(state.url);
             }, 3000);
 
@@ -50,7 +49,6 @@ function createRealtimeSocket() {
 
             selectedId.update(currentId => (currentId || id));
         } catch (e) {
-            console.error('Invalid WebSocket data:', e);
         }
     }
 

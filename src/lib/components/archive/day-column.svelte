@@ -5,12 +5,12 @@
     StatusMap,
     TeamMap,
   } from "$lib/constants/translate";
-  import type { ArDayStatus } from "$lib/types/archive";
+  import type { Status } from "$lib/types/archive";
   import AgentName from "./agent-name.svelte";
   import FormatText from "./format-text.svelte";
 
   export let dayIdx: string;
-  export let dayStatus: ArDayStatus;
+  export let dayStatus: Status;
 </script>
 
 <div class="day-column">

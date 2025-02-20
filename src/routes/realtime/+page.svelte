@@ -2,27 +2,17 @@
   import AgentsCanvas from "$lib/components/realtime/agents-canvas.svelte";
   import Navbar from "$lib/components/realtime/navbar.svelte";
   import type { ReAgent, ReEntry } from "$lib/types/realtime";
+  import { initializeAgents } from "$lib/utils/realtime";
   import { realtimeSocketState } from "$lib/utils/realtime-socket";
   import { onDestroy } from "svelte";
   import "../../app.css";
 
-  const agentCount = 13;
   let text = "";
   let entries: { [id: string]: ReEntry[] } = {};
   let selectedId = "";
   let selectedIdx = -1;
 
-  let agents: ReAgent[] = initializePlayers();
-
-  function initializePlayers(): ReAgent[] {
-    return Array.from({ length: agentCount }, (_, i) => ({
-      idx: i + 1,
-      label: `Agent[${(i + 1).toString().padStart(2, "0")}]`,
-      disabled: false,
-      targetIdx: 3,
-      center: true,
-    }));
-  }
+  let agents: ReAgent[] = initializeAgents(13);
 
   const unsubscribeEntries = realtimeSocketState.entries.subscribe((value) => {
     entries = value;
@@ -58,7 +48,7 @@
     )
       return;
 
-    agents = initializePlayers();
+    agents = initializeAgents(13);
     text = "";
 
     for (let i = 0; i <= idx; i++) {

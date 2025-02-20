@@ -34,13 +34,15 @@
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.globalAlpha = canvas === messageCanvas ? 1 : 0.8;
-      ctx.strokeStyle = ctx.fillStyle = "#001fcc";
+      ctx.globalAlpha = canvas === messageCanvas ? 1 : 1;
       ctx.lineWidth = 2;
     });
 
-    agents.forEach(({ idx, targetIdx, disabled, center }) => {
+    agents.forEach((agent) => {
+      const { idx, targets = [], disabled, center } = agent;
+
       if (disabled) return;
+
       const from = document.getElementById(`agent-${idx}`);
       if (!(from instanceof HTMLElement)) return;
       const fromRect = from.getBoundingClientRect();
@@ -49,18 +51,23 @@
       const fromX = fromRect.left + fromRect.width / 2 - canvasRect.left;
       const fromY = fromRect.top + fromRect.height / 2 - canvasRect.top;
 
-      if (targetIdx !== -1) {
+      targets.forEach(({ targetIdx, color = "#001fcc" }) => {
+        if (targetIdx === -1) return;
+
         const to = document.getElementById(`agent-${targetIdx}`);
         if (!(to instanceof HTMLElement)) return;
         const toRect = to.getBoundingClientRect();
+
         drawArrow(
           arrowCtx,
           fromX,
           fromY,
           toRect.left + toRect.width / 2 - canvasRect.left,
-          toRect.top + toRect.height / 2 - canvasRect.top
+          toRect.top + toRect.height / 2 - canvasRect.top,
+          false,
+          color
         );
-      }
+      });
 
       if (center) {
         drawArrow(
@@ -69,7 +76,8 @@
           canvasRect.height / 2,
           fromX,
           fromY,
-          true
+          true,
+          "#FFF"
         );
       }
     });
@@ -81,9 +89,13 @@
     y1: number,
     x2: number,
     y2: number,
-    isCenter = false
+    isCenter = false,
+    color = "#001fcc"
   ) {
     const arrowShape = isCenter ? [0, 0, 0, 0, 0, 15] : [0, 5, -20, 5, -20, 15];
+
+    ctx.strokeStyle = ctx.fillStyle = color;
+
     ctx.beginPath();
     let dx = x2 - x1;
     let dy = y2 - y1;
@@ -117,21 +129,18 @@
 <div class="circle" bind:this={container}>
   <canvas bind:this={messageCanvas} class="message-canvas"></canvas>
   <canvas bind:this={arrowCanvas} class="arrow-canvas"></canvas>
-  <!-- {#if text} -->
-  <div
-    class="card bg-base-100 card-xs shadow-sm overflow-auto p-4 z-1"
-    style="width: 50%;  max-height: 30%;"
-  >
-    <div class="card-body">
-      <p class="text-lg text-pretty">
-        {text}
-        我こそは、運命の糸を操る者なり。占いの結果、Agent[03]は人狼であったと断言せざるを得ない。
-        我こそは、運命の糸を操る者なり。占いの結果、Agent[03]は人狼であったと断言せざるを得ない。
-        我こそは、運命の糸を操る者なり。占いの結果、Agent[03]は人狼であったと断言せざるを得ない。
-      </p>
+  {#if text || true}
+    <div
+      class="card bg-base-100 card-xs shadow-sm overflow-auto p-4 z-1"
+      style="width: 50%;  max-height: 30%;"
+    >
+      <div class="card-body">
+        <p class="text-lg text-pretty">
+          {text}
+        </p>
+      </div>
     </div>
-  </div>
-  <!-- {/if} -->
+  {/if}
 
   {#each agents as agent, i}
     <div
