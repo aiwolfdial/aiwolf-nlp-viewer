@@ -2,12 +2,10 @@ import type { ReEntry } from '$lib/types/realtime';
 import { writable } from 'svelte/store';
 
 export interface RealTimeSocket {
-    status: 'disconnected' | 'connecting' | 'connected';
+    status: 'disconnected' | 'connecting' | 'connected' | 'attempting';
     url: string;
     socket: WebSocket | null;
-    autoReconnect: boolean;
-    reconnectInterval: number;
-    reconnectTimer: number | null;
+    reconnectTimer?: number | null;
 }
 
 const DEFAULT_URL = 'ws://localhost:8080/realtime';
@@ -17,143 +15,91 @@ function createRealtimeSocket() {
         status: 'disconnected',
         url: DEFAULT_URL,
         socket: null,
-        autoReconnect: true,
-        reconnectInterval: 3000,
-        reconnectTimer: null
+        reconnectTimer: null,
     });
 
     const entries = writable<{ [id: string]: ReEntry[] }>({});
     const selectedId = writable<string>('');
     const selectedIdx = writable<number>(-1);
 
-    function connect(url?: string) {
-        return update(state => {
+    function attemptReconnect() {
+        update(state => {
+            if (state.reconnectTimer) return state;
+
+            const timer = setInterval(() => {
+                console.log('Attempting reconnect...');
+                connect(state.url);
+            }, 3000);
+
+            return { ...state, status: 'attempting', reconnectTimer: timer };
+        });
+    }
+
+    function handleMessage(event: MessageEvent) {
+        try {
+            const message = JSON.parse(event.data);
+            const entry = message.data as ReEntry;
+            const id = message.id as string;
+
+            entries.update(currentEntries => {
+                const updatedEntries = { ...currentEntries };
+                if (!updatedEntries[id]) {
+                    updatedEntries[id] = [];
+                }
+                updatedEntries[id].push(entry);
+                return updatedEntries;
+            });
+
+            selectedId.update(currentId => (currentId || id));
+        } catch (e) {
+            console.error('Invalid WebSocket data:', e);
+        }
+    }
+
+    function connect(url: string = DEFAULT_URL) {
+        update(state => {
             if (state.socket) {
                 state.socket.close();
             }
-            if (url) {
-                state.url = url;
-            }
-            try {
-                const socket = new WebSocket(state.url);
 
-                socket.onopen = () => {
-                    update(s => ({ ...s, status: 'connected' }));
-                };
+            const socket = new WebSocket(url);
+            socket.onopen = () => {
+                update(s => ({ ...s, status: 'connected', reconnectTimer: null }));
+            };
+            socket.onclose = attemptReconnect;
+            socket.onerror = () => {
+                update(s => ({ ...s, status: 'attempting' }));
+            };
+            socket.onmessage = handleMessage;
 
-                socket.onclose = () => {
-                    update(s => {
-                        if (s.autoReconnect && !s.reconnectTimer) {
-                            const timer = window.setTimeout(() => connect(), s.reconnectInterval);
-                            return { ...s, status: 'disconnected', socket: null, reconnectTimer: timer };
-                        }
-                        return { ...s, status: 'disconnected', socket: null };
-                    });
-                };
-
-                socket.onerror = () => {
-                    update(s => ({ ...s, status: 'disconnected' }));
-                };
-
-                socket.onmessage = (event) => {
-                    try {
-                        const message = JSON.parse(event.data);
-                        const entry = message.data as ReEntry;
-                        const id = message.id as string;
-
-                        entries.update(currentEntries => {
-                            if (!currentEntries[id]) {
-                                currentEntries[id] = [];
-                            }
-                            currentEntries[id].push(entry);
-                            return currentEntries;
-                        });
-
-                        selectedId.update(currentId => {
-                            if (currentId === '') {
-                                return id;
-                            }
-                            return currentId;
-                        });
-
-                        selectedId.subscribe(value => {
-                            if (value === id) {
-                                entries.subscribe(allEntries => {
-                                    if (allEntries[id]) {
-                                        selectedIdx.set(allEntries[id].length - 1);
-                                    }
-                                })();
-                            }
-                        })();
-                    } catch (e) {
-                        console.error('Invalid WebSocket data:', e);
-                    }
-                };
-
-                return {
-                    ...state,
-                    status: 'connecting',
-                    socket,
-                    reconnectTimer: null
-                };
-            } catch (error) {
-                console.error('WebSocket connection error:', error);
-                return {
-                    ...state,
-                    status: 'disconnected',
-                    socket: null
-                };
-            }
+            return { ...state, status: 'connecting', socket, url };
         });
     }
 
     function disconnect() {
-        return update(state => {
+        update(state => {
             if (state.socket) {
                 state.socket.close();
             }
             if (state.reconnectTimer) {
-                clearTimeout(state.reconnectTimer);
+                clearInterval(state.reconnectTimer);
             }
-            return {
-                ...state,
-                status: 'disconnected',
-                socket: null,
-                reconnectTimer: null
-            };
+            return { ...state, status: 'disconnected', socket: null, reconnectTimer: null };
         });
     }
 
-    function setAutoReconnect(value: boolean) {
-        return update(state => ({
-            ...state,
-            autoReconnect: value
-        }));
-    }
-
-    function setUrl(url: string) {
-        return update(state => ({
-            ...state,
-            url
-        }));
+    function setUrl(newUrl: string) {
+        update(state => ({ ...state, url: newUrl }));
     }
 
     return {
         subscribe,
         connect,
         disconnect,
-        setAutoReconnect,
         setUrl,
         entries: { subscribe: entries.subscribe },
-        selectedId: {
-            subscribe: selectedId.subscribe,
-            set: selectedId.set
-        },
-        selectedIdx: {
-            subscribe: selectedIdx.subscribe,
-            set: selectedIdx.set,
-            update: selectedIdx.update
-        }
+        selectedId: { subscribe: selectedId.subscribe, set: selectedId.set },
+        selectedIdx: { subscribe: selectedIdx.subscribe, set: selectedIdx.set, update: selectedIdx.update }
     };
 }
 

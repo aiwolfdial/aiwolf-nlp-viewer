@@ -1,13 +1,12 @@
 <script lang="ts">
-  import { base } from "$app/paths";
-  import Agent from "$lib/components/realtime/agent.svelte";
   import AgentsCanvas from "$lib/components/realtime/agents-canvas.svelte";
-  import ConnectionPanel from "$lib/components/realtime/connection-panel.svelte";
+  import Navbar from "$lib/components/realtime/navbar.svelte";
   import type { ReAgent, ReEntry } from "$lib/types/realtime";
   import { realtimeSocketState } from "$lib/utils/realtime-socket";
   import { onDestroy, onMount } from "svelte";
+  import "../../app.css";
 
-  const agentCount = 5;
+  const agentCount = 13;
   let text = "";
   let entries: { [id: string]: ReEntry[] } = {};
   let selectedId = "";
@@ -25,7 +24,6 @@
     }));
   }
 
-  // ストアからのデータを購読
   const unsubscribeEntries = realtimeSocketState.entries.subscribe((value) => {
     entries = value;
   });
@@ -115,116 +113,35 @@
       });
     }
   }
-
-  function stepForward() {
-    if (selectedId && selectedIdx < entries[selectedId].length - 1) {
-      realtimeSocketState.selectedIdx.update((idx) => idx + 1);
-    }
-  }
-
-  function stepBackward() {
-    if (selectedIdx > 0) {
-      realtimeSocketState.selectedIdx.update((idx) => idx - 1);
-    }
-  }
 </script>
 
 <svelte:head>
   <title>aiwolf-nlp-viewer</title>
-  <link rel="stylesheet" href="{base}/global.css" />
 </svelte:head>
 
-<main>
-  <ConnectionPanel />
-  <AgentsCanvas {agents} {text}>
-    {#each agents as agent, i}
-      <Agent {agent} index={i} total={agents.length} />
-    {/each}
-  </AgentsCanvas>
-  {#if selectedId !== ""}
-    <div class="controls-container">
-      <div class="controls">
-        <button
-          class="control-btn backward"
-          on:click={stepBackward}
-          disabled={selectedIdx <= 0}
-        >
-          前へ
-        </button>
-
-        <div class="progress-info">
-          {#if entries[selectedId]}
-            {selectedIdx + 1} / {entries[selectedId].length}
-          {/if}
-        </div>
-
-        <button
-          class="control-btn forward"
-          on:click={stepForward}
-          disabled={!entries[selectedId] ||
-            selectedIdx >= entries[selectedId].length - 1}
-        >
-          次へ
-        </button>
-      </div>
+<main class="h-screen flex flex-col">
+  <Navbar />
+  <div class="flex flex-1 overflow-hidden w-full flex-col md:flex-row">
+    <div class="flex-auto p-8">
+      <AgentsCanvas {agents} {text}></AgentsCanvas>
     </div>
-  {:else}
-    <div class="no-data-message">
-      WebSocket接続を待機中...データが到着すると表示されます
+    <div class="w-full md:w-64 max-md:h-64 flex flex-col">
+      <ul
+        class="list bg-base-100 overflow-y-auto flex-1"
+        style="background-color: #f8f8f8;"
+      >
+        {#each entries[selectedId] || [] as entry, idx}
+          <li class="list-row">
+            <div>
+              <div>{entry.action}</div>
+              <div class="text-xs uppercase font-semibold opacity-60"></div>
+            </div>
+            <button class="btn btn-square" on:click={() => applyLogEntry(idx)}>
+              <iconify-icon inline icon="mdi:play"></iconify-icon>
+            </button>
+          </li>
+        {/each}
+      </ul>
     </div>
-  {/if}
+  </div>
 </main>
-
-<style>
-  .controls-container {
-    margin-top: 24px;
-    padding: 16px;
-    background-color: white;
-    border-top: 1px solid #eee;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-  }
-
-  .controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .control-btn {
-    padding: 10px 20px;
-    background-color: #4a5568;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s ease;
-  }
-
-  .control-btn:hover:not(:disabled) {
-    background-color: #2d3748;
-  }
-
-  .control-btn:disabled {
-    background-color: #a0aec0;
-    cursor: not-allowed;
-  }
-
-  .progress-info {
-    font-size: 16px;
-    font-weight: 500;
-    color: #4a5568;
-    min-width: 80px;
-    text-align: center;
-  }
-
-  .no-data-message {
-    text-align: center;
-    margin-top: 30px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    color: #666;
-  }
-</style>

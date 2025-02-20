@@ -41,7 +41,7 @@
 
     agents.forEach(({ idx, targetIdx, disabled, center }) => {
       if (disabled) return;
-      const from = document.getElementById(`player-${idx}`);
+      const from = document.getElementById(`agent-${idx}`);
       if (!(from instanceof HTMLElement)) return;
       const fromRect = from.getBoundingClientRect();
       const canvasRect = arrowCanvas.getBoundingClientRect();
@@ -50,7 +50,7 @@
       const fromY = fromRect.top + fromRect.height / 2 - canvasRect.top;
 
       if (targetIdx !== -1) {
-        const to = document.getElementById(`player-${targetIdx}`);
+        const to = document.getElementById(`agent-${targetIdx}`);
         if (!(to instanceof HTMLElement)) return;
         const toRect = to.getBoundingClientRect();
         drawArrow(
@@ -117,28 +117,44 @@
 <div class="circle" bind:this={container}>
   <canvas bind:this={messageCanvas} class="message-canvas"></canvas>
   <canvas bind:this={arrowCanvas} class="arrow-canvas"></canvas>
-
   {#if text}
-    <div class="message-bubble">
-      {text}
+    <div class="card bg-base-100 w-64 shadow-sm">
+      <p class="text-l text-center text-wrap p-4">
+        {text}
+        <!-- 我こそは、運命の糸を操る者なり。占いの結果、Agent[03]は人狼であったと断言せざるを得ない。 -->
+      </p>
     </div>
   {/if}
 
-  <slot />
+  {#each agents as agent, i}
+    <div
+      class="agent"
+      style="--angle: {i * (360 / agents.length)}"
+      id="agent-{agent.idx}"
+    >
+      <img
+        src="/images/male/{agent.idx.toString().padStart(2, '0')}.png"
+        alt={agent.label}
+        class:disabled={agent.disabled}
+      />
+      <p>{agent.label}</p>
+    </div>
+  {/each}
 </div>
 
 <style>
   .circle {
+    background-color: #ddd;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    width: min(80vw, 100vw);
-    height: min(64vh, 80vw);
+    width: 80%;
+    height: 80%;
     margin: auto;
-    margin-top: 120px;
     border-radius: 50%;
     box-sizing: border-box;
+    margin-top: 5%;
   }
 
   .message-canvas,
@@ -146,23 +162,36 @@
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
   }
 
   .arrow-canvas {
     z-index: 1;
   }
 
-  .message-bubble {
+  .agent {
     position: absolute;
-    top: 50%;
-    left: 50%;
     transform: translate(-50%, -50%);
-    background: white;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    max-width: 70%;
-    word-break: break-word;
-    z-index: 2;
+    transform-origin: center;
+    left: calc(50% + cos(var(--angle) * 1deg) * 45%);
+    top: calc(50% + sin(var(--angle) * 1deg) * 45%);
+    text-align: center;
+    width: 100px;
+  }
+
+  .agent > img {
+    object-fit: cover;
+    border-radius: 12%;
+    border: 2px solid #ddd;
+    transition: opacity 0.3s ease;
+  }
+
+  .agent > img.disabled {
+    opacity: 0.5;
+  }
+
+  .agent > p {
+    margin: 0;
   }
 </style>
