@@ -3,12 +3,11 @@
   import { onDestroy } from "svelte";
   import "../../../app.css";
 
-  let url = "";
+  let url = "ws://localhost:8080/realtime";
   let status = "disconnected";
 
   const unsubscribe = realtimeSocketState.subscribe((state) => {
     status = state.status;
-    url = state.url;
   });
 
   onDestroy(unsubscribe);

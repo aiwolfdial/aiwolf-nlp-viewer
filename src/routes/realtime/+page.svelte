@@ -3,7 +3,7 @@
   import Navbar from "$lib/components/realtime/navbar.svelte";
   import type { ReAgent, ReEntry } from "$lib/types/realtime";
   import { realtimeSocketState } from "$lib/utils/realtime-socket";
-  import { onDestroy, onMount } from "svelte";
+  import { onDestroy } from "svelte";
   import "../../app.css";
 
   const agentCount = 13;
@@ -17,10 +17,10 @@
   function initializePlayers(): ReAgent[] {
     return Array.from({ length: agentCount }, (_, i) => ({
       idx: i + 1,
-      label: `Player ${i + 1}`,
+      label: `Agent[${(i + 1).toString().padStart(2, "0")}]`,
       disabled: false,
-      targetIdx: -1,
-      center: false,
+      targetIdx: 3,
+      center: true,
     }));
   }
 
@@ -47,10 +47,6 @@
     unsubscribeEntries();
     unsubscribeSelectedId();
     unsubscribeSelectedIdx();
-  });
-
-  onMount(() => {
-    realtimeSocketState.connect();
   });
 
   function applyLogEntry(idx: number) {
@@ -122,14 +118,11 @@
 <main class="h-screen flex flex-col">
   <Navbar />
   <div class="flex flex-1 overflow-hidden w-full flex-col md:flex-row">
-    <div class="flex-auto p-8">
+    <div class="flex-auto p-8 bg-base-300">
       <AgentsCanvas {agents} {text}></AgentsCanvas>
     </div>
-    <div class="w-full md:w-64 max-md:h-64 flex flex-col">
-      <ul
-        class="list bg-base-100 overflow-y-auto flex-1"
-        style="background-color: #f8f8f8;"
-      >
+    <div class="w-full md:w-64 max-md:h-64 flex flex-col bg-base-200">
+      <ul class="list overflow-y-auto flex-1">
         {#each entries[selectedId] || [] as entry, idx}
           <li class="list-row">
             <div>

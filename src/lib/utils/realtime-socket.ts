@@ -8,12 +8,10 @@ export interface RealTimeSocket {
     reconnectTimer?: number | null;
 }
 
-const DEFAULT_URL = 'ws://localhost:8080/realtime';
-
 function createRealtimeSocket() {
     const { subscribe, set, update } = writable<RealTimeSocket>({
         status: 'disconnected',
-        url: DEFAULT_URL,
+        url: '',
         socket: null,
         reconnectTimer: null,
     });
@@ -56,7 +54,7 @@ function createRealtimeSocket() {
         }
     }
 
-    function connect(url: string = DEFAULT_URL) {
+    function connect(url: string) {
         update(state => {
             if (state.socket) {
                 state.socket.close();

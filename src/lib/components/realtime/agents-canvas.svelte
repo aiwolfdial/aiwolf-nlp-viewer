@@ -117,14 +117,21 @@
 <div class="circle" bind:this={container}>
   <canvas bind:this={messageCanvas} class="message-canvas"></canvas>
   <canvas bind:this={arrowCanvas} class="arrow-canvas"></canvas>
-  {#if text}
-    <div class="card bg-base-100 w-64 shadow-sm">
-      <p class="text-l text-center text-wrap p-4">
+  <!-- {#if text} -->
+  <div
+    class="card bg-base-100 card-xs shadow-sm overflow-auto p-4 z-1"
+    style="width: 50%;  max-height: 30%;"
+  >
+    <div class="card-body">
+      <p class="text-lg text-pretty">
         {text}
-        <!-- 我こそは、運命の糸を操る者なり。占いの結果、Agent[03]は人狼であったと断言せざるを得ない。 -->
+        我こそは、運命の糸を操る者なり。占いの結果、Agent[03]は人狼であったと断言せざるを得ない。
+        我こそは、運命の糸を操る者なり。占いの結果、Agent[03]は人狼であったと断言せざるを得ない。
+        我こそは、運命の糸を操る者なり。占いの結果、Agent[03]は人狼であったと断言せざるを得ない。
       </p>
     </div>
-  {/if}
+  </div>
+  <!-- {/if} -->
 
   {#each agents as agent, i}
     <div
@@ -132,19 +139,26 @@
       style="--angle: {i * (360 / agents.length)}"
       id="agent-{agent.idx}"
     >
-      <img
-        src="/images/male/{agent.idx.toString().padStart(2, '0')}.png"
-        alt={agent.label}
-        class:disabled={agent.disabled}
-      />
-      <p>{agent.label}</p>
+      <div
+        class="avatar"
+        class:avatar-online={!agent.disabled}
+        class:avatar-offline={agent.disabled}
+      >
+        <div class="w-24 rounded-full">
+          <img
+            src="/images/male/{agent.idx.toString().padStart(2, '0')}.png"
+            alt={agent.label}
+            class:disabled={agent.disabled}
+          />
+        </div>
+      </div>
+      <span class="badge mt-2">{agent.label}</span>
     </div>
   {/each}
 </div>
 
 <style>
   .circle {
-    background-color: #ddd;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -178,20 +192,5 @@
     top: calc(50% + sin(var(--angle) * 1deg) * 45%);
     text-align: center;
     width: 100px;
-  }
-
-  .agent > img {
-    object-fit: cover;
-    border-radius: 12%;
-    border: 2px solid #ddd;
-    transition: opacity 0.3s ease;
-  }
-
-  .agent > img.disabled {
-    opacity: 0.5;
-  }
-
-  .agent > p {
-    margin: 0;
   }
 </style>
