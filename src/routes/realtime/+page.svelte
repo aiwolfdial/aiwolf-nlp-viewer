@@ -1,6 +1,11 @@
 <script lang="ts">
   import AgentsCanvas from "$lib/components/realtime/agents-canvas.svelte";
   import Navbar from "$lib/components/realtime/navbar.svelte";
+  import {
+    ActionMap,
+    ActionPrefixMap,
+    IdxToText,
+  } from "$lib/constants/translate";
   import type { ReAgent, ReEntry } from "$lib/types/realtime";
   import { initializeAgents } from "$lib/utils/realtime";
   import { realtimeSocketState } from "$lib/utils/realtime-socket";
@@ -8,50 +13,32 @@
   import "../../app.css";
 
   let text = "";
-  let entries: { [id: string]: ReEntry[] } = {};
   let selectedId = "";
   let selectedIdx = -1;
 
+  let entries: Record<string, ReEntry[]> = {};
   let agents: ReAgent[] = initializeAgents(13);
 
   const unsubscribeEntries = realtimeSocketState.entries.subscribe((value) => {
     entries = value;
+    if (!selectedId && selectedIdx === -1) {
+      selectedId = Object.keys(value)[0];
+    }
+    if (selectedId && value[selectedId]) {
+      selectedIdx = value[selectedId].length - 1;
+    }
+    applyEntries(selectedId, selectedIdx);
   });
-
-  const unsubscribeSelectedId = realtimeSocketState.selectedId.subscribe(
-    (value) => {
-      selectedId = value;
-    }
-  );
-
-  const unsubscribeSelectedIdx = realtimeSocketState.selectedIdx.subscribe(
-    (value) => {
-      selectedIdx = value;
-      if (selectedId && entries[selectedId] && selectedIdx >= 0) {
-        applyLogEntry(selectedIdx);
-      }
-    }
-  );
 
   onDestroy(() => {
     unsubscribeEntries();
-    unsubscribeSelectedId();
-    unsubscribeSelectedIdx();
   });
 
-  function applyLogEntry(idx: number) {
-    if (
-      !selectedId ||
-      idx < 0 ||
-      !entries[selectedId] ||
-      idx >= entries[selectedId].length
-    )
-      return;
-
+  function applyEntries(selectedId: string, selectedIdx: number) {
     agents = initializeAgents(13);
     text = "";
 
-    for (let i = 0; i <= idx; i++) {
+    for (let i = 0; i <= selectedIdx; i++) {
       const entry = entries[selectedId][i];
 
       if (i > 0) {
@@ -59,7 +46,7 @@
           text = "";
           agents = agents.map((p) => ({
             ...p,
-            targetIdx: -1,
+            targets: [],
             center: false,
           }));
         }
@@ -68,22 +55,38 @@
       agents = agents.map((p) => {
         switch (entry.action) {
           case "execute":
-            if (p.idx === entry.agent) {
+          case "attack":
+            if (p.idx === entry.target) {
+              text =
+                IdxToText(entry.target) +
+                ActionPrefixMap[entry.action] +
+                ActionMap[entry.action];
               return {
                 ...p,
-                disabled: entry.result as boolean,
+                disabled:
+                  entry.action === "execute" ? true : (entry.result as boolean),
               };
             }
             break;
-          case "attack":
           case "divine":
           case "guard":
           case "vote":
           case "attackVote":
-            if (p.idx === entry.agent) {
+            if (p.idx === entry.agent && entry.target !== undefined) {
+              text =
+                IdxToText(entry.agent) +
+                "が" +
+                IdxToText(entry.target) +
+                ActionPrefixMap[entry.action] +
+                ActionMap[entry.action];
               return {
                 ...p,
-                targetIdx: entry.target || -1,
+                targets: [
+                  {
+                    targetIdx: entry.target,
+                    color: "red",
+                  },
+                ],
               };
             }
             break;
@@ -116,10 +119,13 @@
         {#each entries[selectedId] || [] as entry, idx}
           <li class="list-row">
             <div>
-              <div>{entry.action}</div>
+              <div>{ActionMap[entry.action]}</div>
               <div class="text-xs uppercase font-semibold opacity-60"></div>
             </div>
-            <button class="btn btn-square" on:click={() => applyLogEntry(idx)}>
+            <button
+              class="btn btn-square"
+              on:click={() => applyEntries(selectedId, idx)}
+            >
               <iconify-icon inline icon="mdi:play"></iconify-icon>
             </button>
           </li>

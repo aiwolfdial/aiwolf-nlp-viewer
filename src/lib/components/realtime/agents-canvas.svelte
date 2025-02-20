@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ReAgent } from "$lib/types/realtime";
-  import { afterUpdate, onMount } from "svelte";
+  import { afterUpdate, getContext, onMount } from "svelte";
 
   export let agents: ReAgent[] = [];
   export let text: string = "";
@@ -77,8 +77,9 @@
           fromX,
           fromY,
           true,
-          "#FFF"
+          getContext("theme") === "dark" ? "#1D232A" : "#FFF"
         );
+        console.log(getContext("theme"));
       }
     });
   }
@@ -153,11 +154,13 @@
         class:avatar-online={!agent.disabled}
         class:avatar-offline={agent.disabled}
       >
-        <div class="w-24 rounded-full">
+        <div
+          class="w-24 rounded-full"
+          style:opacity={agent.disabled ? 0.25 : 1}
+        >
           <img
             src="/images/male/{agent.idx.toString().padStart(2, '0')}.png"
             alt={agent.label}
-            class:disabled={agent.disabled}
           />
         </div>
       </div>

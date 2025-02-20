@@ -17,8 +17,6 @@ function createRealtimeSocket() {
     });
 
     const entries = writable<{ [id: string]: ReEntry[] }>({});
-    const selectedId = writable<string>('');
-    const selectedIdx = writable<number>(-1);
 
     function attemptReconnect() {
         update(state => {
@@ -46,8 +44,6 @@ function createRealtimeSocket() {
                 updatedEntries[id].push(entry);
                 return updatedEntries;
             });
-
-            selectedId.update(currentId => (currentId || id));
         } catch (e) {
         }
     }
@@ -94,8 +90,6 @@ function createRealtimeSocket() {
         disconnect,
         setUrl,
         entries: { subscribe: entries.subscribe },
-        selectedId: { subscribe: selectedId.subscribe, set: selectedId.set },
-        selectedIdx: { subscribe: selectedIdx.subscribe, set: selectedIdx.set, update: selectedIdx.update }
     };
 }
 
