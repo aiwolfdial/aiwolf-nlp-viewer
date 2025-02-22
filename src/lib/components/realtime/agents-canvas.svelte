@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from "$app/paths";
   import type { RePacket } from "$lib/types/realtime";
   import { afterUpdate, onMount } from "svelte";
 
@@ -177,7 +178,7 @@
           style:opacity={!agent.isAlive ? 0.25 : 1}
         >
           <img
-            src="/images/male/{agent.idx.toString().padStart(2, '0')}.png"
+            src="{base}/images/male/{agent.idx.toString().padStart(2, '0')}.png"
             alt={agent.name}
           />
         </div>
