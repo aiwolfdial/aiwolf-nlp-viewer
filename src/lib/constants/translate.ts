@@ -23,3 +23,27 @@ export const TeamMap = {
 }
 
 export const ReplaceWords = { "kanolab1": "[チーム名]" }
+
+export const ActionMap = {
+    "execute": "追放されました",
+    "attack": "襲撃されました",
+    "divine": "占いました",
+    "guard": "護衛しました",
+    "vote": "投票しました",
+    "attackVote": "襲撃投票しました",
+    "talk": "発言しました",
+    "whisper": "囁きました",
+}
+
+export const ActionPrefixMap = {
+    "execute": "が",
+    "attack": "が",
+    "divine": "を",
+    "guard": "を",
+    "vote": "に",
+    "attackVote": "に",
+}
+
+export function IdxToText(idx: number | string) {
+    return `Agent[${idx.toString().padStart(2, "0")}]`
+}

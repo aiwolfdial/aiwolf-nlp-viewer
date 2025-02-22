@@ -1,10 +1,12 @@
 <script lang="ts">
+  import { IdxToText } from "$lib/constants/translate";
+
   export let agentIdx: string;
   export let highlight = false;
 </script>
 
 <strong class={highlight ? "agent" + agentIdx.padStart(2, "0") : ""}
-  >Agent[{agentIdx.padStart(2, "0")}]</strong
+  >{IdxToText(agentIdx)}</strong
 >
 
 <style>
