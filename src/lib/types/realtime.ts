@@ -1,34 +1,19 @@
-export interface ReEntry {
+export interface RePacket {
+    id: string;
+    idx: number;
     day: number;
-    action:
-    | "execute"
-    | "attack"
-    | "divine"
-    | "guard"
-    | "vote"
-    | "attackVote"
-    | "talk"
-    | "whisper";
-    agent?: number;
-    target?: number;
-    text?: string;
-    result?: boolean | string;
+    isDay: boolean;
+    agents: ReAgent[];
+    message: string;
+    summary: string;
+    isDivider: boolean;
 }
 
 export interface ReAgent {
     idx: number;
-    label: string;
-    disabled: boolean;
-    targets: ReAgentArrow[];
-    center: boolean;
-}
-
-export interface ReAgentArrow {
-    targetIdx: number;
-    color: string;
-}
-
-export interface ReMessage {
-    id: string;
-    data: ReEntry;
+    name: string;
+    role: string;
+    isAlive: boolean;
+    targetIdxs: number[];
+    isBubble: boolean;
 }

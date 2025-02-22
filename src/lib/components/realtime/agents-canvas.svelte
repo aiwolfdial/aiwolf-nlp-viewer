@@ -1,13 +1,22 @@
 <script lang="ts">
-  import type { ReAgent } from "$lib/types/realtime";
-  import { afterUpdate, getContext, onMount } from "svelte";
+  import type { RePacket } from "$lib/types/realtime";
+  import { afterUpdate, onMount } from "svelte";
 
-  export let agents: ReAgent[] = [];
-  export let text: string = "";
+  export let packet: RePacket = {
+    id: "",
+    idx: 0,
+    day: 0,
+    isDay: true,
+    agents: [],
+    message: "",
+    summary: "",
+    isDivider: false,
+  };
 
   let messageCanvas: HTMLCanvasElement;
   let arrowCanvas: HTMLCanvasElement;
   let container: HTMLDivElement;
+  let messageBox: HTMLDivElement;
 
   onMount(() => {
     window.addEventListener("resize", drawArrows);
@@ -38,10 +47,10 @@
       ctx.lineWidth = 2;
     });
 
-    agents.forEach((agent) => {
-      const { idx, targets = [], disabled, center } = agent;
+    packet.agents.forEach((agent) => {
+      const { idx, targetIdxs = [], isAlive, isBubble } = agent;
 
-      if (disabled) return;
+      if (!isAlive) return;
 
       const from = document.getElementById(`agent-${idx}`);
       if (!(from instanceof HTMLElement)) return;
@@ -51,10 +60,10 @@
       const fromX = fromRect.left + fromRect.width / 2 - canvasRect.left;
       const fromY = fromRect.top + fromRect.height / 2 - canvasRect.top;
 
-      targets.forEach(({ targetIdx, color = "#001fcc" }) => {
-        if (targetIdx === -1) return;
+      targetIdxs.forEach((idx) => {
+        if (idx === -1) return;
 
-        const to = document.getElementById(`agent-${targetIdx}`);
+        const to = document.getElementById(`agent-${idx}`);
         if (!(to instanceof HTMLElement)) return;
         const toRect = to.getBoundingClientRect();
 
@@ -65,11 +74,11 @@
           toRect.left + toRect.width / 2 - canvasRect.left,
           toRect.top + toRect.height / 2 - canvasRect.top,
           false,
-          color
+          getComputedStyle(messageBox).getPropertyValue("background-color")
         );
       });
 
-      if (center) {
+      if (isBubble) {
         drawArrow(
           messageCtx,
           canvasRect.width / 2,
@@ -77,9 +86,8 @@
           fromX,
           fromY,
           true,
-          getContext("theme") === "dark" ? "#1D232A" : "#FFF"
+          getComputedStyle(messageBox).getPropertyValue("background-color")
         );
-        console.log(getContext("theme"));
       }
     });
   }
@@ -127,44 +135,54 @@
   }
 </script>
 
+<div role="alert" class="alert">
+  <span
+    >{packet.id}
+    {packet.idx}
+    {packet.day}日目 {packet.isDay ? "昼" : "夜"}
+    {packet.summary}</span
+  >
+</div>
+
 <div class="circle" bind:this={container}>
   <canvas bind:this={messageCanvas} class="message-canvas"></canvas>
   <canvas bind:this={arrowCanvas} class="arrow-canvas"></canvas>
-  {#if text || true}
+  {#if packet.message !== ""}
     <div
+      bind:this={messageBox}
       class="card bg-base-100 card-xs shadow-sm overflow-auto p-4 z-1"
       style="width: 50%;  max-height: 30%;"
     >
       <div class="card-body">
         <p class="text-lg text-pretty">
-          {text}
+          {packet.message}
         </p>
       </div>
     </div>
   {/if}
 
-  {#each agents as agent, i}
+  {#each packet.agents as agent, i}
     <div
       class="agent"
-      style="--angle: {i * (360 / agents.length)}"
+      style="--angle: {i * (360 / packet.agents.length)}"
       id="agent-{agent.idx}"
     >
       <div
         class="avatar"
-        class:avatar-online={!agent.disabled}
-        class:avatar-offline={agent.disabled}
+        class:avatar-online={agent.isAlive}
+        class:avatar-offline={!agent.isAlive}
       >
         <div
           class="w-24 rounded-full"
-          style:opacity={agent.disabled ? 0.25 : 1}
+          style:opacity={!agent.isAlive ? 0.25 : 1}
         >
           <img
             src="/images/male/{agent.idx.toString().padStart(2, '0')}.png"
-            alt={agent.label}
+            alt={agent.name}
           />
         </div>
       </div>
-      <span class="badge mt-2">{agent.label}</span>
+      <span class="badge mt-2">{agent.name}</span>
     </div>
   {/each}
 </div>

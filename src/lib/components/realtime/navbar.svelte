@@ -4,6 +4,7 @@
   import "../../../app.css";
 
   let url = "ws://localhost:8080/realtime";
+  let token = "";
   let status = "disconnected";
 
   const unsubscribe = realtimeSocketState.subscribe((state) => {
@@ -13,9 +14,7 @@
   onDestroy(unsubscribe);
 
   function handleConnect() {
-    if (url) {
-      realtimeSocketState.connect(url);
-    }
+    realtimeSocketState.connect(url, token);
   }
 
   function handleDisconnect() {
@@ -55,7 +54,12 @@
   <label class="input mx-2">
     <iconify-icon class="h-[1em] opacity-50" inline icon="mdi:key"
     ></iconify-icon>
-    <input type="text" class="grow" placeholder="Authorization Key" />
+    <input
+      type="text"
+      class="grow"
+      placeholder="Authorization Key"
+      bind:value={token}
+    />
     <span class="badge badge-neutral badge-xs">Optional</span>
   </label>
   <button
@@ -68,4 +72,9 @@
     on:click={handleDisconnect}
     disabled={status === "disconnected"}>切断</button
   >
+  <label class="flex items-center cursor-pointer gap-2">
+    <iconify-icon inline icon="mdi:white-balance-sunny"></iconify-icon>
+    <input type="checkbox" value="dark" class="toggle theme-controller" />
+    <iconify-icon inline icon="mdi:moon-and-stars"></iconify-icon>
+  </label>
 </div>

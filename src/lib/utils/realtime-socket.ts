@@ -1,70 +1,66 @@
-import type { ReEntry } from '$lib/types/realtime';
+import type { RePacket } from '$lib/types/realtime';
 import { writable } from 'svelte/store';
 
 export interface RealTimeSocket {
-    status: 'disconnected' | 'connecting' | 'connected' | 'attempting';
     url: string;
+    token: string;
+    status: 'disconnected' | 'connecting' | 'connected' | 'attempting';
     socket: WebSocket | null;
     reconnectTimer?: number | null;
 }
 
 function createRealtimeSocket() {
-    const { subscribe, set, update } = writable<RealTimeSocket>({
+    const { subscribe, update } = writable<RealTimeSocket>({
         status: 'disconnected',
         url: '',
+        token: '',
         socket: null,
         reconnectTimer: null,
     });
 
-    const entries = writable<{ [id: string]: ReEntry[] }>({});
+    const entries = writable<{ [id: string]: RePacket[] }>({});
 
-    function attemptReconnect() {
+    function reconnect() {
         update(state => {
             if (state.reconnectTimer) return state;
-
             const timer = setInterval(() => {
-                connect(state.url);
+                connect(state.url, state.token);
             }, 3000);
-
             return { ...state, status: 'attempting', reconnectTimer: timer };
         });
     }
 
-    function handleMessage(event: MessageEvent) {
+    function handle(event: MessageEvent) {
         try {
-            const message = JSON.parse(event.data);
-            const entry = message.data as ReEntry;
-            const id = message.id as string;
+            const packet = JSON.parse(event.data) as RePacket;
 
             entries.update(currentEntries => {
                 const updatedEntries = { ...currentEntries };
-                if (!updatedEntries[id]) {
-                    updatedEntries[id] = [];
+                if (!updatedEntries[packet.id]) {
+                    updatedEntries[packet.id] = [];
                 }
-                updatedEntries[id].push(entry);
+                updatedEntries[packet.id].push(packet);
                 return updatedEntries;
             });
         } catch (e) {
         }
     }
 
-    function connect(url: string) {
+    function connect(url: string, token: string) {
         update(state => {
             if (state.socket) {
                 state.socket.close();
             }
-
-            const socket = new WebSocket(url);
+            const socket = new WebSocket(url + (token !== "" ? '?token=' + token : ""));
             socket.onopen = () => {
                 update(s => ({ ...s, status: 'connected', reconnectTimer: null }));
             };
-            socket.onclose = attemptReconnect;
+            socket.onclose = reconnect;
             socket.onerror = () => {
                 update(s => ({ ...s, status: 'attempting' }));
             };
-            socket.onmessage = handleMessage;
-
-            return { ...state, status: 'connecting', socket, url };
+            socket.onmessage = handle;
+            return { ...state, status: 'connecting', socket };
         });
     }
 
@@ -80,15 +76,15 @@ function createRealtimeSocket() {
         });
     }
 
-    function setUrl(newUrl: string) {
-        update(state => ({ ...state, url: newUrl }));
+    function set(url: string, token: string) {
+        update(state => ({ ...state, url: url, token: token }));
     }
 
     return {
         subscribe,
         connect,
         disconnect,
-        setUrl,
+        set,
         entries: { subscribe: entries.subscribe },
     };
 }
