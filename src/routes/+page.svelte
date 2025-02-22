@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from "$app/paths";
   import "../app.css";
 </script>
 
@@ -14,12 +15,12 @@
         <div class="py-6">
           <button
             class="btn btn-primary mx-2"
-            on:click={() => (window.location.href = "/realtime")}
+            on:click={() => (window.location.href = base + "/realtime")}
             >リアルタイムログ</button
           >
           <button
             class="btn btn-primary mx-2"
-            on:click={() => (window.location.href = "/archive")}
+            on:click={() => (window.location.href = base + "/archive")}
             >アーカイブログ</button
           >
         </div>
