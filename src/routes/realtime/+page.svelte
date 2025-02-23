@@ -24,7 +24,6 @@
 
   const unsubscribeEntries = realtimeSocketState.entries.subscribe((value) => {
     entries = value;
-    console.log(entries);
     if (selectedId === "" && Object.keys(value).length > 0) {
       selectedId = Object.keys(value)[0];
     }

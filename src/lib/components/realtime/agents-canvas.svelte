@@ -1,18 +1,9 @@
 <script lang="ts">
   import { base } from "$app/paths";
   import type { RePacket } from "$lib/types/realtime";
-  import { afterUpdate, onMount } from "svelte";
+  import { onMount } from "svelte";
 
-  export let packet: RePacket = {
-    id: "",
-    idx: 0,
-    day: 0,
-    isDay: true,
-    agents: [],
-    message: "",
-    summary: "",
-    isDivider: false,
-  };
+  let { packet }: { packet: RePacket } = $props();
 
   let messageCanvas: HTMLCanvasElement;
   let arrowCanvas: HTMLCanvasElement;
@@ -20,17 +11,17 @@
   let messageBox: HTMLDivElement;
 
   onMount(() => {
-    window.addEventListener("resize", drawArrows);
+    window.addEventListener("resize", render);
     return () => {
-      window.removeEventListener("resize", drawArrows);
+      window.removeEventListener("resize", render);
     };
   });
 
-  afterUpdate(() => {
-    drawArrows();
+  $effect(() => {
+    render();
   });
 
-  function drawArrows() {
+  function render() {
     if (!messageCanvas || !arrowCanvas || !container) return;
 
     const messageCtx = messageCanvas.getContext("2d");
@@ -136,31 +127,25 @@
   }
 </script>
 
-<div role="alert" class="alert">
-  <span
-    >{packet.id}
-    {packet.idx}
-    {packet.day}日目 {packet.isDay ? "昼" : "夜"}
-    {packet.summary}</span
-  >
-</div>
+<h3 class="text-lg font-bold">
+  {packet.day}日目 {packet.isDay ? "昼" : "夜"}
+</h3>
 
 <div class="circle" bind:this={container}>
   <canvas bind:this={messageCanvas} class="message-canvas"></canvas>
   <canvas bind:this={arrowCanvas} class="arrow-canvas"></canvas>
-  {#if packet.message !== ""}
-    <div
-      bind:this={messageBox}
-      class="card bg-base-100 card-xs shadow-sm overflow-auto p-4 z-1"
-      style="width: 50%;  max-height: 30%;"
-    >
-      <div class="card-body">
-        <p class="text-lg text-pretty">
-          {packet.message}
-        </p>
-      </div>
+  <div
+    bind:this={messageBox}
+    class="card bg-base-100 card-xs shadow-sm overflow-auto p-4 z-1"
+    style="width: 50%; max-height: 30%;"
+    style:visibility={packet.message ? "visible" : "hidden"}
+  >
+    <div class="card-body">
+      <p class="text-lg text-pretty">
+        {packet.message}
+      </p>
     </div>
-  {/if}
+  </div>
 
   {#each packet.agents as agent, i}
     <div

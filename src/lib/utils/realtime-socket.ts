@@ -1,7 +1,7 @@
 import type { RePacket } from '$lib/types/realtime';
 import { writable } from 'svelte/store';
 
-export interface RealTimeSocket {
+export interface RealtimeSocket {
     url: string;
     token: string;
     status: 'disconnected' | 'connecting' | 'connected' | 'attempting';
@@ -10,7 +10,7 @@ export interface RealTimeSocket {
 }
 
 function createRealtimeSocket() {
-    const { subscribe, update } = writable<RealTimeSocket>({
+    const { subscribe, update } = writable<RealtimeSocket>({
         status: 'disconnected',
         url: '',
         token: '',
