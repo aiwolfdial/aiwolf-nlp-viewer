@@ -1,9 +1,9 @@
 <script lang="ts">
   import { base } from "$app/paths";
-  import type { RePacket } from "$lib/types/realtime";
+  import type { Packet } from "$lib/types/realtime";
   import { onMount } from "svelte";
 
-  let { packet }: { packet: RePacket } = $props();
+  let { packet }: { packet: Packet } = $props();
 
   let messageCanvas: HTMLCanvasElement;
   let arrowCanvas: HTMLCanvasElement;
@@ -153,13 +153,11 @@
       style="--angle: {i * (360 / packet.agents.length)}"
       id="agent-{agent.idx}"
     >
-      <div
-        class="avatar"
-        class:avatar-online={agent.isAlive}
-        class:avatar-offline={!agent.isAlive}
-      >
+      <div class="avatar">
         <div
-          class="w-24 rounded-full"
+          class="w-24 rounded-full ring-offset-base-100 ring ring-offset-2"
+          class:ring-success={agent.isAlive}
+          class:ring-error={!agent.isAlive}
           style:opacity={!agent.isAlive ? 0.25 : 1}
         >
           <img
@@ -208,5 +206,13 @@
     top: calc(50% + sin(var(--angle) * 1deg) * 45%);
     text-align: center;
     width: 100px;
+  }
+
+  .ring-success {
+    --tw-ring-color: var(--color-success);
+  }
+
+  .ring-error {
+    --tw-ring-color: var(--color-error);
   }
 </style>

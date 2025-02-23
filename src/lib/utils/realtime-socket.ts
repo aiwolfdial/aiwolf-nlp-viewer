@@ -1,4 +1,4 @@
-import type { RePacket } from '$lib/types/realtime';
+import type { Packet } from '$lib/types/realtime';
 import { writable } from 'svelte/store';
 
 export interface RealtimeSocket {
@@ -18,7 +18,7 @@ function createRealtimeSocket() {
         reconnectTimer: null,
     });
 
-    const entries = writable<{ [id: string]: RePacket[] }>({});
+    const entries = writable<{ [id: string]: Packet[] }>({});
 
     function reconnect() {
         update(state => {
@@ -32,7 +32,7 @@ function createRealtimeSocket() {
 
     function handle(event: MessageEvent) {
         try {
-            const packet = JSON.parse(event.data) as RePacket;
+            const packet = JSON.parse(event.data) as Packet;
 
             entries.update(currentEntries => {
                 const updatedEntries = { ...currentEntries };

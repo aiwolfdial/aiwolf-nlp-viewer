@@ -1,7 +1,7 @@
 <script lang="ts">
   import AgentsCanvas from "$lib/components/realtime/agents-canvas.svelte";
   import Navbar from "$lib/components/realtime/navbar.svelte";
-  import type { RePacket } from "$lib/types/realtime";
+  import type { Packet } from "$lib/types/realtime";
   import { initializeAgents } from "$lib/utils/realtime";
   import { realtimeSocketState } from "$lib/utils/realtime-socket";
   import { onDestroy } from "svelte";
@@ -10,8 +10,8 @@
   let selectedId = "";
   let selectedIdx = -1;
 
-  let entries: Record<string, RePacket[]> = {};
-  let packet: RePacket = {
+  let entries: Record<string, Packet[]> = {};
+  let packet: Packet = {
     id: "",
     idx: 0,
     day: 0,

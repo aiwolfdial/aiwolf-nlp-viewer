@@ -1,7 +1,7 @@
 import { IdxToText } from "$lib/constants/translate";
-import type { ReAgent } from "$lib/types/realtime";
+import type { Agent } from "$lib/types/realtime";
 
-export function initializeAgents(length: number): ReAgent[] {
+export function initializeAgents(length: number): Agent[] {
     return Array.from({ length: length }, (_, i) => ({
         idx: i + 1,
         name: IdxToText(i + 1),

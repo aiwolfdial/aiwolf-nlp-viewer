@@ -1,15 +1,15 @@
-export interface RePacket {
+export interface Packet {
     id: string;
     idx: number;
     day: number;
     isDay: boolean;
-    agents: ReAgent[];
+    agents: Agent[];
     message: string;
     summary: string;
     isDivider: boolean;
 }
 
-export interface ReAgent {
+export interface Agent {
     idx: number;
     name: string;
     role: string;

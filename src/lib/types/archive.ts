@@ -1,50 +1,50 @@
-export interface ArAgent {
+export interface Agent {
     role: string;
     status: string;
     name: string;
 }
 
-export interface ArTalk {
+export interface Talk {
     talkIdx: string;
     turnIdx: string;
     agentIdx: string;
     text: string;
 }
 
-export interface ArVote {
+export interface Vote {
     agentIdx: string;
     targetIdx: string;
 }
 
-export interface ArExecution {
+export interface Execution {
     agentIdx: string;
     role: string;
 }
 
-export interface ArDivine {
+export interface Divine {
     agentIdx: string;
     targetIdx: string;
     result: string;
 }
 
-export interface ArAttack {
+export interface Attack {
     targetIdx: string;
     isSuccessful: boolean;
 }
 
-export interface ArResult {
+export interface Result {
     villagers: string;
     werewolves: string;
     winSide: string;
 }
 
-export interface ArDayStatus {
-    agents: Record<string, ArAgent>;
-    talks: ArTalk[];
-    votes: ArVote[];
-    execution: ArExecution | null;
-    divine: ArDivine | null;
-    attackVotes: ArVote[];
-    attack: ArAttack | null;
-    result: ArResult | null;
+export interface DayStatus {
+    agents: Record<string, Agent>;
+    talks: Talk[];
+    votes: Vote[];
+    execution: Execution | null;
+    divine: Divine | null;
+    attackVotes: Vote[];
+    attack: Attack | null;
+    result: Result | null;
 }
