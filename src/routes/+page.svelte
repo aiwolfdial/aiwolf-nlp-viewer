@@ -10,15 +10,17 @@
 <main>
   <div class="hero bg-base-200 min-h-screen">
     <div class="hero-content text-center">
-      <div class="max-w-md">
+      <div class="container">
         <h1 class="text-5xl font-bold">aiwolf-nlp-viewer</h1>
-        <div class="py-6">
-          <button
-            class="btn btn-primary mx-2"
-            on:click={() => goto("/realtime")}>リアルタイムログ</button
+        <div class="flex flex-row gap-4 py-4">
+          <button class="btn btn-primary" on:click={() => goto("/realtime")}
+            >リアルタイムログ</button
           >
-          <button class="btn btn-primary mx-2" on:click={() => goto("/archive")}
+          <button class="btn btn-primary" on:click={() => goto("/archive")}
             >アーカイブログ</button
+          >
+          <button class="btn btn-primary" on:click={() => goto("/statistics")}
+            >統計情報</button
           >
         </div>
       </div>

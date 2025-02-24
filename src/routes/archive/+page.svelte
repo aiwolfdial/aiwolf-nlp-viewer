@@ -86,68 +86,43 @@
       console.error("Error loading asset log:", error);
     }
   }
-
-  let fileInput: HTMLInputElement | null = null;
 </script>
 
 <svelte:head>
   <title>aiwolf-nlp-viewer</title>
-  <link rel="stylesheet" href="{base}/global.css" />
+  <!-- <link rel="stylesheet" href="{base}/global.css" /> -->
 </svelte:head>
 
-<main>
-  <div class="input-controls">
-    <div class="select-container">
-      <select
-        on:change={(e) => {
-          const path = e.currentTarget.value;
-          if (path) {
-            const selected = assetLogs.find((log) => log.path === path);
-            if (selected) {
-              loadAssetLog(selected.path, selected.name);
-            }
-            e.currentTarget.value = "";
+<main class="h-screen flex flex-col">
+  <div class="navbar bg-base-100 flex justify-start">
+    <h1 class="text-3xl font-bold truncate mx-4">aiwolf-nlp-viewer</h1>
+    <select
+      class="select w-full max-w-xs ml-auto"
+      on:change={(e) => {
+        const path = e.currentTarget.value;
+        if (path) {
+          const selected = assetLogs.find((log) => log.path === path);
+          if (selected) {
+            loadAssetLog(selected.path, selected.name);
           }
-        }}
-      >
-        <option value="">サンプルログを選択</option>
-        {#each assetLogs as log}
-          <option value={log.path}>{log.name}</option>
-        {/each}
-      </select>
-    </div>
-
-    <div
-      tabindex="0"
-      class="file-input-container"
-      role="button"
-      on:dragover|preventDefault
-      on:drop|preventDefault={handleDrop}
-      on:click={() => fileInput?.click()}
-      on:keydown={(e) => {
-        if (e.key === "Enter") {
-          fileInput?.click();
+          e.currentTarget.value = "";
         }
       }}
     >
-      <div class="file-input-label">
-        ファイルを選択もしくはドラッグアンドドロップしてください
-      </div>
-    </div>
+      <option value="">サンプルログを選択</option>
+      {#each assetLogs as log}
+        <option value={log.path}>{log.name}</option>
+      {/each}
+    </select>
 
     <input
-      id="fileInput"
+      class="file-input w-full max-w-xs mx-2"
       type="file"
       accept=".log"
       multiple
       on:change={handleFileSelect}
-      hidden
-      bind:this={fileInput}
     />
   </div>
-
-  <style>
-  </style>
 
   {#if logFiles.length > 0}
     <div class="log-container">
@@ -179,44 +154,6 @@
 </main>
 
 <style>
-  main {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    padding: var(--spacing-md);
-    box-sizing: border-box;
-  }
-
-  .input-controls {
-    margin: 1rem 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .select-container {
-    width: 100%;
-  }
-
-  .select-container select {
-    width: 100%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-
-  .file-input-container {
-    flex: 1;
-    padding: 1rem;
-    border: 2px dashed #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-  }
-
   .log-container {
     width: 100%;
     height: 100%;
@@ -238,30 +175,6 @@
     flex-grow: 1;
     overflow-x: auto;
     overflow-y: hidden;
-  }
-
-  .file-input-container {
-    background-color: var(--color-background);
-    border-radius: var(--border-radius-lg);
-    padding: var(--spacing-md);
-  }
-
-  .file-input-container {
-    height: 100%;
-    border: 2px dashed #ccc;
-    cursor: pointer;
-    box-sizing: border-box;
-  }
-
-  .file-input-container:hover {
-    border-color: var(--color-primary);
-    background: var(--color-hover);
-  }
-
-  .file-input-label {
-    display: block;
-    text-align: center;
-    cursor: pointer;
   }
 
   .tabs {
@@ -309,5 +222,36 @@
 
   .close-button:hover {
     background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  :root {
+    --color-primary: #333;
+    --color-secondary: #555;
+    --color-border: #e0e0e0;
+    --color-background: #f4f4f4;
+    --color-hover: #f5f5f5;
+
+    --spacing-sm: 8px;
+    --spacing-md: 15px;
+    --spacing-lg: 20px;
+
+    --border-radius: 5px;
+    --border-radius-lg: 8px;
+
+    --border-width-agent: 3px;
+    --color-agent01: #942d40;
+    --color-agent02: #ec754f;
+    --color-agent03: #bcdaf2;
+    --color-agent04: #062d68;
+    --color-agent05: #ebdf83;
+
+    --highlight-width: 60%;
+    --highlight-color-agent01: #942d40bb;
+    --highlight-color-agent02: #ec754fbb;
+    --highlight-color-agent03: #bcdaf2bb;
+    --highlight-color-agent04: #062d68bb;
+    --highlight-color-agent05: #ebdf83bb;
+
+    --over-opacity: 0.4;
   }
 </style>

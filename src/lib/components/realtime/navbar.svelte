@@ -1,31 +1,40 @@
 <script lang="ts">
-  import { browser } from "$app/environment";
+  import {
+    realtimeSettings,
+    type RealtimeSettings,
+  } from "$lib/stores/realtime-settings";
   import { realtimeSocketState } from "$lib/utils/realtime-socket";
   import { onDestroy } from "svelte";
   import "../../../app.css";
 
-  let socketUrl = "ws://localhost:8080/realtime";
-  let socketToken = "";
-  let socketStatus: string;
+  let settings: RealtimeSettings;
+  let status: string;
 
-  $: if (browser) {
-    localStorage.setItem("realtime-url", socketUrl);
-    localStorage.setItem("realtime-token", socketToken);
-  }
-
-  if (browser) {
-    socketUrl = localStorage.getItem("realtime-url") || socketUrl;
-    socketToken = localStorage.getItem("realtime-token") || socketToken;
-  }
-
-  const unsubscribe = realtimeSocketState.subscribe((state) => {
-    socketStatus = state.status;
+  const unsubscribeSettings = realtimeSettings.subscribe((value) => {
+    settings = value;
   });
 
-  onDestroy(unsubscribe);
+  const unsubscribeStatus = realtimeSocketState.subscribe((state) => {
+    status = state.status;
+  });
+
+  onDestroy(() => {
+    unsubscribeSettings();
+    unsubscribeStatus();
+  });
+
+  function updateSettings<K extends keyof typeof settings>(
+    key: K,
+    value: (typeof settings)[K]
+  ) {
+    realtimeSettings.update((current) => ({
+      ...current,
+      [key]: value,
+    }));
+  }
 
   function handleConnect() {
-    realtimeSocketState.connect(socketUrl, socketToken);
+    realtimeSocketState.connect();
   }
 
   function handleDisconnect() {
@@ -34,32 +43,35 @@
 </script>
 
 <div class="navbar bg-base-100 flex justify-start">
-  <h1 class="text-3xl font-bold truncate ml-4">aiwolf-nlp-viewer</h1>
+  <h1 class="text-3xl font-bold truncate mx-4">aiwolf-nlp-viewer</h1>
   <div class="ml-auto">
-    {#if socketStatus === "connected"}
-      <div class="inline-grid *:[grid-area:1/1]">
-        <div class="status status-success animate-ping"></div>
-        <div class="status status-success"></div>
-      </div>
-    {:else if socketStatus === "connecting"}
-      <div class="inline-grid *:[grid-area:1/1]">
-        <div class="status status-warning animate-ping"></div>
-        <div class="status status-warning"></div>
-      </div>
-    {:else}
-      <div class="inline-grid *:[grid-area:1/1]">
-        <div class="status status-error"></div>
-      </div>
-    {/if}
+    <div class="inline-grid *:[grid-area:1/1]">
+      <div
+        class="status"
+        class:status-success={status === "connected"}
+        class:status-warning={status === "connecting"}
+        class:status-error={status === "disconnected"}
+        class:animate-ping={status === "connected" || status === "connecting"}
+      ></div>
+      <div
+        class="status"
+        class:status-success={status === "connected"}
+        class:status-warning={status === "connecting"}
+        style:visibility={status === "connected" || status === "connecting"
+          ? "visible"
+          : "hidden"}
+      ></div>
+    </div>
   </div>
-  <label class="input ml-4 mr-2">
+  <label class="input mx-2">
     <iconify-icon class="h-[1em] opacity-50" inline icon="mdi:link"
     ></iconify-icon>
     <input
       type="text"
       class="grow"
       placeholder="WebSocket URL"
-      bind:value={socketUrl}
+      value={settings.url}
+      on:input={(e) => updateSettings("url", e.currentTarget.value)}
     />
   </label>
   <label class="input mx-2">
@@ -69,21 +81,22 @@
       type="text"
       class="grow"
       placeholder="Authorization Key"
-      bind:value={socketToken}
+      value={settings.token}
+      on:input={(e) => updateSettings("token", e.currentTarget.value)}
     />
     <span class="badge badge-neutral badge-xs">Optional</span>
   </label>
   <button
     class="btn btn-info mx-2"
     on:click={handleConnect}
-    disabled={socketStatus !== "disconnected"}>接続</button
+    disabled={status !== "disconnected"}>接続</button
   >
   <button
     class="btn btn-error mx-2"
     on:click={handleDisconnect}
-    disabled={socketStatus === "disconnected"}>切断</button
+    disabled={status === "disconnected"}>切断</button
   >
-  <label class="flex items-center cursor-pointer gap-2">
+  <label class="flex items-center cursor-pointer gap-2 mx-2">
     <iconify-icon inline icon="mdi:white-balance-sunny"></iconify-icon>
     <input type="checkbox" value="dark" class="toggle theme-controller" />
     <iconify-icon inline icon="mdi:moon-and-stars"></iconify-icon>

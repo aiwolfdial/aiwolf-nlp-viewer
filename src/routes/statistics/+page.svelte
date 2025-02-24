@@ -1,6 +1,7 @@
 <script lang="ts">
   import { base } from "$app/paths";
   import { onMount } from "svelte";
+  import "../../app.css";
 
   let stats: string[][] = [];
   let sortColumn: number | null = null;
@@ -45,59 +46,38 @@
 
 <svelte:head>
   <title>aiwolf-nlp-viewer</title>
-  <link rel="stylesheet" href="{base}/global.css" />
 </svelte:head>
 
-<div class="container">
-  {#if stats.length > 0}
-    <table class="table">
-      <thead>
-        <tr>
-          {#each stats[0] as header, i}
-            <th on:click={() => sortTable(i)} class="sortable">
-              {header}
-              {#if sortColumn === i}
-                {sortAscending ? "▲" : "▼"}
-              {/if}
-            </th>
-          {/each}
-        </tr>
-      </thead>
-      <tbody>
-        {#each stats.slice(1) as row}
-          <tr>
-            {#each row as cell}
-              <td>{cell}</td>
-            {/each}
-          </tr>
-        {/each}
-      </tbody>
-    </table>
-  {/if}
-</div>
-
-<style>
-  .container {
-    margin: 1rem;
-  }
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  .table th,
-  .table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  .table th {
-    background-color: #f2f2f2;
-  }
-  .sortable {
-    cursor: pointer;
-    user-select: none;
-  }
-  .sortable:hover {
-    background-color: #e6e6e6;
-  }
-</style>
+<main>
+  <div class="hero bg-base-200 min-h-screen">
+    <div class="hero-content text-center max-w-screen">
+      {#if stats.length > 0}
+        <div class="overflow-x-auto">
+          <table class="table table-zebra">
+            <thead>
+              <tr>
+                {#each stats[0] as header, i}
+                  <th on:click={() => sortTable(i)} class="sortable">
+                    {header}
+                    {#if sortColumn === i}
+                      {sortAscending ? "▲" : "▼"}
+                    {/if}
+                  </th>
+                {/each}
+              </tr>
+            </thead>
+            <tbody>
+              {#each stats.slice(1) as row}
+                <tr>
+                  {#each row as cell}
+                    <td>{cell}</td>
+                  {/each}
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+        </div>
+      {/if}
+    </div>
+  </div>
+</main>

@@ -1,9 +1,21 @@
 <script lang="ts">
   import { base } from "$app/paths";
+  import {
+    realtimeSettings,
+    type RealtimeSettings,
+  } from "$lib/stores/realtime-settings";
   import type { Packet } from "$lib/types/realtime";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
 
   let { packet }: { packet: Packet } = $props();
+
+  let settings = $state<RealtimeSettings>();
+
+  const unsubscribeSettings = realtimeSettings.subscribe((value) => {
+    settings = value;
+  });
+
+  onDestroy(unsubscribeSettings);
 
   let messageCanvas: HTMLCanvasElement;
   let arrowCanvas: HTMLCanvasElement;
@@ -90,8 +102,8 @@
     y1: number,
     x2: number,
     y2: number,
-    isCenter = false,
-    color = "#001fcc"
+    isCenter: boolean,
+    color: string
   ) {
     const arrowShape = isCenter ? [0, 0, 0, 0, 0, 15] : [0, 5, -20, 5, -20, 15];
 
@@ -130,6 +142,7 @@
 <div role="alert" class="alert">
   <p class="text-lg font-bold">
     {packet.day}日目 {packet.isDay ? "昼" : "夜"}
+    {settings?.token}
   </p>
 </div>
 

@@ -21,20 +21,20 @@
     isDivider: false,
   };
 
-  let socketEntries: Record<string, Packet[]>;
-  let socketStatus: string;
+  let entries: Record<string, Packet[]>;
+  let status: string;
 
   const unsubscribeEntries = realtimeSocketState.entries.subscribe((value) => {
-    socketEntries = value;
+    entries = value;
     if (selectedId === "" && Object.keys(value).length > 0) {
       selectedId = Object.keys(value)[0];
     }
-    selectedIdx = socketEntries[selectedId]?.length - 1;
+    selectedIdx = entries[selectedId]?.length - 1;
     applyPacket(selectedId, selectedIdx);
   });
 
   const unsubscribeStatus = realtimeSocketState.subscribe((value) => {
-    socketStatus = value.status;
+    status = value.status;
   });
 
   onDestroy(() => {
@@ -43,15 +43,15 @@
   });
 
   function applyPacket(selectedId: string, selectedIdx: number) {
-    if (!socketEntries[selectedId]) return;
+    if (!entries[selectedId]) return;
     if (selectedIdx < 0) return;
-    if (selectedIdx >= socketEntries[selectedId].length) return;
-    currentPacket = socketEntries[selectedId][selectedIdx];
+    if (selectedIdx >= entries[selectedId].length) return;
+    currentPacket = entries[selectedId][selectedIdx];
   }
 
   if (browser) {
     window.addEventListener("beforeunload", (e) => {
-      if (socketStatus === "connecting") {
+      if (status === "connecting") {
         e.preventDefault();
       }
     });
@@ -70,7 +70,7 @@
     </div>
     <div class="w-full md:w-64 max-md:h-32 flex flex-col bg-base-200">
       <ul class="list overflow-y-auto flex-1 px-1">
-        {#each socketEntries[selectedId] || [] as packet, idx}
+        {#each entries[selectedId] || [] as packet, idx}
           <button class="btn" on:click={() => applyPacket(selectedId, idx)}
             >{idx + 1}. {packet.summary}</button
           >
