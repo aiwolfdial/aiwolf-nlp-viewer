@@ -10,7 +10,7 @@
 
   let selectedId = "";
   let selectedIdx = -1;
-  let packet: Packet = {
+  let currentPacket: Packet = {
     id: "",
     idx: -1,
     day: 0,
@@ -46,7 +46,7 @@
     if (!socketEntries[selectedId]) return;
     if (selectedIdx < 0) return;
     if (selectedIdx >= socketEntries[selectedId].length) return;
-    packet = socketEntries[selectedId][selectedIdx];
+    currentPacket = socketEntries[selectedId][selectedIdx];
   }
 
   if (browser) {
@@ -66,18 +66,14 @@
   <Navbar />
   <div class="flex flex-1 overflow-hidden w-full flex-col md:flex-row">
     <div class="flex-auto p-8 bg-base-300">
-      <AgentsCanvas {packet}></AgentsCanvas>
+      <AgentsCanvas packet={currentPacket}></AgentsCanvas>
     </div>
-    <div class="w-full md:w-64 max-md:h-64 flex flex-col bg-base-200">
-      <ul class="list overflow-y-auto flex-1">
-        {#each socketEntries[selectedId] || [] as p, idx}
-          <li class="list-row">
-            <button
-              class="btn btn-wide"
-              on:click={() => applyPacket(selectedId, idx)}
-              >{idx + 1}. {p.summary}</button
-            >
-          </li>
+    <div class="w-full md:w-64 max-md:h-32 flex flex-col bg-base-200">
+      <ul class="list overflow-y-auto flex-1 px-1">
+        {#each socketEntries[selectedId] || [] as packet, idx}
+          <button class="btn" on:click={() => applyPacket(selectedId, idx)}
+            >{idx + 1}. {packet.summary}</button
+          >
         {/each}
       </ul>
     </div>

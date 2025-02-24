@@ -127,9 +127,11 @@
   }
 </script>
 
-<h3 class="text-lg font-bold">
-  {packet.day}日目 {packet.isDay ? "昼" : "夜"}
-</h3>
+<div role="alert" class="alert">
+  <p class="text-lg font-bold">
+    {packet.day}日目 {packet.isDay ? "昼" : "夜"}
+  </p>
+</div>
 
 <div class="circle" bind:this={container}>
   <canvas bind:this={messageCanvas} class="message-canvas"></canvas>
