@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import AgentsCanvas from "$lib/components/realtime/agents-canvas.svelte";
   import Navbar from "$lib/components/realtime/navbar.svelte";
   import type { Packet } from "$lib/types/realtime";
@@ -9,37 +10,51 @@
 
   let selectedId = "";
   let selectedIdx = -1;
-
-  let entries: Record<string, Packet[]> = {};
   let packet: Packet = {
     id: "",
-    idx: 0,
+    idx: -1,
     day: 0,
     isDay: true,
     agents: initializeAgents(5),
-    message: "",
-    summary: "",
+    message: "未接続",
+    summary: "未接続",
     isDivider: false,
   };
 
+  let socketEntries: Record<string, Packet[]>;
+  let socketStatus: string;
+
   const unsubscribeEntries = realtimeSocketState.entries.subscribe((value) => {
-    entries = value;
+    socketEntries = value;
     if (selectedId === "" && Object.keys(value).length > 0) {
       selectedId = Object.keys(value)[0];
     }
-    selectedIdx = entries[selectedId]?.length - 1;
+    selectedIdx = socketEntries[selectedId]?.length - 1;
     applyPacket(selectedId, selectedIdx);
+  });
+
+  const unsubscribeStatus = realtimeSocketState.subscribe((value) => {
+    socketStatus = value.status;
   });
 
   onDestroy(() => {
     unsubscribeEntries();
+    unsubscribeStatus();
   });
 
   function applyPacket(selectedId: string, selectedIdx: number) {
-    if (!entries[selectedId]) return;
+    if (!socketEntries[selectedId]) return;
     if (selectedIdx < 0) return;
-    if (selectedIdx >= entries[selectedId].length) return;
-    packet = entries[selectedId][selectedIdx];
+    if (selectedIdx >= socketEntries[selectedId].length) return;
+    packet = socketEntries[selectedId][selectedIdx];
+  }
+
+  if (browser) {
+    window.addEventListener("beforeunload", (e) => {
+      if (socketStatus === "connecting") {
+        e.preventDefault();
+      }
+    });
   }
 </script>
 
@@ -55,7 +70,7 @@
     </div>
     <div class="w-full md:w-64 max-md:h-64 flex flex-col bg-base-200">
       <ul class="list overflow-y-auto flex-1">
-        {#each entries[selectedId] || [] as p, idx}
+        {#each socketEntries[selectedId] || [] as p, idx}
           <li class="list-row">
             <button
               class="btn btn-wide"

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { base } from "$app/paths";
+  import { goto } from "$app/navigation";
   import "../app.css";
 </script>
 
@@ -15,12 +15,9 @@
         <div class="py-6">
           <button
             class="btn btn-primary mx-2"
-            on:click={() => (window.location.href = base + "/realtime")}
-            >リアルタイムログ</button
+            on:click={() => goto("/realtime")}>リアルタイムログ</button
           >
-          <button
-            class="btn btn-primary mx-2"
-            on:click={() => (window.location.href = base + "/archive")}
+          <button class="btn btn-primary mx-2" on:click={() => goto("/archive")}
             >アーカイブログ</button
           >
         </div>

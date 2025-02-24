@@ -141,7 +141,7 @@
     style:visibility={packet.message ? "visible" : "hidden"}
   >
     <div class="card-body">
-      <p class="text-lg text-pretty">
+      <p class="text-lg text-pretty text-center">
         {packet.message}
       </p>
     </div>
