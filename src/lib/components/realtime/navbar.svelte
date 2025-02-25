@@ -94,4 +94,9 @@
     on:click={handleDisconnect}
     disabled={status === "disconnected"}>切断</button
   >
+  <label class="flex items-center cursor-pointer gap-2 mx-2">
+    <iconify-icon inline icon="mdi:white-balance-sunny"></iconify-icon>
+    <input type="checkbox" value="dark" class="toggle theme-controller" />
+    <iconify-icon inline icon="mdi:moon-and-stars"></iconify-icon>
+  </label>
 </div>
