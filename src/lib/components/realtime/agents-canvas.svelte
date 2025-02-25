@@ -142,7 +142,6 @@
 <div role="alert" class="alert">
   <p class="text-lg font-bold">
     {packet.day}日目 {packet.isDay ? "昼" : "夜"}
-    {settings?.token}
   </p>
 </div>
 

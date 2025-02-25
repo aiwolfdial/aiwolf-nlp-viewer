@@ -3,6 +3,7 @@
   import DayColumn from "$lib/components/archive/day-column.svelte";
   import type { DayStatus } from "$lib/types/archive";
   import { processArchiveLog } from "$lib/utils/archive";
+  import "../../app.css";
 
   type LogFile = {
     name: string;
@@ -90,7 +91,6 @@
 
 <svelte:head>
   <title>aiwolf-nlp-viewer</title>
-  <!-- <link rel="stylesheet" href="{base}/global.css" /> -->
 </svelte:head>
 
 <main class="h-screen flex flex-col">
@@ -125,26 +125,28 @@
   </div>
 
   {#if logFiles.length > 0}
-    <div class="log-container">
-      <div class="tabs-container">
-        <div class="tabs">
-          {#each logFiles as file, i}
-            <div class="tab-wrapper" class:active={selectedTabIdx === i}>
-              <button class="tab-button" on:click={() => (selectedTabIdx = i)}>
-                {file.name}
-              </button>
-              <button
-                class="close-button"
-                on:click={() => closeTab(i)}
-                aria-label="Close tab"
-              >
-                ✕
-              </button>
-            </div>
-          {/each}
-        </div>
+    <div class="w-full h-full flex flex-col overflow-hidden">
+      <div class="w-full shrink-0 overflow-x-auto flex gap-4 m-4">
+        {#each logFiles as file, i}
+          <div class="w-fit shrink-0 flex gap-0">
+            <button
+              class="btn"
+              class:btn-active={selectedTabIdx === i}
+              on:click={() => (selectedTabIdx = i)}
+            >
+              {file.name}
+            </button>
+            <button
+              class="btn btn-error btn-square"
+              on:click={() => closeTab(i)}
+              aria-label="Close tab"
+            >
+              <iconify-icon icon="mdi:close"></iconify-icon>
+            </button>
+          </div>
+        {/each}
       </div>
-      <div class="days-container">
+      <div class="overflow-y-hidden flex grow overflox-x-auto gap-4 p-4">
         {#each Object.entries(logFiles[selectedTabIdx].data) as [day, dayLog]}
           <DayColumn dayIdx={day} dayStatus={dayLog} />
         {/each}
@@ -154,76 +156,6 @@
 </main>
 
 <style>
-  .log-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  .tabs-container {
-    flex-shrink: 0;
-    overflow-x: auto;
-    width: 100%;
-  }
-
-  .days-container {
-    display: flex;
-    gap: var(--spacing-lg);
-    padding: var(--spacing-lg);
-    flex-grow: 1;
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
-
-  .tabs {
-    display: flex;
-    gap: var(--spacing-sm);
-    margin-top: var(--spacing-sm);
-    margin-bottom: var(--spacing-sm);
-    min-width: 100%;
-    width: fit-content;
-  }
-
-  .tab-wrapper {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-  }
-
-  .tab-wrapper.active {
-    background: var(--color-hover);
-  }
-
-  .tab-button {
-    padding: var(--spacing-sm) var(--spacing-md);
-    background: none;
-    border: none;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-
-  .tab-wrapper.active .tab-button {
-    font-weight: bold;
-  }
-
-  .close-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px var(--spacing-sm);
-    font-size: 0.8em;
-    color: #666;
-    transition: background-color 0.2s;
-  }
-
-  .close-button:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-
   :root {
     --color-primary: #333;
     --color-secondary: #555;
