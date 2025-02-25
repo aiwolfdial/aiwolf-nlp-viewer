@@ -145,14 +145,20 @@
   </p>
 </div>
 
-<div class="circle" bind:this={container}>
-  <canvas bind:this={messageCanvas} class="message-canvas"></canvas>
-  <canvas bind:this={arrowCanvas} class="arrow-canvas"></canvas>
+<div
+  class="w-4/5 h-4/5 flex items-center justify-center relative rounded-1/2 box-border m-auto mt-16"
+  bind:this={container}
+>
+  <canvas bind:this={messageCanvas} class="w-full h-full absolute top-0 left-0"
+  ></canvas>
+  <canvas
+    bind:this={arrowCanvas}
+    class="w-full h-full absolute top-0 left-0 z-10"
+  ></canvas>
   <div
     bind:this={messageBox}
-    class="card bg-base-100 card-xs shadow-sm overflow-auto p-4 z-1"
-    style="width: 50%; max-height: 30%;"
-    style:visibility={packet.message ? "visible" : "hidden"}
+    class="w-1/2 h-fit max-h-1/3 card bg-base-100 card-xs shadow-sm overflow-auto p-4 z-1"
+    hidden={!packet.message}
   >
     <div class="card-body">
       <p class="text-lg text-pretty text-center">
@@ -160,10 +166,9 @@
       </p>
     </div>
   </div>
-
   {#each packet.agents as agent, i}
     <div
-      class="agent"
+      class="absolute origin-center text-center flex flex-col gap-2 items-center transform-angle"
       style="--angle: {i * (360 / packet.agents.length)}"
       id="agent-{agent.idx}"
     >
@@ -180,46 +185,21 @@
           />
         </div>
       </div>
-      <span class="badge mt-2">{agent.name}</span>
+      <span class="badge">{agent.name}</span>
     </div>
   {/each}
 </div>
+<footer class="footer footer-center text-base-content p-4">
+  <aside>
+    <p>イラスト : 石黒正数氏</p>
+  </aside>
+</footer>
 
 <style>
-  .circle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    width: 80%;
-    height: 80%;
-    margin: auto;
-    border-radius: 50%;
-    box-sizing: border-box;
-    margin-top: 5%;
-  }
-
-  .message-canvas,
-  .arrow-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .arrow-canvas {
-    z-index: 1;
-  }
-
-  .agent {
-    position: absolute;
+  .transform-angle {
     transform: translate(-50%, -50%);
-    transform-origin: center;
     left: calc(50% + cos(var(--angle) * 1deg) * 45%);
     top: calc(50% + sin(var(--angle) * 1deg) * 45%);
-    text-align: center;
-    width: 100px;
   }
 
   .ring-success {

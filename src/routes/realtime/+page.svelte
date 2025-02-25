@@ -65,7 +65,7 @@
 <main class="h-screen flex flex-col">
   <Navbar />
   <div class="flex flex-1 overflow-hidden w-full flex-col md:flex-row">
-    <div class="flex-auto p-8 bg-base-300">
+    <div class="flex-auto pt-8 px-8 bg-base-300">
       <AgentsCanvas packet={currentPacket}></AgentsCanvas>
     </div>
     <div class="w-full md:w-64 max-md:h-32 flex flex-col bg-base-200">

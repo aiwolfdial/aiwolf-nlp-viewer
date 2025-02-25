@@ -57,9 +57,7 @@
         class="status"
         class:status-success={status === "connected"}
         class:status-warning={status === "connecting"}
-        style:visibility={status === "connected" || status === "connecting"
-          ? "visible"
-          : "hidden"}
+        hidden={status === "disconnected"}
       ></div>
     </div>
   </div>
