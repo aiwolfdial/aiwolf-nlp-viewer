@@ -139,67 +139,74 @@
   }
 </script>
 
-<div role="alert" class="alert">
-  <p class="text-lg font-bold">
-    {packet.day}日目 {packet.isDay ? "昼" : "夜"}
-  </p>
-</div>
-
-<div
-  class="w-4/5 h-4/5 flex items-center justify-center relative rounded-1/2 box-border m-auto mt-16"
-  bind:this={container}
->
-  <canvas bind:this={messageCanvas} class="w-full h-full absolute top-0 left-0"
-  ></canvas>
-  <canvas
-    bind:this={arrowCanvas}
-    class="w-full h-full absolute top-0 left-0 z-10"
-  ></canvas>
-  <div
-    bind:this={messageBox}
-    class="w-1/2 h-fit max-h-1/3 card bg-base-100 card-xs shadow-sm overflow-auto p-4 z-1"
-    hidden={!packet.message}
-  >
-    <div class="card-body">
-      <p class="text-lg text-pretty text-center">
-        {packet.message}
-      </p>
-    </div>
+<div class="h-full flex flex-col">
+  <div role="alert" class="alert m-4">
+    <p class="text-lg font-bold">
+      {packet.day}日目 {packet.isDay ? "昼" : "夜"}
+    </p>
   </div>
-  {#each packet.agents as agent, i}
+  <div class="w-full flex-1 mt-8">
     <div
-      class="absolute origin-center text-center flex flex-col gap-2 items-center transform-angle"
-      style="--angle: {i * (360 / packet.agents.length)}"
-      id="agent-{agent.idx}"
+      class="h-full flex items-center justify-center relative rounded-1/2 box-border"
+      bind:this={container}
     >
-      <div class="avatar">
-        <div
-          class="w-24 rounded-full ring-offset-base-100 ring ring-offset-2"
-          class:ring-success={agent.isAlive}
-          class:ring-error={!agent.isAlive}
-          style:opacity={!agent.isAlive ? 0.25 : 1}
-        >
-          <img
-            src="{base}/images/male/{agent.idx.toString().padStart(2, '0')}.png"
-            alt={agent.name}
-          />
+      <canvas
+        bind:this={messageCanvas}
+        class="w-full h-full absolute top-0 left-0"
+      ></canvas>
+      <canvas
+        bind:this={arrowCanvas}
+        class="w-full h-full absolute top-0 left-0 z-10"
+      ></canvas>
+      <div
+        bind:this={messageBox}
+        class="w-1/2 h-fit max-h-1/3 card bg-base-100 card-xs shadow-sm overflow-auto p-4 z-1"
+        hidden={!packet.message}
+      >
+        <div class="card-body">
+          <p class="text-lg text-pretty text-center">
+            {packet.message}
+          </p>
         </div>
       </div>
-      <span class="badge">{agent.name}</span>
+      {#each packet.agents as agent, i}
+        <div
+          class="absolute origin-center text-center flex flex-col gap-2 items-center transform-angle"
+          style="--angle: {i * (360 / packet.agents.length)}"
+          id="agent-{agent.idx}"
+        >
+          <div class="avatar">
+            <div
+              class="w-24 rounded-full ring-offset-base-100 ring ring-offset-2"
+              class:ring-success={agent.isAlive}
+              class:ring-error={!agent.isAlive}
+              style:opacity={!agent.isAlive ? 0.25 : 1}
+            >
+              <img
+                src="{base}/images/male/{agent.idx
+                  .toString()
+                  .padStart(2, '0')}.png"
+                alt={agent.name}
+              />
+            </div>
+          </div>
+          <span class="badge">{agent.name}</span>
+        </div>
+      {/each}
     </div>
-  {/each}
+  </div>
+  <footer class="footer footer-center text-base-content p-2">
+    <aside>
+      <p>イラスト : 石黒正数氏</p>
+    </aside>
+  </footer>
 </div>
-<footer class="footer footer-center text-base-content p-4">
-  <aside>
-    <p>イラスト : 石黒正数氏</p>
-  </aside>
-</footer>
 
 <style>
   .transform-angle {
     transform: translate(-50%, -50%);
-    left: calc(50% + cos(var(--angle) * 1deg) * 45%);
-    top: calc(50% + sin(var(--angle) * 1deg) * 45%);
+    left: calc(50% + cos(var(--angle) * 1deg - 90deg) * 45%);
+    top: calc(50% + sin(var(--angle) * 1deg - 90deg) * 45%);
   }
 
   .ring-success {
