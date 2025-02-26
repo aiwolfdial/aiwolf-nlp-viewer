@@ -160,7 +160,7 @@
       ></canvas>
       <div
         bind:this={messageBox}
-        class="w-1/2 h-fit max-h-1/3 card bg-base-100 card-xs shadow-sm overflow-auto p-4 z-1"
+        class="w-1/2 h-fit max-h-1/3 card bg-base-100 card-xs shadow-sm overflow-auto p-4 z-20"
         hidden={!packet.message}
       >
         <div class="card-body">
