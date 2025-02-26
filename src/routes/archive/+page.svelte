@@ -38,25 +38,6 @@
     }
   }
 
-  function handleDrop(event: DragEvent) {
-    const files = Array.from(event.dataTransfer?.files || []);
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const data = (e.target?.result as string) ?? "";
-        logFiles = [
-          ...logFiles,
-          {
-            name: file.name,
-            data: processArchiveLog(data),
-          },
-        ];
-        selectedTabIdx = logFiles.length - 1;
-      };
-      reader.readAsText(file);
-    });
-  }
-
   function closeTab(idx: number) {
     logFiles = logFiles.filter((_, index) => index !== idx);
     if (selectedTabIdx >= logFiles.length) {
@@ -114,7 +95,6 @@
         <option value={log.path}>{log.name}</option>
       {/each}
     </select>
-
     <input
       class="file-input w-full max-w-xs mx-2"
       type="file"
@@ -122,10 +102,15 @@
       multiple
       on:change={handleFileSelect}
     />
+    <label class="flex items-center cursor-pointer gap-2 mx-2">
+      <iconify-icon inline icon="mdi:white-balance-sunny"></iconify-icon>
+      <input type="checkbox" value="dark" class="toggle theme-controller" />
+      <iconify-icon inline icon="mdi:moon-and-stars"></iconify-icon>
+    </label>
   </div>
 
-  {#if logFiles.length > 0}
-    <div class="w-full h-full flex flex-col overflow-hidden">
+  <div class="w-full h-full flex flex-col overflow-hidden bg-base-300">
+    {#if logFiles.length > 0}
       <div class="w-full shrink-0 overflow-x-auto flex gap-4 m-4">
         {#each logFiles as file, i}
           <div class="w-fit shrink-0 flex gap-0">
@@ -151,39 +136,6 @@
           <DayColumn dayIdx={day} dayStatus={dayLog} />
         {/each}
       </div>
-    </div>
-  {/if}
+    {/if}
+  </div>
 </main>
-
-<style>
-  :root {
-    --color-primary: #333;
-    --color-secondary: #555;
-    --color-border: #e0e0e0;
-    --color-background: #f4f4f4;
-    --color-hover: #f5f5f5;
-
-    --spacing-sm: 8px;
-    --spacing-md: 15px;
-    --spacing-lg: 20px;
-
-    --border-radius: 5px;
-    --border-radius-lg: 8px;
-
-    --border-width-agent: 3px;
-    --color-agent01: #942d40;
-    --color-agent02: #ec754f;
-    --color-agent03: #bcdaf2;
-    --color-agent04: #062d68;
-    --color-agent05: #ebdf83;
-
-    --highlight-width: 60%;
-    --highlight-color-agent01: #942d40bb;
-    --highlight-color-agent02: #ec754fbb;
-    --highlight-color-agent03: #bcdaf2bb;
-    --highlight-color-agent04: #062d68bb;
-    --highlight-color-agent05: #ebdf83bb;
-
-    --over-opacity: 0.4;
-  }
-</style>
