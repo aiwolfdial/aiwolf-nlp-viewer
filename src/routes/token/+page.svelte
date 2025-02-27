@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Buffer } from "buffer";
+  import { SignJWT } from "jose";
   import "../../app.css";
 
   let state = $state({
@@ -12,22 +12,34 @@
   function generateSecret() {
     let randomBytes = new Uint8Array(32);
     crypto.getRandomValues(randomBytes);
-    state.secret = Buffer.from(randomBytes).toString("base64");
+    state.secret = btoa(String.fromCharCode(...randomBytes));
   }
 
-  //   $effect(() => {
-  //     try {
-  //       if (state.secret && state.role) {
-  //         const payload =
-  //           state.role === "PLAYER"
-  //             ? { role: "PLAYER", team: state.team }
-  //             : { role: "RECEIVER" };
-  //         state.token = jwt.sign(payload, state.secret, { algorithm: "HS256" });
-  //       }
-  //     } catch (e) {
-  //       state.token = "Error generating token";
-  //     }
-  //   });
+  $effect(() => {
+    generateToken(state.secret, state.role, state.team);
+  });
+
+  async function generateToken(
+    secret: string,
+    role: "PLAYER" | "RECEIVER",
+    team: string
+  ) {
+    if (!secret || !role) {
+      state.token = "";
+      return;
+    }
+    const payload =
+      role === "PLAYER" ? { role: "PLAYER", team: team } : { role: "RECEIVER" };
+    try {
+      const secretKey = new TextEncoder().encode(secret);
+      const jwt = await new SignJWT(payload)
+        .setProtectedHeader({ alg: "HS256" })
+        .sign(secretKey);
+      state.token = jwt;
+    } catch (error) {
+      state.token = "エラーが発生しました";
+    }
+  }
 </script>
 
 <svelte:head>
@@ -37,43 +49,46 @@
 <main>
   <div class="hero bg-base-200 min-h-screen">
     <div class="hero-content text-center">
-      <div class="max-w-md">
-        <h2 class="text-xl font-bold p-2">トークン生成</h2>
-
-        <button class="btn btn-primary mb-4" on:click={generateSecret}>
-          Generate Secret Key
-        </button>
-
-        <label class="input mb-4 block">
-          <iconify-icon class="h-[1em] opacity-50" inline icon="mdi:key"
-          ></iconify-icon>
-          <input
-            type="text"
-            class="grow"
-            placeholder="Secret Key"
-            bind:value={state.secret}
-          />
-        </label>
-
-        <select class="select w-full mb-4" bind:value={state.role}>
-          <option value="PLAYER">Player</option>
-          <option value="RECEIVER">Receiver</option>
-        </select>
-
-        {#if state.role === "PLAYER"}
-          <input
-            type="text"
-            class="input w-full mb-4"
-            placeholder="Team"
-            bind:value={state.team}
-          />
-        {/if}
+      <div>
+        <div class="w-md card bg-base-100 shadow-xl p-4">
+          <h2 class="text-xl font-bold p-2">トークン生成</h2>
+          <button class="btn mb-4" onclick={generateSecret}>
+            秘密鍵を生成する
+          </button>
+          <label class="input w-full mb-4 block">
+            <iconify-icon class="h-[1em] opacity-50" inline icon="mdi:key"
+            ></iconify-icon>
+            <input
+              type="text"
+              class="grow"
+              placeholder="秘密鍵"
+              bind:value={state.secret}
+            />
+          </label>
+          <select class="select w-full mb-4" bind:value={state.role}>
+            <option value="PLAYER">エージェント</option>
+            <option value="RECEIVER">リアルタイムログ</option>
+          </select>
+          <label class="input w-full mb-4 block">
+            <iconify-icon
+              class="h-[1em] opacity-50"
+              inline
+              icon="mdi:form-textbox"
+            ></iconify-icon>
+            <input
+              type="text"
+              class="grow"
+              placeholder="チーム名"
+              bind:value={state.team}
+              disabled={state.role !== "PLAYER"}
+            />
+          </label>
+        </div>
 
         {#if state.token}
-          <div class="card bg-base-100 shadow-xl">
+          <div class="w-md card bg-base-100 shadow-xl p-2 mt-4">
             <div class="card-body">
-              <h3 class="card-title">Generated Token</h3>
-              <p class="break-all">{state.token}</p>
+              <pre class="whitespace-pre-wrap break-all">{state.token}</pre>
             </div>
           </div>
         {/if}
