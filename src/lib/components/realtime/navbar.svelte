@@ -22,6 +22,7 @@
     unsubscribeSettings();
     unsubscribeStatus();
   });
+
   function updateSettings(path: string, value: any) {
     realtimeSettings.update((current) => {
       const keys = path.split(".");

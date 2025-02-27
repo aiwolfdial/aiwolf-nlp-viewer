@@ -11,21 +11,50 @@
 <main>
   <div class="hero bg-base-200 min-h-screen">
     <div class="hero-content text-center">
-      <div class="container">
-        <h1 class="text-5xl font-bold">aiwolf-nlp-viewer</h1>
-        <div class="flex flex-row gap-4 py-4">
-          <button
-            class="btn btn-primary"
-            on:click={() => goto(base + "/realtime")}>リアルタイムログ</button
-          >
-          <button
-            class="btn btn-primary"
-            on:click={() => goto(base + "/archive")}>アーカイブログ</button
-          >
-          <button
-            class="btn btn-primary"
-            on:click={() => goto(base + "/statistics")}>統計情報</button
-          >
+      <div class="max-w-md">
+        <h1 class="text-5xl font-bold p-4">aiwolf-nlp-viewer</h1>
+        <div class="p-2">
+          <h2 class="text-xl font-bold">ログビューア</h2>
+          <div class="flex flex-row justify-center gap-4 p-2">
+            <button
+              class="btn btn-primary"
+              on:click={() => goto(base + "/realtime")}>リアルタイムログ</button
+            >
+            <button
+              class="btn btn-primary"
+              on:click={() => goto(base + "/archive")}>アーカイブログ</button
+            >
+          </div>
+        </div>
+        <div class="p-2">
+          <h2 class="text-xl font-bold">ソースコード</h2>
+          <div class="flex flex-row justify-center gap-4 p-2">
+            <button
+              class="btn btn-primary"
+              on:click={() =>
+                window.open("https://github.com/kano-lab/aiwolf-nlp-server")}
+              >対戦サーバ</button
+            >
+            <button
+              class="btn btn-primary"
+              on:click={() =>
+                window.open("https://github.com/kano-lab/aiwolf-nlp-agent")}
+              >エージェント</button
+            >
+          </div>
+        </div>
+        <div class="p-2">
+          <h2 class="text-xl font-bold">その他</h2>
+          <div class="flex flex-row justify-center gap-4 p-2">
+            <button
+              class="btn btn-primary"
+              on:click={() => goto(base + "/token")}>トークン生成</button
+            >
+            <button
+              class="btn btn-primary"
+              on:click={() => goto(base + "/statistics")}>統計情報</button
+            >
+          </div>
         </div>
       </div>
     </div>
