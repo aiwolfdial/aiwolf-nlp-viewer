@@ -1,5 +1,6 @@
 <script lang="ts">
   import { base } from "$app/paths";
+  import { IdxToText } from "$lib/constants/translate";
   import {
     realtimeSettings,
     type RealtimeSettings,
@@ -17,10 +18,10 @@
 
   onDestroy(unsubscribeSettings);
 
-  let messageCanvas: HTMLCanvasElement;
-  let arrowCanvas: HTMLCanvasElement;
   let container: HTMLDivElement;
-  let messageBox: HTMLDivElement;
+  let bubble: HTMLCanvasElement;
+  let arrow: HTMLCanvasElement;
+  let chat: HTMLDivElement;
 
   onMount(() => {
     window.addEventListener("resize", render);
@@ -34,20 +35,20 @@
   });
 
   function render() {
-    if (!messageCanvas || !arrowCanvas || !container) return;
+    if (!bubble || !arrow || !container) return;
 
-    const messageCtx = messageCanvas.getContext("2d");
-    const arrowCtx = arrowCanvas.getContext("2d");
+    const messageCtx = bubble.getContext("2d");
+    const arrowCtx = arrow.getContext("2d");
     if (!messageCtx || !arrowCtx) return;
 
     const rect = container.getBoundingClientRect();
-    [messageCanvas, arrowCanvas].forEach((canvas) => {
+    [bubble, arrow].forEach((canvas) => {
       canvas.width = rect.width;
       canvas.height = rect.height;
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.globalAlpha = canvas === messageCanvas ? 1 : 1;
+      ctx.globalAlpha = canvas === bubble ? 1 : 1;
       ctx.lineWidth = 2;
     });
 
@@ -59,7 +60,7 @@
       const from = document.getElementById(`agent-${idx}`);
       if (!(from instanceof HTMLElement)) return;
       const fromRect = from.getBoundingClientRect();
-      const canvasRect = arrowCanvas.getBoundingClientRect();
+      const canvasRect = arrow.getBoundingClientRect();
 
       const fromX = fromRect.left + fromRect.width / 2 - canvasRect.left;
       const fromY = fromRect.top + fromRect.height / 2 - canvasRect.top;
@@ -78,7 +79,7 @@
           toRect.left + toRect.width / 2 - canvasRect.left,
           toRect.top + toRect.height / 2 - canvasRect.top,
           false,
-          getComputedStyle(messageBox).getPropertyValue("background-color")
+          getComputedStyle(chat).getPropertyValue("background-color")
         );
       });
 
@@ -90,7 +91,7 @@
           fromX,
           fromY,
           true,
-          getComputedStyle(messageBox).getPropertyValue("background-color")
+          getComputedStyle(chat).getPropertyValue("background-color")
         );
       }
     });
@@ -150,16 +151,12 @@
       class="h-full flex items-center justify-center relative rounded-1/2 box-border"
       bind:this={container}
     >
-      <canvas
-        bind:this={messageCanvas}
-        class="w-full h-full absolute top-0 left-0"
+      <canvas bind:this={bubble} class="w-full h-full absolute top-0 left-0"
       ></canvas>
-      <canvas
-        bind:this={arrowCanvas}
-        class="w-full h-full absolute top-0 left-0 z-10"
+      <canvas bind:this={arrow} class="w-full h-full absolute top-0 left-0 z-10"
       ></canvas>
       <div
-        bind:this={messageBox}
+        bind:this={chat}
         class="w-1/2 h-fit max-h-1/3 card bg-base-100 card-xs shadow-sm overflow-auto p-4 z-20"
         hidden={!packet.message}
       >
@@ -171,7 +168,7 @@
       </div>
       {#each packet.agents as agent, i}
         <div
-          class="absolute origin-center text-center flex flex-col gap-2 items-center transform-angle"
+          class="absolute origin-center text-center flex flex-col items-center transform-angle"
           style="--angle: {i * (360 / packet.agents.length)}"
           id="agent-{agent.idx}"
         >
@@ -190,7 +187,15 @@
               />
             </div>
           </div>
-          <span class="badge">{agent.name}</span>
+          {#if settings?.display.agent.name}
+            <span class="badge mt-1">{IdxToText(agent.idx)}</span>
+          {/if}
+          {#if settings?.display.agent.team}
+            <span class="badge mt-1">{agent.team}</span>
+          {/if}
+          {#if settings?.display.agent.role}
+            <span class="badge mt-1">{agent.role}</span>
+          {/if}
         </div>
       {/each}
     </div>

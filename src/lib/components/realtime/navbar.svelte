@@ -22,15 +22,21 @@
     unsubscribeSettings();
     unsubscribeStatus();
   });
+  function updateSettings(path: string, value: any) {
+    realtimeSettings.update((current) => {
+      const keys = path.split(".");
+      const lastKey = keys.pop()!;
+      let target = current;
 
-  function updateSettings<K extends keyof typeof settings>(
-    key: K,
-    value: (typeof settings)[K]
-  ) {
-    realtimeSettings.update((current) => ({
-      ...current,
-      [key]: value,
-    }));
+      for (const key of keys) {
+        if (key) {
+          target = target[key as keyof typeof target] as any;
+        }
+      }
+
+      target[lastKey as keyof typeof target] = value;
+      return { ...current };
+    });
   }
 
   function handleConnect() {
@@ -40,6 +46,8 @@
   function handleDisconnect() {
     realtimeSocketState.disconnect();
   }
+
+  let modal: HTMLDialogElement;
 </script>
 
 <div class="navbar bg-base-100 flex justify-start">
@@ -68,8 +76,8 @@
       type="text"
       class="grow"
       placeholder="WebSocket URL"
-      value={settings.url}
-      on:input={(e) => updateSettings("url", e.currentTarget.value)}
+      value={settings.connection.url}
+      on:input={(e) => updateSettings("connection.url", e.currentTarget.value)}
     />
   </label>
   <label class="input mx-2">
@@ -79,8 +87,9 @@
       type="text"
       class="grow"
       placeholder="Authorization Key"
-      value={settings.token}
-      on:input={(e) => updateSettings("token", e.currentTarget.value)}
+      value={settings.connection.token}
+      on:input={(e) =>
+        updateSettings("connection.token", e.currentTarget.value)}
     />
     <span class="badge badge-neutral badge-xs">Optional</span>
   </label>
@@ -94,6 +103,51 @@
     on:click={handleDisconnect}
     disabled={status === "disconnected"}>切断</button
   >
+  <button class="btn mx-2" on:click={() => modal.showModal()}>設定</button>
+  <dialog class="modal" bind:this={modal}>
+    <div class="modal-box">
+      <div class="form-control">
+        <h3 class="text-lg font-bold my-2">表示設定</h3>
+        <h4 class="text-base font-bold my-2">エージェント</h4>
+        <div class="flex gap-4 my-2">
+          <label class="label cursor-pointer">
+            <span class="label-text">名前</span>
+            <input
+              type="checkbox"
+              checked={settings.display.agent.name}
+              on:change={(e) =>
+                updateSettings("display.agent.name", e.currentTarget.checked)}
+              class="checkbox"
+            />
+          </label>
+          <label class="label cursor-pointer">
+            <span class="label-text">チーム名</span>
+            <input
+              type="checkbox"
+              checked={settings.display.agent.team}
+              on:change={(e) =>
+                updateSettings("display.agent.team", e.currentTarget.checked)}
+              class="checkbox"
+            />
+          </label>
+          <label class="label cursor-pointer">
+            <span class="label-text">役職</span>
+            <input
+              type="checkbox"
+              checked={settings.display.agent.role}
+              on:change={(e) =>
+                updateSettings("display.agent.role", e.currentTarget.checked)}
+              class="checkbox"
+            />
+          </label>
+        </div>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
+
   <label class="flex items-center cursor-pointer gap-2 mx-2">
     <iconify-icon inline icon="mdi:white-balance-sunny"></iconify-icon>
     <input type="checkbox" value="dark" class="toggle theme-controller" />

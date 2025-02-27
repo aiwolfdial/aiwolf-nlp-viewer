@@ -11,6 +11,7 @@ export interface Packet {
 
 export interface Agent {
     idx: number;
+    team: string;
     name: string;
     role: string;
     isAlive: boolean;

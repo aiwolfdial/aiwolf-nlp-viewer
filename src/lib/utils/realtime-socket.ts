@@ -22,11 +22,10 @@ function createRealtimeSocketState() {
 
     function connect() {
         if (!settings) return;
-        const { url, token } = settings;
         update(state => ({ ...state, status: "connecting" }));
-        const socketUrl = new URL(url);
-        if (token) {
-            socketUrl.searchParams.set('token', token);
+        const socketUrl = new URL(settings.connection.url);
+        if (settings.connection.token) {
+            socketUrl.searchParams.set('token', settings.connection.token);
         }
         socket = new WebSocket(socketUrl);
         socket.onopen = () => {
