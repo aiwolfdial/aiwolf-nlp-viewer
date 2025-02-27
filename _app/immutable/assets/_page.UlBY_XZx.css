@@ -1,1 +1,0 @@
-.transform-angle.svelte-1lpd0gy{transform:translate(-50%,-50%);left:calc(50% + cos(var(--angle) * 1deg)*45%);top:calc(50% + sin(var(--angle) * 1deg)*45%)}.ring-success.svelte-1lpd0gy{--tw-ring-color: var(--color-success)}.ring-error.svelte-1lpd0gy{--tw-ring-color: var(--color-error)}
