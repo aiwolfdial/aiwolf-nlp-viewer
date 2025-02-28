@@ -1,0 +1,1 @@
+.transform-angle.svelte-1m75ffo{transform:translate(-50%,-50%);left:calc(50% + cos(var(--angle) * 1deg - 90deg)*40%);top:calc(50% + sin(var(--angle) * 1deg - 90deg)*40%)}.ring-success.svelte-1m75ffo{--tw-ring-color: var(--color-success)}.ring-error.svelte-1m75ffo{--tw-ring-color: var(--color-error)}
