@@ -111,7 +111,7 @@
       </select>
       <ul class="list overflow-y-auto flex-1">
         {#each $entries[$selectedId] || [] as packet, idx}
-          <button class="btn" on:click={() => selectedIdx.set(idx)}>
+          <button class="btn" onclick={() => selectedIdx.set(idx)}>
             {idx + 1}. {packet.summary}
           </button>
         {/each}

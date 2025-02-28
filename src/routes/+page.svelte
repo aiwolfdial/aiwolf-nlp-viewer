@@ -18,11 +18,11 @@
           <div class="flex flex-row justify-center gap-4 p-2">
             <button
               class="btn btn-primary"
-              on:click={() => goto(base + "/realtime")}>リアルタイムログ</button
+              onclick={() => goto(base + "/realtime")}>リアルタイムログ</button
             >
             <button
               class="btn btn-primary"
-              on:click={() => goto(base + "/archive")}>アーカイブログ</button
+              onclick={() => goto(base + "/archive")}>アーカイブログ</button
             >
           </div>
         </div>
@@ -31,13 +31,13 @@
           <div class="flex flex-row justify-center gap-4 p-2">
             <button
               class="btn btn-primary"
-              on:click={() =>
+              onclick={() =>
                 window.open("https://github.com/kano-lab/aiwolf-nlp-server")}
               >対戦サーバ</button
             >
             <button
               class="btn btn-primary"
-              on:click={() =>
+              onclick={() =>
                 window.open("https://github.com/kano-lab/aiwolf-nlp-agent")}
               >エージェント</button
             >
@@ -48,11 +48,11 @@
           <div class="flex flex-row justify-center gap-4 p-2">
             <button
               class="btn btn-primary"
-              on:click={() => goto(base + "/token")}>トークン生成</button
+              onclick={() => goto(base + "/token")}>トークン生成</button
             >
             <button
               class="btn btn-primary"
-              on:click={() => goto(base + "/statistics")}>統計情報</button
+              onclick={() => goto(base + "/statistics")}>統計情報</button
             >
           </div>
         </div>
