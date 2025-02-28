@@ -48,10 +48,17 @@
 
 <main>
   <div class="hero bg-base-200 min-h-screen">
-    <div class="hero-content text-center">
+    <div class="hero-content">
       <div>
         <div class="w-md card bg-base-100 shadow-xl p-4">
-          <h2 class="text-xl font-bold p-2">トークン生成</h2>
+          <h2 class="text-xl font-bold text-center p-2">トークン生成</h2>
+          <p class="text-sm p-2">
+            対戦サーバにおける接続認証を
+            有効にした場合に必要となるトークンを生成するものです。秘密鍵はブラウザ上で生成され、サーバには一切送信されません。
+          </p>
+          <p class="text-sm p-2">
+            エージェントとして接続する場合は、チーム名を入力してください。
+          </p>
           <button class="btn mb-4" onclick={generateSecret}>
             秘密鍵を生成する
           </button>

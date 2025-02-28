@@ -10,8 +10,10 @@
     data: Record<string, DayStatus>;
   };
 
-  let logFiles: LogFile[] = [];
-  let selectedTabIdx = 0;
+  let { logFiles, selectedTabIdx } = $state({
+    logFiles: [] as LogFile[],
+    selectedTabIdx: 0,
+  });
 
   function handleFileSelect(event: Event): void {
     const target = event.target as HTMLInputElement;
@@ -79,7 +81,7 @@
     <h1 class="text-3xl font-bold truncate mx-4">aiwolf-nlp-viewer</h1>
     <select
       class="select w-full max-w-xs ml-auto"
-      on:change={(e) => {
+      onchange={(e) => {
         const path = e.currentTarget.value;
         if (path) {
           const selected = assetLogs.find((log) => log.path === path);
@@ -100,7 +102,7 @@
       type="file"
       accept=".log"
       multiple
-      on:change={handleFileSelect}
+      onchange={handleFileSelect}
     />
     <label class="flex items-center cursor-pointer gap-2 mx-2">
       <iconify-icon inline icon="mdi:white-balance-sunny"></iconify-icon>
@@ -117,13 +119,13 @@
             <button
               class="btn"
               class:btn-active={selectedTabIdx === i}
-              on:click={() => (selectedTabIdx = i)}
+              onclick={() => (selectedTabIdx = i)}
             >
               {file.name}
             </button>
             <button
               class="btn btn-error btn-square"
-              on:click={() => closeTab(i)}
+              onclick={() => closeTab(i)}
               aria-label="Close tab"
             >
               <iconify-icon icon="mdi:close"></iconify-icon>

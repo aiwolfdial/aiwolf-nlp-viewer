@@ -1,5 +1,6 @@
-import { realtimeSettings, type RealtimeSettings } from '$lib/stores/realtime-settings';
+import { realtimeSettings } from '$lib/stores/realtime-settings';
 import type { Packet } from '$lib/types/realtime';
+import type { RealtimeSettings } from '$lib/types/realtime-settings';
 import { writable } from 'svelte/store';
 
 export interface RealtimeSocket {

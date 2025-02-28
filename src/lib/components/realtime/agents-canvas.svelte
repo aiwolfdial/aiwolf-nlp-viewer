@@ -1,11 +1,9 @@
 <script lang="ts">
   import { base } from "$app/paths";
   import { IdxToText } from "$lib/constants/translate";
-  import {
-    realtimeSettings,
-    type RealtimeSettings,
-  } from "$lib/stores/realtime-settings";
+  import { realtimeSettings } from "$lib/stores/realtime-settings";
   import type { Packet } from "$lib/types/realtime";
+  import type { RealtimeSettings } from "$lib/types/realtime-settings";
   import { onDestroy, onMount } from "svelte";
 
   let { packet }: { packet: Packet } = $props();

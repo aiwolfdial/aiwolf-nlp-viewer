@@ -9,8 +9,7 @@
   import AgentName from "./agent-name.svelte";
   import FormatText from "./format-text.svelte";
 
-  export let dayIdx: string;
-  export let dayStatus: DayStatus;
+  let { dayIdx = "", dayStatus = {} as DayStatus } = $props();
 </script>
 
 <div class="flex-[0_0_400px] rounded-lg bg-base-200">

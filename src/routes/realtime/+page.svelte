@@ -5,12 +5,14 @@
   import type { Packet } from "$lib/types/realtime";
   import { initializeAgents } from "$lib/utils/realtime";
   import { realtimeSocketState } from "$lib/utils/realtime-socket";
-  import { onDestroy } from "svelte";
+  import { onDestroy, onMount } from "svelte";
+  import { derived, writable } from "svelte/store";
   import "../../app.css";
 
-  let selectedId = "";
-  let selectedIdx = -1;
-  let currentPacket: Packet = {
+  const selectedId = writable("");
+  const selectedIdx = writable(0);
+
+  const currentPacket = writable<Packet>({
     id: "",
     idx: -1,
     day: 0,
@@ -19,43 +21,76 @@
     message: "未接続",
     summary: "未接続",
     isDivider: false,
-  };
-
-  let entries: Record<string, Packet[]>;
-  let status: string;
-
-  const unsubscribeEntries = realtimeSocketState.entries.subscribe((value) => {
-    entries = value;
-    if (selectedId === "" && Object.keys(value).length > 0) {
-      selectedId = Object.keys(value)[0];
-    }
-    selectedIdx = entries[selectedId]?.length - 1;
-    applyPacket(selectedId, selectedIdx);
   });
 
-  const unsubscribeStatus = realtimeSocketState.subscribe((value) => {
-    status = value.status;
-  });
+  const entries = writable<Record<string, Packet[]>>({});
+  const status = writable("");
 
-  onDestroy(() => {
-    unsubscribeEntries();
-    unsubscribeStatus();
-  });
-
-  function applyPacket(selectedId: string, selectedIdx: number) {
-    if (!entries[selectedId]) return;
-    if (selectedIdx < 0) return;
-    if (selectedIdx >= entries[selectedId].length) return;
-    currentPacket = entries[selectedId][selectedIdx];
-  }
-
-  if (browser) {
-    window.addEventListener("beforeunload", (e) => {
-      if (status === "connecting") {
-        e.preventDefault();
+  onMount(() => {
+    const unsubscribeEntries = realtimeSocketState.entries.subscribe(
+      (value) => {
+        entries.set(value);
+        selectedId.update((id) => {
+          if (!id) {
+            const firstKey = Object.keys(value)[0] || "";
+            return firstKey;
+          }
+          return id;
+        });
       }
+    );
+
+    const unsubscribeStatus = realtimeSocketState.subscribe((value) => {
+      status.set(value.status);
     });
-  }
+
+    selectedId.subscribe((id) => {
+      entries.update((e) => {
+        if (id && e[id]?.length > 0) {
+          selectedIdx.set(e[id].length - 1);
+        }
+        return e;
+      });
+    });
+
+    derived(
+      [selectedId, selectedIdx, entries],
+      ([$selectedId, $selectedIdx, $entries]) => {
+        if (
+          $entries[$selectedId] &&
+          $selectedIdx >= 0 &&
+          $selectedIdx < $entries[$selectedId].length
+        ) {
+          return $entries[$selectedId][$selectedIdx];
+        }
+        return {
+          id: "",
+          idx: -1,
+          day: 0,
+          isDay: true,
+          agents: initializeAgents(5),
+          message: "未接続",
+          summary: "未接続",
+          isDivider: false,
+        };
+      }
+    ).subscribe((packet) => {
+      currentPacket.set(packet);
+    });
+
+    onDestroy(() => {
+      unsubscribeEntries();
+      unsubscribeStatus();
+    });
+
+    if (browser) {
+      window.addEventListener("beforeunload", (e) => {
+        if ($status === "connecting") {
+          e.preventDefault();
+        }
+      });
+    }
+  });
 </script>
 
 <svelte:head>
@@ -66,14 +101,19 @@
   <Navbar />
   <div class="flex flex-1 overflow-hidden w-full flex-col md:flex-row">
     <div class="flex-auto bg-base-300">
-      <AgentsCanvas packet={currentPacket}></AgentsCanvas>
+      <AgentsCanvas packet={$currentPacket} />
     </div>
-    <div class="w-full md:w-64 max-md:h-32 flex flex-col bg-base-200">
-      <ul class="list overflow-y-auto flex-1 px-1">
-        {#each entries[selectedId] || [] as packet, idx}
-          <button class="btn" on:click={() => applyPacket(selectedId, idx)}
-            >{idx + 1}. {packet.summary}</button
-          >
+    <div class="w-full md:w-64 max-md:h-32 flex flex-col bg-base-200 px-2">
+      <select class="select" bind:value={$selectedId}>
+        {#each Object.keys($entries) as id}
+          <option value={id}>{id}</option>
+        {/each}
+      </select>
+      <ul class="list overflow-y-auto flex-1">
+        {#each $entries[$selectedId] || [] as packet, idx}
+          <button class="btn" on:click={() => selectedIdx.set(idx)}>
+            {idx + 1}. {packet.summary}
+          </button>
         {/each}
       </ul>
     </div>

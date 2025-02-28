@@ -1,19 +1,7 @@
 import { browser } from "$app/environment";
+import { Convert, type RealtimeSettings } from "$lib/types/realtime-settings";
 import { writable } from "svelte/store";
 
-export interface RealtimeSettings {
-    connection: {
-        url: string;
-        token: string;
-    };
-    display: {
-        agent: {
-            name: boolean;
-            team: boolean;
-            role: boolean;
-        }
-    };
-}
 
 const defaultRealtimeSettings: RealtimeSettings = {
     connection: {
@@ -34,18 +22,19 @@ function load(): RealtimeSettings {
     const value = localStorage.getItem('realtime-settings');
     if (value) {
         try {
-            return JSON.parse(value);
+            return Convert.fromJson(value);
         } catch (e) {
             console.error(e);
         }
     }
+    localStorage.setItem('realtime-settings', Convert.toJson(defaultRealtimeSettings));
     return defaultRealtimeSettings;
 }
 
 export const realtimeSettings = writable<RealtimeSettings>(load());
 
-realtimeSettings.subscribe(settings => {
+realtimeSettings.subscribe(_ => {
     if (browser) {
-        localStorage.setItem('realtime-settings', JSON.stringify(settings));
+        localStorage.setItem('realtime-settings', Convert.toJson(defaultRealtimeSettings));
     }
 });

@@ -2,9 +2,9 @@
   import { ReplaceWords } from "$lib/constants/translate";
   import AgentName from "./agent-name.svelte";
 
-  export let text: string;
+  let { text = "" } = $props();
 
-  export function formatTalkText(text: string): {
+  function formatTalkText(text: string): {
     parts: Array<{
       text: string;
       agentIdx: number | null;

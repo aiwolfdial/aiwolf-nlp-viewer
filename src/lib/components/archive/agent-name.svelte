@@ -1,8 +1,7 @@
 <script lang="ts">
   import { IdxToText } from "$lib/constants/translate";
 
-  export let agentIdx: string;
-  export let highlight = false;
+  let { agentIdx = "", highlight = false } = $props();
 </script>
 
 <strong class={highlight ? "agent" + agentIdx.padStart(2, "0") : ""}
