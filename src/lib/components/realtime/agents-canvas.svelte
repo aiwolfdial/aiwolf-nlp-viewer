@@ -183,7 +183,7 @@
           style="--angle: {i * (360 / packet.agents.length)}"
           id="agent-{agent.idx}"
         >
-          <div class="avatar" class:indicator={settings?.display.largeScale}>
+          <div class="avatar rounded-full bg-base-300">
             <div
               class={settings?.display.largeScale
                 ? "relative w-48 rounded-full ring-offset-base-100 ring ring-offset-2"

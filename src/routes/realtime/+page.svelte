@@ -110,8 +110,18 @@
         {/each}
       </select>
       <ul class="list overflow-y-auto flex-1">
-        {#each $entries[$selectedId] || [] as packet, idx}
-          <button class="btn" onclick={() => selectedIdx.set(idx)}>
+        {#each $entries[$selectedId] || [] as packet, idx (idx)}
+          {#if idx > 0 && (packet.day !== $entries[$selectedId][idx - 1].day || packet.isDay !== $entries[$selectedId][idx - 1].isDay)}
+            <div class="divider">
+              {packet.day}日目 {packet.isDay ? "昼" : "夜"}
+            </div>
+          {/if}
+          {#if idx == 0}
+            <div class="divider">
+              {packet.day}日目 {packet.isDay ? "昼" : "夜"}
+            </div>
+          {/if}
+          <button class="btn" on:click={() => selectedIdx.set(idx)}>
             {idx + 1}. {packet.summary}
           </button>
         {/each}
