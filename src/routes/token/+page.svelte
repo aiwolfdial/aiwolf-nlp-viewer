@@ -28,6 +28,10 @@
       state.token = "";
       return;
     }
+    if (role === "PLAYER" && !team) {
+      state.token = "";
+      return;
+    }
     const payload =
       role === "PLAYER" ? { role: "PLAYER", team: team } : { role: "RECEIVER" };
     try {
@@ -49,20 +53,19 @@
 <main>
   <div class="hero bg-base-200 min-h-screen">
     <div class="hero-content">
-      <div>
-        <div class="w-md card bg-base-100 shadow-xl p-4">
-          <h2 class="text-xl font-bold text-center p-2">トークン生成</h2>
-          <p class="text-sm p-2">
-            対戦サーバにおける接続認証を
-            有効にした場合に必要となるトークンを生成するものです。秘密鍵はブラウザ上で生成され、サーバには一切送信されません。
+      <div class="w-md card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="text-xl font-bold text-center">トークン生成</h2>
+          <p class="text-sm">
+            対戦サーバにおける接続認証を有効にした場合に必要となるトークンを生成します。秘密鍵はブラウザ上で生成され、サーバには一切送信されません。
           </p>
-          <p class="text-sm p-2">
+          <p class="text-sm">
             エージェントとして接続する場合は、チーム名を入力してください。
           </p>
-          <button class="btn mb-4" onclick={generateSecret}>
+          <button class="btn mt-2" onclick={generateSecret}>
             秘密鍵を生成する
           </button>
-          <label class="input w-full mb-4 block">
+          <label class="input w-full mt-2 block">
             <iconify-icon class="h-[1em] opacity-50" inline icon="mdi:key"
             ></iconify-icon>
             <input
@@ -72,11 +75,11 @@
               bind:value={state.secret}
             />
           </label>
-          <select class="select w-full mb-4" bind:value={state.role}>
+          <select class="select w-full mt-2" bind:value={state.role}>
             <option value="PLAYER">エージェント</option>
             <option value="RECEIVER">リアルタイムログ</option>
           </select>
-          <label class="input w-full mb-4 block">
+          <label class="input w-full mt-2 block">
             <iconify-icon
               class="h-[1em] opacity-50"
               inline
@@ -91,15 +94,20 @@
             />
           </label>
         </div>
-
-        {#if state.token}
-          <div class="w-md card bg-base-100 shadow-xl p-2 mt-4">
-            <div class="card-body">
-              <pre class="whitespace-pre-wrap break-all">{state.token}</pre>
-            </div>
-          </div>
-        {/if}
       </div>
+      {#if state.token}
+        <div class="w-md card bg-base-100 shadow-xl mt-4">
+          <div class="card-body">
+            <pre class="whitespace-pre-wrap break-all">{state.token}</pre>
+            <button
+              class="btn"
+              onclick={() => navigator.clipboard.writeText(state.token)}
+            >
+              トークンをコピーする
+            </button>
+          </div>
+        </div>
+      {/if}
     </div>
   </div>
 </main>
