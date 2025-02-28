@@ -12,6 +12,7 @@ export interface Connection {
 
 export interface Display {
     agent: Agent;
+    largeScale: boolean;
 }
 
 export interface Agent {
@@ -193,6 +194,7 @@ const typeMap: any = {
     ], false),
     "Display": o([
         { json: "agent", js: "agent", typ: r("Agent") },
+        { json: "largeScale", js: "largeScale", typ: true },
     ], false),
     "Agent": o([
         { json: "name", js: "name", typ: true },

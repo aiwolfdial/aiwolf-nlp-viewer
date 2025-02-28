@@ -139,27 +139,40 @@
 </script>
 
 <div class="h-full flex flex-col">
-  <div role="alert" class="alert m-4">
-    <p class="text-lg font-bold">
-      {packet.day}日目 {packet.isDay ? "昼" : "夜"}
-    </p>
-  </div>
+  {#if !settings?.display.largeScale}
+    <div role="alert" class="alert m-4">
+      <p class="text-lg font-bold">
+        {packet.day}日目 {packet.isDay ? "昼" : "夜"}
+      </p>
+    </div>
+  {/if}
   <div class="w-full flex-1 mt-8">
     <div
       class="h-full flex items-center justify-center relative rounded-1/2 box-border"
       bind:this={container}
     >
+      {#if settings?.display.largeScale}
+        <p
+          class="text-9xl font-black opacity-50 absolute top-0 left-0 -mt-4 ml-8"
+        >
+          {packet.day}日目 {packet.isDay ? "昼" : "夜"}
+        </p>
+      {/if}
       <canvas bind:this={bubble} class="w-full h-full absolute top-0 left-0"
       ></canvas>
       <canvas bind:this={arrow} class="w-full h-full absolute top-0 left-0 z-10"
       ></canvas>
       <div
         bind:this={chat}
-        class="w-1/2 h-fit max-h-1/3 card bg-base-100 card-xs shadow-sm overflow-auto p-4 z-20"
+        class="w-1/2 h-fit max-h-1/3 card bg-base-100 card-md shadow-md overflow-auto z-20"
         hidden={!packet.message}
       >
         <div class="card-body">
-          <p class="text-lg text-pretty text-center">
+          <p
+            class={settings?.display.largeScale
+              ? "text-3xl font-bold text-pretty text-center"
+              : "text-lg text-pretty text-center"}
+          >
             {packet.message}
           </p>
         </div>
@@ -170,9 +183,11 @@
           style="--angle: {i * (360 / packet.agents.length)}"
           id="agent-{agent.idx}"
         >
-          <div class="avatar">
+          <div class="avatar" class:indicator={settings?.display.largeScale}>
             <div
-              class="w-24 rounded-full ring-offset-base-100 ring ring-offset-2"
+              class={settings?.display.largeScale
+                ? "relative w-48 rounded-full ring-offset-base-100 ring ring-offset-2"
+                : "relative w-24 rounded-full ring-offset-base-100 ring ring-offset-2"}
               class:ring-success={agent.isAlive}
               class:ring-error={!agent.isAlive}
               style:opacity={!agent.isAlive ? 0.25 : 1}
@@ -182,17 +197,33 @@
                   .toString()
                   .padStart(2, '0')}.png"
                 alt={agent.name}
+                class="w-full h-full"
               />
+              {#if settings?.display.largeScale && settings?.display.agent.name}
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="text-9xl font-bold opacity-75">
+                    {agent.idx}
+                  </span>
+                </div>
+              {/if}
             </div>
           </div>
-          {#if settings?.display.agent.name}
+          {#if !settings?.display.largeScale && settings?.display.agent.name}
             <span class="badge mt-1">{IdxToText(agent.idx)}</span>
           {/if}
           {#if settings?.display.agent.team}
-            <span class="badge mt-1">{agent.team}</span>
+            {#if settings?.display.largeScale}
+              <span class="text-2xl mt-2">{agent.team}</span>
+            {:else}
+              <span class="badge mt-1">{agent.team}</span>
+            {/if}
           {/if}
           {#if settings?.display.agent.role}
-            <span class="badge mt-1">{agent.role}</span>
+            {#if settings?.display.largeScale}
+              <span class="text-2xl mt-2">{agent.role}</span>
+            {:else}
+              <span class="badge mt-1">{agent.role}</span>
+            {/if}
           {/if}
         </div>
       {/each}
@@ -208,8 +239,8 @@
 <style>
   .transform-angle {
     transform: translate(-50%, -50%);
-    left: calc(50% + cos(var(--angle) * 1deg - 90deg) * 45%);
-    top: calc(50% + sin(var(--angle) * 1deg - 90deg) * 45%);
+    left: calc(50% + cos(var(--angle) * 1deg - 90deg) * 40%);
+    top: calc(50% + sin(var(--angle) * 1deg - 90deg) * 40%);
   }
 
   .ring-success {

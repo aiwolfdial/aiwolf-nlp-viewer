@@ -13,7 +13,8 @@ const defaultRealtimeSettings: RealtimeSettings = {
             name: true,
             team: true,
             role: true
-        }
+        },
+        largeScale: false,
     }
 }
 
