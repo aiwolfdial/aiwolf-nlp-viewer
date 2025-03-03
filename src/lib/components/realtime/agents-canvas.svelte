@@ -237,7 +237,8 @@
       </div>
       {#each packet.agents as agent, i}
         <div
-          class="absolute origin-center text-center flex flex-col items-center transform-angle"
+          class="absolute origin-center text-center flex flex-col items-center transform-angle rounded-xl p-2"
+          class:bg-base-100={agent.idx === focusIdx}
           style="--angle: {i * (360 / packet.agents.length)}"
           id="agent-{agent.idx}"
         >
@@ -280,20 +281,20 @@
             </div>
           </div>
           {#if !settings?.display.largeScale && settings?.display.canvas.name}
-            <span class="badge mt-1">{IdxToName(agent.idx)}</span>
+            <span class="mt-1">{IdxToName(agent.idx)}</span>
           {/if}
           {#if settings?.display.canvas.team}
             {#if settings?.display.largeScale}
               <span class="text-2xl mt-2">{agent.team}</span>
             {:else}
-              <span class="badge mt-1">{agent.team}</span>
+              <span class="mt-1">{agent.team}</span>
             {/if}
           {/if}
           {#if settings?.display.canvas.role && (agent.idx === focusIdx || focusIdx === undefined)}
             {#if settings?.display.largeScale}
               <span class="text-2xl mt-2">{agent.role}</span>
             {:else}
-              <span class="badge mt-1">{agent.role}</span>
+              <span class="mt-1">{agent.role}</span>
             {/if}
           {/if}
         </div>
