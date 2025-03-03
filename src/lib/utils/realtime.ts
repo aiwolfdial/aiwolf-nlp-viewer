@@ -14,8 +14,8 @@ export function initializeAgents(length: number): Agent[] {
     }));
 }
 
-export function IdxToCustomName(agent: SettingsAgent | undefined, packet: Packet, idx: number) {
-    if (idx === -1) return "該当なし";
+export function IdxToCustomName(agent: SettingsAgent | undefined, packet: Packet, idx: number | undefined) {
+    if (idx === undefined) return "該当なし";
     let values = [];
     if (agent?.name) {
         values.push(IdxToName(idx));

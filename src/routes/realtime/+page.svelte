@@ -14,17 +14,17 @@
   const selectedId = writable("");
   const selectedIdx = writable(0);
 
-  const defaultPacket = {
+  const defaultPacket: Packet = {
     id: "",
     idx: -1,
     day: 0,
     isDay: true,
     agents: initializeAgents(5),
     event: "未接続",
-    message: "未接続",
-    fromIdx: -1,
-    toIdx: -1,
-    bubbleIdx: -1,
+    message: undefined,
+    fromIdx: undefined,
+    toIdx: undefined,
+    bubbleIdx: undefined,
   };
 
   const currentPacket = writable<Packet>(defaultPacket);
@@ -107,14 +107,14 @@
     <div class="flex-auto bg-base-300">
       <AgentsCanvas packet={$currentPacket} />
     </div>
-    <div class="w-full md:w-64 max-md:h-32 flex flex-col bg-base-200 px-2">
-      <select class="select" bind:value={$selectedId}>
+    <div class="w-full md:w-64 max-md:h-32 flex flex-col bg-base-200 p-2">
+      <select class="w-full select" bind:value={$selectedId}>
         {#each Object.keys($entries) as id}
           <option value={id}>{id}</option>
         {/each}
       </select>
-      <ul class="list overflow-y-auto flex-1 mb-2">
-        {#each $entries[$selectedId] || [] as packet, idx (idx)}
+      <ul class="list overflow-y-auto flex-1 my-2 px-2">
+        {#each $entries[$selectedId] || [] as packet, idx}
           {#if idx > 0 && (packet.day !== $entries[$selectedId][idx - 1].day || packet.isDay !== $entries[$selectedId][idx - 1].isDay)}
             <div class="divider">
               {packet.day}日目 {packet.isDay ? "昼" : "夜"}
@@ -146,7 +146,6 @@
                 </p>
                 <iconify-icon inline icon="mdi:arrow-u-down-right-bold"
                 ></iconify-icon>
-                <p></p>
               {:else}
                 <p class="overflow-hidden text-ellipsis whitespace-nowrap">
                   {IdxToCustomName(
@@ -154,14 +153,13 @@
                     packet,
                     packet.bubbleIdx
                   ) +
-                    "「" +
+                    "<" +
                     packet.message}
                 </p>
-                <p>」</p>
               {/if}
             {:else}
               <p class="overflow-hidden text-ellipsis whitespace-nowrap">
-                {#if packet.event === "投票"}
+                {#if packet.event === "投票" || packet.event === "占い"}
                   {IdxToCustomName(
                     settings?.display.text,
                     packet,

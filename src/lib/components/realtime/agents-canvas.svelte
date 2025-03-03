@@ -37,15 +37,15 @@
         }
         return `${IdxToCustomName(settings?.display.bubble, packet, packet.fromIdx)} が投票しました`;
       case "追放":
-        if (packet.toIdx === -1) {
+        if (packet.toIdx === undefined) {
           return "誰も追放されませんでした";
         }
         return `${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} を追放しました`;
       case "襲撃":
-        if (packet.toIdx === -1) {
+        if (packet.toIdx === undefined) {
           return "誰も襲撃されませんでした";
         }
-        if (packet.fromIdx === -2) {
+        if (packet.fromIdx === -1) {
           return `${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} が襲撃されましたが、護衛されました`;
         }
         return `${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} が襲撃されました`;
@@ -106,7 +106,7 @@
     if (!messageCtx || !arrowCtx) return;
     const canvasRect = arrow.getBoundingClientRect();
 
-    if (packet.fromIdx !== -1 && packet.toIdx !== -1) {
+    if (packet.fromIdx !== undefined && packet.toIdx !== undefined) {
       const from = document.getElementById(`agent-${packet.fromIdx}`);
       if (!(from instanceof HTMLElement)) return;
       const fromRect = from.getBoundingClientRect();
@@ -129,7 +129,7 @@
       );
     }
 
-    if (packet.bubbleIdx !== -1) {
+    if (packet.bubbleIdx !== undefined) {
       const bubble = document.getElementById(`agent-${packet.bubbleIdx}`);
       if (!(bubble instanceof HTMLElement)) return;
       const bubbleRect = bubble.getBoundingClientRect();
@@ -158,7 +158,7 @@
     isCenter: boolean,
     color: string
   ) {
-    const arrowShape = isCenter ? [0, 0, 0, 0, 0, 15] : [0, 5, -20, 5, -20, 15];
+    const arrowShape = isCenter ? [0, 0, 0, 0, 0, 30] : [0, 5, -20, 5, -20, 15];
 
     ctx.strokeStyle = ctx.fillStyle = color;
 
@@ -281,20 +281,20 @@
             </div>
           </div>
           {#if !settings?.display.largeScale && settings?.display.canvas.name}
-            <span class="mt-1">{IdxToName(agent.idx)}</span>
+            <span>{IdxToName(agent.idx)}</span>
           {/if}
           {#if settings?.display.canvas.team}
             {#if settings?.display.largeScale}
               <span class="text-2xl mt-2">{agent.team}</span>
             {:else}
-              <span class="mt-1">{agent.team}</span>
+              <span>{agent.team}</span>
             {/if}
           {/if}
           {#if settings?.display.canvas.role && (agent.idx === focusIdx || focusIdx === undefined)}
             {#if settings?.display.largeScale}
               <span class="text-2xl mt-2">{agent.role}</span>
             {:else}
-              <span class="mt-1">{agent.role}</span>
+              <span>{agent.role}</span>
             {/if}
           {/if}
         </div>

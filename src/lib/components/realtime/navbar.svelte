@@ -49,8 +49,8 @@
   let modal: HTMLDialogElement;
 </script>
 
-<div class="navbar bg-base-100 flex justify-start">
-  <h1 class="text-3xl font-bold truncate mx-4">aiwolf-nlp-viewer</h1>
+<div class="navbar bg-base-100 flex justify-start gap-4 overflow-x-auto">
+  <h1 class="text-3xl font-bold text-nowrap ml-2">aiwolf-nlp-viewer</h1>
   <div class="ml-auto">
     <div class="inline-grid *:[grid-area:1/1]">
       {#if status === "connected"}<div
@@ -66,7 +66,7 @@
       {/if}
     </div>
   </div>
-  <label class="input mx-2">
+  <label class="input min-w-3xs w-3xs">
     <iconify-icon class="h-[1em] opacity-50" inline icon="mdi:link"
     ></iconify-icon>
     <input
@@ -77,7 +77,7 @@
       oninput={(e) => updateSettings("connection.url", e.currentTarget.value)}
     />
   </label>
-  <label class="input mx-2">
+  <label class="input min-w-3xs w-3xs">
     <iconify-icon class="h-[1em] opacity-50" inline icon="mdi:key"
     ></iconify-icon>
     <input
@@ -90,16 +90,16 @@
     <span class="badge badge-neutral badge-xs">Optional</span>
   </label>
   <button
-    class="btn btn-info mx-2"
+    class="btn btn-info"
     onclick={handleConnect}
     disabled={status !== "disconnected"}>接続</button
   >
   <button
-    class="btn btn-error mx-2"
+    class="btn btn-error"
     onclick={handleDisconnect}
     disabled={status === "disconnected"}>切断</button
   >
-  <button class="btn mx-2" onclick={() => modal.showModal()}>設定</button>
+  <button class="btn" onclick={() => modal.showModal()}>設定</button>
   <dialog class="modal" bind:this={modal}>
     <div class="modal-box">
       <div class="form-control">
@@ -222,8 +222,7 @@
       <button>close</button>
     </form>
   </dialog>
-
-  <label class="flex items-center cursor-pointer gap-2 mx-2">
+  <label class="flex items-center cursor-pointer gap-2">
     <iconify-icon inline icon="mdi:white-balance-sunny"></iconify-icon>
     <input type="checkbox" value="dark" class="toggle theme-controller" />
     <iconify-icon inline icon="mdi:moon-and-stars"></iconify-icon>

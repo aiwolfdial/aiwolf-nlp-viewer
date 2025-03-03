@@ -77,10 +77,10 @@
 </svelte:head>
 
 <main class="h-screen flex flex-col">
-  <div class="navbar bg-base-100 flex justify-start">
-    <h1 class="text-3xl font-bold truncate mx-4">aiwolf-nlp-viewer</h1>
+  <div class="navbar bg-base-100 flex justify-start gap-4 overflow-x-auto">
+    <h1 class="text-3xl font-bold text-nowrap ml-2">aiwolf-nlp-viewer</h1>
     <select
-      class="select w-full max-w-xs ml-auto"
+      class="select min-w-3xs w-3xs ml-auto"
       onchange={(e) => {
         const path = e.currentTarget.value;
         if (path) {
@@ -98,13 +98,13 @@
       {/each}
     </select>
     <input
-      class="file-input w-full max-w-xs mx-2"
+      class="file-input min-w-3xs w-3xs"
       type="file"
       accept=".log"
       multiple
       onchange={handleFileSelect}
     />
-    <label class="flex items-center cursor-pointer gap-2 mx-2">
+    <label class="flex items-center cursor-pointer gap-2">
       <iconify-icon inline icon="mdi:white-balance-sunny"></iconify-icon>
       <input type="checkbox" value="dark" class="toggle theme-controller" />
       <iconify-icon inline icon="mdi:moon-and-stars"></iconify-icon>

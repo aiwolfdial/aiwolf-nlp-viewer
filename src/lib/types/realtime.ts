@@ -5,10 +5,10 @@ export interface Packet {
     isDay: boolean;
     agents: Agent[];
     event: string;
-    message: string;
-    fromIdx: number;
-    toIdx: number;
-    bubbleIdx: number;
+    message: string | undefined;
+    fromIdx: number | undefined;
+    toIdx: number | undefined;
+    bubbleIdx: number | undefined;
 }
 
 export interface Agent {
