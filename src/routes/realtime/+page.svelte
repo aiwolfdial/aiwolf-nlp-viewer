@@ -2,8 +2,10 @@
   import { browser } from "$app/environment";
   import AgentsCanvas from "$lib/components/realtime/agents-canvas.svelte";
   import Navbar from "$lib/components/realtime/navbar.svelte";
+  import { realtimeSettings } from "$lib/stores/realtime-settings";
   import type { Packet } from "$lib/types/realtime";
-  import { initializeAgents } from "$lib/utils/realtime";
+  import type { RealtimeSettings } from "$lib/types/realtime-settings";
+  import { IdxToCustomName, initializeAgents } from "$lib/utils/realtime";
   import { realtimeSocketState } from "$lib/utils/realtime-socket";
   import { onDestroy, onMount } from "svelte";
   import { derived, writable } from "svelte/store";
@@ -12,19 +14,25 @@
   const selectedId = writable("");
   const selectedIdx = writable(0);
 
-  const currentPacket = writable<Packet>({
+  const defaultPacket = {
     id: "",
     idx: -1,
     day: 0,
     isDay: true,
     agents: initializeAgents(5),
+    event: "未接続",
     message: "未接続",
-    summary: "未接続",
-    isDivider: false,
-  });
+    fromIdx: -1,
+    toIdx: -1,
+    bubbleIdx: -1,
+  };
+
+  const currentPacket = writable<Packet>(defaultPacket);
 
   const entries = writable<Record<string, Packet[]>>({});
   const status = writable("");
+
+  let settings = $state<RealtimeSettings>();
 
   onMount(() => {
     const unsubscribeEntries = realtimeSocketState.entries.subscribe(
@@ -53,6 +61,10 @@
       });
     });
 
+    const unsubscribeSettings = realtimeSettings.subscribe((value) => {
+      settings = value;
+    });
+
     derived(
       [selectedId, selectedIdx, entries],
       ([$selectedId, $selectedIdx, $entries]) => {
@@ -63,16 +75,7 @@
         ) {
           return $entries[$selectedId][$selectedIdx];
         }
-        return {
-          id: "",
-          idx: -1,
-          day: 0,
-          isDay: true,
-          agents: initializeAgents(5),
-          message: "未接続",
-          summary: "未接続",
-          isDivider: false,
-        };
+        return defaultPacket;
       }
     ).subscribe((packet) => {
       currentPacket.set(packet);
@@ -81,6 +84,7 @@
     onDestroy(() => {
       unsubscribeEntries();
       unsubscribeStatus();
+      unsubscribeSettings();
     });
 
     if (browser) {
@@ -109,7 +113,7 @@
           <option value={id}>{id}</option>
         {/each}
       </select>
-      <ul class="list overflow-y-auto flex-1">
+      <ul class="list overflow-y-auto flex-1 mb-2">
         {#each $entries[$selectedId] || [] as packet, idx (idx)}
           {#if idx > 0 && (packet.day !== $entries[$selectedId][idx - 1].day || packet.isDay !== $entries[$selectedId][idx - 1].isDay)}
             <div class="divider">
@@ -121,8 +125,58 @@
               {packet.day}日目 {packet.isDay ? "昼" : "夜"}
             </div>
           {/if}
-          <button class="btn" on:click={() => selectedIdx.set(idx)}>
-            {idx + 1}. {packet.summary}
+          <button class="btn" onclick={() => selectedIdx.set(idx)}>
+            {#if packet.event === "トーク" || packet.event === "囁き"}
+              {#if packet.message === "Over"}
+                <p class="overflow-hidden text-ellipsis whitespace-nowrap">
+                  {IdxToCustomName(
+                    settings?.display.text,
+                    packet,
+                    packet.bubbleIdx
+                  )}
+                </p>
+                <iconify-icon inline icon="mdi:skip-forward"></iconify-icon>
+              {:else if packet.message === "Skip"}
+                <p class="overflow-hidden text-ellipsis whitespace-nowrap">
+                  {IdxToCustomName(
+                    settings?.display.text,
+                    packet,
+                    packet.bubbleIdx
+                  )}
+                </p>
+                <iconify-icon inline icon="mdi:arrow-u-down-right-bold"
+                ></iconify-icon>
+                <p></p>
+              {:else}
+                <p class="overflow-hidden text-ellipsis whitespace-nowrap">
+                  {IdxToCustomName(
+                    settings?.display.text,
+                    packet,
+                    packet.bubbleIdx
+                  ) +
+                    "「" +
+                    packet.message}
+                </p>
+                <p>」</p>
+              {/if}
+            {:else}
+              <p class="overflow-hidden text-ellipsis whitespace-nowrap">
+                {#if packet.event === "投票"}
+                  {IdxToCustomName(
+                    settings?.display.text,
+                    packet,
+                    packet.fromIdx
+                  )}
+                {:else if packet.event === "追放" || packet.event === "襲撃"}
+                  {IdxToCustomName(
+                    settings?.display.text,
+                    packet,
+                    packet.toIdx
+                  )}
+                {/if}
+                {packet.event}
+              </p>
+            {/if}
           </button>
         {/each}
       </ul>

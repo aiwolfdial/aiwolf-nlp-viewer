@@ -104,15 +104,15 @@
     <div class="modal-box">
       <div class="form-control">
         <h3 class="text-lg font-bold mt-2">表示設定</h3>
-        <h4 class="text-base font-bold mt-4">エージェント</h4>
+        <h4 class="text-base font-bold mt-4">キャンバス上のエージェント情報</h4>
         <div class="flex gap-4 my-2">
           <label class="label cursor-pointer">
             <span class="label-text">名前</span>
             <input
               type="checkbox"
-              checked={settings?.display.agent.name}
+              checked={settings?.display.canvas.name}
               onchange={(e) =>
-                updateSettings("display.agent.name", e.currentTarget.checked)}
+                updateSettings("display.canvas.name", e.currentTarget.checked)}
               class="checkbox"
             />
           </label>
@@ -120,9 +120,9 @@
             <span class="label-text">チーム名</span>
             <input
               type="checkbox"
-              checked={settings?.display.agent.team}
+              checked={settings?.display.canvas.team}
               onchange={(e) =>
-                updateSettings("display.agent.team", e.currentTarget.checked)}
+                updateSettings("display.canvas.team", e.currentTarget.checked)}
               class="checkbox"
             />
           </label>
@@ -130,9 +130,77 @@
             <span class="label-text">役職</span>
             <input
               type="checkbox"
-              checked={settings?.display.agent.role}
+              checked={settings?.display.canvas.role}
               onchange={(e) =>
-                updateSettings("display.agent.role", e.currentTarget.checked)}
+                updateSettings("display.canvas.role", e.currentTarget.checked)}
+              class="checkbox"
+            />
+          </label>
+        </div>
+        <h4 class="text-base font-bold mt-4">
+          メッセージボックス上のエージェント情報
+        </h4>
+        <div class="flex gap-4 my-2">
+          <label class="label cursor-pointer">
+            <span class="label-text">名前</span>
+            <input
+              type="checkbox"
+              checked={settings?.display.bubble.name}
+              onchange={(e) =>
+                updateSettings("display.bubble.name", e.currentTarget.checked)}
+              class="checkbox"
+            />
+          </label>
+          <label class="label cursor-pointer">
+            <span class="label-text">チーム名</span>
+            <input
+              type="checkbox"
+              checked={settings?.display.bubble.team}
+              onchange={(e) =>
+                updateSettings("display.bubble.team", e.currentTarget.checked)}
+              class="checkbox"
+            />
+          </label>
+          <label class="label cursor-pointer">
+            <span class="label-text">役職</span>
+            <input
+              type="checkbox"
+              checked={settings?.display.bubble.role}
+              onchange={(e) =>
+                updateSettings("display.bubble.role", e.currentTarget.checked)}
+              class="checkbox"
+            />
+          </label>
+        </div>
+        <h4 class="text-base font-bold mt-4">一覧のエージェント情報</h4>
+        <div class="flex gap-4 my-2">
+          <label class="label cursor-pointer">
+            <span class="label-text">名前</span>
+            <input
+              type="checkbox"
+              checked={settings?.display.text.name}
+              onchange={(e) =>
+                updateSettings("display.text.name", e.currentTarget.checked)}
+              class="checkbox"
+            />
+          </label>
+          <label class="label cursor-pointer">
+            <span class="label-text">チーム名</span>
+            <input
+              type="checkbox"
+              checked={settings?.display.text.team}
+              onchange={(e) =>
+                updateSettings("display.text.team", e.currentTarget.checked)}
+              class="checkbox"
+            />
+          </label>
+          <label class="label cursor-pointer">
+            <span class="label-text">役職</span>
+            <input
+              type="checkbox"
+              checked={settings?.display.text.role}
+              onchange={(e) =>
+                updateSettings("display.text.role", e.currentTarget.checked)}
               class="checkbox"
             />
           </label>

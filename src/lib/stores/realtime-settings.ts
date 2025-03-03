@@ -9,10 +9,20 @@ const defaultRealtimeSettings: RealtimeSettings = {
         token: ""
     },
     display: {
-        agent: {
+        canvas: {
             name: true,
             team: true,
             role: true
+        },
+        bubble: {
+            name: true,
+            team: false,
+            role: false
+        },
+        text: {
+            name: true,
+            team: false,
+            role: false
         },
         largeScale: false,
     }

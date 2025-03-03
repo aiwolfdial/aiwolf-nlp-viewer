@@ -11,7 +11,9 @@ export interface Connection {
 }
 
 export interface Display {
-    agent: Agent;
+    canvas: Agent;
+    bubble: Agent;
+    text: Agent;
     largeScale: boolean;
 }
 
@@ -193,7 +195,9 @@ const typeMap: any = {
         { json: "token", js: "token", typ: "" },
     ], false),
     "Display": o([
-        { json: "agent", js: "agent", typ: r("Agent") },
+        { json: "canvas", js: "canvas", typ: r("Agent") },
+        { json: "bubble", js: "bubble", typ: r("Agent") },
+        { json: "text", js: "text", typ: r("Agent") },
         { json: "largeScale", js: "largeScale", typ: true },
     ], false),
     "Agent": o([

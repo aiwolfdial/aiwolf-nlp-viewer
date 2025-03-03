@@ -4,9 +4,11 @@ export interface Packet {
     day: number;
     isDay: boolean;
     agents: Agent[];
+    event: string;
     message: string;
-    summary: string;
-    isDivider: boolean;
+    fromIdx: number;
+    toIdx: number;
+    bubbleIdx: number;
 }
 
 export interface Agent {
@@ -15,6 +17,4 @@ export interface Agent {
     name: string;
     role: string;
     isAlive: boolean;
-    targetIdxs: number[];
-    isBubble: boolean;
 }

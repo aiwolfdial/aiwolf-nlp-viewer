@@ -1,20 +1,70 @@
 <script lang="ts">
   import { base } from "$app/paths";
-  import { IdxToText } from "$lib/constants/translate";
+  import { IdxToName, RoleToSpecieText } from "$lib/constants/translate";
   import { realtimeSettings } from "$lib/stores/realtime-settings";
   import type { Packet } from "$lib/types/realtime";
   import type { RealtimeSettings } from "$lib/types/realtime-settings";
+  import { IdxToCustomName, xor } from "$lib/utils/realtime";
   import { onDestroy, onMount } from "svelte";
 
   let { packet }: { packet: Packet } = $props();
 
   let settings = $state<RealtimeSettings>();
 
-  const unsubscribeSettings = realtimeSettings.subscribe((value) => {
+  const unsubscribe = realtimeSettings.subscribe((value) => {
     settings = value;
   });
 
-  onDestroy(unsubscribeSettings);
+  onDestroy(unsubscribe);
+
+  let focusIdx = $state<number>();
+  let message = $derived.by(() => {
+    switch (packet.event) {
+      case "未接続":
+        return "未接続";
+      case "トーク":
+      case "囁き":
+        // :TODO 囁きの場合、人狼のみ表示する
+        return packet.message;
+      case "襲撃投票":
+        if (xor(focusIdx === undefined, packet.fromIdx === focusIdx)) {
+          return `${IdxToCustomName(settings?.display.bubble, packet, packet.fromIdx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} に襲撃投票しました`;
+        }
+        return `襲撃投票しました`;
+      case "投票":
+        if (xor(focusIdx === undefined, packet.fromIdx === focusIdx)) {
+          return `${IdxToCustomName(settings?.display.bubble, packet, packet.fromIdx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} に投票しました`;
+        }
+        return `${IdxToCustomName(settings?.display.bubble, packet, packet.fromIdx)} が投票しました`;
+      case "追放":
+        if (packet.toIdx === -1) {
+          return "誰も追放されませんでした";
+        }
+        return `${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} を追放しました`;
+      case "襲撃":
+        if (packet.toIdx === -1) {
+          return "誰も襲撃されませんでした";
+        }
+        if (packet.fromIdx === -2) {
+          return `${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} が襲撃されましたが、護衛されました`;
+        }
+        return `${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} が襲撃されました`;
+      case "占い":
+        if (xor(focusIdx === undefined, packet.fromIdx === focusIdx)) {
+          return `${IdxToCustomName(settings?.display.bubble, packet, packet.fromIdx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} を占った結果、${RoleToSpecieText(
+            packet.agents.find((agent) => agent.idx === packet.toIdx)?.role
+          )} でした`;
+        }
+        return "占いました";
+      case "護衛":
+        if (xor(focusIdx === undefined, packet.fromIdx === focusIdx)) {
+          return `${IdxToCustomName(settings?.display.bubble, packet, packet.fromIdx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} を護衛対象にしました`;
+        }
+        return "護衛しました";
+      default:
+        return undefined;
+    }
+  });
 
   let container: HTMLDivElement;
   let bubble: HTMLCanvasElement;
@@ -34,11 +84,6 @@
 
   function render() {
     if (!bubble || !arrow || !container) return;
-
-    const messageCtx = bubble.getContext("2d");
-    const arrowCtx = arrow.getContext("2d");
-    if (!messageCtx || !arrowCtx) return;
-
     const rect = container.getBoundingClientRect();
     [bubble, arrow].forEach((canvas) => {
       canvas.width = rect.width;
@@ -50,49 +95,58 @@
       ctx.lineWidth = 2;
     });
 
-    packet.agents.forEach((agent) => {
-      const { idx, targetIdxs = [], isAlive, isBubble } = agent;
+    if (focusIdx !== undefined) {
+      if (packet.event === "占い" && packet.fromIdx !== focusIdx) return;
+      if (packet.event === "投票" && packet.fromIdx !== focusIdx) return;
+      if (packet.event === "襲撃投票" && packet.fromIdx !== focusIdx) return;
+    }
 
-      if (!isAlive) return;
+    const messageCtx = bubble.getContext("2d");
+    const arrowCtx = arrow.getContext("2d");
+    if (!messageCtx || !arrowCtx) return;
+    const canvasRect = arrow.getBoundingClientRect();
 
-      const from = document.getElementById(`agent-${idx}`);
+    if (packet.fromIdx !== -1 && packet.toIdx !== -1) {
+      const from = document.getElementById(`agent-${packet.fromIdx}`);
       if (!(from instanceof HTMLElement)) return;
       const fromRect = from.getBoundingClientRect();
-      const canvasRect = arrow.getBoundingClientRect();
 
       const fromX = fromRect.left + fromRect.width / 2 - canvasRect.left;
       const fromY = fromRect.top + fromRect.height / 2 - canvasRect.top;
 
-      targetIdxs.forEach((idx) => {
-        if (idx === -1) return;
+      const to = document.getElementById(`agent-${packet.toIdx}`);
+      if (!(to instanceof HTMLElement)) return;
+      const toRect = to.getBoundingClientRect();
 
-        const to = document.getElementById(`agent-${idx}`);
-        if (!(to instanceof HTMLElement)) return;
-        const toRect = to.getBoundingClientRect();
+      drawArrow(
+        arrowCtx,
+        fromX,
+        fromY,
+        toRect.left + toRect.width / 2 - canvasRect.left,
+        toRect.top + toRect.height / 2 - canvasRect.top,
+        false,
+        getComputedStyle(chat).getPropertyValue("background-color")
+      );
+    }
 
-        drawArrow(
-          arrowCtx,
-          fromX,
-          fromY,
-          toRect.left + toRect.width / 2 - canvasRect.left,
-          toRect.top + toRect.height / 2 - canvasRect.top,
-          false,
-          getComputedStyle(chat).getPropertyValue("background-color")
-        );
-      });
+    if (packet.bubbleIdx !== -1) {
+      const bubble = document.getElementById(`agent-${packet.bubbleIdx}`);
+      if (!(bubble instanceof HTMLElement)) return;
+      const bubbleRect = bubble.getBoundingClientRect();
 
-      if (isBubble) {
-        drawArrow(
-          messageCtx,
-          canvasRect.width / 2,
-          canvasRect.height / 2,
-          fromX,
-          fromY,
-          true,
-          getComputedStyle(chat).getPropertyValue("background-color")
-        );
-      }
-    });
+      const bubbleX = bubbleRect.left + bubbleRect.width / 2 - canvasRect.left;
+      const bubbleY = bubbleRect.top + bubbleRect.height / 2 - canvasRect.top;
+
+      drawArrow(
+        messageCtx,
+        canvasRect.width / 2,
+        canvasRect.height / 2,
+        bubbleX,
+        bubbleY,
+        true,
+        getComputedStyle(chat).getPropertyValue("background-color")
+      );
+    }
   }
 
   function drawArrow(
@@ -153,27 +207,31 @@
     >
       {#if settings?.display.largeScale}
         <p
-          class="text-9xl font-black opacity-50 absolute top-0 left-0 -mt-4 ml-8"
+          class="w-2/5 text-9xl font-black opacity-50 absolute top-0 left-0 -mt-4 ml-8"
         >
           {packet.day}日目 {packet.isDay ? "昼" : "夜"}
         </p>
       {/if}
-      <canvas bind:this={bubble} class="w-full h-full absolute top-0 left-0"
+      <canvas
+        bind:this={bubble}
+        class="w-full h-full absolute top-0 left-0 pointer-events-none"
       ></canvas>
-      <canvas bind:this={arrow} class="w-full h-full absolute top-0 left-0 z-10"
+      <canvas
+        bind:this={arrow}
+        class="w-full h-full absolute top-0 left-0 z-10 pointer-events-none"
       ></canvas>
       <div
         bind:this={chat}
         class="w-1/2 h-fit max-h-1/3 card bg-base-100 card-md shadow-md overflow-auto z-20"
-        hidden={!packet.message}
+        hidden={!message}
       >
         <div class="card-body">
           <p
             class={settings?.display.largeScale
-              ? "text-3xl font-bold text-pretty text-center"
-              : "text-lg text-pretty text-center"}
+              ? "text-3xl font-bold text-pretty break-keep text-center"
+              : "text-lg text-pretty break-keep text-center"}
           >
-            {packet.message}
+            {message}
           </p>
         </div>
       </div>
@@ -192,33 +250,46 @@
               class:ring-error={!agent.isAlive}
               style:opacity={!agent.isAlive ? 0.25 : 1}
             >
-              <img
-                src="{base}/images/male/{agent.idx
-                  .toString()
-                  .padStart(2, '0')}.png"
-                alt={agent.name}
-                class="w-full h-full"
-              />
-              {#if settings?.display.largeScale && settings?.display.agent.name}
-                <div class="absolute inset-0 flex items-center justify-center">
-                  <span class="text-9xl font-bold opacity-75">
-                    {agent.idx}
-                  </span>
-                </div>
-              {/if}
+              <button
+                class="cursor-pointer"
+                onclick={() => {
+                  if (focusIdx === agent.idx) {
+                    focusIdx = undefined;
+                  } else {
+                    focusIdx = agent.idx;
+                  }
+                }}
+              >
+                <img
+                  src="{base}/images/male/{agent.idx
+                    .toString()
+                    .padStart(2, '0')}.png"
+                  alt={agent.name}
+                  class="w-full h-full"
+                />
+                {#if settings?.display.largeScale && settings?.display.canvas.name}
+                  <div
+                    class="absolute inset-0 flex items-center justify-center"
+                  >
+                    <span class="text-9xl font-bold opacity-75">
+                      {agent.idx}
+                    </span>
+                  </div>
+                {/if}
+              </button>
             </div>
           </div>
-          {#if !settings?.display.largeScale && settings?.display.agent.name}
-            <span class="badge mt-1">{IdxToText(agent.idx)}</span>
+          {#if !settings?.display.largeScale && settings?.display.canvas.name}
+            <span class="badge mt-1">{IdxToName(agent.idx)}</span>
           {/if}
-          {#if settings?.display.agent.team}
+          {#if settings?.display.canvas.team}
             {#if settings?.display.largeScale}
               <span class="text-2xl mt-2">{agent.team}</span>
             {:else}
               <span class="badge mt-1">{agent.team}</span>
             {/if}
           {/if}
-          {#if settings?.display.agent.role}
+          {#if settings?.display.canvas.role && (agent.idx === focusIdx || focusIdx === undefined)}
             {#if settings?.display.largeScale}
               <span class="text-2xl mt-2">{agent.role}</span>
             {:else}

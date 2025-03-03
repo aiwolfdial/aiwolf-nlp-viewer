@@ -22,8 +22,26 @@ export const TeamMap = {
     "WEREWOLF": "人狼陣営",
 }
 
+export const RoleToSpeciesMap = {
+    "VILLAGER": "HUMAN",
+    "SEER": "HUMAN",
+    "MEDIUM": "HUMAN",
+    "BODYGUARD": "HUMAN",
+    "WEREWOLF": "WEREWOLF",
+    "POSSESSED": "HUMAN",
+}
+
 export const ReplaceWords = { "kanolab1": "[チーム名]" }
 
-export function IdxToText(idx: number | string) {
+export function IdxToName(idx: number | string) {
     return `Agent[${idx.toString().padStart(2, "0")}]`
+}
+
+export function RoleToSpecieText(role: string | undefined) {
+    if (!role) return "不明";
+    return SpecieMap[
+        RoleToSpeciesMap[
+        role as keyof typeof RoleToSpeciesMap
+        ] as keyof typeof SpecieMap
+    ];
 }
