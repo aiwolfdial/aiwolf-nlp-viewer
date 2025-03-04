@@ -19,6 +19,12 @@
           </div>
         </div>
         <div class="p-2">
+          <h2 class="text-xl font-bold">エージェント</h2>
+          <div class="flex flex-row justify-center gap-4 p-2">
+            <a class="btn btn-primary" href="./agent">エージェント</a>
+          </div>
+        </div>
+        <div class="p-2">
           <h2 class="text-xl font-bold">ソースコード</h2>
           <div class="flex flex-row justify-center gap-4 p-2">
             <a
