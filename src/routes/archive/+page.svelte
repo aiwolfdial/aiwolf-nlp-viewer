@@ -1,9 +1,9 @@
 <script lang="ts">
   import { base } from "$app/paths";
-  import DayColumn from "$lib/components/archive/day-column.svelte";
   import type { DayStatus } from "$lib/types/archive";
   import { processArchiveLog } from "$lib/utils/archive";
   import "../../app.css";
+  import DayColumn from "./DayColumn.svelte";
 
   type LogFile = {
     name: string;

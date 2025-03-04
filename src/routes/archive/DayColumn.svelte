@@ -6,8 +6,8 @@
     TeamMap,
   } from "$lib/constants/translate";
   import type { DayStatus } from "$lib/types/archive";
-  import AgentName from "./agent-name.svelte";
-  import FormatText from "./format-text.svelte";
+  import AgentName from "./AgentName.svelte";
+  import FormatText from "./FormatText.svelte";
 
   let { dayIdx = "", dayStatus = {} as DayStatus } = $props();
 </script>

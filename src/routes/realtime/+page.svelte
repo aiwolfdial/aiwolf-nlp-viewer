@@ -1,7 +1,5 @@
 <script lang="ts">
   import { browser } from "$app/environment";
-  import AgentsCanvas from "$lib/components/realtime/agents-canvas.svelte";
-  import Navbar from "$lib/components/realtime/navbar.svelte";
   import { realtimeSettings } from "$lib/stores/realtime-settings";
   import type { Packet } from "$lib/types/realtime";
   import type { RealtimeSettings } from "$lib/types/realtime-settings";
@@ -10,6 +8,8 @@
   import { onDestroy, onMount } from "svelte";
   import { derived, writable } from "svelte/store";
   import "../../app.css";
+  import Canvas from "./Canvas.svelte";
+  import Navbar from "./Navbar.svelte";
 
   const selectedId = writable("");
   const selectedIdx = writable(0);
@@ -105,7 +105,7 @@
   <Navbar />
   <div class="flex flex-1 overflow-hidden w-full flex-col md:flex-row">
     <div class="flex-auto bg-base-300">
-      <AgentsCanvas packet={$currentPacket} />
+      <Canvas packet={$currentPacket} />
     </div>
     <div class="w-full md:w-64 max-md:h-32 flex flex-col bg-base-200 p-2">
       <select class="w-full select" bind:value={$selectedId}>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { ReplaceWords } from "$lib/constants/translate";
-  import AgentName from "./agent-name.svelte";
+  import AgentName from "./AgentName.svelte";
 
   let { text = "" } = $props();
 
