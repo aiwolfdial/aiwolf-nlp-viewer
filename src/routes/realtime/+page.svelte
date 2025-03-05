@@ -115,12 +115,7 @@
       </select>
       <ul class="list overflow-y-auto flex-1 my-2 px-2">
         {#each $entries[$selectedId] || [] as packet, idx}
-          {#if idx > 0 && (packet.day !== $entries[$selectedId][idx - 1].day || packet.isDay !== $entries[$selectedId][idx - 1].isDay)}
-            <div class="divider">
-              {packet.day}日目 {packet.isDay ? "昼" : "夜"}
-            </div>
-          {/if}
-          {#if idx == 0}
+          {#if (idx > 0 && (packet.day !== $entries[$selectedId][idx - 1].day || packet.isDay !== $entries[$selectedId][idx - 1].isDay)) || idx === 0}
             <div class="divider">
               {packet.day}日目 {packet.isDay ? "昼" : "夜"}
             </div>
