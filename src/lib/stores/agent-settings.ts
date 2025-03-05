@@ -26,8 +26,8 @@ function load(): AgentSettings {
 
 export const agentSettings = writable<AgentSettings>(load());
 
-agentSettings.subscribe(_ => {
+agentSettings.subscribe(value => {
     if (browser) {
-        localStorage.setItem('agent-settings', Convert.toJson(defaultAgentSettings));
+        localStorage.setItem('agent-settings', Convert.toJson(value));
     }
 });

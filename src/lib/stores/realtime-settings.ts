@@ -44,8 +44,8 @@ function load(): RealtimeSettings {
 
 export const realtimeSettings = writable<RealtimeSettings>(load());
 
-realtimeSettings.subscribe(_ => {
+realtimeSettings.subscribe(value => {
     if (browser) {
-        localStorage.setItem('realtime-settings', Convert.toJson(defaultRealtimeSettings));
+        localStorage.setItem('realtime-settings', Convert.toJson(value));
     }
 });
