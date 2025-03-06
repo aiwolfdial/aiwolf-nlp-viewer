@@ -1,13 +1,16 @@
 <script lang="ts">
   import { browser } from "$app/environment";
   import { agentSettings } from "$lib/stores/agent-settings";
-  import type {
-    Info,
-    Packet,
-    Request,
-    Role,
-    Setting,
-    Talk,
+  import {
+    Species,
+    Status,
+    type Info,
+    type Judge,
+    type Packet,
+    type Request,
+    type Role,
+    type Setting,
+    type Talk,
   } from "$lib/types/agent";
   import { type AgentSettings } from "$lib/types/agent-settings";
   import { agentSocketState } from "$lib/utils/agent-socket";
@@ -21,6 +24,8 @@
   const role = writable<Role | null>(null);
   const request = writable<Request | null>(null);
   const info = writable<Info | null>(null);
+  const mediumResults = writable<Judge[]>([]);
+  const divineResults = writable<Judge[]>([]);
   const setting = writable<Setting | null>(null);
   const talkHistory = writable<Talk[]>([]);
   const whisperHistory = writable<Talk[]>([]);
@@ -76,6 +81,8 @@
       role.set(value.role);
       request.set(value.request);
       info.set(value.info);
+      mediumResults.set(value.mediumResults);
+      divineResults.set(value.divineResults);
       setting.set(value.setting);
       talkHistory.set(value.talkHistory);
       whisperHistory.set(value.whisperHistory);
@@ -109,61 +116,102 @@
   <div class="flex flex-1 overflow-hidden w-full flex-col">
     <div class="flex-auto bg-base-300 p-2 h-full overflow-hidden">
       <div class="flex flex-row h-full" bind:this={containerRef}>
-        <div class="overflow-y-auto pr-2 h-full" style="width: {width}%">
-          <div class="grid auto-cols-max grid-flow-row gap-2">
-            <div class="card bg-base-100 shadow-sm">
-              <div class="card-body">
-                <h2 class="card-title">役職</h2>
-                <pre class="overflow-x-auto">{$role}</pre>
-              </div>
+        <div class="overflow-y-auto px-2 h-full" style="width: {width}%">
+          <pre class="font-bold text-xl p-2">{$info?.agent ??
+              "未接続"} {$role}</pre>
+          {#if $request !== null}
+            <pre class="bg-primary text-primary-content p-2">{$request}</pre>
+          {/if}
+          {#if $info !== null}
+            <div class="p-2">
+              {#each Object.entries($info.statusMap ?? {}) as [key, value]}
+                <div class="flex flex-row gap-2">
+                  <pre>{key}</pre>
+                  <pre>{($info.roleMap ?? {})[key] ?? "-"}</pre>
+                  {#if value === Status.ALIVE}
+                    <pre
+                      class="font-bold bg-info text-info-content ml-auto">{value}</pre>{:else}
+                    <pre
+                      class="font-bold bg-error text-error-content ml-auto">{value}</pre>
+                  {/if}
+                </div>
+              {/each}
             </div>
-            <div class="card bg-base-100 shadow-sm">
-              <div class="card-body">
-                <h2 class="card-title">リクエスト</h2>
-                <pre class="overflow-x-auto">{$request}</pre>
+            {#if $mediumResults.length > 0}
+              <h2 class="font-bold text-lg p-2">霊能結果</h2>
+              {#each $mediumResults as { day, target, result }}
+                <div class="flex flex-row gap-2">
+                  <pre>{target}</pre>
+                  <pre>(Day{day})</pre>
+                  {#if result === Species.HUMAN}
+                    <pre
+                      class="font-bold bg-info text-info-content ml-auto">{result}</pre>{:else}
+                    <pre
+                      class="font-bold bg-error text-error-content ml-auto">{result}</pre>
+                  {/if}
+                </div>
+              {/each}
+            {/if}
+            {#if $divineResults.length > 0}
+              <h2 class="font-bold text-lg p-2">占い結果</h2>
+              {#each $mediumResults as { day, target, result }}
+                <div class="flex flex-row gap-2">
+                  <pre>{target}</pre>
+                  <pre>(Day{day})</pre>
+                  {#if result === Species.HUMAN}
+                    <pre
+                      class="font-bold bg-info text-info-content ml-auto">{result}</pre>{:else}
+                    <pre
+                      class="font-bold bg-error text-error-content ml-auto">{result}</pre>
+                  {/if}
+                </div>
+              {/each}
+            {/if}
+          {/if}
+          {#if $talkHistory.length > 0}
+            <h2 class="font-bold text-lg p-2">トーク履歴</h2>
+          {/if}
+          {#each $talkHistory as { agent, day, idx, text, skip, over }}
+            <div
+              class="chat"
+              class:chat-end={agent === $info?.agent}
+              class:chat-start={agent !== $info?.agent}
+            >
+              <div class="chat-image avatar avatar-placeholder">
+                <div class="bg-neutral text-neutral-content w-12 rounded-full">
+                  <span class="text-2xl"
+                    >{Number(agent.match(/Agent\[(\d+)\]/)?.[1]) ?? ""}</span
+                  >
+                </div>
               </div>
+              <div class="chat-header"></div>
+              <div class="chat-bubble bg-base-100">{text}</div>
+              <div class="chat-footer opacity-50">Day {day} Idx {idx}</div>
             </div>
-            <div class="card bg-base-100 shadow-sm">
-              <div class="card-body">
-                <h2 class="card-title">現状態</h2>
-                <pre class="overflow-x-auto">{JSON.stringify(
-                    $info,
-                    null,
-                    2
-                  )}</pre>
+          {/each}
+          {#if $whisperHistory.length > 0}
+            <h2 class="font-bold text-lg p-2">囁き履歴</h2>
+          {/if}
+          {#each $whisperHistory as { agent, day, idx, text, skip, over }}
+            <div
+              class="chat"
+              class:chat-end={agent === $info?.agent}
+              class:chat-start={agent !== $info?.agent}
+            >
+              <div class="chat-image avatar avatar-placeholder">
+                <div class="bg-neutral text-neutral-content w-12 rounded-full">
+                  <span class="text-2xl"
+                    >{Number(agent.match(/Agent\[(\d+)\]/)?.[1]) ?? ""}</span
+                  >
+                </div>
               </div>
+              <div class="chat-header"></div>
+              <div class="chat-bubble bg-base-100">{text}</div>
+              <div class="chat-footer opacity-50">Day {day} Idx {idx}</div>
             </div>
-            <div class="card bg-base-100 shadow-sm">
-              <div class="card-body">
-                <h2 class="card-title">設定</h2>
-                <pre class="overflow-x-auto">{JSON.stringify(
-                    $setting,
-                    null,
-                    2
-                  )}</pre>
-              </div>
-            </div>
-            <div class="card bg-base-100 shadow-sm">
-              <div class="card-body">
-                <h2 class="card-title">トーク履歴</h2>
-                <pre class="overflow-x-auto">{JSON.stringify(
-                    $talkHistory,
-                    null,
-                    2
-                  )}</pre>
-              </div>
-            </div>
-            <div class="card bg-base-100 shadow-sm">
-              <div class="card-body">
-                <h2 class="card-title">囁き履歴</h2>
-                <pre class="overflow-x-auto">{JSON.stringify(
-                    $whisperHistory,
-                    null,
-                    2
-                  )}</pre>
-              </div>
-            </div>
-          </div>
+          {/each}
+          <div class="divider"></div>
+          <pre>{JSON.stringify($setting, null, 2)}</pre>
         </div>
         <button
           class="cursor-ew-resize w-2 rounded bg-gray-300 hover:bg-gray-400 active:bg-gray-500 transition-colors border-0"

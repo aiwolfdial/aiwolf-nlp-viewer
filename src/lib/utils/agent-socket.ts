@@ -1,5 +1,5 @@
 import { agentSettings } from '$lib/stores/agent-settings';
-import { Request, Role, type Info, type Packet, type Setting, type Talk } from '$lib/types/agent';
+import { Request, Role, type Info, type Judge, type Packet, type Setting, type Talk } from '$lib/types/agent';
 import type { AgentSettings } from '$lib/types/agent-settings';
 import { writable } from 'svelte/store';
 
@@ -9,6 +9,8 @@ export interface AgentSocket {
     role: Role | null;
     request: Request | null;
     info: Info | null;
+    mediumResults: Judge[];
+    divineResults: Judge[];
     setting: Setting | null;
     talkHistory: Talk[];
     whisperHistory: Talk[];
@@ -21,6 +23,8 @@ function createAgentSocketState() {
         role: null,
         request: null,
         info: null,
+        mediumResults: [],
+        divineResults: [],
         setting: null,
         talkHistory: [],
         whisperHistory: [],
@@ -67,6 +71,12 @@ function createAgentSocketState() {
 
                     if (packet.info) {
                         newState.info = packet.info;
+                        if (packet.info.mediumResult) {
+                            newState.mediumResults.push(packet.info.mediumResult);
+                        }
+                        if (packet.info.divineResult) {
+                            newState.divineResults.push(packet.info.divineResult);
+                        }
                     }
                     if (packet.setting) {
                         newState.setting = packet.setting;
