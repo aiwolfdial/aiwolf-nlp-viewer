@@ -56,10 +56,20 @@ function createAgentSocketState() {
         socket.onclose = () => {
             update(state => ({ ...state, status: "disconnected" }));
             socket = null;
+            if (actionTimer) {
+                actionTimer.clear();
+                actionTimer = null;
+                update(state => ({ ...state, deadline: null }));
+            }
         }
         socket.onerror = () => {
             update(state => ({ ...state, status: "disconnected" }));
             socket = null;
+            if (actionTimer) {
+                actionTimer.clear();
+                actionTimer = null;
+                update(state => ({ ...state, deadline: null }));
+            }
         }
         socket.onmessage = (event) => {
             try {
@@ -133,6 +143,11 @@ function createAgentSocketState() {
             update(state => ({ ...state, status: "disconnected" }));
             socket.close();
             socket = null;
+            if (actionTimer) {
+                actionTimer.clear();
+                actionTimer = null;
+                update(state => ({ ...state, deadline: null }));
+            }
         }
     }
 
@@ -140,6 +155,7 @@ function createAgentSocketState() {
         if (actionTimer) {
             actionTimer.clear();
             actionTimer = null;
+            update(state => ({ ...state, deadline: null }));
         }
         if (socket && socket.readyState === WebSocket.OPEN) {
             try {
