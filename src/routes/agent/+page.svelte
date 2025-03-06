@@ -281,7 +281,19 @@
             >s
           </span>
         {/if}
-        <input type="text" class="input flex-1" bind:value={$message} />
+        <input
+          type="text"
+          class="input flex-1"
+          bind:value={$message}
+          list="agents"
+        />
+        <datalist id="agents">
+          {#each Object.entries($info?.statusMap ?? {}) as [key, value]}
+            {#if value === Status.ALIVE}
+              <option value={key}></option>
+            {/if}
+          {/each}
+        </datalist>
         <button
           class="btn btn-square"
           onclick={() => {
