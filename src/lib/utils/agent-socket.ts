@@ -5,6 +5,7 @@ import { writable } from 'svelte/store';
 
 export interface AgentSocket {
     status: 'disconnected' | 'connecting' | 'connected';
+    deadline: Date | null;
     entries: (Packet | string)[];
     role: Role | null;
     request: Request | null;
@@ -19,6 +20,7 @@ export interface AgentSocket {
 function createAgentSocketState() {
     const { subscribe, update } = writable<AgentSocket>({
         status: 'disconnected',
+        deadline: null,
         entries: [],
         role: null,
         request: null,
@@ -32,6 +34,9 @@ function createAgentSocketState() {
 
     let socket: WebSocket | null = null;
     let settings: AgentSettings | null = null;
+
+    let actionTimeout: number | null = null;
+    let actionTimer: Timer | null = null;
 
     agentSettings.subscribe((value) => {
         settings = value;
@@ -58,6 +63,7 @@ function createAgentSocketState() {
         }
         socket.onmessage = (event) => {
             try {
+                const date = Date.now();
                 const packet = JSON.parse(event.data) as Packet;
                 update(state => {
                     const newEntries = state.entries.slice();
@@ -80,6 +86,7 @@ function createAgentSocketState() {
                     }
                     if (packet.setting) {
                         newState.setting = packet.setting;
+                        actionTimeout = packet.setting.actionTimeout;
                     }
                     if (packet.talkHistory) {
                         newState.talkHistory.push(...packet.talkHistory);
@@ -100,6 +107,17 @@ function createAgentSocketState() {
                     case Request.NAME:
                         send(settings?.team || 'viewer' + Math.floor(Math.random() * 1000));
                         break;
+                    case Request.TALK:
+                    case Request.WHISPER:
+                    case Request.VOTE:
+                    case Request.DIVINE:
+                    case Request.GUARD:
+                    case Request.ATTACK:
+                        actionTimer = new Timer(() => {
+                            send("TIMEOUT");
+                        }, new Date(date + (actionTimeout ?? 60000)));
+                        update(state => ({ ...state, deadline: actionTimer?.deadline() ?? null }));
+                        break;
                     case Request.FINISH:
                         disconnect();
                         break;
@@ -119,6 +137,10 @@ function createAgentSocketState() {
     }
 
     function send(text: string) {
+        if (actionTimer) {
+            actionTimer.clear();
+            actionTimer = null;
+        }
         if (socket && socket.readyState === WebSocket.OPEN) {
             try {
                 socket.send(text);
@@ -143,3 +165,21 @@ function createAgentSocketState() {
 }
 
 export const agentSocketState = createAgentSocketState();
+
+class Timer {
+    private timeout: NodeJS.Timeout;
+    private _deadline: Date;
+
+    constructor(callback: () => void, deadline: Date) {
+        this.timeout = setTimeout(callback, deadline.getTime() - new Date().getTime());
+        this._deadline = deadline;
+    }
+
+    deadline() {
+        return this._deadline;
+    }
+
+    clear() {
+        clearTimeout(this.timeout);
+    }
+}
