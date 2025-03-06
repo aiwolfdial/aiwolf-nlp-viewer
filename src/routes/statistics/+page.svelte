@@ -84,7 +84,7 @@
     <div class="hero-content text-center max-w-screen">
       {#if stats.length > 0}
         <div>
-          <a class="btn m-4" href={`${base}assets/stats.csv`}
+          <a class="btn m-4" href={`${base}/assets/stats.csv`}
             >CSV形式でダウンロードする</a
           >
           <div class="max-w-screen overflow-x-auto">
