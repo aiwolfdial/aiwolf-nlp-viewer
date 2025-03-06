@@ -34,6 +34,46 @@
 
   let settings = $state<RealtimeSettings>();
 
+  let width = $state<number>(80);
+  let isDragging = false;
+  let containerRef: HTMLDivElement | null = null;
+
+  function onMouseMove(clientX: number) {
+    if (!isDragging || !containerRef) return;
+    const containerRect = containerRef.getBoundingClientRect();
+    const relativeX = clientX - containerRect.left;
+    const containerWidth = containerRect.width;
+    width = Math.min(90, Math.max(10, (relativeX / containerWidth) * 100));
+  }
+
+  function onDragStart() {
+    isDragging = true;
+    document.body.style.cursor = "ew-resize";
+    document.body.style.userSelect = "none";
+
+    const moveHandler = (e: MouseEvent | TouchEvent) => {
+      const clientX =
+        e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
+      onMouseMove(clientX);
+    };
+
+    const stopHandler = () => {
+      isDragging = false;
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+
+      window.removeEventListener("mousemove", moveHandler);
+      window.removeEventListener("touchmove", moveHandler);
+      window.removeEventListener("mouseup", stopHandler);
+      window.removeEventListener("touchend", stopHandler);
+    };
+
+    window.addEventListener("mousemove", moveHandler);
+    window.addEventListener("touchmove", moveHandler);
+    window.addEventListener("mouseup", stopHandler);
+    window.addEventListener("touchend", stopHandler);
+  }
+
   onMount(() => {
     const unsubscribeEntries = realtimeSocketState.entries.subscribe(
       (value) => {
@@ -101,78 +141,92 @@
   <title>aiwolf-nlp-viewer</title>
 </svelte:head>
 
-<main class="h-screen flex flex-col">
+<main class="h-screen flex flex-col bg-base-300">
   <Navbar />
-  <div class="flex flex-1 overflow-hidden w-full flex-col md:flex-row">
-    <div class="flex-auto bg-base-300">
+  <div
+    class="flex flex-1 overflow-hidden w-full flex-row h-full"
+    bind:this={containerRef}
+  >
+    <div class="overflow-y-auto pr-2 h-full" style="width: {width}%">
       <Canvas packet={$currentPacket} />
     </div>
-    <div class="w-full md:w-64 max-md:h-32 flex flex-col bg-base-200 p-2">
-      <select class="w-full select" bind:value={$selectedId}>
-        {#each Object.keys($entries) as id}
-          <option value={id}>{id}</option>
-        {/each}
-      </select>
-      <ul class="list overflow-y-auto flex-1 my-2 px-2">
-        {#each $entries[$selectedId] || [] as packet, idx}
-          {#if (idx > 0 && (packet.day !== $entries[$selectedId][idx - 1].day || packet.isDay !== $entries[$selectedId][idx - 1].isDay)) || idx === 0}
-            <div class="divider">
-              {packet.day}日目 {packet.isDay ? "昼" : "夜"}
-            </div>
-          {/if}
-          <button class="btn" onclick={() => selectedIdx.set(idx)}>
-            {#if packet.event === "トーク" || packet.event === "囁き"}
-              {#if packet.message === "Over"}
-                <p class="overflow-hidden text-ellipsis whitespace-nowrap">
-                  {IdxToCustomName(
-                    settings?.display.text,
-                    packet,
-                    packet.bubbleIdx
-                  )}
-                </p>
-                <iconify-icon inline icon="mdi:skip-forward"></iconify-icon>
-              {:else if packet.message === "Skip"}
-                <p class="overflow-hidden text-ellipsis whitespace-nowrap">
-                  {IdxToCustomName(
-                    settings?.display.text,
-                    packet,
-                    packet.bubbleIdx
-                  )}
-                </p>
-                <iconify-icon inline icon="mdi:arrow-u-down-right-bold"
-                ></iconify-icon>
+    <button
+      class="cursor-ew-resize w-2 rounded bg-gray-300 hover:bg-gray-400 active:bg-gray-500 transition-colors border-0 my-2"
+      onmousedown={onDragStart}
+      ontouchstart={onDragStart}
+      aria-label="Resize"
+    ></button>
+    <div
+      class="overflow-y-auto pl-2 h-full"
+      style="width: {100 - width - 0.5}%;"
+    >
+      <div class="flex flex-col p-2">
+        <select class="w-full select" bind:value={$selectedId}>
+          {#each Object.keys($entries) as id}
+            <option value={id}>{id}</option>
+          {/each}
+        </select>
+        <ul class="list overflow-y-auto flex-1 my-2 px-2">
+          {#each $entries[$selectedId] || [] as packet, idx}
+            {#if (idx > 0 && (packet.day !== $entries[$selectedId][idx - 1].day || packet.isDay !== $entries[$selectedId][idx - 1].isDay)) || idx === 0}
+              <div class="divider">
+                {packet.day}日目 {packet.isDay ? "昼" : "夜"}
+              </div>
+            {/if}
+            <button class="btn" onclick={() => selectedIdx.set(idx)}>
+              {#if packet.event === "トーク" || packet.event === "囁き"}
+                {#if packet.message === "Over"}
+                  <p class="overflow-hidden text-ellipsis whitespace-nowrap">
+                    {IdxToCustomName(
+                      settings?.display.text,
+                      packet,
+                      packet.bubbleIdx
+                    )}
+                  </p>
+                  <iconify-icon inline icon="mdi:skip-forward"></iconify-icon>
+                {:else if packet.message === "Skip"}
+                  <p class="overflow-hidden text-ellipsis whitespace-nowrap">
+                    {IdxToCustomName(
+                      settings?.display.text,
+                      packet,
+                      packet.bubbleIdx
+                    )}
+                  </p>
+                  <iconify-icon inline icon="mdi:arrow-u-down-right-bold"
+                  ></iconify-icon>
+                {:else}
+                  <p class="overflow-hidden text-ellipsis whitespace-nowrap">
+                    {IdxToCustomName(
+                      settings?.display.text,
+                      packet,
+                      packet.bubbleIdx
+                    ) +
+                      "<" +
+                      packet.message}
+                  </p>
+                {/if}
               {:else}
                 <p class="overflow-hidden text-ellipsis whitespace-nowrap">
-                  {IdxToCustomName(
-                    settings?.display.text,
-                    packet,
-                    packet.bubbleIdx
-                  ) +
-                    "<" +
-                    packet.message}
+                  {#if packet.event === "投票" || packet.event === "占い"}
+                    {IdxToCustomName(
+                      settings?.display.text,
+                      packet,
+                      packet.fromIdx
+                    )}
+                  {:else if packet.event === "追放" || packet.event === "襲撃"}
+                    {IdxToCustomName(
+                      settings?.display.text,
+                      packet,
+                      packet.toIdx
+                    )}
+                  {/if}
+                  {packet.event}
                 </p>
               {/if}
-            {:else}
-              <p class="overflow-hidden text-ellipsis whitespace-nowrap">
-                {#if packet.event === "投票" || packet.event === "占い"}
-                  {IdxToCustomName(
-                    settings?.display.text,
-                    packet,
-                    packet.fromIdx
-                  )}
-                {:else if packet.event === "追放" || packet.event === "襲撃"}
-                  {IdxToCustomName(
-                    settings?.display.text,
-                    packet,
-                    packet.toIdx
-                  )}
-                {/if}
-                {packet.event}
-              </p>
-            {/if}
-          </button>
-        {/each}
-      </ul>
+            </button>
+          {/each}
+        </ul>
+      </div>
     </div>
   </div>
 </main>

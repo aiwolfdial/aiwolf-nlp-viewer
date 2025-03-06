@@ -2,6 +2,7 @@
 
 export interface AgentSettings {
     connection: Connection;
+    team: string;
 }
 
 export interface Connection {
@@ -174,6 +175,7 @@ function r(name: string) {
 const typeMap: any = {
     "AgentSettings": o([
         { json: "connection", js: "connection", typ: r("Connection") },
+        { json: "team", js: "team", typ: "" },
     ], false),
     "Connection": o([
         { json: "url", js: "url", typ: "" },

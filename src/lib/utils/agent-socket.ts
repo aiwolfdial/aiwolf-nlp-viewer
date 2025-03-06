@@ -1,17 +1,29 @@
 import { agentSettings } from '$lib/stores/agent-settings';
-import type { Packet } from '$lib/types/agent';
+import { Request, Role, type Info, type Packet, type Setting, type Talk } from '$lib/types/agent';
 import type { AgentSettings } from '$lib/types/agent-settings';
 import { writable } from 'svelte/store';
 
 export interface AgentSocket {
     status: 'disconnected' | 'connecting' | 'connected';
-    entries: Packet[]
+    entries: (Packet | string)[];
+    role: Role | null;
+    request: Request | null;
+    info: Info | null;
+    setting: Setting | null;
+    talkHistory: Talk[];
+    whisperHistory: Talk[];
 }
 
 function createAgentSocketState() {
     const { subscribe, update } = writable<AgentSocket>({
         status: 'disconnected',
         entries: [],
+        role: null,
+        request: null,
+        info: null,
+        setting: null,
+        talkHistory: [],
+        whisperHistory: [],
     });
 
     let socket: WebSocket | null = null;
@@ -46,8 +58,42 @@ function createAgentSocketState() {
                 update(state => {
                     const newEntries = state.entries.slice();
                     newEntries.push(packet);
-                    return { ...state, entries: newEntries };
+
+                    const newState = {
+                        ...state,
+                        entries: newEntries,
+                        request: packet.request
+                    };
+
+                    if (packet.info) {
+                        newState.info = packet.info;
+                    }
+                    if (packet.setting) {
+                        newState.setting = packet.setting;
+                    }
+                    if (packet.talkHistory) {
+                        newState.talkHistory.push(...packet.talkHistory);
+                    }
+                    if (packet.whisperHistory) {
+                        newState.whisperHistory.push(...packet.whisperHistory);
+                    }
+                    if (packet.request === Request.INITIALIZE &&
+                        newState.info &&
+                        newState.info.roleMap &&
+                        newState.info.agent) {
+                        newState.role = newState.info.roleMap[newState.info.agent];
+                    }
+                    return newState;
                 });
+
+                switch (packet.request) {
+                    case Request.NAME:
+                        send(settings?.team || 'viewer' + Math.floor(Math.random() * 1000));
+                        break;
+                    case Request.FINISH:
+                        disconnect();
+                        break;
+                }
             } catch (e) {
                 console.error("Failed to parse message:", e);
             }
@@ -66,24 +112,23 @@ function createAgentSocketState() {
         if (socket && socket.readyState === WebSocket.OPEN) {
             try {
                 socket.send(text);
+                update(state => {
+                    const newEntries = state.entries.slice();
+                    newEntries.push(text);
+                    return { ...state, entries: newEntries };
+                });
             } catch (e) {
                 console.error("Failed to send message:", e);
             }
         }
     }
 
+
     return {
         subscribe,
         connect,
         disconnect,
         send,
-        entries: {
-            subscribe: (callback: (value: Packet[]) => void) => {
-                return subscribe((state) => {
-                    callback(state.entries);
-                });
-            }
-        },
     };
 }
 

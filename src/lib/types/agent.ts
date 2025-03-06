@@ -1,9 +1,23 @@
 export interface Packet {
-    request: string;
+    request: Request;
     info: Info | undefined;
     setting: Setting | undefined;
     talkHistory: Talk[] | undefined;
     whisperHistory: Talk[] | undefined;
+}
+
+export enum Request {
+    NAME = "NAME",
+    TALK = "TALK",
+    WHISPER = "WHISPER",
+    VOTE = "VOTE",
+    DIVINE = "DIVINE",
+    GUARD = "GUARD",
+    ATTACK = "ATTACK",
+    INITIALIZE = "INITIALIZE",
+    DAILY_INITIALIZE = "DAILY_INITIALIZE",
+    DAILY_FINISH = "DAILY_FINISH",
+    FINISH = "FINISH"
 }
 
 export interface Info {
@@ -15,15 +29,34 @@ export interface Info {
     attackedAgent: string | undefined;
     voteList: Vote[] | undefined;
     attackVoteList: Vote[] | undefined;
-    statusMap: Record<string, string> | undefined;
-    roleMap: Record<string, string> | undefined;
+    statusMap: Record<string, Status> | undefined;
+    roleMap: Record<string, Role> | undefined;
 }
 
 export interface Judge {
     day: number;
     agent: string;
     target: string;
-    result: string;
+    result: Species;
+}
+
+export enum Species {
+    HUMAN = "HUMAN",
+    WEREWOLF = "WEREWOLF",
+}
+
+export enum Status {
+    ALIVE = "ALIVE",
+    DEAD = "DEAD",
+}
+
+export enum Role {
+    WEREWOLF = "WEREWOLF",
+    POSSESSED = "POSSESSED",
+    SEER = "SEER",
+    BODYGUARD = "BODYGUARD",
+    VILLAGER = "VILLAGER",
+    MEDIUM = "MEDIUM"
 }
 
 export interface Vote {
@@ -34,7 +67,7 @@ export interface Vote {
 
 export interface Setting {
     playerNum: number;
-    roleNumMap: Record<string, number>;
+    roleNumMap: Record<Role, number>;
     maxTalk: number;
     maxTalkTurn: number;
     maxWhisper: number;

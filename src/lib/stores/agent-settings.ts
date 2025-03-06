@@ -8,6 +8,7 @@ const defaultAgentSettings: AgentSettings = {
         url: "ws://localhost:8080/ws",
         token: ""
     },
+    team: "default",
 }
 
 function load(): AgentSettings {

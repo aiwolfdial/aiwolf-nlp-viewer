@@ -102,7 +102,20 @@
   <button class="btn" onclick={() => modal.showModal()}>設定</button>
   <dialog class="modal" bind:this={modal}>
     <div class="modal-box">
-      <div class="form-control"></div>
+      <div class="form-control">
+        <h3 class="text-lg font-bold mt-2">エージェント設定</h3>
+        <h4 class="text-base font-bold mt-4">チーム名</h4>
+        <label class="input min-w-3xs w-3xs my-2">
+          <iconify-icon class="h-[1em] opacity-50" inline icon="mdi:rename"
+          ></iconify-icon>
+          <input
+            type="text"
+            class="grow"
+            value={settings?.team}
+            oninput={(e) => updateSettings("team", e.currentTarget.value)}
+          />
+        </label>
+      </div>
     </div>
     <form method="dialog" class="modal-backdrop">
       <button>close</button>
