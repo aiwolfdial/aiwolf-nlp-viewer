@@ -11,8 +11,8 @@
   import Canvas from "./Canvas.svelte";
   import Navbar from "./Navbar.svelte";
 
-  const selectedId = writable("");
-  const selectedIdx = writable(0);
+  const selectedId = writable<string | null>(null);
+  const selectedIdx = writable<number | null>(null);
 
   const defaultPacket: Packet = {
     id: "",
@@ -78,12 +78,17 @@
     const unsubscribeEntries = realtimeSocketState.entries.subscribe(
       (value) => {
         entries.set(value);
-        selectedId.update((id) => {
-          if (!id) {
-            const firstKey = Object.keys(value)[0] || "";
-            return firstKey;
-          }
-          return id;
+
+        selectedId.update((currentId) => {
+          if (currentId) return currentId;
+          return Object.keys(value)[0];
+        });
+
+        selectedIdx.update(() => {
+          if (!$selectedId) return null;
+          const currentEntries = value[$selectedId];
+          if (!currentEntries) return null;
+          return currentEntries.length - 1;
         });
       }
     );
@@ -108,6 +113,8 @@
     derived(
       [selectedId, selectedIdx, entries],
       ([$selectedId, $selectedIdx, $entries]) => {
+        if (!$selectedId) return defaultPacket;
+        if (!$selectedIdx) return defaultPacket;
         if (
           $entries[$selectedId] &&
           $selectedIdx >= 0 &&
@@ -167,64 +174,66 @@
           {/each}
         </select>
         <ul class="list overflow-y-auto flex-1 my-2 px-2">
-          {#each $entries[$selectedId] || [] as packet, idx}
-            {#if (idx > 0 && (packet.day !== $entries[$selectedId][idx - 1].day || packet.isDay !== $entries[$selectedId][idx - 1].isDay)) || idx === 0}
-              <div class="divider">
-                {packet.day}日目 {packet.isDay ? "昼" : "夜"}
-              </div>
-            {/if}
-            <button class="btn" onclick={() => selectedIdx.set(idx)}>
-              {#if packet.event === "トーク" || packet.event === "囁き"}
-                {#if packet.message === "Over"}
-                  <p class="overflow-hidden text-ellipsis whitespace-nowrap">
-                    {IdxToCustomName(
-                      settings?.display.text,
-                      packet,
-                      packet.bubbleIdx
-                    )}
-                  </p>
-                  <iconify-icon inline icon="mdi:skip-forward"></iconify-icon>
-                {:else if packet.message === "Skip"}
-                  <p class="overflow-hidden text-ellipsis whitespace-nowrap">
-                    {IdxToCustomName(
-                      settings?.display.text,
-                      packet,
-                      packet.bubbleIdx
-                    )}
-                  </p>
-                  <iconify-icon inline icon="mdi:arrow-u-down-right-bold"
-                  ></iconify-icon>
+          {#if $selectedId}
+            {#each $entries[$selectedId] || [] as packet, idx}
+              {#if (idx > 0 && (packet.day !== $entries[$selectedId][idx - 1].day || packet.isDay !== $entries[$selectedId][idx - 1].isDay)) || idx === 0}
+                <div class="divider">
+                  {packet.day}日目 {packet.isDay ? "昼" : "夜"}
+                </div>
+              {/if}
+              <button class="btn" onclick={() => selectedIdx.set(idx)}>
+                {#if packet.event === "トーク" || packet.event === "囁き"}
+                  {#if packet.message === "Over"}
+                    <p class="overflow-hidden text-ellipsis whitespace-nowrap">
+                      {IdxToCustomName(
+                        settings?.display.text,
+                        packet,
+                        packet.bubbleIdx
+                      )}
+                    </p>
+                    <iconify-icon inline icon="mdi:skip-forward"></iconify-icon>
+                  {:else if packet.message === "Skip"}
+                    <p class="overflow-hidden text-ellipsis whitespace-nowrap">
+                      {IdxToCustomName(
+                        settings?.display.text,
+                        packet,
+                        packet.bubbleIdx
+                      )}
+                    </p>
+                    <iconify-icon inline icon="mdi:arrow-u-down-right-bold"
+                    ></iconify-icon>
+                  {:else}
+                    <p class="overflow-hidden text-ellipsis whitespace-nowrap">
+                      {IdxToCustomName(
+                        settings?.display.text,
+                        packet,
+                        packet.bubbleIdx
+                      ) +
+                        "<" +
+                        packet.message}
+                    </p>
+                  {/if}
                 {:else}
                   <p class="overflow-hidden text-ellipsis whitespace-nowrap">
-                    {IdxToCustomName(
-                      settings?.display.text,
-                      packet,
-                      packet.bubbleIdx
-                    ) +
-                      "<" +
-                      packet.message}
+                    {#if packet.event === "投票" || packet.event === "占い"}
+                      {IdxToCustomName(
+                        settings?.display.text,
+                        packet,
+                        packet.fromIdx
+                      )}
+                    {:else if packet.event === "追放" || packet.event === "襲撃"}
+                      {IdxToCustomName(
+                        settings?.display.text,
+                        packet,
+                        packet.toIdx
+                      )}
+                    {/if}
+                    {packet.event}
                   </p>
                 {/if}
-              {:else}
-                <p class="overflow-hidden text-ellipsis whitespace-nowrap">
-                  {#if packet.event === "投票" || packet.event === "占い"}
-                    {IdxToCustomName(
-                      settings?.display.text,
-                      packet,
-                      packet.fromIdx
-                    )}
-                  {:else if packet.event === "追放" || packet.event === "襲撃"}
-                    {IdxToCustomName(
-                      settings?.display.text,
-                      packet,
-                      packet.toIdx
-                    )}
-                  {/if}
-                  {packet.event}
-                </p>
-              {/if}
-            </button>
-          {/each}
+              </button>
+            {/each}
+          {/if}
         </ul>
       </div>
     </div>
