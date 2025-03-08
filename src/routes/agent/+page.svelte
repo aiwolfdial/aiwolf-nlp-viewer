@@ -1,5 +1,6 @@
 <script lang="ts">
   import { browser } from "$app/environment";
+  import { page } from "$app/state";
   import { agentSettings } from "$lib/stores/agent-settings";
   import {
     Request,
@@ -46,6 +47,26 @@
   let width = $state<number>(50);
   let isDragging = false;
   let containerRef: HTMLDivElement | null = null;
+
+  function connectWithParams() {
+    if (browser) {
+      const params = page.url.searchParams;
+      const url = params.get("url");
+      const token = params.get("token");
+
+      if (url) {
+        agentSettings.update((value) => ({
+          ...value,
+          connection: {
+            url: url ?? "",
+            token: token ?? "",
+          },
+        }));
+
+        agentSocketState.connect();
+      }
+    }
+  }
 
   function onMouseMove(clientX: number) {
     if (!isDragging || !containerRef) return;
@@ -104,6 +125,8 @@
   }
 
   onMount(() => {
+    connectWithParams();
+
     const unsubscribeStatus = agentSocketState.subscribe((value) => {
       status.set(value.status);
 
@@ -146,7 +169,12 @@
 
     if (browser) {
       window.addEventListener("beforeunload", (e) => {
-        if ($status === "connecting") {
+        if ($status === "connected") {
+          e.preventDefault();
+        }
+      });
+      window.addEventListener("popstate", (e) => {
+        if ($status === "connected") {
           e.preventDefault();
         }
       });

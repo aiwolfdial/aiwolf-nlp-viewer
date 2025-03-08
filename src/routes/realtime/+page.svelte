@@ -1,5 +1,6 @@
 <script lang="ts">
   import { browser } from "$app/environment";
+  import { page } from "$app/state";
   import { realtimeSettings } from "$lib/stores/realtime-settings";
   import type { Packet } from "$lib/types/realtime";
   import type { RealtimeSettings } from "$lib/types/realtime-settings";
@@ -38,6 +39,26 @@
   let isDragging = false;
   let containerRef: HTMLDivElement | null = null;
 
+  function connectWithParams() {
+    if (browser) {
+      const params = page.url.searchParams;
+      const url = params.get("url");
+      const token = params.get("token");
+
+      if (url) {
+        realtimeSettings.update((value) => ({
+          ...value,
+          connection: {
+            url: url ?? "",
+            token: token ?? "",
+          },
+        }));
+
+        realtimeSocketState.connect();
+      }
+    }
+  }
+
   function onMouseMove(clientX: number) {
     if (!isDragging || !containerRef) return;
     const containerRect = containerRef.getBoundingClientRect();
@@ -75,6 +96,8 @@
   }
 
   onMount(() => {
+    connectWithParams();
+
     const unsubscribeEntries = realtimeSocketState.entries.subscribe(
       (value) => {
         entries.set(value);
@@ -132,7 +155,12 @@
 
     if (browser) {
       window.addEventListener("beforeunload", (e) => {
-        if ($status === "connecting") {
+        if ($status === "connected") {
+          e.preventDefault();
+        }
+      });
+      window.addEventListener("popstate", (e) => {
+        if ($status === "connected") {
           e.preventDefault();
         }
       });
