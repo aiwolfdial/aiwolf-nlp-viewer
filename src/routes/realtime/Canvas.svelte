@@ -199,10 +199,10 @@
   <div class="bg-secondary" bind:this={arrowContainer}></div>
   {#if !settings?.display.largeScale}
     <div role="alert" class="alert m-4">
-      <p class="text-lg font-bold">
+      <span class="text-lg font-bold">
         {packet.day}日目 {packet.isDay ? "昼" : "夜"}
         {packet.event}フェーズ
-      </p>
+      </span>
     </div>
   {/if}
   <div class="w-full flex-1 mt-8">
@@ -211,11 +211,11 @@
       bind:this={container}
     >
       {#if settings?.display.largeScale}
-        <p
-          class="w-2/5 text-9xl font-black opacity-50 absolute top-0 left-0 -mt-4 ml-8"
+        <span
+          class="base-content w-2/5 text-9xl font-black opacity-50 absolute top-0 left-0 -mt-4 ml-8"
         >
           {packet.day}日目 {packet.isDay ? "昼" : "夜"}
-        </p>
+        </span>
       {/if}
       <canvas
         bind:this={bubble}
@@ -233,8 +233,8 @@
         <div class="card-body">
           <p
             class={settings?.display.largeScale
-              ? "text-3xl font-bold text-pretty break-keep text-center"
-              : "text-lg text-pretty break-keep text-center"}
+              ? "base-content text-3xl font-bold text-pretty break-keep text-center"
+              : "base-content text-lg text-pretty break-keep text-center"}
           >
             {message}
           </p>
@@ -243,7 +243,7 @@
       {#each packet.agents as agent, i}
         <div
           class="absolute origin-center text-center flex flex-col items-center transform-angle rounded-xl p-2"
-          class:bg-base-100={agent.idx === focusIdx}
+          class:bg-focus={agent.idx === focusIdx}
           style="--angle: {i * (360 / packet.agents.length)}"
           id="agent-{agent.idx}"
         >
@@ -286,20 +286,20 @@
             </div>
           </div>
           {#if !settings?.display.largeScale && settings?.display.canvas.name}
-            <span>{IdxToName(agent.idx)}</span>
+            <span class="base-content">{IdxToName(agent.idx)}</span>
           {/if}
           {#if settings?.display.canvas.team}
             {#if settings?.display.largeScale}
-              <span class="text-2xl mt-2">{agent.team}</span>
+              <span class="base-content text-2xl mt-2">{agent.team}</span>
             {:else}
-              <span>{agent.team}</span>
+              <span class="base-content">{agent.team}</span>
             {/if}
           {/if}
           {#if settings?.display.canvas.role && (agent.idx === focusIdx || focusIdx === undefined)}
             {#if settings?.display.largeScale}
-              <span class="text-2xl mt-2">{agent.role}</span>
+              <span class="base-content text-2xl mt-2">{agent.role}</span>
             {:else}
-              <span>{agent.role}</span>
+              <span class="base-content">{agent.role}</span>
             {/if}
           {/if}
         </div>
@@ -326,5 +326,10 @@
 
   .ring-error {
     --tw-ring-color: var(--color-error);
+  }
+  .bg-focus {
+    background-color: oklch(
+      from var(--color-accent) calc(l + (1 - l) / 2) c h / 0.3
+    );
   }
 </style>
