@@ -173,7 +173,7 @@
             <option value={id}>{id}</option>
           {/each}
         </select>
-        <ul class="list overflow-y-auto flex-1 my-2 px-2">
+        <ul class="list overflow-y-auto flex-1 my-2">
           {#if $selectedId}
             {#each $entries[$selectedId] || [] as packet, idx}
               {#if (idx > 0 && (packet.day !== $entries[$selectedId][idx - 1].day || packet.isDay !== $entries[$selectedId][idx - 1].isDay)) || idx === 0}

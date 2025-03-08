@@ -61,6 +61,8 @@
           return `${IdxToCustomName(settings?.display.bubble, packet, packet.fromIdx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} を護衛対象にしました`;
         }
         return "護衛しました";
+      case "終了":
+        return packet.message + " が勝利しました";
       default:
         return undefined;
     }
@@ -69,7 +71,8 @@
   let container: HTMLDivElement;
   let bubble: HTMLCanvasElement;
   let arrow: HTMLCanvasElement;
-  let chat: HTMLDivElement;
+  let bubbleContainer: HTMLDivElement;
+  let arrowContainer: HTMLDivElement;
 
   onMount(() => {
     window.addEventListener("resize", render);
@@ -125,7 +128,7 @@
         toRect.left + toRect.width / 2 - canvasRect.left,
         toRect.top + toRect.height / 2 - canvasRect.top,
         false,
-        getComputedStyle(chat).getPropertyValue("background-color")
+        getComputedStyle(arrowContainer).getPropertyValue("background-color")
       );
     }
 
@@ -144,7 +147,7 @@
         bubbleX,
         bubbleY,
         true,
-        getComputedStyle(chat).getPropertyValue("background-color")
+        getComputedStyle(bubbleContainer).getPropertyValue("background-color")
       );
     }
   }
@@ -193,10 +196,12 @@
 </script>
 
 <div class="h-full flex flex-col">
+  <div class="bg-secondary" bind:this={arrowContainer}></div>
   {#if !settings?.display.largeScale}
     <div role="alert" class="alert m-4">
       <p class="text-lg font-bold">
         {packet.day}日目 {packet.isDay ? "昼" : "夜"}
+        {packet.event}フェーズ
       </p>
     </div>
   {/if}
@@ -221,7 +226,7 @@
         class="w-full h-full absolute top-0 left-0 z-10 pointer-events-none"
       ></canvas>
       <div
-        bind:this={chat}
+        bind:this={bubbleContainer}
         class="w-1/2 h-fit max-h-1/3 card bg-base-100 card-md shadow-md overflow-auto z-20"
         hidden={!message}
       >
