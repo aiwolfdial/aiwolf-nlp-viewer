@@ -233,8 +233,8 @@
         <div class="card-body">
           <p
             class={settings?.display.largeScale
-              ? "base-content text-3xl font-bold text-pretty break-keep text-center"
-              : "base-content text-lg text-pretty break-keep text-center"}
+              ? "base-content text-3xl font-bold text-pretty break-all text-center"
+              : "base-content text-lg text-pretty break-all text-center"}
           >
             {message}
           </p>

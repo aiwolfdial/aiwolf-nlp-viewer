@@ -34,6 +34,8 @@
   const setting = writable<Setting | null>(null);
   const talkHistory = writable<Talk[]>([]);
   const whisperHistory = writable<Talk[]>([]);
+  const executedAgents = writable<string[]>([]);
+  const attackedAgents = writable<string[]>([]);
 
   const remain = writable<number | null>(null);
   const message = writable<string>("");
@@ -125,6 +127,8 @@
       setting.set(value.setting);
       talkHistory.set(value.talkHistory);
       whisperHistory.set(value.whisperHistory);
+      executedAgents.set(value.executedAgents);
+      attackedAgents.set(value.attackedAgents);
     });
 
     const unsubscribeSettings = agentSettings.subscribe((value) => {
@@ -157,7 +161,7 @@
 <main class="h-screen flex flex-col">
   <Navbar />
   <div class="flex flex-1 overflow-hidden w-full flex-col">
-    <div class="flex-auto bg-base-300 p-2 h-full overflow-hidden">
+    <div class="flex-auto bg-base-300 h-full overflow-hidden">
       <div class="flex flex-row h-full" bind:this={containerRef}>
         <div class="overflow-y-auto px-2 h-full" style="width: {width}%">
           <pre class="font-bold text-xl p-2">{$info?.agent ?? "未接続"} {RoleJA[
@@ -178,11 +182,16 @@
                     <pre
                       class="font-bold bg-info text-info-content ml-auto">{StatusJA[
                         value
-                      ]}</pre>{:else}
+                      ]}</pre>
+                  {:else}
                     <pre
                       class="font-bold bg-error text-error-content ml-auto">{StatusJA[
                         value
-                      ]}</pre>
+                      ]}{$executedAgents.includes(key)
+                        ? " (追放)"
+                        : $attackedAgents.includes(key)
+                          ? " (襲撃)"
+                          : ""}</pre>
                   {/if}
                 </div>
               {/each}
@@ -196,7 +205,7 @@
                     <pre>(Day{day})</pre>
                     {#if result === Species.HUMAN}
                       <pre
-                        class="font-bold bg-info text-info-content ml-auto">{SpeciesJA[
+                        class="font-bold bg-success text-success-content ml-auto">{SpeciesJA[
                           result
                         ]}</pre>{:else}
                       <pre
@@ -232,51 +241,99 @@
           {/if}
           {#if $talkHistory.length > 0}
             <div class="p-2">
-              <h2 class="font-bold text-lg p-2">トーク履歴</h2>
-              {#each $talkHistory as { agent, day, idx, text, skip, over }}
-                <div class="chat chat-start">
-                  <div class="chat-image avatar avatar-placeholder">
+              <h2 class="font-bold text-lg">トーク履歴</h2>
+              {#if $talkHistory.length > 0}
+                {@const days = [
+                  ...new Set($talkHistory.map((t) => t.day)),
+                ].sort((a, b) => b - a)}
+                <div class="tabs tabs-border">
+                  {#each days as day}
+                    <input
+                      type="radio"
+                      name="talk_days"
+                      class="tab"
+                      checked={day === days[0]}
+                      aria-label={`${day}日目`}
+                    />
                     <div
-                      class="bg-neutral text-neutral-content w-12 rounded-full"
+                      class="tab-content bg-base-200 p-2 max-h-96 overflow-y-auto"
                     >
-                      <span class="text-2xl"
-                        >{Number(agent.match(/Agent\[(\d+)\]/)?.[1]) ??
-                          ""}</span
-                      >
+                      {#each $talkHistory.filter((t) => t.day === day) as { agent, idx, text, skip, over }}
+                        <div class="chat chat-start">
+                          <div class="chat-image avatar avatar-placeholder">
+                            <div
+                              class="bg-neutral text-neutral-content w-12 rounded-full"
+                            >
+                              <span class="text-2xl">
+                                {Number(agent.match(/Agent\[(\d+)\]/)?.[1]) ??
+                                  ""}
+                              </span>
+                            </div>
+                          </div>
+                          <div class="chat-header"></div>
+                          <div
+                            class="chat-bubble bg-base-100 text-pretty break-all"
+                          >
+                            {text}
+                          </div>
+                          <pre class="chat-footer opacity-50">{idx}</pre>
+                        </div>
+                      {/each}
                     </div>
-                  </div>
-                  <div class="chat-header"></div>
-                  <div class="chat-bubble bg-base-100">{text}</div>
-                  <div class="chat-footer opacity-50">Day {day} Idx {idx}</div>
+                  {/each}
                 </div>
-              {/each}
+              {/if}
             </div>
           {/if}
           {#if $whisperHistory.length > 0}
             <div class="p-2">
-              <h2 class="font-bold text-lg p-2">囁き履歴</h2>
-              {#each $whisperHistory as { agent, day, idx, text, skip, over }}
-                <div class="chat chat-start">
-                  <div class="chat-image avatar avatar-placeholder">
+              <h2 class="font-bold text-lg">囁き履歴</h2>
+              {#if $whisperHistory.length > 0}
+                {@const days = [
+                  ...new Set($whisperHistory.map((t) => t.day)),
+                ].sort((a, b) => b - a)}
+                <div class="tabs tabs-border">
+                  {#each days as day}
+                    <input
+                      type="radio"
+                      name="whisper_days"
+                      class="tab"
+                      checked={day === days[0]}
+                      aria-label={`${day}日目`}
+                    />
                     <div
-                      class="bg-neutral text-neutral-content w-12 rounded-full"
+                      class="tab-content bg-base-200 p-2 max-h-96 overflow-y-auto"
                     >
-                      <span class="text-2xl"
-                        >{Number(agent.match(/Agent\[(\d+)\]/)?.[1]) ??
-                          ""}</span
-                      >
+                      {#each $whisperHistory.filter((t) => t.day === day) as { agent, idx, text, skip, over }}
+                        <div class="chat chat-start">
+                          <div class="chat-image avatar avatar-placeholder">
+                            <div
+                              class="bg-neutral text-neutral-content w-12 rounded-full"
+                            >
+                              <span class="text-2xl">
+                                {Number(agent.match(/Agent\[(\d+)\]/)?.[1]) ??
+                                  ""}
+                              </span>
+                            </div>
+                          </div>
+                          <div class="chat-header"></div>
+                          <div
+                            class="chat-bubble bg-base-100 text-pretty break-all"
+                          >
+                            {text}
+                          </div>
+                          <pre class="chat-footer opacity-50">{idx}</pre>
+                        </div>
+                      {/each}
                     </div>
-                  </div>
-                  <div class="chat-header"></div>
-                  <div class="chat-bubble bg-base-100">{text}</div>
-                  <div class="chat-footer opacity-50">Day {day} Idx {idx}</div>
+                  {/each}
                 </div>
-              {/each}
+              {/if}
             </div>
           {/if}
         </div>
         <button
-          class="cursor-ew-resize w-2 rounded bg-gray-300 hover:bg-gray-400 active:bg-gray-500 transition-colors border-0"
+          class="cursor-ew-resize w-2 rounded bg-gray-300 hover:bg-gray-400 active:bg-gray-500 transition-colors border-0 my-2"
           onmousedown={onDragStart}
           ontouchstart={onDragStart}
           aria-label="Resize"

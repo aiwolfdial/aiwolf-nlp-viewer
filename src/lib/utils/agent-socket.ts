@@ -15,6 +15,8 @@ export interface AgentSocket {
     setting: Setting | null;
     talkHistory: Talk[];
     whisperHistory: Talk[];
+    executedAgents: string[];
+    attackedAgents: string[];
 }
 
 function createAgentSocketState() {
@@ -30,6 +32,8 @@ function createAgentSocketState() {
         setting: null,
         talkHistory: [],
         whisperHistory: [],
+        executedAgents: [],
+        attackedAgents: [],
     });
 
     let socket: WebSocket | null = null;
@@ -64,6 +68,8 @@ function createAgentSocketState() {
             setting: null,
             talkHistory: [],
             whisperHistory: [],
+            executedAgents: [],
+            attackedAgents: [],
         }));
     }
 
@@ -120,6 +126,12 @@ function createAgentSocketState() {
                             if (newState.divineResults.findIndex(j => j.day === judge.day && j.agent === judge.agent) < 0) {
                                 newState.divineResults.push(packet.info.divineResult);
                             }
+                        }
+                        if (packet.info.executedAgent) {
+                            newState.executedAgents.push(packet.info.executedAgent);
+                        }
+                        if (packet.info.attackedAgent) {
+                            newState.attackedAgents.push(packet.info.attackedAgent);
                         }
                     }
                     if (packet.setting) {

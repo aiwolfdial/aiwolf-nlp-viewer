@@ -87,7 +87,6 @@
         selectedIdx.update(() => {
           if (!$selectedId) return null;
           const currentEntries = value[$selectedId];
-          if (!currentEntries) return null;
           return currentEntries.length - 1;
         });
       }
@@ -97,32 +96,27 @@
       status.set(value.status);
     });
 
-    selectedId.subscribe((id) => {
-      entries.update((e) => {
-        if (id && e[id]?.length > 0) {
-          selectedIdx.set(e[id].length - 1);
-        }
-        return e;
-      });
+    const unsubscribeSelectedId = selectedId.subscribe((id) => {
+      if (id && $entries[id]?.length > 0) {
+        selectedIdx.set($entries[id].length - 1);
+      } else {
+        selectedIdx.set(null);
+      }
     });
 
     const unsubscribeSettings = realtimeSettings.subscribe((value) => {
       settings = value;
     });
 
-    derived(
+    const unsubscribeCurrentPacket = derived(
       [selectedId, selectedIdx, entries],
       ([$selectedId, $selectedIdx, $entries]) => {
-        if (!$selectedId) return defaultPacket;
-        if (!$selectedIdx) return defaultPacket;
-        if (
-          $entries[$selectedId] &&
-          $selectedIdx >= 0 &&
-          $selectedIdx < $entries[$selectedId].length
-        ) {
-          return $entries[$selectedId][$selectedIdx];
+        if (!$selectedId || $selectedIdx === null) return defaultPacket;
+        const packets = $entries[$selectedId];
+        if (!packets || $selectedIdx < 0 || $selectedIdx >= packets.length) {
+          return defaultPacket;
         }
-        return defaultPacket;
+        return packets[$selectedIdx];
       }
     ).subscribe((packet) => {
       currentPacket.set(packet);
@@ -132,6 +126,8 @@
       unsubscribeEntries();
       unsubscribeStatus();
       unsubscribeSettings();
+      unsubscribeSelectedId();
+      unsubscribeCurrentPacket();
     });
 
     if (browser) {
@@ -181,7 +177,10 @@
                   {packet.day}日目 {packet.isDay ? "昼" : "夜"}
                 </div>
               {/if}
-              <button class="btn" onclick={() => selectedIdx.set(idx)}>
+              <button
+                class="btn {idx === $selectedIdx ? 'btn-primary' : ''}"
+                onclick={() => selectedIdx.set(idx)}
+              >
                 {#if packet.event === "トーク" || packet.event === "囁き"}
                   {#if packet.message === "Over"}
                     <p class="overflow-hidden text-ellipsis whitespace-nowrap">
