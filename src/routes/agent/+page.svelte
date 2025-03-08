@@ -2,12 +2,16 @@
   import { browser } from "$app/environment";
   import { agentSettings } from "$lib/stores/agent-settings";
   import {
+    Request,
+    RequestJA,
+    RoleJA,
     Species,
+    SpeciesJA,
     Status,
+    StatusJA,
     type Info,
     type Judge,
     type Packet,
-    type Request,
     type Role,
     type Setting,
     type Talk,
@@ -156,101 +160,120 @@
     <div class="flex-auto bg-base-300 p-2 h-full overflow-hidden">
       <div class="flex flex-row h-full" bind:this={containerRef}>
         <div class="overflow-y-auto px-2 h-full" style="width: {width}%">
-          <pre class="font-bold text-xl p-2">{$info?.agent ??
-              "未接続"} {$role}</pre>
+          <pre class="font-bold text-xl p-2">{$info?.agent ?? "未接続"} {RoleJA[
+              $role!
+            ]}</pre>
           {#if $request !== null}
-            <pre class="bg-primary text-primary-content p-2">{$request}</pre>
+            <pre class="bg-primary text-primary-content p-2">{$info !== null
+                ? $info.day + "日目"
+                : "ゲーム外"} {RequestJA[$request!]}</pre>
           {/if}
           {#if $info !== null}
             <div class="p-2">
               {#each Object.entries($info.statusMap ?? {}) as [key, value]}
                 <div class="flex flex-row gap-2">
                   <pre>{key}</pre>
-                  <pre>{($info.roleMap ?? {})[key] ?? "-"}</pre>
+                  <pre>{RoleJA[($info.roleMap ?? {})[key]] ?? "-"}</pre>
                   {#if value === Status.ALIVE}
                     <pre
-                      class="font-bold bg-info text-info-content ml-auto">{value}</pre>{:else}
+                      class="font-bold bg-info text-info-content ml-auto">{StatusJA[
+                        value
+                      ]}</pre>{:else}
                     <pre
-                      class="font-bold bg-error text-error-content ml-auto">{value}</pre>
+                      class="font-bold bg-error text-error-content ml-auto">{StatusJA[
+                        value
+                      ]}</pre>
                   {/if}
                 </div>
               {/each}
             </div>
             {#if $mediumResults.length > 0}
-              <h2 class="font-bold text-lg p-2">霊能結果</h2>
-              {#each $mediumResults as { day, target, result }}
-                <div class="flex flex-row gap-2">
-                  <pre>{target}</pre>
-                  <pre>(Day{day})</pre>
-                  {#if result === Species.HUMAN}
-                    <pre
-                      class="font-bold bg-info text-info-content ml-auto">{result}</pre>{:else}
-                    <pre
-                      class="font-bold bg-error text-error-content ml-auto">{result}</pre>
-                  {/if}
-                </div>
-              {/each}
+              <div class="p-2">
+                <h2 class="font-bold text-lg">霊能結果</h2>
+                {#each $mediumResults as { day, target, result }}
+                  <div class="flex flex-row gap-2">
+                    <pre>{target}</pre>
+                    <pre>(Day{day})</pre>
+                    {#if result === Species.HUMAN}
+                      <pre
+                        class="font-bold bg-info text-info-content ml-auto">{SpeciesJA[
+                          result
+                        ]}</pre>{:else}
+                      <pre
+                        class="font-bold bg-error text-error-content ml-auto">{SpeciesJA[
+                          result
+                        ]}</pre>
+                    {/if}
+                  </div>
+                {/each}
+              </div>
             {/if}
             {#if $divineResults.length > 0}
-              <h2 class="font-bold text-lg p-2">占い結果</h2>
-              {#each $mediumResults as { day, target, result }}
-                <div class="flex flex-row gap-2">
-                  <pre>{target}</pre>
-                  <pre>(Day{day})</pre>
-                  {#if result === Species.HUMAN}
-                    <pre
-                      class="font-bold bg-info text-info-content ml-auto">{result}</pre>{:else}
-                    <pre
-                      class="font-bold bg-error text-error-content ml-auto">{result}</pre>
-                  {/if}
-                </div>
-              {/each}
+              <div class="p-2">
+                <h2 class="font-bold text-lg">占い結果</h2>
+                {#each $divineResults as { day, target, result }}
+                  <div class="flex flex-row gap-2">
+                    <pre>{target}</pre>
+                    <pre>(Day{day})</pre>
+                    {#if result === Species.HUMAN}
+                      <pre
+                        class="font-bold bg-info text-info-content ml-auto">{SpeciesJA[
+                          result
+                        ]}</pre>{:else}
+                      <pre
+                        class="font-bold bg-error text-error-content ml-auto">{SpeciesJA[
+                          result
+                        ]}</pre>
+                    {/if}
+                  </div>
+                {/each}
+              </div>
             {/if}
           {/if}
           {#if $talkHistory.length > 0}
-            <h2 class="font-bold text-lg p-2">トーク履歴</h2>
-          {/if}
-          {#each $talkHistory as { agent, day, idx, text, skip, over }}
-            <div
-              class="chat"
-              class:chat-end={agent === $info?.agent}
-              class:chat-start={agent !== $info?.agent}
-            >
-              <div class="chat-image avatar avatar-placeholder">
-                <div class="bg-neutral text-neutral-content w-12 rounded-full">
-                  <span class="text-2xl"
-                    >{Number(agent.match(/Agent\[(\d+)\]/)?.[1]) ?? ""}</span
-                  >
+            <div class="p-2">
+              <h2 class="font-bold text-lg p-2">トーク履歴</h2>
+              {#each $talkHistory as { agent, day, idx, text, skip, over }}
+                <div class="chat chat-start">
+                  <div class="chat-image avatar avatar-placeholder">
+                    <div
+                      class="bg-neutral text-neutral-content w-12 rounded-full"
+                    >
+                      <span class="text-2xl"
+                        >{Number(agent.match(/Agent\[(\d+)\]/)?.[1]) ??
+                          ""}</span
+                      >
+                    </div>
+                  </div>
+                  <div class="chat-header"></div>
+                  <div class="chat-bubble bg-base-100">{text}</div>
+                  <div class="chat-footer opacity-50">Day {day} Idx {idx}</div>
                 </div>
-              </div>
-              <div class="chat-header"></div>
-              <div class="chat-bubble bg-base-100">{text}</div>
-              <div class="chat-footer opacity-50">Day {day} Idx {idx}</div>
+              {/each}
             </div>
-          {/each}
+          {/if}
           {#if $whisperHistory.length > 0}
-            <h2 class="font-bold text-lg p-2">囁き履歴</h2>
-          {/if}
-          {#each $whisperHistory as { agent, day, idx, text, skip, over }}
-            <div
-              class="chat"
-              class:chat-end={agent === $info?.agent}
-              class:chat-start={agent !== $info?.agent}
-            >
-              <div class="chat-image avatar avatar-placeholder">
-                <div class="bg-neutral text-neutral-content w-12 rounded-full">
-                  <span class="text-2xl"
-                    >{Number(agent.match(/Agent\[(\d+)\]/)?.[1]) ?? ""}</span
-                  >
+            <div class="p-2">
+              <h2 class="font-bold text-lg p-2">囁き履歴</h2>
+              {#each $whisperHistory as { agent, day, idx, text, skip, over }}
+                <div class="chat chat-start">
+                  <div class="chat-image avatar avatar-placeholder">
+                    <div
+                      class="bg-neutral text-neutral-content w-12 rounded-full"
+                    >
+                      <span class="text-2xl"
+                        >{Number(agent.match(/Agent\[(\d+)\]/)?.[1]) ??
+                          ""}</span
+                      >
+                    </div>
+                  </div>
+                  <div class="chat-header"></div>
+                  <div class="chat-bubble bg-base-100">{text}</div>
+                  <div class="chat-footer opacity-50">Day {day} Idx {idx}</div>
                 </div>
-              </div>
-              <div class="chat-header"></div>
-              <div class="chat-bubble bg-base-100">{text}</div>
-              <div class="chat-footer opacity-50">Day {day} Idx {idx}</div>
+              {/each}
             </div>
-          {/each}
-          <div class="divider"></div>
-          <pre>{JSON.stringify($setting, null, 2)}</pre>
+          {/if}
         </div>
         <button
           class="cursor-ew-resize w-2 rounded bg-gray-300 hover:bg-gray-400 active:bg-gray-500 transition-colors border-0"
@@ -269,49 +292,83 @@
         </div>
       </div>
     </div>
-    <div class="m-4">
-      <div class="flex gap-2 items-center">
-        {#if $remain !== null}
+    {#if $remain !== null}
+      <div class="m-4">
+        <div class="flex gap-2 items-center">
           <span class="countdown font-mono text-2xl">
+            {#if $remain > 60000}
+              <span
+                style="--value:{Math.floor($remain / 60000)};"
+                aria-live="polite"
+                aria-label={Math.floor($remain / 60000).toString()}
+                >{Math.floor($remain / 60000)}</span
+              >m
+            {/if}
             <span
-              style="--value:{Math.floor($remain / 1000)};"
+              style="--value:{Math.floor(($remain % 60000) / 1000)};"
               aria-live="polite"
-              aria-label={Math.floor($remain / 1000).toString()}
-              >{Math.floor($remain / 1000)}</span
+              aria-label={Math.floor(($remain % 60000) / 1000).toString()}
+              >{Math.floor(($remain % 60000) / 1000)}</span
             >s
           </span>
-        {/if}
-        <input
-          type="text"
-          class="input flex-1"
-          bind:value={$message}
-          list="agents"
-        />
-        <datalist id="agents">
-          {#each Object.entries($info?.statusMap ?? {}) as [key, value]}
-            {#if value === Status.ALIVE}
-              <option value={key}></option>
+          {#if $request === Request.VOTE || $request === Request.DIVINE || $request === Request.GUARD || $request === Request.ATTACK}
+            {#each Object.entries($info?.statusMap ?? {}) as [key, value]}
+              {#if value === Status.ALIVE}
+                <button class="btn" onclick={() => ($message = key)}>
+                  {key}
+                </button>
+              {/if}
+            {/each}
+          {:else}
+            {#if $setting?.maxSkip ?? 0 > 0}
+              <button
+                class="btn btn-square"
+                onclick={() => ($message = "Skip")}
+                aria-label="Skip"
+              >
+                <iconify-icon icon="mdi:arrow-u-down-right-bold"></iconify-icon>
+              </button>
             {/if}
-          {/each}
-        </datalist>
-        <button
-          class="btn btn-square"
-          onclick={() => {
-            agentSocketState.send($message);
-            $message = "";
-          }}
-          aria-label="Send"
-        >
-          <iconify-icon icon="mdi:send"></iconify-icon>
-        </button>
+            <button
+              class="btn btn-square"
+              onclick={() => ($message = "Over")}
+              aria-label="Over"
+            >
+              <iconify-icon icon="mdi:skip-forward"></iconify-icon>
+            </button>
+          {/if}
+          <input
+            type="text"
+            class="input flex-1"
+            bind:value={$message}
+            list="agents"
+          />
+          <datalist id="agents">
+            {#each Object.entries($info?.statusMap ?? {}) as [key, value]}
+              {#if value === Status.ALIVE}
+                <option value={key}></option>
+              {/if}
+            {/each}
+          </datalist>
+          <button
+            class="btn btn-square"
+            onclick={() => {
+              agentSocketState.send($message);
+              $message = "";
+            }}
+            aria-label="Send"
+          >
+            <iconify-icon icon="mdi:send"></iconify-icon>
+          </button>
+        </div>
+        <progress
+          class="progress"
+          value={$remain !== null
+            ? ($remain / ($setting?.actionTimeout ?? 60000)) * 100
+            : 0}
+          max="100"
+        ></progress>
       </div>
-      <progress
-        class="progress"
-        value={$remain !== null
-          ? ($remain / ($setting?.actionTimeout ?? 60000)) * 100
-          : 0}
-        max="100"
-      ></progress>
-    </div>
+    {/if}
   </div>
 </main>

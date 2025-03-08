@@ -20,6 +20,20 @@ export enum Request {
     FINISH = "FINISH"
 }
 
+export const RequestJA = {
+    NAME: "名前",
+    TALK: "トーク",
+    WHISPER: "囁き",
+    VOTE: "投票",
+    DIVINE: "占い",
+    GUARD: "護衛",
+    ATTACK: "襲撃",
+    INITIALIZE: "ゲーム開始",
+    DAILY_INITIALIZE: "昼開始",
+    DAILY_FINISH: "昼終了",
+    FINISH: "ゲーム終了"
+}
+
 export interface Info {
     day: number;
     agent: string | undefined;
@@ -45,9 +59,19 @@ export enum Species {
     WEREWOLF = "WEREWOLF",
 }
 
+export const SpeciesJA = {
+    HUMAN: "人間",
+    WEREWOLF: "人狼",
+}
+
 export enum Status {
     ALIVE = "ALIVE",
     DEAD = "DEAD",
+}
+
+export const StatusJA = {
+    ALIVE: "生存",
+    DEAD: "死亡",
 }
 
 export enum Role {
@@ -57,6 +81,15 @@ export enum Role {
     BODYGUARD = "BODYGUARD",
     VILLAGER = "VILLAGER",
     MEDIUM = "MEDIUM"
+}
+
+export const RoleJA = {
+    WEREWOLF: "人狼",
+    POSSESSED: "狂人",
+    SEER: "占い師",
+    BODYGUARD: "騎士",
+    VILLAGER: "村人",
+    MEDIUM: "霊媒師"
 }
 
 export interface Vote {

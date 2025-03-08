@@ -42,35 +42,57 @@ function createAgentSocketState() {
         settings = value;
     });
 
+    function disconnect() {
+        if (socket) {
+            socket.close();
+            socket = null;
+        }
+        if (actionTimer) {
+            actionTimer.clear();
+            actionTimer = null;
+        }
+        update(state => ({
+            ...state,
+            status: "disconnected",
+            deadline: null,
+            entries: [],
+            role: null,
+            request: null,
+            info: null,
+            mediumResults: [],
+            divineResults: [],
+            setting: null,
+            talkHistory: [],
+            whisperHistory: [],
+        }));
+    }
+
     function connect() {
         if (!settings) return;
+        if (socket) {
+            disconnect();
+        }
+
         update(state => ({ ...state, status: "connecting" }));
         const socketUrl = new URL(settings.connection.url);
         if (settings.connection.token) {
             socketUrl.searchParams.set('token', settings.connection.token);
         }
+
         socket = new WebSocket(socketUrl);
+
         socket.onopen = () => {
             update(state => ({ ...state, status: "connected" }));
         };
+
         socket.onclose = () => {
-            update(state => ({ ...state, status: "disconnected" }));
-            socket = null;
-            if (actionTimer) {
-                actionTimer.clear();
-                actionTimer = null;
-                update(state => ({ ...state, deadline: null }));
-            }
+            disconnect();
         }
+
         socket.onerror = () => {
-            update(state => ({ ...state, status: "disconnected" }));
-            socket = null;
-            if (actionTimer) {
-                actionTimer.clear();
-                actionTimer = null;
-                update(state => ({ ...state, deadline: null }));
-            }
+            disconnect();
         }
+
         socket.onmessage = (event) => {
             try {
                 const date = Date.now();
@@ -88,10 +110,16 @@ function createAgentSocketState() {
                     if (packet.info) {
                         newState.info = packet.info;
                         if (packet.info.mediumResult) {
-                            newState.mediumResults.push(packet.info.mediumResult);
+                            const judge = packet.info.mediumResult;
+                            if (newState.mediumResults.findIndex(j => j.day === judge.day && j.agent === judge.agent) < 0) {
+                                newState.mediumResults.push(packet.info.mediumResult);
+                            }
                         }
                         if (packet.info.divineResult) {
-                            newState.divineResults.push(packet.info.divineResult);
+                            const judge = packet.info.divineResult;
+                            if (newState.divineResults.findIndex(j => j.day === judge.day && j.agent === judge.agent) < 0) {
+                                newState.divineResults.push(packet.info.divineResult);
+                            }
                         }
                     }
                     if (packet.setting) {
@@ -123,6 +151,9 @@ function createAgentSocketState() {
                     case Request.DIVINE:
                     case Request.GUARD:
                     case Request.ATTACK:
+                        if (actionTimer) {
+                            actionTimer.clear();
+                        }
                         actionTimer = new Timer(() => {
                             send("TIMEOUT");
                         }, new Date(date + (actionTimeout ?? 60000)));
@@ -138,18 +169,6 @@ function createAgentSocketState() {
         };
     }
 
-    function disconnect() {
-        if (socket) {
-            update(state => ({ ...state, status: "disconnected" }));
-            socket.close();
-            socket = null;
-            if (actionTimer) {
-                actionTimer.clear();
-                actionTimer = null;
-                update(state => ({ ...state, deadline: null }));
-            }
-        }
-    }
 
     function send(text: string) {
         if (actionTimer) {
@@ -170,7 +189,6 @@ function createAgentSocketState() {
             }
         }
     }
-
 
     return {
         subscribe,
