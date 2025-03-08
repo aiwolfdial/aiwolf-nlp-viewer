@@ -212,7 +212,7 @@
     >
       {#if settings?.display.largeScale}
         <span
-          class="base-content w-2/5 text-9xl font-black opacity-50 absolute top-0 left-0 -mt-4 ml-8"
+          class="base-content w-2/5 text-9xl font-black opacity-50 absolute top-0 left-0 -mt-4 ml-8 select-none"
         >
           {packet.day}日目 {packet.isDay ? "昼" : "夜"}
         </span>
@@ -277,7 +277,7 @@
                   <div
                     class="absolute inset-0 flex items-center justify-center"
                   >
-                    <span class="text-9xl font-bold opacity-75">
+                    <span class="text-9xl font-bold opacity-75 select-none">
                       {agent.idx}
                     </span>
                   </div>
@@ -286,20 +286,24 @@
             </div>
           </div>
           {#if !settings?.display.largeScale && settings?.display.canvas.name}
-            <span class="base-content">{IdxToName(agent.idx)}</span>
+            <span class="base-content select-none">{IdxToName(agent.idx)}</span>
           {/if}
           {#if settings?.display.canvas.team}
             {#if settings?.display.largeScale}
-              <span class="base-content text-2xl mt-2">{agent.team}</span>
+              <span class="base-content text-2xl mt-2 select-none"
+                >{agent.team}</span
+              >
             {:else}
-              <span class="base-content">{agent.team}</span>
+              <span class="base-content select-none">{agent.team}</span>
             {/if}
           {/if}
           {#if settings?.display.canvas.role && (agent.idx === focusIdx || focusIdx === undefined)}
             {#if settings?.display.largeScale}
-              <span class="base-content text-2xl mt-2">{agent.role}</span>
+              <span class="base-content text-2xl mt-2 select-none"
+                >{agent.role}</span
+              >
             {:else}
-              <span class="base-content">{agent.role}</span>
+              <span class="base-content select-none">{agent.role}</span>
             {/if}
           {/if}
         </div>
