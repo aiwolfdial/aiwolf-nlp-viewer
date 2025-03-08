@@ -370,7 +370,7 @@
           </span>
           {#if $request === Request.VOTE || $request === Request.DIVINE || $request === Request.GUARD || $request === Request.ATTACK}
             {#each Object.entries($info?.statusMap ?? {}) as [key, value]}
-              {#if value === Status.ALIVE}
+              {#if value === Status.ALIVE && key !== $info?.agent}
                 <button class="btn" onclick={() => ($message = key)}>
                   {key}
                 </button>
@@ -402,7 +402,7 @@
           />
           <datalist id="agents">
             {#each Object.entries($info?.statusMap ?? {}) as [key, value]}
-              {#if value === Status.ALIVE}
+              {#if value === Status.ALIVE && key !== $info?.agent}
                 <option value={key}></option>
               {/if}
             {/each}
