@@ -55,28 +55,27 @@ function createAgentSocketState() {
             actionTimer.clear();
             actionTimer = null;
         }
-        update(state => ({
-            ...state,
-            status: "disconnected",
-            deadline: null,
-            entries: [],
-            role: null,
-            request: null,
-            info: null,
-            mediumResults: [],
-            divineResults: [],
-            setting: null,
-            talkHistory: [],
-            whisperHistory: [],
-            executedAgents: [],
-            attackedAgents: [],
-        }));
     }
 
     function connect() {
         if (!settings) return;
         if (socket) {
-            disconnect();
+            update(state => ({
+                ...state,
+                status: "disconnected",
+                deadline: null,
+                entries: [],
+                role: null,
+                request: null,
+                info: null,
+                mediumResults: [],
+                divineResults: [],
+                setting: null,
+                talkHistory: [],
+                whisperHistory: [],
+                executedAgents: [],
+                attackedAgents: [],
+            }));
         }
 
         update(state => ({ ...state, status: "connecting" }));
