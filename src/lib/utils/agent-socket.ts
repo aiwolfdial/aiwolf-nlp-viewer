@@ -50,6 +50,7 @@ function createAgentSocketState() {
         if (socket) {
             socket.close();
             socket = null;
+            update(state => ({ ...state, status: "disconnected" }))
         }
         if (actionTimer) {
             actionTimer.clear();
