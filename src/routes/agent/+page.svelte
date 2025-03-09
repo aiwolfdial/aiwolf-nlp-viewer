@@ -44,10 +44,6 @@
   let settings = $state<AgentSettings>();
   let animationFrameId: number;
 
-  let width = $state<number>(50);
-  let isDragging = false;
-  let containerRef: HTMLDivElement | null = null;
-
   function connectWithParams() {
     if (browser) {
       const params = page.url.searchParams;
@@ -66,42 +62,6 @@
         agentSocketState.connect();
       }
     }
-  }
-
-  function onMouseMove(clientX: number) {
-    if (!isDragging || !containerRef) return;
-    const containerRect = containerRef.getBoundingClientRect();
-    const relativeX = clientX - containerRect.left;
-    const containerWidth = containerRect.width;
-    width = Math.min(90, Math.max(10, (relativeX / containerWidth) * 100));
-  }
-
-  function onDragStart() {
-    isDragging = true;
-    document.body.style.cursor = "ew-resize";
-    document.body.style.userSelect = "none";
-
-    const moveHandler = (e: MouseEvent | TouchEvent) => {
-      const clientX =
-        e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
-      onMouseMove(clientX);
-    };
-
-    const stopHandler = () => {
-      isDragging = false;
-      document.body.style.cursor = "";
-      document.body.style.userSelect = "";
-
-      window.removeEventListener("mousemove", moveHandler);
-      window.removeEventListener("touchmove", moveHandler);
-      window.removeEventListener("mouseup", stopHandler);
-      window.removeEventListener("touchend", stopHandler);
-    };
-
-    window.addEventListener("mousemove", moveHandler);
-    window.addEventListener("touchmove", moveHandler);
-    window.addEventListener("mouseup", stopHandler);
-    window.addEventListener("touchend", stopHandler);
   }
 
   function updateDeadline() {
@@ -188,93 +148,131 @@
 
 <main class="h-screen flex flex-col">
   <Navbar />
-  <div class="flex flex-1 overflow-hidden w-full flex-col">
-    <div class="flex-auto bg-base-300 h-full overflow-hidden">
-      <div class="flex flex-row h-full" bind:this={containerRef}>
-        <div class="overflow-y-auto px-2 h-full" style="width: {width}%">
-          <pre class="font-bold text-xl p-2">{$info?.agent ?? "未接続"} {RoleJA[
-              $role!
-            ]}</pre>
-          {#if $request !== null}
-            <pre class="bg-primary text-primary-content p-2">{$info !== null
-                ? $info.day + "日目"
-                : "ゲーム外"} {RequestJA[$request!]}</pre>
-          {/if}
-          {#if $info !== null}
-            <div class="p-2">
-              {#each Object.entries($info.statusMap ?? {}) as [key, value]}
-                <div class="flex flex-row gap-2">
-                  <pre>{key}</pre>
-                  <pre>{RoleJA[($info.roleMap ?? {})[key]] ?? "-"}</pre>
+  <div class="flex-1 tabs tabs-border overflow-y-auto">
+    <input
+      type="radio"
+      name="tabs"
+      class="tab"
+      checked={true}
+      aria-label={`メイン`}
+    />
+    <div class="tab-content">
+      <div class="flex flex-row">
+        <div class="w-1/4 flex flex-col overflow-hidden">
+          <div class="overflow-y-auto flex-1">
+            <pre class="font-bold text-3xl p-2">{$info?.agent ??
+                "未接続"} {RoleJA[$role!]}</pre>
+            {#if $request !== null}
+              <pre
+                class="bg-primary text-primary-content text-2xl p-2 m-2">{$info !==
+                null
+                  ? $info.day + "日目"
+                  : "ゲーム外"} {RequestJA[$request!]}</pre>
+            {/if}
+            {#if $info !== null}
+              <div class="p-2">
+                {#each Object.entries($info.statusMap ?? {}) as [key, value]}
                   {#if value === Status.ALIVE}
-                    <pre
-                      class="font-bold bg-info text-info-content ml-auto">{StatusJA[
-                        value
-                      ]}</pre>
+                    <div
+                      class="bg-info text-info-content flex flex-row gap-2 p-2"
+                    >
+                      <pre class="font-bold text-2xl">{key}</pre>
+                      <pre class="font-bold text-2xl">{RoleJA[
+                          ($info.roleMap ?? {})[key]
+                        ] ?? ""}</pre>
+                      <pre class="font-bold text-2xl ml-auto">{StatusJA[
+                          value
+                        ]}</pre>
+                    </div>
                   {:else}
-                    <pre
-                      class="font-bold bg-error text-error-content ml-auto">{StatusJA[
-                        value
-                      ]}{$executedAgents.includes(key)
-                        ? " (追放)"
-                        : $attackedAgents.includes(key)
-                          ? " (襲撃)"
-                          : ""}</pre>
+                    <div
+                      class="bg-error text-error-content flex flex-row gap-2 p-2"
+                    >
+                      <pre class="font-bold text-2xl">{key}</pre>
+                      <pre class="font-bold text-2xl">{RoleJA[
+                          ($info.roleMap ?? {})[key]
+                        ] ?? ""}</pre>
+                      <pre class="font-bold text-2xl ml-auto">{StatusJA[
+                          value
+                        ]}{$executedAgents.includes(key)
+                          ? " (追放)"
+                          : $attackedAgents.includes(key)
+                            ? " (襲撃)"
+                            : ""}</pre>
+                    </div>
                   {/if}
+                {/each}
+              </div>
+              {#if $mediumResults.length > 0}
+                <div class="p-2">
+                  <h2 class="font-bold text-lg">霊能結果</h2>
+                  {#each $mediumResults as { day, target, result }}
+                    {#if result !== Species.HUMAN}
+                      <div
+                        class="bg-error text-error-content flex flex-row gap-2 p-2"
+                      >
+                        <pre class="font-bold text-2xl">{target}</pre>
+                        <pre class="font-bold text-2xl">({day}日目)</pre>
+                        <pre class="font-bold text-2xl ml-auto">{SpeciesJA[
+                            result
+                          ]}</pre>
+                      </div>
+                    {:else}
+                      <div
+                        class="bg-success text-success-content flex flex-row gap-2 p-2"
+                      >
+                        <pre class="font-bold text-2xl">{target}</pre>
+                        <pre class="font-bold text-2xl">({day}日目)</pre>
+                        <pre class="font-bold text-2xl ml-auto">{SpeciesJA[
+                            result
+                          ]}</pre>
+                      </div>
+                    {/if}
+                  {/each}
                 </div>
-              {/each}
-            </div>
-            {#if $mediumResults.length > 0}
-              <div class="p-2">
-                <h2 class="font-bold text-lg">霊能結果</h2>
-                {#each $mediumResults as { day, target, result }}
-                  <div class="flex flex-row gap-2">
-                    <pre>{target}</pre>
-                    <pre>(Day{day})</pre>
-                    {#if result === Species.HUMAN}
-                      <pre
-                        class="font-bold bg-success text-success-content ml-auto">{SpeciesJA[
-                          result
-                        ]}</pre>{:else}
-                      <pre
-                        class="font-bold bg-error text-error-content ml-auto">{SpeciesJA[
-                          result
-                        ]}</pre>
+              {/if}
+              {#if $divineResults.length > 0}
+                <div class="p-2">
+                  <h2 class="font-bold text-lg">占い結果</h2>
+                  {#each $divineResults as { day, target, result }}
+                    {#if result !== Species.HUMAN}
+                      <div
+                        class="bg-error text-error-content flex flex-row gap-2 p-2"
+                      >
+                        <pre class="font-bold text-2xl">{target}</pre>
+                        <pre class="font-bold text-2xl">({day}日目)</pre>
+                        <pre class="font-bold text-2xl ml-auto">{SpeciesJA[
+                            result
+                          ]}</pre>
+                      </div>
+                    {:else}
+                      <div
+                        class="bg-success text-success-content flex flex-row gap-2 p-2"
+                      >
+                        <pre class="font-bold text-2xl">{target}</pre>
+                        <pre class="font-bold text-2xl">({day}日目)</pre>
+                        <pre class="font-bold text-2xl ml-auto">{SpeciesJA[
+                            result
+                          ]}</pre>
+                      </div>
                     {/if}
-                  </div>
-                {/each}
-              </div>
+                  {/each}
+                </div>
+              {/if}
             {/if}
-            {#if $divineResults.length > 0}
-              <div class="p-2">
-                <h2 class="font-bold text-lg">占い結果</h2>
-                {#each $divineResults as { day, target, result }}
-                  <div class="flex flex-row gap-2">
-                    <pre>{target}</pre>
-                    <pre>(Day{day})</pre>
-                    {#if result === Species.HUMAN}
-                      <pre
-                        class="font-bold bg-info text-info-content ml-auto">{SpeciesJA[
-                          result
-                        ]}</pre>{:else}
-                      <pre
-                        class="font-bold bg-error text-error-content ml-auto">{SpeciesJA[
-                          result
-                        ]}</pre>
-                    {/if}
-                  </div>
-                {/each}
-              </div>
-            {/if}
-          {/if}
+          </div>
+        </div>
+        <div
+          class="w-2/5 flex flex-col border-l border-r border-base-300 overflow-hidden"
+        >
           {#if $talkHistory.length > 0}
-            <div class="p-2">
+            <div class="p-2 flex flex-col">
               <h2 class="font-bold text-lg">トーク履歴</h2>
               {#if $talkHistory.length > 0}
                 {@const days = [
                   ...new Set($talkHistory.map((t) => t.day)),
                 ].sort((a, b) => b - a)}
-                <div class="tabs tabs-border">
+                <div class="tabs tabs-border flex-none">
                   {#each days as day}
                     <input
                       type="radio"
@@ -283,9 +281,7 @@
                       checked={day === days[0]}
                       aria-label={`${day}日目`}
                     />
-                    <div
-                      class="tab-content bg-base-200 p-2 max-h-96 overflow-y-auto"
-                    >
+                    <div class="tab-content overflow-y-auto">
                       {#each $talkHistory.filter((t) => t.day === day) as { agent, idx, text, skip, over }}
                         <div class="chat chat-start">
                           <div class="chat-image avatar avatar-placeholder">
@@ -313,14 +309,16 @@
               {/if}
             </div>
           {/if}
+        </div>
+        <div class="w-1/3 flex flex-col overflow-hidden">
           {#if $whisperHistory.length > 0}
-            <div class="p-2">
+            <div class="p-2 flex flex-col">
               <h2 class="font-bold text-lg">囁き履歴</h2>
               {#if $whisperHistory.length > 0}
                 {@const days = [
                   ...new Set($whisperHistory.map((t) => t.day)),
                 ].sort((a, b) => b - a)}
-                <div class="tabs tabs-border">
+                <div class="tabs tabs-border flex-none">
                   {#each days as day}
                     <input
                       type="radio"
@@ -329,9 +327,7 @@
                       checked={day === days[0]}
                       aria-label={`${day}日目`}
                     />
-                    <div
-                      class="tab-content bg-base-200 p-2 max-h-96 overflow-y-auto"
-                    >
+                    <div class="tab-content bg-base-200 overflow-y-auto">
                       {#each $whisperHistory.filter((t) => t.day === day) as { agent, idx, text, skip, over }}
                         <div class="chat chat-start">
                           <div class="chat-image avatar avatar-placeholder">
@@ -360,100 +356,99 @@
             </div>
           {/if}
         </div>
-        <button
-          class="cursor-ew-resize w-2 rounded bg-gray-300 hover:bg-gray-400 active:bg-gray-500 transition-colors border-0 my-2"
-          onmousedown={onDragStart}
-          ontouchstart={onDragStart}
-          aria-label="Resize"
-        ></button>
-        <div
-          class="overflow-y-auto pl-2 h-full"
-          style="width: {100 - width - 0.5}%;"
-        >
-          {#each [...$entries].reverse() as entry}
-            <pre class="overflow-x-auto">{JSON.stringify(entry, null, 2)}</pre>
-            <div class="divider"></div>
-          {/each}
-        </div>
       </div>
     </div>
-    {#if $remain !== null}
-      <div class="m-4">
-        <div class="flex gap-2 items-center">
-          <span class="countdown font-mono text-2xl">
-            {#if $remain > 60000}
-              <span
-                style="--value:{Math.floor($remain / 60000)};"
-                aria-live="polite"
-                aria-label={Math.floor($remain / 60000).toString()}
-                >{Math.floor($remain / 60000)}</span
-              >m
-            {/if}
+    <input type="radio" name="tabs" class="tab" aria-label={`ログ`} />
+    <div class="tab-content">
+      <div class="overflow-y-auto">
+        {#each [...$entries].reverse() as entry}
+          <pre class="text-pretty break-words">{JSON.stringify(
+              entry,
+              null,
+              2
+            )}</pre>
+          <div class="divider"></div>
+        {/each}
+      </div>
+    </div>
+  </div>
+
+  {#if $remain !== null}
+    <div class="p-4 border-t border-base-300 flex-none">
+      <div class="flex gap-2 items-center">
+        <span class="countdown font-mono text-2xl">
+          {#if $remain > 60000}
             <span
-              style="--value:{Math.floor(($remain % 60000) / 1000)};"
+              style="--value:{Math.floor($remain / 60000)};"
               aria-live="polite"
-              aria-label={Math.floor(($remain % 60000) / 1000).toString()}
-              >{Math.floor(($remain % 60000) / 1000)}</span
-            >s
-          </span>
-          {#if $request === Request.VOTE || $request === Request.DIVINE || $request === Request.GUARD || $request === Request.ATTACK}
-            {#each Object.entries($info?.statusMap ?? {}) as [key, value]}
-              {#if value === Status.ALIVE && key !== $info?.agent}
-                <button class="btn" onclick={() => ($message = key)}>
-                  {key}
-                </button>
-              {/if}
-            {/each}
-          {:else}
-            {#if $setting?.maxSkip ?? 0 > 0}
-              <button
-                class="btn btn-square"
-                onclick={() => ($message = "Skip")}
-                aria-label="Skip"
-              >
-                <iconify-icon icon="mdi:arrow-u-down-right-bold"></iconify-icon>
+              aria-label={Math.floor($remain / 60000).toString()}
+              >{Math.floor($remain / 60000)}</span
+            >m
+          {/if}
+          <span
+            style="--value:{Math.floor(($remain % 60000) / 1000)};"
+            aria-live="polite"
+            aria-label={Math.floor(($remain % 60000) / 1000).toString()}
+            >{Math.floor(($remain % 60000) / 1000)}</span
+          >s
+        </span>
+        {#if $request === Request.VOTE || $request === Request.DIVINE || $request === Request.GUARD || $request === Request.ATTACK}
+          {#each Object.entries($info?.statusMap ?? {}) as [key, value]}
+            {#if value === Status.ALIVE && key !== $info?.agent}
+              <button class="btn" onclick={() => ($message = key)}>
+                {key}
               </button>
             {/if}
+          {/each}
+        {:else}
+          {#if $setting?.maxSkip ?? 0 > 0}
             <button
               class="btn btn-square"
-              onclick={() => ($message = "Over")}
-              aria-label="Over"
+              onclick={() => ($message = "Skip")}
+              aria-label="Skip"
             >
-              <iconify-icon icon="mdi:skip-forward"></iconify-icon>
+              <iconify-icon icon="mdi:arrow-u-down-right-bold"></iconify-icon>
             </button>
           {/if}
-          <input
-            type="text"
-            class="input flex-1"
-            bind:value={$message}
-            list="agents"
-          />
-          <datalist id="agents">
-            {#each Object.entries($info?.statusMap ?? {}) as [key, value]}
-              {#if value === Status.ALIVE && key !== $info?.agent}
-                <option value={key}></option>
-              {/if}
-            {/each}
-          </datalist>
           <button
             class="btn btn-square"
-            onclick={() => {
-              agentSocketState.send($message);
-              $message = "";
-            }}
-            aria-label="Send"
+            onclick={() => ($message = "Over")}
+            aria-label="Over"
           >
-            <iconify-icon icon="mdi:send"></iconify-icon>
+            <iconify-icon icon="mdi:skip-forward"></iconify-icon>
           </button>
-        </div>
-        <progress
-          class="progress"
-          value={$remain !== null
-            ? ($remain / ($setting?.actionTimeout ?? 60000)) * 100
-            : 0}
-          max="100"
-        ></progress>
+        {/if}
+        <input
+          type="text"
+          class="input flex-1"
+          bind:value={$message}
+          list="agents"
+        />
+        <datalist id="agents">
+          {#each Object.entries($info?.statusMap ?? {}) as [key, value]}
+            {#if value === Status.ALIVE && key !== $info?.agent}
+              <option value={key}></option>
+            {/if}
+          {/each}
+        </datalist>
+        <button
+          class="btn btn-square"
+          onclick={() => {
+            agentSocketState.send($message);
+            $message = "";
+          }}
+          aria-label="Send"
+        >
+          <iconify-icon icon="mdi:send"></iconify-icon>
+        </button>
       </div>
-    {/if}
-  </div>
+      <progress
+        class="progress"
+        value={$remain !== null
+          ? ($remain / ($setting?.actionTimeout ?? 60000)) * 100
+          : 0}
+        max="100"
+      ></progress>
+    </div>
+  {/if}
 </main>
