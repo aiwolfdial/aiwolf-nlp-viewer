@@ -173,5 +173,8 @@
         onSendMessage={handleSendMessage}
       />
     {/if}
+  {:else}
+    <pre
+      class="base-content w-2/5 text-5xl font-bold opacity-70 mt-4 ml-8 select-none">未接続</pre>
   {/if}
 </main>
