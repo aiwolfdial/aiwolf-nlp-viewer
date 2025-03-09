@@ -81,23 +81,22 @@
 
 <main>
   <div class="hero bg-base-200 min-h-screen">
-    <div class="hero-content text-center max-w-screen">
+    <div class="hero-content text-center max-w-screen mx-2">
       {#if stats.length > 0}
         <div>
-          <a class="btn m-4" href={`${base}/assets/stats.csv`}
-            >CSV形式でダウンロードする</a
-          >
           <div class="max-w-screen overflow-x-auto">
             <table class="table table-zebra">
               <thead>
                 <tr>
                   {#each stats[0] as header, i}
                     <th onclick={() => sortTable(i)} class="sortable">
-                      {header}
-                      {#if sortColumn === i}
-                        <iconify-icon inline icon={getSortIcon(i)}
-                        ></iconify-icon>
-                      {/if}
+                      <div class="flex items-center">
+                        <pre>{header}</pre>
+                        {#if sortColumn === i}
+                          <iconify-icon inline icon={getSortIcon(i)}
+                          ></iconify-icon>
+                        {/if}
+                      </div>
                     </th>
                   {/each}
                 </tr>
@@ -106,13 +105,16 @@
                 {#each stats.slice(1) as row}
                   <tr>
                     {#each row as cell}
-                      <td>{cell}</td>
+                      <td><pre>{cell}</pre></td>
                     {/each}
                   </tr>
                 {/each}
               </tbody>
             </table>
           </div>
+          <a class="btn m-4" href={`${base}/assets/stats.csv`}
+            >CSV形式でダウンロードする</a
+          >
         </div>
       {/if}
     </div>

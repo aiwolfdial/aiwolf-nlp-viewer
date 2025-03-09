@@ -211,11 +211,9 @@
       bind:this={container}
     >
       {#if settings?.display.largeScale}
-        <span
-          class="base-content w-2/5 text-9xl font-black opacity-50 absolute top-0 left-0 -mt-4 ml-8 select-none"
-        >
-          {packet.day}日目 {packet.isDay ? "昼" : "夜"}
-        </span>
+        <pre
+          class="base-content w-2/5 text-5xl font-bold opacity-70 absolute top-0 left-0 -mt-4 ml-8 select-none">{packet.day}日目<br
+          />{packet.isDay ? "昼" : "夜"}<br />{packet.event}</pre>
       {/if}
       <canvas
         bind:this={bubble}
@@ -277,33 +275,30 @@
                   <div
                     class="absolute inset-0 flex items-center justify-center"
                   >
-                    <span class="text-9xl font-bold opacity-75 select-none">
-                      {agent.idx}
-                    </span>
+                    <pre
+                      class="text-9xl font-bold opacity-75 select-none">{agent.idx}</pre>
                   </div>
                 {/if}
               </button>
             </div>
           </div>
           {#if !settings?.display.largeScale && settings?.display.canvas.name}
-            <span class="base-content select-none">{IdxToName(agent.idx)}</span>
+            <pre class="base-content select-none">{IdxToName(agent.idx)}</pre>
           {/if}
           {#if settings?.display.canvas.team}
             {#if settings?.display.largeScale}
-              <span class="base-content text-2xl mt-2 select-none"
-                >{agent.team}</span
-              >
+              <pre
+                class="base-content text-2xl mt-2 select-none">{agent.team}</pre>
             {:else}
-              <span class="base-content select-none">{agent.team}</span>
+              <pre class="base-content select-none">{agent.team}</pre>
             {/if}
           {/if}
           {#if settings?.display.canvas.role && (agent.idx === focusIdx || focusIdx === undefined)}
             {#if settings?.display.largeScale}
-              <span class="base-content text-2xl mt-2 select-none"
-                >{agent.role}</span
-              >
+              <pre
+                class="base-content text-2xl mt-2 select-none">{agent.role}</pre>
             {:else}
-              <span class="base-content select-none">{agent.role}</span>
+              <pre class="base-content select-none">{agent.role}</pre>
             {/if}
           {/if}
         </div>
@@ -312,7 +307,7 @@
   </div>
   <footer class="footer footer-center text-base-content p-2">
     <aside>
-      <p>イラスト : 石黒正数氏</p>
+      <span>イラスト : 石黒正数氏</span>
     </aside>
   </footer>
 </div>
@@ -333,7 +328,7 @@
   }
   .bg-focus {
     background-color: oklch(
-      from var(--color-accent) calc(l + (1 - l) / 2) c h / 0.3
+      from var(--color-primary) calc(l + (1 - l) / 2) c h / 0.3
     );
   }
 </style>

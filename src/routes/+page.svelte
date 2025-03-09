@@ -36,6 +36,10 @@
               href="https://github.com/kano-lab/aiwolf-nlp-agent"
               >エージェント</a
             >
+            <a
+              class="btn btn-primary"
+              href="https://github.com/kano-lab/aiwolf-nlp-viewer">ビューア</a
+            >
           </div>
         </div>
         <div class="p-2">
