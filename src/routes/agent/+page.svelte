@@ -36,7 +36,6 @@
   const attackedAgents = writable<string[]>([]);
 
   const remain = writable<number | null>(null);
-  const message = writable<string>("");
 
   let settings = $state<AgentSettings>();
   let animationFrameId: number;
@@ -138,9 +137,8 @@
     }
   });
 
-  function handleSendMessage(msg: string) {
-    agentSocketState.send(msg);
-    message.set("");
+  function handleSendMessage(message: string) {
+    agentSocketState.send(message);
   }
 </script>
 
@@ -153,6 +151,7 @@
   {#if $info !== null}
     <div class="overflow-y-hidden flex grow overflox-x-auto gap-4 p-4">
       <AgentColumn
+        role={$role}
         request={$request}
         info={$info}
         mediumResults={$mediumResults}
@@ -171,8 +170,6 @@
         setting={$setting}
         request={$request}
         info={$info}
-        message={$message}
-        onMessageChange={(value) => message.set(value)}
         onSendMessage={handleSendMessage}
       />
     {/if}

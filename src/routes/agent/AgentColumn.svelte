@@ -1,6 +1,7 @@
 <script lang="ts">
   import {
     RequestJA,
+    Role,
     RoleJA,
     Species,
     SpeciesJA,
@@ -12,6 +13,7 @@
   } from "$lib/types/agent";
 
   let {
+    role,
     request,
     info,
     mediumResults,
@@ -19,6 +21,7 @@
     executedAgents,
     attackedAgents,
   }: {
+    role: Role | null;
     request: Request | null;
     info: Info;
     mediumResults: Judge[];
@@ -32,12 +35,26 @@
   <div class="flex flex-col h-full p-4">
     <h2 class="text-xl font-bold pb-2">エージェント</h2>
     <div class="grow overflow-y-auto pr-4">
-      <h2 class="text-lg font-bold">リクエスト</h2>
-      {#if request !== null}
-        <pre class="text-lg">{info !== null
-            ? info.day + "日目"
-            : "ゲーム外"} {RequestJA[request]}</pre>
-      {/if}
+      <div class="flex justify-around">
+        <div>
+          <h2 class="text-lg font-bold text-center">役職</h2>
+          <pre class="text-lg text-center">{role !== null
+              ? RoleJA[role]
+              : "ゲーム外"}</pre>
+        </div>
+        <div>
+          <h2 class="text-lg font-bold text-center">日数</h2>
+          <pre class="text-lg text-center">{info !== null
+              ? info.day + "日目"
+              : "ゲーム外"}</pre>
+        </div>
+        <div>
+          <h2 class="text-lg font-bold text-center">リクエスト</h2>
+          {#if request !== null}
+            <pre class="text-lg text-center">{RequestJA[request]}</pre>
+          {/if}
+        </div>
+      </div>
       <h2 class="text-lg font-bold pt-2">ステータス</h2>
       {#each Object.entries(info.statusMap ?? {}) as [key, value]}
         {#if value === Status.ALIVE}

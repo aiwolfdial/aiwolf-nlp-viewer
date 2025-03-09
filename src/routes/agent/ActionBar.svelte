@@ -1,26 +1,51 @@
 <script lang="ts">
-  import { Request, Status, type Info, type Setting } from "$lib/types/agent";
+  import {
+    Request,
+    RequestJA,
+    Status,
+    type Info,
+    type Setting,
+  } from "$lib/types/agent";
+  import { writable } from "svelte/store";
 
   let {
     remain,
     setting,
     request,
     info,
-    message,
-    onMessageChange,
     onSendMessage,
   }: {
     remain: number | null;
     setting: Setting | null;
     request: Request | null;
     info: Info | null;
-    message: string;
-    onMessageChange: (value: string) => void;
     onSendMessage: (message: string) => void;
   } = $props();
+
+  const message = writable<string>("");
+
+  function setMessage(value: string) {
+    $message = value;
+    input.focus();
+  }
+
+  function onKeydown(event: KeyboardEvent) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      if (event.ctrlKey || event.metaKey) {
+        onSendMessage($message);
+      }
+    }
+  }
+
+  let input: HTMLInputElement;
+
+  function onUse(element: HTMLElement) {
+    element.focus();
+  }
 </script>
 
-<div class="flex-none bg-base-200">
+<form class="flex-none bg-base-200" data-sveltekit-keepfocus>
   <div class="flex gap-2 items-center mx-4 mt-4">
     <span class="countdown font-mono text-2xl">
       {#if remain && remain > 60000}
@@ -39,50 +64,65 @@
       >s
     </span>
     {#if request === Request.VOTE || request === Request.DIVINE || request === Request.GUARD || request === Request.ATTACK}
+      <span class="bg-primary text-primary-content text-lg font-bold"
+        >{RequestJA[request]}対象を選択してください</span
+      >
       {#each Object.entries(info?.statusMap ?? {}) as [key, value]}
         {#if value === Status.ALIVE && key !== info?.agent}
-          <button class="btn" onclick={() => onMessageChange(key)}>
+          <button class="btn" onclick={() => setMessage(key)}>
             {key}
           </button>
         {/if}
       {/each}
     {:else}
+      <span class="bg-primary text-primary-content text-lg font-bold"
+        >{RequestJA[request ?? Request.INITIALIZE]}内容を入力してください</span
+      >
       {#if (setting?.maxSkip ?? 0) > 0}
         <button
-          class="btn btn-square"
-          onclick={() => onMessageChange("Skip")}
+          class="btn"
+          onclick={() => setMessage("Skip")}
           aria-label="Skip"
         >
           <iconify-icon icon="mdi:arrow-u-down-right-bold"></iconify-icon>
+          SKIP
         </button>
       {/if}
-      <button
-        class="btn btn-square"
-        onclick={() => onMessageChange("Over")}
-        aria-label="Over"
-      >
+      <button class="btn" onclick={() => setMessage("Over")} aria-label="Over">
         <iconify-icon icon="mdi:skip-forward"></iconify-icon>
+        OVER
       </button>
     {/if}
     <input
       type="text"
       class="input flex-1"
-      bind:value={message}
-      list="agents"
+      bind:value={$message}
+      list="suggests"
+      onkeydown={onKeydown}
+      use:onUse
+      bind:this={input}
     />
-    <datalist id="agents">
-      {#each Object.entries(info?.statusMap ?? {}) as [key, value]}
-        {#if value === Status.ALIVE && key !== info?.agent}
-          <option value={key}></option>
+    <datalist id="suggests">
+      {#if request === Request.VOTE || request === Request.DIVINE || request === Request.GUARD || request === Request.ATTACK}
+        {#each Object.entries(info?.statusMap ?? {}) as [key, value]}
+          {#if value === Status.ALIVE && key !== info?.agent}
+            <option value={key}></option>
+          {/if}
+        {/each}
+      {:else}
+        {#if (setting?.maxSkip ?? 0) > 0}
+          <option value="Skip"></option>
         {/if}
-      {/each}
+        <option value="Over"></option>
+      {/if}
     </datalist>
     <button
-      class="btn btn-square"
-      onclick={() => onSendMessage(message)}
+      class="btn"
+      onclick={() => onSendMessage($message)}
       aria-label="Send"
     >
       <iconify-icon icon="mdi:send"></iconify-icon>
+      送信
     </button>
   </div>
   <div class="mx-4 mb-2">
@@ -94,4 +134,4 @@
       max="100"
     ></progress>
   </div>
-</div>
+</form>
