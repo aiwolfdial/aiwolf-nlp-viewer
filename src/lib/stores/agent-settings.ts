@@ -8,7 +8,7 @@ const defaultAgentSettings: AgentSettings = {
         url: "ws://localhost:8080/ws",
         token: ""
     },
-    team: "default",
+    team: "aiwolf-nlp-viewer",
 }
 
 function load(): AgentSettings {
