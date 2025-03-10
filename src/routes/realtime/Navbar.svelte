@@ -102,9 +102,9 @@
   <button class="btn" onclick={() => modal.showModal()}>設定</button>
   <dialog class="modal" bind:this={modal}>
     <div class="modal-box">
-      <div class="form-control">
-        <h3 class="text-lg font-bold mt-2">表示設定</h3>
-        <h4 class="text-base font-bold mt-4">キャンバス上のエージェント情報</h4>
+      <div class="form-control my-2">
+        <h3 class="text-lg font-bold">表示設定</h3>
+        <h4 class="text-base font-bold mt-2">キャンバス上のエージェント情報</h4>
         <div class="flex gap-4 my-2">
           <label class="label cursor-pointer">
             <span class="label-text">名前</span>
@@ -137,7 +137,7 @@
             />
           </label>
         </div>
-        <h4 class="text-base font-bold mt-4">
+        <h4 class="text-base font-bold mt-2">
           メッセージボックス上のエージェント情報
         </h4>
         <div class="flex gap-4 my-2">
@@ -172,7 +172,7 @@
             />
           </label>
         </div>
-        <h4 class="text-base font-bold mt-4">一覧のエージェント情報</h4>
+        <h4 class="text-base font-bold mt-2">一覧のエージェント情報</h4>
         <div class="flex gap-4 my-2">
           <label class="label cursor-pointer">
             <span class="label-text">名前</span>
@@ -205,7 +205,7 @@
             />
           </label>
         </div>
-        <h4 class="text-base font-bold mt-4">大画面向け</h4>
+        <h4 class="text-base font-bold mt-2">大画面向け</h4>
         <label class="label cursor-pointer my-2">
           <span class="label-text">有効</span>
           <input

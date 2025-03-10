@@ -1,18 +1,22 @@
 <script lang="ts">
+  import { base } from "$app/paths";
   import type { Talk } from "$lib/types/agent";
 
   let { talk }: { talk: Talk } = $props();
 </script>
 
 <div class="chat chat-start">
-  <div class="chat-image avatar avatar-placeholder">
-    <div class="bg-neutral text-neutral-content w-12 rounded-full">
-      <span class="text-2xl">
-        {Number(talk.agent.match(/Agent\[(\d+)\]/)?.[1]) ?? ""}
-      </span>
+  <div class="chat-image avatar">
+    <div class="w-10 rounded-full">
+      <img
+        src="{base}/images/male/{Number(talk.agent.match(/Agent\[(\d+)\]/)?.[1])
+          .toString()
+          .padStart(2, '0')}.png"
+        alt={talk.agent}
+      />
     </div>
   </div>
-  <div class="chat-header"></div>
+  <pre class="chat-header">{talk.agent}</pre>
   {#if talk.over}
     <iconify-icon inline icon="mdi:skip-forward"></iconify-icon>
   {:else if talk.skip}
@@ -22,5 +26,5 @@
       {talk.text}
     </div>
   {/if}
-  <pre class="chat-footer opacity-50">{talk.idx}</pre>
+  <pre class="chat-footer opacity-50">Idx: {talk.idx}</pre>
 </div>

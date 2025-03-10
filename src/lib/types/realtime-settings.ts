@@ -1,5 +1,3 @@
-// ref: https://app.quicktype.io/
-
 export interface RealtimeSettings {
     connection: Connection;
     display: Display;

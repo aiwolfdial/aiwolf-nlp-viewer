@@ -9,6 +9,9 @@ const defaultAgentSettings: AgentSettings = {
         token: ""
     },
     team: "aiwolf-nlp-viewer",
+    display: {
+        largeScale: false
+    }
 }
 
 function load(): AgentSettings {

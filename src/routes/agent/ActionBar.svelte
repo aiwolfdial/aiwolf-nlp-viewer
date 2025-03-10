@@ -46,7 +46,7 @@
 </script>
 
 <form class="flex-none bg-base-200" data-sveltekit-keepfocus>
-  <div class="flex gap-2 items-center mx-4 mt-4">
+  <div class="flex gap-2 items-center mx-4 pt-4 pb-4 overflow-x-auto">
     <span class="countdown font-mono text-2xl">
       {#if remain && remain > 60000}
         <span
@@ -64,7 +64,8 @@
       >s
     </span>
     {#if request === Request.VOTE || request === Request.DIVINE || request === Request.GUARD || request === Request.ATTACK}
-      <span class="bg-primary text-primary-content text-lg font-bold"
+      <span
+        class="bg-primary text-primary-content text-lg font-bold text-nowrap"
         >{RequestJA[request]}対象を選択してください</span
       >
       {#each Object.entries(info?.statusMap ?? {}) as [key, value]}
@@ -75,7 +76,8 @@
         {/if}
       {/each}
     {:else}
-      <span class="bg-primary text-primary-content text-lg font-bold"
+      <span
+        class="bg-primary text-primary-content text-lg font-bold text-nowrap"
         >{RequestJA[request ?? Request.INITIALIZE]}内容を入力してください</span
       >
       {#if (setting?.maxSkip ?? 0) > 0}
@@ -95,7 +97,7 @@
     {/if}
     <input
       type="text"
-      class="input flex-1"
+      class="input min-w-64 flex-1"
       bind:value={$message}
       list="suggests"
       onkeydown={onKeydown}
@@ -125,7 +127,7 @@
       送信
     </button>
   </div>
-  <div class="mx-4 mb-2">
+  <div class="-mt-2 mx-4 mb-2">
     <progress
       class="progress"
       value={remain !== null

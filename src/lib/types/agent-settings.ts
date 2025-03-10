@@ -1,13 +1,16 @@
-// ref: https://app.quicktype.io/
-
 export interface AgentSettings {
     connection: Connection;
     team: string;
+    display: Display;
 }
 
 export interface Connection {
     url: string;
     token: string;
+}
+
+export interface Display {
+    largeScale: boolean;
 }
 
 export class Convert {
@@ -176,9 +179,13 @@ const typeMap: any = {
     "AgentSettings": o([
         { json: "connection", js: "connection", typ: r("Connection") },
         { json: "team", js: "team", typ: "" },
+        { json: "display", js: "display", typ: r("Display") }
     ], false),
     "Connection": o([
         { json: "url", js: "url", typ: "" },
         { json: "token", js: "token", typ: "" },
+    ], false),
+    "Display": o([
+        { json: "largeScale", js: "largeScale", typ: true },
     ], false),
 };

@@ -102,9 +102,9 @@
   <button class="btn" onclick={() => modal.showModal()}>設定</button>
   <dialog class="modal" bind:this={modal}>
     <div class="modal-box">
-      <div class="form-control">
-        <h3 class="text-lg font-bold mt-2">エージェント設定</h3>
-        <h4 class="text-base font-bold mt-4">チーム名</h4>
+      <div class="form-control my-2">
+        <h3 class="text-lg font-bold">エージェント設定</h3>
+        <h4 class="text-base font-bold mt-2">チーム名</h4>
         <label class="input min-w-3xs w-3xs my-2">
           <iconify-icon class="h-[1em] opacity-50" inline icon="mdi:rename"
           ></iconify-icon>
@@ -113,6 +113,18 @@
             class="grow"
             value={settings?.team}
             oninput={(e) => updateSettings("team", e.currentTarget.value)}
+          />
+        </label>
+        <h3 class="text-lg font-bold mt-4">表示設定</h3>
+        <h4 class="text-base font-bold mt-2">大画面向け</h4>
+        <label class="label cursor-pointer my-2">
+          <span class="label-text">有効</span>
+          <input
+            type="checkbox"
+            checked={settings?.display.largeScale}
+            onchange={(e) =>
+              updateSettings("display.largeScale", e.currentTarget.checked)}
+            class="checkbox"
           />
         </label>
       </div>
