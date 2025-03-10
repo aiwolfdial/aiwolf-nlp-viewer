@@ -173,8 +173,14 @@
         onSendMessage={handleSendMessage}
       />
     {/if}
+  {:else if settings?.display.largeScale}
+    <div class="flex items-center justify-center h-full">
+      <pre
+        class="base-content text-9xl font-bold opacity-70 select-none">未接続</pre>
+    </div>
   {:else}
-    <pre
-      class="base-content w-2/5 text-5xl font-bold opacity-70 mt-4 ml-8 select-none">未接続</pre>
+    <div role="alert" class="alert m-4">
+      <span class="text-lg font-bold">未接続</span>
+    </div>
   {/if}
 </main>
