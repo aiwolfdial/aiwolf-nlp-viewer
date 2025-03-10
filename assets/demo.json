@@ -1,0 +1,38 @@
+{
+    "infinite_loop": false,
+    "team_count": 5,
+    "game_count": 0,
+    "idx_team_map": {
+        "0": "viewer",
+        "1": "kanolab-a",
+        "2": "kanolab-b",
+        "3": "kanolab-c",
+        "4": "kanolab-d"
+    },
+    "role_num_map": {
+        "BODYGUARD": 0,
+        "MEDIUM": 0,
+        "POSSESSED": 1,
+        "SEER": 1,
+        "VILLAGER": 2,
+        "WEREWOLF": 1
+    },
+    "ended_matches": [],
+    "scheduled_matches": [
+        {
+            "POSSESSED": [
+                1
+            ],
+            "SEER": [
+                0
+            ],
+            "VILLAGER": [
+                2,
+                3
+            ],
+            "WEREWOLF": [
+                4
+            ]
+        }
+    ]
+}
