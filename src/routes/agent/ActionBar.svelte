@@ -60,7 +60,7 @@
 
 <form class="flex-none bg-base-200" data-sveltekit-keepfocus>
   {#if settings?.display.largeScale}
-    <div class="flex gap-2 items-center mx-4 pt-4 overflow-x-auto">
+    <div class="flex gap-2 items-center px-4 pt-4 pb-4 overflow-x-auto">
       <span class="countdown font-mono text-3xl">
         {#if remain && remain > 60000}
           <span
@@ -92,7 +92,7 @@
         >
       {/if}
     </div>
-    <div class="flex gap-2 items-center mx-4 pt-2 pb-4 overflow-x-auto">
+    <div class="flex gap-2 items-center px-4 pt-2 pb-4 overflow-x-auto">
       {#if request === Request.VOTE || request === Request.DIVINE || request === Request.GUARD || request === Request.ATTACK}
         {#each Object.entries(info?.statusMap ?? {}) as [key, value]}
           {#if value === Status.ALIVE && key !== info?.agent}
@@ -163,7 +163,7 @@
       ></progress>
     </div>
   {:else}
-    <div class="flex gap-2 items-center mx-4 pt-4 pb-4 overflow-x-auto">
+    <div class="flex gap-2 items-center p-4 overflow-x-auto">
       <span class="countdown font-mono text-2xl">
         {#if remain && remain > 60000}
           <span
