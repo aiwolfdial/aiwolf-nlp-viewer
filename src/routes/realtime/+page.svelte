@@ -166,6 +166,20 @@
       });
     }
   });
+
+  let listRef: HTMLDivElement | null = null;
+
+  $effect(() => {
+    if (listRef && $selectedIdx !== null) {
+      const buttons = listRef.querySelectorAll("button");
+      if ($selectedIdx >= 0 && $selectedIdx < buttons.length) {
+        buttons[$selectedIdx].scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
+    }
+  });
 </script>
 
 <svelte:head>
@@ -187,17 +201,14 @@
       ontouchstart={onDragStart}
       aria-label="Resize"
     ></button>
-    <div
-      class="overflow-y-auto pl-2 h-full"
-      style="width: {100 - width - 0.5}%;"
-    >
+    <div class="flex-1 overflow-y-auto h-full pr-2">
       <div class="flex flex-col p-2">
         <select class="w-full select" bind:value={$selectedId}>
           {#each Object.keys($entries) as id}
             <option value={id}>{id}</option>
           {/each}
         </select>
-        <ul class="list overflow-y-auto flex-1 my-2">
+        <div class="list overflow-y-auto flex-1 my-2" bind:this={listRef}>
           {#if $selectedId}
             {#each $entries[$selectedId] || [] as packet, idx}
               {#if (idx > 0 && (packet.day !== $entries[$selectedId][idx - 1].day || packet.isDay !== $entries[$selectedId][idx - 1].isDay)) || idx === 0}
@@ -261,7 +272,7 @@
               </button>
             {/each}
           {/if}
-        </ul>
+        </div>
       </div>
     </div>
   </div>
