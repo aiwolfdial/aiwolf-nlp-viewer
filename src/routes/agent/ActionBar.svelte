@@ -96,7 +96,7 @@
       {#if request === Request.VOTE || request === Request.DIVINE || request === Request.GUARD || request === Request.ATTACK}
         {#each Object.entries(info?.statusMap ?? {}) as [key, value]}
           {#if value === Status.ALIVE && key !== info?.agent}
-            <button class="btn" onclick={() => setMessage(key)}>
+            <button class="btn btn-xl" onclick={() => setMessage(key)}>
               {key}
             </button>
           {/if}
