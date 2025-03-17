@@ -29,16 +29,17 @@
           <div class="flex flex-row justify-center gap-4 p-2">
             <a
               class="btn btn-primary"
-              href="https://github.com/kano-lab/aiwolf-nlp-server">対戦サーバ</a
+              href="https://github.com/aiwolfdial/aiwolf-nlp-server"
+              >対戦サーバ</a
             >
             <a
               class="btn btn-primary"
-              href="https://github.com/kano-lab/aiwolf-nlp-agent"
+              href="https://github.com/aiwolfdial/aiwolf-nlp-agent"
               >エージェント</a
             >
             <a
               class="btn btn-primary"
-              href="https://github.com/kano-lab/aiwolf-nlp-viewer">ビューア</a
+              href="https://github.com/aiwolfdial/aiwolf-nlp-viewer">ビューア</a
             >
           </div>
         </div>
