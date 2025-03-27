@@ -35,16 +35,21 @@ export const RequestJA = {
 }
 
 export interface Info {
+    game_id: string;
     day: number;
-    agent: string | undefined;
-    mediumResult: Judge | undefined;
-    divineResult: Judge | undefined;
-    executedAgent: string | undefined;
-    attackedAgent: string | undefined;
-    voteList: Vote[] | undefined;
-    attackVoteList: Vote[] | undefined;
-    statusMap: Record<string, Status> | undefined;
-    roleMap: Record<string, Role> | undefined;
+    agent: string;
+    profile: string | undefined;
+    medium_result: Judge | undefined;
+    divine_result: Judge | undefined;
+    executed_agent: string | undefined;
+    attacked_agent: string | undefined;
+    vote_list: Vote[] | undefined;
+    attack_vote_list: Vote[] | undefined;
+    status_map: Record<string, Status>;
+    role_map: Record<string, Role>;
+    remain_count: number | undefined;
+    remain_length: number | undefined;
+    remain_skip: number | undefined;
 }
 
 export interface Judge {
@@ -99,21 +104,47 @@ export interface Vote {
 }
 
 export interface Setting {
-    playerNum: number;
-    roleNumMap: Record<Role, number>;
-    maxTalk: number;
-    maxTalkTurn: number;
-    maxWhisper: number;
-    maxWhisperTurn: number;
-    maxSkip: number;
-    isEnabledNoAttack: boolean;
-    isVoteVisible: boolean;
-    isTalkOnFirstDay: boolean;
-    responseTimeout: number;
-    actionTimeout: number;
-    maxRevote: number;
-    maxAttackRevote: number;
+    agent_count: number;
+    role_num_map: Record<Role, number>;
+    vote_visibility: boolean;
+    talk_on_first_day: boolean;
+    talk: {
+        max_count: {
+            per_agent: number;
+            per_day: number;
+        }
+        max_length: {
+            per_talk: number | undefined;
+            per_agent: number | undefined;
+            base_length: number | undefined;
+        }
+        max_skip: number;
+    }
+    whisper: {
+        max_count: {
+            per_agent: number;
+            per_day: number;
+        }
+        max_length: {
+            per_talk: number | undefined;
+            per_agent: number | undefined;
+            base_length: number | undefined;
+        }
+        max_skip: number;
+    }
+    vote: {
+        max_count: number;
+    }
+    attack_vote: {
+        max_count: number;
+        allow_no_target: boolean;
+    }
+    timeout: {
+        action: number;
+        response: number;
+    }
 }
+
 
 export interface Talk {
     idx: number;

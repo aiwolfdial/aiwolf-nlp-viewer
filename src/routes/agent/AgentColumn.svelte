@@ -60,18 +60,18 @@
               request
             ]}</pre>
         {/if}
-        {#each Object.entries(info.statusMap ?? {}) as [key, value]}
+        {#each Object.entries(info.status_map ?? {}) as [key, value]}
           {#if value === Status.ALIVE}
             <div class="bg-info text-info-content flex flex-row gap-2 px-2">
               <pre class="text-2xl font-bold">{key}</pre>
-              <pre class="text-2xl">{RoleJA[(info.roleMap ?? {})[key]] ??
+              <pre class="text-2xl">{RoleJA[(info.role_map ?? {})[key]] ??
                   ""}</pre>
               <pre class="text-2xl font-bold ml-auto">{StatusJA[value]}</pre>
             </div>
           {:else}
             <div class="bg-error text-error-content flex flex-row gap-2 px-2">
               <pre class="text-2xl font-bold">{key}</pre>
-              <pre class="text-2xl">{RoleJA[(info.roleMap ?? {})[key]] ??
+              <pre class="text-2xl">{RoleJA[(info.role_map ?? {})[key]] ??
                   ""}</pre>
               <pre class="text-2xl font-bold ml-auto">{StatusJA[
                   value
@@ -156,18 +156,18 @@
           </div>
         </div>
         <h2 class="text-lg font-bold pt-2">ステータス</h2>
-        {#each Object.entries(info.statusMap ?? {}) as [key, value]}
+        {#each Object.entries(info.status_map ?? {}) as [key, value]}
           {#if value === Status.ALIVE}
             <div class="bg-info text-info-content flex flex-row gap-2">
               <pre class="text-lg">{key}</pre>
-              <pre class="text-lg">{RoleJA[(info.roleMap ?? {})[key]] ??
+              <pre class="text-lg">{RoleJA[(info.role_map ?? {})[key]] ??
                   ""}</pre>
               <pre class="text-lg ml-auto">{StatusJA[value]}</pre>
             </div>
           {:else}
             <div class="bg-error text-error-content flex flex-row gap-2">
               <pre class="text-lg">{key}</pre>
-              <pre class="text-lg">{RoleJA[(info.roleMap ?? {})[key]] ??
+              <pre class="text-lg">{RoleJA[(info.role_map ?? {})[key]] ??
                   ""}</pre>
               <pre class="text-lg ml-auto">{StatusJA[
                   value

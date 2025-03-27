@@ -115,28 +115,28 @@ function createAgentSocketState() {
 
                     if (packet.info) {
                         newState.info = packet.info;
-                        if (packet.info.mediumResult) {
-                            const judge = packet.info.mediumResult;
+                        if (packet.info.medium_result) {
+                            const judge = packet.info.medium_result;
                             if (newState.mediumResults.findIndex(j => j.day === judge.day && j.agent === judge.agent) < 0) {
-                                newState.mediumResults.push(packet.info.mediumResult);
+                                newState.mediumResults.push(packet.info.medium_result);
                             }
                         }
-                        if (packet.info.divineResult) {
-                            const judge = packet.info.divineResult;
+                        if (packet.info.divine_result) {
+                            const judge = packet.info.divine_result;
                             if (newState.divineResults.findIndex(j => j.day === judge.day && j.agent === judge.agent) < 0) {
-                                newState.divineResults.push(packet.info.divineResult);
+                                newState.divineResults.push(packet.info.divine_result);
                             }
                         }
-                        if (packet.info.executedAgent) {
-                            newState.executedAgents.push(packet.info.executedAgent);
+                        if (packet.info.executed_agent) {
+                            newState.executedAgents.push(packet.info.executed_agent);
                         }
-                        if (packet.info.attackedAgent) {
-                            newState.attackedAgents.push(packet.info.attackedAgent);
+                        if (packet.info.attacked_agent) {
+                            newState.attackedAgents.push(packet.info.attacked_agent);
                         }
                     }
                     if (packet.setting) {
                         newState.setting = packet.setting;
-                        actionTimeout = packet.setting.actionTimeout;
+                        actionTimeout = packet.setting.timeout.action;
                     }
                     if (packet.talkHistory) {
                         newState.talkHistory.push(...packet.talkHistory);
@@ -146,9 +146,9 @@ function createAgentSocketState() {
                     }
                     if (packet.request === Request.INITIALIZE &&
                         newState.info &&
-                        newState.info.roleMap &&
+                        newState.info.role_map &&
                         newState.info.agent) {
-                        newState.role = newState.info.roleMap[newState.info.agent];
+                        newState.role = newState.info.role_map[newState.info.agent];
                     }
                     return newState;
                 });

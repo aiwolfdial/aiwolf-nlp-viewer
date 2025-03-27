@@ -94,7 +94,7 @@
     </div>
     <div class="flex gap-2 items-center px-4 pt-2 pb-4 overflow-x-auto">
       {#if request === Request.VOTE || request === Request.DIVINE || request === Request.GUARD || request === Request.ATTACK}
-        {#each Object.entries(info?.statusMap ?? {}) as [key, value]}
+        {#each Object.entries(info?.status_map ?? {}) as [key, value]}
           {#if value === Status.ALIVE && key !== info?.agent}
             <button class="btn btn-xl" onclick={() => setMessage(key)}>
               {key}
@@ -102,7 +102,7 @@
           {/if}
         {/each}
       {:else}
-        {#if (setting?.maxSkip ?? 0) > 0}
+        {#if (info?.remain_skip ?? 0) > 0}
           <button
             class="btn btn-xl"
             onclick={() => setMessage("Skip")}
@@ -132,13 +132,13 @@
       />
       <datalist id="suggests">
         {#if request === Request.VOTE || request === Request.DIVINE || request === Request.GUARD || request === Request.ATTACK}
-          {#each Object.entries(info?.statusMap ?? {}) as [key, value]}
+          {#each Object.entries(info?.status_map ?? {}) as [key, value]}
             {#if value === Status.ALIVE && key !== info?.agent}
               <option value={key}></option>
             {/if}
           {/each}
         {:else}
-          {#if (setting?.maxSkip ?? 0) > 0}
+          {#if (info?.remain_skip ?? 0) > 0}
             <option value="Skip"></option>
           {/if}
           <option value="Over"></option>
@@ -157,7 +157,7 @@
       <progress
         class="progress"
         value={remain !== null
-          ? (remain / (setting?.actionTimeout ?? 60000)) * 100
+          ? (remain / (setting?.timeout.action ?? 60000)) * 100
           : 0}
         max="100"
       ></progress>
@@ -186,7 +186,7 @@
           class="bg-primary text-primary-content text-lg font-bold text-nowrap"
           >{RequestJA[request]}対象を選択してください</span
         >
-        {#each Object.entries(info?.statusMap ?? {}) as [key, value]}
+        {#each Object.entries(info?.status_map ?? {}) as [key, value]}
           {#if value === Status.ALIVE && key !== info?.agent}
             <button class="btn" onclick={() => setMessage(key)}>
               {key}
@@ -200,7 +200,7 @@
             request ?? Request.INITIALIZE
           ]}内容を入力してください</span
         >
-        {#if (setting?.maxSkip ?? 0) > 0}
+        {#if (info?.remain_skip ?? 0) > 0}
           <button
             class="btn"
             onclick={() => setMessage("Skip")}
@@ -230,13 +230,13 @@
       />
       <datalist id="suggests">
         {#if request === Request.VOTE || request === Request.DIVINE || request === Request.GUARD || request === Request.ATTACK}
-          {#each Object.entries(info?.statusMap ?? {}) as [key, value]}
+          {#each Object.entries(info?.status_map ?? {}) as [key, value]}
             {#if value === Status.ALIVE && key !== info?.agent}
               <option value={key}></option>
             {/if}
           {/each}
         {:else}
-          {#if (setting?.maxSkip ?? 0) > 0}
+          {#if (info?.remain_skip ?? 0) > 0}
             <option value="Skip"></option>
           {/if}
           <option value="Over"></option>
@@ -255,7 +255,7 @@
       <progress
         class="progress"
         value={remain !== null
-          ? (remain / (setting?.actionTimeout ?? 60000)) * 100
+          ? (remain / (setting?.timeout.action ?? 60000)) * 100
           : 0}
         max="100"
       ></progress>
