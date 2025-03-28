@@ -2,8 +2,8 @@ export interface Packet {
     request: Request;
     info: Info | undefined;
     setting: Setting | undefined;
-    talkHistory: Talk[] | undefined;
-    whisperHistory: Talk[] | undefined;
+    talk_history: Talk[] | undefined;
+    whisper_history: Talk[] | undefined;
 }
 
 export enum Request {

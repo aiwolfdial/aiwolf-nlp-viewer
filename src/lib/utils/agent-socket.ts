@@ -138,11 +138,11 @@ function createAgentSocketState() {
                         newState.setting = packet.setting;
                         actionTimeout = packet.setting.timeout.action;
                     }
-                    if (packet.talkHistory) {
-                        newState.talkHistory.push(...packet.talkHistory);
+                    if (packet.talk_history) {
+                        newState.talkHistory.push(...packet.talk_history);
                     }
-                    if (packet.whisperHistory) {
-                        newState.whisperHistory.push(...packet.whisperHistory);
+                    if (packet.whisper_history) {
+                        newState.whisperHistory.push(...packet.whisper_history);
                     }
                     if (packet.request === Request.INITIALIZE &&
                         newState.info &&

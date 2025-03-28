@@ -19,7 +19,7 @@
   import ActionBar from "./ActionBar.svelte";
   import AgentColumn from "./AgentColumn.svelte";
   import Navbar from "./Navbar.svelte";
-  import TalkHistory from "./TalkColumn.svelte";
+  import TalkColumn from "./TalkColumn.svelte";
 
   const status = writable("");
   const deadline = writable<number | null>(null);
@@ -159,9 +159,9 @@
         executedAgents={$executedAgents}
         attackedAgents={$attackedAgents}
       />
-      <TalkHistory header="トーク履歴" talks={$talkHistory} />
+      <TalkColumn header="トーク履歴" talks={$talkHistory} />
       {#if $role === Role.WEREWOLF}
-        <TalkHistory header="囁き履歴" talks={$whisperHistory} />
+        <TalkColumn header="囁き履歴" talks={$whisperHistory} />
       {/if}
     </div>
     {#if $remain !== null}
