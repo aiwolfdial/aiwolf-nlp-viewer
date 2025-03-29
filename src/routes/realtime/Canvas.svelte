@@ -7,7 +7,10 @@
   import { IdxToCustomName, xor } from "$lib/utils/realtime";
   import { onDestroy, onMount } from "svelte";
 
-  let { packet }: { packet: Packet } = $props();
+  let {
+    packet,
+    focusIdx = $bindable(),
+  }: { packet: Packet; focusIdx?: number } = $props();
 
   let settings = $state<RealtimeSettings>();
 
@@ -17,7 +20,6 @@
 
   onDestroy(unsubscribe);
 
-  let focusIdx = $state<number>();
   let message = $derived.by(() => {
     switch (packet.event) {
       case "未接続":

@@ -14,6 +14,7 @@
 
   const selectedId = writable<string | null>(null);
   const selectedIdx = writable<number | null>(null);
+  let focusIdx = $state<number | undefined>(undefined);
 
   const defaultPacket: Packet = {
     id: "",
@@ -193,7 +194,7 @@
     bind:this={containerRef}
   >
     <div class="overflow-y-auto pr-2 h-full" style="width: {width}%">
-      <Canvas packet={$currentPacket} />
+      <Canvas packet={$currentPacket} bind:focusIdx />
     </div>
     <button
       class="cursor-ew-resize w-2 rounded bg-gray-300 hover:bg-gray-400 active:bg-gray-500 transition-colors border-0 my-2"
@@ -221,7 +222,11 @@
                 onclick={() => selectedIdx.set(idx)}
               >
                 {#if packet.event === "トーク" || packet.event === "囁き"}
-                  {#if packet.message === "Over"}
+                  {#if packet.event === "囁き" && focusIdx !== undefined && packet.agents.find((agent) => agent.idx === focusIdx)?.role !== "WEREWOLF"}
+                    <p class="overflow-hidden text-ellipsis whitespace-nowrap">
+                      {packet.event}
+                    </p>
+                  {:else if packet.message === "Over"}
                     <p class="overflow-hidden text-ellipsis whitespace-nowrap">
                       {IdxToCustomName(
                         settings?.display.text,
