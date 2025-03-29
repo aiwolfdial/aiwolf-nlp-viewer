@@ -8,9 +8,7 @@ export function initializeAgents(length: number): Agent[] {
         team: "Undefined",
         name: IdxToName(i + 1),
         role: "Undefined",
-        isAlive: true,
-        targetIdxs: [],
-        isBubble: false,
+        is_alive: true,
     }));
 }
 
@@ -18,7 +16,7 @@ export function IdxToCustomName(agent: SettingsAgent | undefined, packet: Packet
     if (idx === undefined) return "該当なし";
     let values = [];
     if (agent?.name) {
-        values.push(IdxToName(idx));
+        values.push(packet.agents.find((agent) => agent.idx === idx)?.name);
     }
     if (agent?.team) {
         values.push(packet.agents.find((agent) => agent.idx === idx)?.team);

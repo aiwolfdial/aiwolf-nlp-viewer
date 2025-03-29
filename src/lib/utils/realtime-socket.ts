@@ -43,6 +43,7 @@ function createRealtimeSocketState() {
         socket.onmessage = (event) => {
             try {
                 const packet = JSON.parse(event.data) as Packet;
+                console.log("Received packet:", packet);
                 update(state => {
                     const newEntries = { ...state.entries };
                     if (!newEntries[packet.id]) {

@@ -2,13 +2,13 @@ export interface Packet {
     id: string;
     idx: number;
     day: number;
-    isDay: boolean;
+    is_day: boolean;
     agents: Agent[];
     event: string;
     message: string | undefined;
-    fromIdx: number | undefined;
-    toIdx: number | undefined;
-    bubbleIdx: number | undefined;
+    from_idx: number | undefined;
+    to_idx: number | undefined;
+    bubble_idx: number | undefined;
 }
 
 export interface Agent {
@@ -16,5 +16,5 @@ export interface Agent {
     team: string;
     name: string;
     role: string;
-    isAlive: boolean;
+    is_alive: boolean;
 }

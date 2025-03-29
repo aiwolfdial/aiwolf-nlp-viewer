@@ -19,13 +19,13 @@
     id: "",
     idx: -1,
     day: 0,
-    isDay: true,
+    is_day: true,
     agents: initializeAgents(5),
     event: "未接続",
     message: undefined,
-    fromIdx: undefined,
-    toIdx: undefined,
-    bubbleIdx: undefined,
+    from_idx: undefined,
+    to_idx: undefined,
+    bubble_idx: undefined,
   };
 
   const currentPacket = writable<Packet>(defaultPacket);
@@ -211,9 +211,9 @@
         <div class="list overflow-y-auto flex-1 my-2" bind:this={listRef}>
           {#if $selectedId}
             {#each $entries[$selectedId] || [] as packet, idx}
-              {#if (idx > 0 && (packet.day !== $entries[$selectedId][idx - 1].day || packet.isDay !== $entries[$selectedId][idx - 1].isDay)) || idx === 0}
+              {#if (idx > 0 && (packet.day !== $entries[$selectedId][idx - 1].day || packet.is_day !== $entries[$selectedId][idx - 1].is_day)) || idx === 0}
                 <div class="divider">
-                  {packet.day}日目 {packet.isDay ? "昼" : "夜"}
+                  {packet.day}日目 {packet.is_day ? "昼" : "夜"}
                 </div>
               {/if}
               <button
@@ -226,7 +226,7 @@
                       {IdxToCustomName(
                         settings?.display.text,
                         packet,
-                        packet.bubbleIdx
+                        packet.bubble_idx
                       )}
                     </p>
                     <iconify-icon inline icon="mdi:skip-forward"></iconify-icon>
@@ -235,7 +235,7 @@
                       {IdxToCustomName(
                         settings?.display.text,
                         packet,
-                        packet.bubbleIdx
+                        packet.bubble_idx
                       )}
                     </p>
                     <iconify-icon inline icon="mdi:arrow-u-down-right-bold"
@@ -245,7 +245,7 @@
                       {IdxToCustomName(
                         settings?.display.text,
                         packet,
-                        packet.bubbleIdx
+                        packet.bubble_idx
                       ) +
                         "<" +
                         packet.message}
@@ -257,13 +257,13 @@
                       {IdxToCustomName(
                         settings?.display.text,
                         packet,
-                        packet.fromIdx
+                        packet.from_idx
                       )}
                     {:else if packet.event === "追放" || packet.event === "襲撃"}
                       {IdxToCustomName(
                         settings?.display.text,
                         packet,
-                        packet.toIdx
+                        packet.to_idx
                       )}
                     {/if}
                     {packet.event}

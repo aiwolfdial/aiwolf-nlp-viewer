@@ -23,42 +23,51 @@
       case "未接続":
         return "未接続";
       case "トーク":
-      case "囁き":
-        // :TODO 囁きの場合、人狼のみ表示する
         return packet.message;
+      case "囁き":
+        if (
+          xor(
+            focusIdx === undefined,
+            packet.agents.find((agent) => agent.idx === focusIdx)?.role ===
+              "WEREWOLF"
+          )
+        ) {
+          return packet.message;
+        }
+        return "囁きました";
       case "襲撃投票":
-        if (xor(focusIdx === undefined, packet.fromIdx === focusIdx)) {
-          return `${IdxToCustomName(settings?.display.bubble, packet, packet.fromIdx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} に襲撃投票しました`;
+        if (xor(focusIdx === undefined, packet.from_idx === focusIdx)) {
+          return `${IdxToCustomName(settings?.display.bubble, packet, packet.from_idx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.to_idx)} に襲撃投票しました`;
         }
         return `襲撃投票しました`;
       case "投票":
-        if (xor(focusIdx === undefined, packet.fromIdx === focusIdx)) {
-          return `${IdxToCustomName(settings?.display.bubble, packet, packet.fromIdx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} に投票しました`;
+        if (xor(focusIdx === undefined, packet.from_idx === focusIdx)) {
+          return `${IdxToCustomName(settings?.display.bubble, packet, packet.from_idx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.to_idx)} に投票しました`;
         }
-        return `${IdxToCustomName(settings?.display.bubble, packet, packet.fromIdx)} が投票しました`;
+        return `${IdxToCustomName(settings?.display.bubble, packet, packet.from_idx)} が投票しました`;
       case "追放":
-        if (packet.toIdx === undefined) {
+        if (packet.to_idx === undefined) {
           return "誰も追放されませんでした";
         }
-        return `${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} を追放しました`;
+        return `${IdxToCustomName(settings?.display.bubble, packet, packet.to_idx)} を追放しました`;
       case "襲撃":
-        if (packet.toIdx === undefined) {
+        if (packet.to_idx === undefined) {
           return "誰も襲撃されませんでした";
         }
-        if (packet.fromIdx === -1) {
-          return `${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} が襲撃されましたが、護衛されました`;
+        if (packet.from_idx === -1) {
+          return `${IdxToCustomName(settings?.display.bubble, packet, packet.to_idx)} が襲撃されましたが、護衛されました`;
         }
-        return `${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} が襲撃されました`;
+        return `${IdxToCustomName(settings?.display.bubble, packet, packet.to_idx)} が襲撃されました`;
       case "占い":
-        if (xor(focusIdx === undefined, packet.fromIdx === focusIdx)) {
-          return `${IdxToCustomName(settings?.display.bubble, packet, packet.fromIdx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} を占った結果、${RoleToSpecieText(
-            packet.agents.find((agent) => agent.idx === packet.toIdx)?.role
+        if (xor(focusIdx === undefined, packet.from_idx === focusIdx)) {
+          return `${IdxToCustomName(settings?.display.bubble, packet, packet.from_idx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.to_idx)} を占った結果、${RoleToSpecieText(
+            packet.agents.find((agent) => agent.idx === packet.to_idx)?.role
           )} でした`;
         }
         return "占いました";
       case "護衛":
-        if (xor(focusIdx === undefined, packet.fromIdx === focusIdx)) {
-          return `${IdxToCustomName(settings?.display.bubble, packet, packet.fromIdx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.toIdx)} を護衛対象にしました`;
+        if (xor(focusIdx === undefined, packet.from_idx === focusIdx)) {
+          return `${IdxToCustomName(settings?.display.bubble, packet, packet.from_idx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.to_idx)} を護衛対象にしました`;
         }
         return "護衛しました";
       case "終了":
@@ -99,9 +108,15 @@
     });
 
     if (focusIdx !== undefined) {
-      if (packet.event === "占い" && packet.fromIdx !== focusIdx) return;
-      if (packet.event === "投票" && packet.fromIdx !== focusIdx) return;
-      if (packet.event === "襲撃投票" && packet.fromIdx !== focusIdx) return;
+      if (
+        packet.event === "囁き" &&
+        packet.agents.find((agent) => agent.idx === focusIdx)?.role !==
+          "WEREWOLF"
+      )
+        return;
+      if (packet.event === "占い" && packet.from_idx !== focusIdx) return;
+      if (packet.event === "投票" && packet.from_idx !== focusIdx) return;
+      if (packet.event === "襲撃投票" && packet.from_idx !== focusIdx) return;
     }
 
     const messageCtx = bubble.getContext("2d");
@@ -109,15 +124,15 @@
     if (!messageCtx || !arrowCtx) return;
     const canvasRect = arrow.getBoundingClientRect();
 
-    if (packet.fromIdx !== undefined && packet.toIdx !== undefined) {
-      const from = document.getElementById(`agent-${packet.fromIdx}`);
+    if (packet.from_idx !== undefined && packet.to_idx !== undefined) {
+      const from = document.getElementById(`agent-${packet.from_idx}`);
       if (!(from instanceof HTMLElement)) return;
       const fromRect = from.getBoundingClientRect();
 
       const fromX = fromRect.left + fromRect.width / 2 - canvasRect.left;
       const fromY = fromRect.top + fromRect.height / 2 - canvasRect.top;
 
-      const to = document.getElementById(`agent-${packet.toIdx}`);
+      const to = document.getElementById(`agent-${packet.to_idx}`);
       if (!(to instanceof HTMLElement)) return;
       const toRect = to.getBoundingClientRect();
 
@@ -132,8 +147,8 @@
       );
     }
 
-    if (packet.bubbleIdx !== undefined) {
-      const bubble = document.getElementById(`agent-${packet.bubbleIdx}`);
+    if (packet.bubble_idx !== undefined) {
+      const bubble = document.getElementById(`agent-${packet.bubble_idx}`);
       if (!(bubble instanceof HTMLElement)) return;
       const bubbleRect = bubble.getBoundingClientRect();
 
@@ -200,7 +215,7 @@
   {#if !settings?.display.largeScale}
     <div role="alert" class="alert m-4">
       <span class="text-lg font-bold">
-        {packet.day}日目 {packet.isDay ? "昼" : "夜"}
+        {packet.day}日目 {packet.is_day ? "昼" : "夜"}
         {packet.event}フェーズ
       </span>
     </div>
@@ -213,7 +228,7 @@
       {#if settings?.display.largeScale}
         <pre
           class="base-content w-2/5 text-5xl font-bold opacity-70 absolute top-0 left-0 -mt-4 ml-8 select-none">{packet.day}日目<br
-          />{packet.isDay ? "昼" : "夜"}<br />{packet.event}</pre>
+          />{packet.is_day ? "昼" : "夜"}<br />{packet.event}</pre>
       {/if}
       <canvas
         bind:this={bubble}
@@ -250,9 +265,9 @@
               class={settings?.display.largeScale
                 ? "relative w-48 rounded-full ring-offset-base-100 ring ring-offset-2"
                 : "relative w-24 rounded-full ring-offset-base-100 ring ring-offset-2"}
-              class:ring-success={agent.isAlive}
-              class:ring-error={!agent.isAlive}
-              style:opacity={!agent.isAlive ? 0.25 : 1}
+              class:ring-success={agent.is_alive}
+              class:ring-error={!agent.is_alive}
+              style:opacity={!agent.is_alive ? 0.25 : 1}
             >
               <button
                 class="cursor-pointer"
