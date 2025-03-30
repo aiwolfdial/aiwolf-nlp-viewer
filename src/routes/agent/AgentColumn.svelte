@@ -62,7 +62,7 @@
         {/if}
         {#each Object.entries(info.status_map ?? {}) as [key, value]}
           {#if value === Status.ALIVE}
-            <div class="bg-info text-info-content flex flex-row gap-2 px-2">
+            <div class="bg-info text-success-content flex flex-row gap-2 px-2">
               <pre class="text-2xl font-bold">{key}</pre>
               <pre class="text-2xl">{RoleJA[(info.role_map ?? {})[key]] ??
                   ""}</pre>
@@ -96,7 +96,7 @@
               </div>
             {:else}
               <div
-                class="bg-success text-success-content flex flex-row gap-2 px-2"
+                class="bg-success text-info-content flex flex-row gap-2 px-2"
               >
                 <pre class="text-2xl font-bold">{target}</pre>
                 <pre class="text-2xl">({day}日目)</pre>
@@ -120,7 +120,7 @@
               </div>
             {:else}
               <div
-                class="bg-success text-success-content flex flex-row gap-2 px-2"
+                class="bg-success text-info-content flex flex-row gap-2 px-2"
               >
                 <pre class="text-2xl font-bold">{target}</pre>
                 <pre class="text-2xl">({day}日目)</pre>
@@ -189,7 +189,7 @@
                 <pre class="text-lg ml-auto">{SpeciesJA[result]}</pre>
               </div>
             {:else}
-              <div class="bg-success text-success-content flex flex-row gap-2">
+              <div class="bg-success text-info-content flex flex-row gap-2">
                 <pre class="text-lg">{target}</pre>
                 <pre class="text-lg">({day}日目)</pre>
                 <pre class="text-lg ml-auto">{SpeciesJA[result]}</pre>
@@ -207,7 +207,7 @@
                 <pre class="text-lg ml-auto">{SpeciesJA[result]}</pre>
               </div>
             {:else}
-              <div class="bg-success text-success-content flex flex-row gap-2">
+              <div class="bg-success text-info-content flex flex-row gap-2">
                 <pre class="text-lg">{target}</pre>
                 <pre class="text-lg">({day}日目)</pre>
                 <pre class="text-lg ml-auto">{SpeciesJA[result]}</pre>

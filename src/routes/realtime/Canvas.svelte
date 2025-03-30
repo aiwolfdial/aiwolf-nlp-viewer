@@ -267,7 +267,7 @@
               class={settings?.display.largeScale
                 ? "relative w-48 rounded-full ring-offset-base-100 ring ring-offset-2"
                 : "relative w-24 rounded-full ring-offset-base-100 ring ring-offset-2"}
-              class:ring-success={agent.is_alive}
+              class:ring-info={agent.is_alive}
               class:ring-error={!agent.is_alive}
               style:opacity={!agent.is_alive ? 0.25 : 1}
             >
@@ -336,8 +336,8 @@
     top: calc(50% + sin(var(--angle) * 1deg - 90deg) * 40%);
   }
 
-  .ring-success {
-    --tw-ring-color: var(--color-success);
+  .ring-info {
+    --tw-ring-color: var(--color-info);
   }
 
   .ring-error {
