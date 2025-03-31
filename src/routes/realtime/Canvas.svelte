@@ -1,6 +1,6 @@
 <script lang="ts">
   import { base } from "$app/paths";
-  import { IdxToName, RoleToSpecieText } from "$lib/constants/translate";
+  import { RoleToSpecieText } from "$lib/constants/translate";
   import { realtimeSettings } from "$lib/stores/realtime-settings";
   import type { Packet } from "$lib/types/realtime";
   import type { RealtimeSettings } from "$lib/types/realtime-settings";
@@ -282,9 +282,9 @@
                 }}
               >
                 <img
-                  src="{base}/images/male/{agent.idx
-                    .toString()
-                    .padStart(2, '0')}.png"
+                  src={agent.avatar === undefined
+                    ? `${base}/images/male/${agent.idx.toString().padStart(2, "0")}.png`
+                    : agent.avatar}
                   alt={agent.name}
                   class="w-full h-full"
                 />
@@ -300,7 +300,7 @@
             </div>
           </div>
           {#if !settings?.display.largeScale && settings?.display.canvas.name}
-            <pre class="base-content select-none">{IdxToName(agent.idx)}</pre>
+            <pre class="base-content select-none">{agent.name}</pre>
           {/if}
           {#if settings?.display.canvas.team}
             {#if settings?.display.largeScale}

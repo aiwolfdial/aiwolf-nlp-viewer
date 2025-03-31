@@ -15,6 +15,8 @@ export interface Agent {
     idx: number;
     team: string;
     name: string;
+    profile: string | undefined;
+    avatar: string | undefined;
     role: string;
     is_alive: boolean;
 }
