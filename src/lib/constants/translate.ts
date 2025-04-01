@@ -36,12 +36,3 @@ export const ReplaceWords = { "kanolab1": "[チーム名]" }
 export function IdxToName(idx: number | string) {
     return `Agent[${idx.toString().padStart(2, "0")}]`
 }
-
-export function RoleToSpecieText(role: string | undefined) {
-    if (!role) return "不明";
-    return SpecieMap[
-        RoleToSpeciesMap[
-        role as keyof typeof RoleToSpeciesMap
-        ] as keyof typeof SpecieMap
-    ];
-}

@@ -97,6 +97,15 @@ export const RoleJA = {
     MEDIUM: "霊媒師"
 }
 
+export const RoleToSpecies: Record<Role, Species> = {
+    WEREWOLF: Species.WEREWOLF,
+    POSSESSED: Species.HUMAN,
+    SEER: Species.HUMAN,
+    BODYGUARD: Species.HUMAN,
+    VILLAGER: Species.HUMAN,
+    MEDIUM: Species.HUMAN
+}
+
 export interface Vote {
     day: number;
     agent: string;
@@ -114,7 +123,9 @@ export interface Setting {
             per_day: number;
         }
         max_length: {
+            count_in_word: boolean | undefined;
             per_talk: number | undefined;
+            mention_length: number | undefined;
             per_agent: number | undefined;
             base_length: number | undefined;
         }
@@ -126,7 +137,9 @@ export interface Setting {
             per_day: number;
         }
         max_length: {
+            count_in_word: boolean | undefined;
             per_talk: number | undefined;
+            mention_length: number | undefined;
             per_agent: number | undefined;
             base_length: number | undefined;
         }

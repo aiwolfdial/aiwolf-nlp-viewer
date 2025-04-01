@@ -1,4 +1,5 @@
 import { IdxToName } from "$lib/constants/translate";
+import { RoleToSpecies, SpeciesJA } from "$lib/types/agent";
 import type { Agent, Packet } from "$lib/types/realtime";
 import type { Agent as SettingsAgent } from "$lib/types/realtime-settings";
 
@@ -7,6 +8,8 @@ export function initializeAgents(length: number): Agent[] {
         idx: i + 1,
         team: "Undefined",
         name: IdxToName(i + 1),
+        profile: undefined,
+        avatar: undefined,
         role: "Undefined",
         is_alive: true,
     }));
@@ -25,6 +28,11 @@ export function IdxToCustomName(agent: SettingsAgent | undefined, packet: Packet
         values.push(packet.agents.find((agent) => agent.idx === idx)?.role);
     }
     return values.join(" ");
+}
+
+export function RoleToSpecie(role: string | undefined) {
+    if (!role) return "";
+    return SpeciesJA[RoleToSpecies[role as keyof typeof RoleToSpecies]];
 }
 
 export function xor(a: boolean, b: boolean) {
