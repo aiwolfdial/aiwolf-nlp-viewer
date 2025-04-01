@@ -158,7 +158,6 @@ export interface Setting {
     }
 }
 
-
 export interface Talk {
     idx: number;
     day: number;
@@ -167,4 +166,31 @@ export interface Talk {
     text: string;
     skip: boolean;
     over: boolean;
+}
+
+export const DefaultProfileAvatars = {
+    'ミナト': '/images/male/01.png',
+    'タクミ': '/images/male/02.png',
+    'ケンジ': '/images/male/03.png',
+    'リュウジ': '/images/male/04.png',
+    'ダイスケ': '/images/male/05.png',
+    'シオン': '/images/male/06.png',
+    'ベンジャミン': '/images/male/07.png',
+    'トシオ': '/images/male/08.png',
+    'ジョナサン': '/images/male/09.png',
+    'シュンイチ': '/images/male/10.png',
+    'ジョージ': '/images/male/11.png',
+    'セルヴァス': '/images/male/12.png',
+    'サクラ': '/images/female/01.png',
+    'リン': '/images/female/02.png',
+    'ユミ': '/images/female/03.png',
+    'メイ': '/images/female/04.png',
+    'ミサキ': '/images/female/05.png',
+    'ミオ': '/images/female/06.png',
+    'ミヅキ': '/images/female/07.png',
+    'ミナコ': '/images/female/08.png',
+    'アスカ': '/images/female/09.png',
+    'ミドリ': '/images/female/10.png',
+    'ヴィクトリア': '/images/female/11.png',
+    'シズエ': '/images/female/12.png'
 }

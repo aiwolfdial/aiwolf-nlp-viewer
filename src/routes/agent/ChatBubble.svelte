@@ -1,11 +1,14 @@
 <script lang="ts">
   import { base } from "$app/paths";
   import { agentSettings } from "$lib/stores/agent-settings";
-  import type { Talk } from "$lib/types/agent";
+  import { DefaultProfileAvatars, type Talk } from "$lib/types/agent";
   import type { AgentSettings } from "$lib/types/agent-settings";
   import { onDestroy, onMount } from "svelte";
 
-  let { talk }: { talk: Talk } = $props();
+  let {
+    talk,
+    isDefaultProfile,
+  }: { talk: Talk; agents: string[]; isDefaultProfile: boolean } = $props();
 
   let settings = $state<AgentSettings>();
 
@@ -23,11 +26,9 @@
     <div class="chat-image avatar">
       <div class="w-20 rounded-full">
         <img
-          src="{base}/images/male/{Number(
-            talk.agent.match(/Agent\[(\d+)\]/)?.[1]
-          )
-            .toString()
-            .padStart(2, '0')}.png"
+          src={isDefaultProfile
+            ? `${base}${DefaultProfileAvatars[talk.agent as keyof typeof DefaultProfileAvatars]}`
+            : ""}
           alt={talk.agent}
         />
       </div>
@@ -47,11 +48,9 @@
     <div class="chat-image avatar">
       <div class="w-10 rounded-full">
         <img
-          src="{base}/images/male/{Number(
-            talk.agent.match(/Agent\[(\d+)\]/)?.[1]
-          )
-            .toString()
-            .padStart(2, '0')}.png"
+          src={isDefaultProfile
+            ? `${base}${DefaultProfileAvatars[talk.agent as keyof typeof DefaultProfileAvatars]}`
+            : ""}
           alt={talk.agent}
         />
       </div>

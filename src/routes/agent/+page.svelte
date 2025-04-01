@@ -159,9 +159,17 @@
         executedAgents={$executedAgents}
         attackedAgents={$attackedAgents}
       />
-      <TalkColumn header="トーク履歴" talks={$talkHistory} />
+      <TalkColumn
+        header="トーク履歴"
+        talks={$talkHistory}
+        agents={Object.keys($info?.status_map ?? {})}
+      />
       {#if $role === Role.WEREWOLF}
-        <TalkColumn header="囁き履歴" talks={$whisperHistory} />
+        <TalkColumn
+          header="囁き履歴"
+          talks={$whisperHistory}
+          agents={Object.keys($info?.status_map ?? {})}
+        />
       {/if}
     </div>
     {#if $remain !== null}
