@@ -31,6 +31,7 @@
 		"daisyui": "^5.0.0-beta.8",
 		"iconify-icon": "^2.2.0",
 		"jose": "^6.0.8",
+		"runes2": "^1.1.4",
 		"tailwindcss": "^4.0.7"
 	}
 }

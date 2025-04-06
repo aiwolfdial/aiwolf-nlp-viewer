@@ -8,8 +8,9 @@
     type Setting,
   } from "$lib/types/agent";
   import type { AgentSettings } from "$lib/types/agent-settings";
+  import { runes } from "runes2";
   import { onDestroy, onMount } from "svelte";
-  import { writable } from "svelte/store";
+  import { derived, writable } from "svelte/store";
 
   let {
     remain,
@@ -25,14 +26,47 @@
     onSendMessage: (message: string) => void;
   } = $props();
 
+  const length = writable(0);
+
   let settings = $state<AgentSettings>();
 
   onMount(() => {
-    const unsubscribe = agentSettings.subscribe((value) => {
+    const unsubscribeSettings = agentSettings.subscribe((value) => {
       settings = value;
     });
 
-    onDestroy(unsubscribe);
+    const unsubscribeLength = derived(message, () => {
+      let result = 0;
+      if (request === Request.TALK) {
+        result += setting?.talk.max_length.base_length ?? 0;
+        result += info?.remain_length ?? 0;
+        if ($message.indexOf("@") !== -1) {
+          result += setting?.talk.max_length.mention_length ?? 0;
+        }
+        if (setting?.talk.max_length.per_talk) {
+          result = Math.min(result, setting.talk.max_length.per_talk);
+        }
+      }
+      if (request === Request.WHISPER) {
+        result += setting?.whisper.max_length.base_length ?? 0;
+        result += info?.remain_length ?? 0;
+        if ($message.indexOf("@") !== -1) {
+          result += setting?.talk.max_length.mention_length ?? 0;
+        }
+        if (setting?.whisper.max_length.per_talk) {
+          result = Math.min(result, setting.whisper.max_length.per_talk);
+        }
+      }
+      result -= runes($message).length;
+      return result;
+    }).subscribe((value) => {
+      length.set(value);
+    });
+
+    onDestroy(() => {
+      unsubscribeSettings();
+      unsubscribeLength();
+    });
   });
 
   const message = writable<string>("");
@@ -250,6 +284,9 @@
         <iconify-icon icon="mdi:send"></iconify-icon>
         送信
       </button>
+      {#if $length > 0}
+        <span class="font-mono">{$length}文字</span>
+      {/if}
     </div>
     <div class="-mt-2 mx-4 mb-2">
       <progress
