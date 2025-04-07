@@ -1,1 +1,0 @@
-import{ah as i,ai as o,aj as n,a3 as s}from"./GgKHaYu0.js";import{b as c}from"./sI1lmN0c.js";function f(t){var _=n,e=s;i(null),o(null);try{return t()}finally{i(_),o(e)}}function l(t,_,e,r=e){t.addEventListener(_,()=>f(e));const a=t.__on_r;a?t.__on_r=()=>{a(),r(!0)}:t.__on_r=()=>r(!0),c()}export{l};
