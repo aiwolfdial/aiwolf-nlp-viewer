@@ -13,132 +13,139 @@
   } from "$lib/types/agent";
   import { type AgentSettings } from "$lib/types/agent-settings";
   import { agentSocketState } from "$lib/utils/agent-socket";
-  import { onDestroy, onMount } from "svelte";
-  import { writable } from "svelte/store";
+  import { onDestroy } from "svelte";
   import "../../app.css";
   import ActionBar from "./ActionBar.svelte";
   import AgentColumn from "./AgentColumn.svelte";
   import Navbar from "./Navbar.svelte";
   import TalkColumn from "./TalkColumn.svelte";
 
-  const status = writable("");
-  const deadline = writable<number | null>(null);
-  const entries = writable<(Packet | string)[]>([]);
-  const role = writable<Role | null>(null);
-  const request = writable<Request | null>(null);
-  const info = writable<Info | null>(null);
-  const mediumResults = writable<Judge[]>([]);
-  const divineResults = writable<Judge[]>([]);
-  const setting = writable<Setting | null>(null);
-  const talkHistory = writable<Talk[]>([]);
-  const whisperHistory = writable<Talk[]>([]);
-  const executedAgents = writable<string[]>([]);
-  const attackedAgents = writable<string[]>([]);
+  let settings = $state<AgentSettings | undefined>(undefined);
+  let status = $state("");
+  let deadline = $state<number | null>(null);
+  let entries = $state<(Packet | string)[]>([]);
+  let role = $state<Role | null>(null);
+  let request = $state<Request | null>(null);
+  let info = $state<Info | null>(null);
+  let mediumResults = $state<Judge[]>([]);
+  let divineResults = $state<Judge[]>([]);
+  let setting = $state<Setting | null>(null);
+  let talkHistory = $state<Talk[]>([]);
+  let whisperHistory = $state<Talk[]>([]);
+  let executedAgents = $state<string[]>([]);
+  let attackedAgents = $state<string[]>([]);
+  let remain = $state<number | null>(null);
+  let animationFrameId = $state<number | null>(null);
 
-  const remain = writable<number | null>(null);
+  let unsubscribeSettings = agentSettings.subscribe((value) => {
+    settings = value;
+  });
 
-  let settings = $state<AgentSettings>();
-  let animationFrameId: number;
+  let unsubscribeSocketState = agentSocketState.subscribe((socketState) => {
+    status = socketState.status;
+
+    if (socketState.deadline) {
+      deadline = socketState.deadline.getTime();
+      updateDeadline();
+    } else {
+      deadline = null;
+      remain = null;
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+    }
+
+    entries = socketState.entries;
+    role = socketState.role;
+    request = socketState.request;
+    info = socketState.info;
+    mediumResults = socketState.mediumResults;
+    divineResults = socketState.divineResults;
+    setting = socketState.setting;
+    talkHistory = socketState.talkHistory;
+    whisperHistory = socketState.whisperHistory;
+    executedAgents = socketState.executedAgents;
+    attackedAgents = socketState.attackedAgents;
+  });
 
   function connectWithParams() {
-    if (browser) {
-      const params = page.url.searchParams;
-      const url = params.get("url");
-      const token = params.get("token");
+    if (!browser) return;
 
-      if (url) {
-        agentSettings.update((value) => ({
-          ...value,
-          connection: {
-            url: url ?? "",
-            token: token ?? "",
-          },
-        }));
+    const params = page.url.searchParams;
+    const url = params.get("url");
+    const token = params.get("token");
 
-        agentSocketState.connect();
-      }
+    if (url) {
+      agentSettings.update((value) => ({
+        ...value,
+        connection: {
+          url: url ?? "",
+          token: token ?? "",
+        },
+      }));
+      agentSocketState.connect();
     }
   }
 
   function updateDeadline() {
-    if ($deadline !== null) {
+    if (deadline === null) return;
+
+    const calculateRemaining = () => {
+      if (deadline === null) return;
+
       const now = Date.now();
-      const remainingTime = Math.max(0, $deadline - now);
-      remain.set(remainingTime);
+      const remainingTime = Math.max(0, deadline - now);
+      remain = remainingTime;
 
       if (remainingTime > 0) {
-        animationFrameId = requestAnimationFrame(updateDeadline);
+        animationFrameId = requestAnimationFrame(calculateRemaining);
       } else {
-        remain.set(0);
-      }
-    }
-
-    return () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
+        remain = 0;
+        animationFrameId = null;
       }
     };
-  }
 
-  onMount(() => {
-    connectWithParams();
-
-    const unsubscribeStatus = agentSocketState.subscribe((value) => {
-      status.set(value.status);
-
-      if (value.deadline) {
-        deadline.set(value.deadline.getTime());
-        if (animationFrameId) {
-          cancelAnimationFrame(animationFrameId);
-        }
-        animationFrameId = requestAnimationFrame(updateDeadline);
-      } else {
-        deadline.set(null);
-        remain.set(null);
-      }
-
-      entries.set(value.entries);
-      role.set(value.role);
-      request.set(value.request);
-      info.set(value.info);
-      mediumResults.set(value.mediumResults);
-      divineResults.set(value.divineResults);
-      setting.set(value.setting);
-      talkHistory.set(value.talkHistory);
-      whisperHistory.set(value.whisperHistory);
-      executedAgents.set(value.executedAgents);
-      attackedAgents.set(value.attackedAgents);
-    });
-
-    const unsubscribeSettings = agentSettings.subscribe((value) => {
-      settings = value;
-    });
-
-    onDestroy(() => {
-      unsubscribeStatus();
-      unsubscribeSettings();
-
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-    });
-
-    if (browser) {
-      window.addEventListener("beforeunload", (e) => {
-        if ($status === "connected") {
-          e.preventDefault();
-        }
-      });
-      window.addEventListener("popstate", (e) => {
-        if ($status === "connected") {
-          e.preventDefault();
-        }
-      });
+    if (animationFrameId) {
+      cancelAnimationFrame(animationFrameId);
     }
-  });
+
+    animationFrameId = requestAnimationFrame(calculateRemaining);
+  }
 
   function handleSendMessage(message: string) {
     agentSocketState.send(message);
+  }
+
+  if (browser) {
+    connectWithParams();
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (status === "connected") {
+        e.preventDefault();
+      }
+    };
+
+    const handlePopState = (e: PopStateEvent) => {
+      if (status === "connected") {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("popstate", handlePopState);
+
+    onDestroy(() => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("popstate", handlePopState);
+
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+
+      unsubscribeSettings();
+      unsubscribeSocketState();
+    });
   }
 </script>
 
@@ -148,36 +155,36 @@
 
 <main class="h-screen flex flex-col bg-base-300">
   <Navbar />
-  {#if $info !== null}
+  {#if info !== null}
     <div class="overflow-y-hidden flex grow overflox-x-auto gap-4 p-4">
       <AgentColumn
-        role={$role}
-        request={$request}
-        info={$info}
-        mediumResults={$mediumResults}
-        divineResults={$divineResults}
-        executedAgents={$executedAgents}
-        attackedAgents={$attackedAgents}
+        {role}
+        {request}
+        {info}
+        {mediumResults}
+        {divineResults}
+        {executedAgents}
+        {attackedAgents}
       />
       <TalkColumn
         header="トーク履歴"
-        talks={$talkHistory}
-        agents={Object.keys($info?.status_map ?? {})}
+        talks={talkHistory}
+        agents={Object.keys(info?.status_map ?? {})}
       />
-      {#if $role === Role.WEREWOLF}
+      {#if role === Role.WEREWOLF}
         <TalkColumn
           header="囁き履歴"
-          talks={$whisperHistory}
-          agents={Object.keys($info?.status_map ?? {})}
+          talks={whisperHistory}
+          agents={Object.keys(info?.status_map ?? {})}
         />
       {/if}
     </div>
-    {#if $remain !== null}
+    {#if remain !== null}
       <ActionBar
-        remain={$remain}
-        setting={$setting}
-        request={$request}
-        info={$info}
+        {remain}
+        {setting}
+        {request}
+        {info}
         onSendMessage={handleSendMessage}
       />
     {/if}
