@@ -1,0 +1,1 @@
+const t={VILLAGER:"村人",SEER:"占い師",MEDIUM:"霊能者",BODYGUARD:"騎士",WEREWOLF:"人狼",POSSESSED:"狂人"},E={ALIVE:"生存",DEAD:"死亡"},s={HUMAN:"人間",WEREWOLF:"人狼"},o={VILLAGER:"村人陣営",WEREWOLF:"人狼陣営"},n={kanolab1:"[チーム名]"};function e(a){return`Agent[${a.toString().padStart(2,"0")}]`}export{e as I,n as R,E as S,o as T,t as a,s as b};

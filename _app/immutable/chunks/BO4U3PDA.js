@@ -1,1 +1,0 @@
-import{a3 as i,a4 as o,a5 as n,O as s}from"./heac-MY7.js";import{b as c}from"./CTFTRwRb.js";function f(t){var _=n,e=s;i(null),o(null);try{return t()}finally{i(_),o(e)}}function l(t,_,e,r=e){t.addEventListener(_,()=>f(e));const a=t.__on_r;a?t.__on_r=()=>{a(),r(!0)}:t.__on_r=()=>r(!0),c()}export{l};
