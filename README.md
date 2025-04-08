@@ -2,25 +2,24 @@
 
 人狼知能コンテスト（自然言語部門） のブラウザ上で動作するビューアならびにエージェントです。
 
-## Developing
+## 機能
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+> [!IMPORTANT]
+> 準備中です。
 
-```bash
-npm run dev
+## 運営向け
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
+パッケージ管理ツールとしてpnpmの使用を推奨します。
 
 ```bash
-npm run build
+git clone https://github.com/aiwolfdial/aiwolf-nlp-viewer.git
+cd aiwolf-nlp-viewer
+pnpm install
+pnpm run dev --open
 ```
 
-You can preview the production build with `npm run preview`.
+### デプロイ
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+```bash
+pnpm run deploy
+```
