@@ -8,6 +8,7 @@ export interface AgentSocket {
     deadline: Date | null;
     entries: (Packet | string)[];
     role: Role | null;
+    profile: string | null;
     request: Request | null;
     info: Info | null;
     mediumResults: Judge[];
@@ -25,6 +26,7 @@ function createAgentSocketState() {
         deadline: null,
         entries: [],
         role: null,
+        profile: null,
         request: null,
         info: null,
         mediumResults: [],
@@ -67,6 +69,7 @@ function createAgentSocketState() {
                 deadline: null,
                 entries: [],
                 role: null,
+                profile: null,
                 request: null,
                 info: null,
                 mediumResults: [],
@@ -145,10 +148,9 @@ function createAgentSocketState() {
                         newState.whisperHistory.push(...packet.whisper_history);
                     }
                     if (packet.request === Request.INITIALIZE &&
-                        newState.info &&
-                        newState.info.role_map &&
-                        newState.info.agent) {
+                        newState.info) {
                         newState.role = newState.info.role_map[newState.info.agent];
+                        newState.profile = newState.info.profile || null;
                     }
                     return newState;
                 });

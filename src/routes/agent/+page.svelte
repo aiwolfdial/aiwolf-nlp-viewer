@@ -25,6 +25,7 @@
   let deadline = $state<number | null>(null);
   let entries = $state<(Packet | string)[]>([]);
   let role = $state<Role | null>(null);
+  let profile = $state<string | null>(null);
   let request = $state<Request | null>(null);
   let info = $state<Info | null>(null);
   let mediumResults = $state<Judge[]>([]);
@@ -58,6 +59,7 @@
 
     entries = socketState.entries;
     role = socketState.role;
+    profile = socketState.profile;
     request = socketState.request;
     info = socketState.info;
     mediumResults = socketState.mediumResults;
@@ -159,6 +161,7 @@
     <div class="overflow-y-hidden flex grow overflox-x-auto gap-4 p-4">
       <AgentColumn
         {role}
+        {profile}
         {request}
         {info}
         {mediumResults}

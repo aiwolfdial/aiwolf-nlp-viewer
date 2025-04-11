@@ -17,6 +17,7 @@
 
   let {
     role,
+    profile,
     request,
     info,
     mediumResults,
@@ -25,6 +26,7 @@
     attackedAgents,
   }: {
     role: Role | null;
+    profile: string | null;
     request: Request | null;
     info: Info;
     mediumResults: Judge[];
@@ -48,17 +50,20 @@
   <div class="flex flex-col h-full p-4">
     {#if settings?.display.largeScale}
       <div class="grow overflow-y-auto pr-4">
-        <pre class="text-5xl font-bold text-center">{role !== null
+        <pre class="text-5xl font-bold text-center">{role
             ? RoleJA[role]
             : "ゲーム外"}</pre>
-        <pre class="text-3xl text-center my-2">{info !== null
+        <pre class="text-3xl text-center my-2">{info
             ? info.day + "日目"
             : "ゲーム外"}</pre>
-        {#if request !== null}
+        {#if request}
           <pre
             class="bg-primary text-primary-content text-3xl font-bold text-center my-2">{RequestJA[
               request
             ]}</pre>
+        {/if}
+        {#if profile}
+          <pre class="text-md text-pretty break-all my-2">{profile}</pre>
         {/if}
         {#each Object.entries(info.status_map ?? {}) as [key, value]}
           {#if value === Status.ALIVE}
@@ -138,23 +143,27 @@
         <div class="flex justify-around">
           <div>
             <h2 class="text-lg font-bold text-center">役職</h2>
-            <pre class="text-lg text-center">{role !== null
+            <pre class="text-lg text-center">{role
                 ? RoleJA[role]
                 : "ゲーム外"}</pre>
           </div>
           <div>
             <h2 class="text-lg font-bold text-center">日数</h2>
-            <pre class="text-lg text-center">{info !== null
+            <pre class="text-lg text-center">{info
                 ? info.day + "日目"
                 : "ゲーム外"}</pre>
           </div>
           <div>
             <h2 class="text-lg font-bold text-center">リクエスト</h2>
-            {#if request !== null}
+            {#if request}
               <pre class="text-lg text-center">{RequestJA[request]}</pre>
             {/if}
           </div>
         </div>
+        {#if profile}
+          <h2 class="text-lg font-bold text-center">プロフィール</h2>
+          <pre class="text-md text-pretty break-all">{profile}</pre>
+        {/if}
         <h2 class="text-lg font-bold pt-2">ステータス</h2>
         {#each Object.entries(info.status_map ?? {}) as [key, value]}
           {#if value === Status.ALIVE}
