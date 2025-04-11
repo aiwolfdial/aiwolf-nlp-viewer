@@ -287,36 +287,35 @@
                   alt={agent.name}
                   class="w-full h-full"
                 />
-                {#if settings?.display.largeScale && settings?.display.canvas.name}
-                  <div
-                    class="absolute inset-0 flex items-center justify-center"
-                  >
-                    <pre
-                      class="text-9xl font-bold opacity-75 select-none">{agent.idx}</pre>
-                  </div>
-                {/if}
               </button>
             </div>
           </div>
-          {#if !settings?.display.largeScale && settings?.display.canvas.name}
-            <pre class="base-content select-none">{agent.name}</pre>
-          {/if}
-          {#if settings?.display.canvas.team}
-            {#if settings?.display.largeScale}
-              <pre
-                class="base-content text-2xl mt-2 select-none">{agent.team}</pre>
-            {:else}
-              <pre class="base-content select-none">{agent.team}</pre>
+          <div class="mt-2">
+            {#if settings?.display.canvas.name}
+              {#if settings?.display.largeScale}
+                <pre
+                  class="base-content text-2xl select-none">{agent.name}</pre>
+              {:else}
+                <pre class="base-content select-none">{agent.name}</pre>
+              {/if}
             {/if}
-          {/if}
-          {#if settings?.display.canvas.role && (agent.idx === focusIdx || focusIdx === undefined)}
-            {#if settings?.display.largeScale}
-              <pre
-                class="base-content text-2xl mt-2 select-none">{agent.role}</pre>
-            {:else}
-              <pre class="base-content select-none">{agent.role}</pre>
+            {#if settings?.display.canvas.team}
+              {#if settings?.display.largeScale}
+                <pre
+                  class="base-content text-2xl select-none">{agent.team}</pre>
+              {:else}
+                <pre class="base-content select-none">{agent.team}</pre>
+              {/if}
             {/if}
-          {/if}
+            {#if settings?.display.canvas.role && (agent.idx === focusIdx || focusIdx === undefined)}
+              {#if settings?.display.largeScale}
+                <pre
+                  class="base-content text-2xl select-none">{agent.role}</pre>
+              {:else}
+                <pre class="base-content select-none">{agent.role}</pre>
+              {/if}
+            {/if}
+          </div>
         </div>
       {/each}
     </div>
