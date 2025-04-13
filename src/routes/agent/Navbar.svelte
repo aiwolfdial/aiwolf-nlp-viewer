@@ -50,7 +50,9 @@
 </script>
 
 <div class="navbar bg-base-100 flex justify-start gap-4 overflow-x-auto">
-  <h1 class="text-3xl font-bold text-nowrap ml-2">aiwolf-nlp-viewer</h1>
+  <a class="text-3xl font-bold text-nowrap ml-2" href="./">
+    aiwolf-nlp-viewer
+  </a>
   <div class="ml-auto">
     <div class="inline-grid *:[grid-area:1/1]">
       {#if status === "connected"}<div

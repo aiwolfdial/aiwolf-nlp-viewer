@@ -21,7 +21,9 @@
 </script>
 
 <div class="navbar bg-base-100 flex justify-start gap-4 overflow-x-auto">
-  <h1 class="text-3xl font-bold text-nowrap ml-2">aiwolf-nlp-viewer</h1>
+  <a class="text-3xl font-bold text-nowrap ml-2" href="./">
+    aiwolf-nlp-viewer
+  </a>
   <select
     class="select min-w-3xs w-3xs ml-auto"
     onchange={(e) => {
