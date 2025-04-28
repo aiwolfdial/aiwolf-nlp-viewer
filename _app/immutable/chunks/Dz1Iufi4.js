@@ -1,0 +1,1 @@
+const E={VILLAGER:"村人",SEER:"占い師",MEDIUM:"霊能者",BODYGUARD:"騎士",WEREWOLF:"人狼",POSSESSED:"狂人"},t={ALIVE:"生存",DEAD:"死亡"},s={HUMAN:"人間",WEREWOLF:"人狼"},S={VILLAGER:"村人陣営",WEREWOLF:"人狼陣営"};function n(a){return`Agent[${a.toString().padStart(2,"0")}]`}export{n as I,E as R,t as S,S as T,s as a};
