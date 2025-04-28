@@ -6,6 +6,7 @@
     TeamMap,
   } from "$lib/constants/translate";
   import type { DayStatus } from "$lib/types/archive";
+  import { getColorFromName } from "$lib/utils/archive";
   import AgentName from "./AgentName.svelte";
   import FormatText from "./FormatText.svelte";
 
@@ -43,15 +44,18 @@
         <div>
           <h3 class="text-lg font-bold my-2">エージェント</h3>
           <ul>
-            {#each Object.entries(dayStatus.agents) as [idx, status]}
+            {#each Object.entries(dayStatus.agents) as [_, status]}
               <li
-                class={"p-2 my-2 border-4 rounded-md agent" +
-                  idx.padStart(2, "0")}
+                class="p-2 my-2 border-4 rounded-md"
+                style={`border-color: ${getColorFromName(status.gameName)}`}
                 class:opacity-25={status.status !== "ALIVE"}
               >
-                <AgentName agentIdx={idx} />
-                {RoleMap[status.role as keyof typeof RoleMap] ?? "NULL"} -
-                {StatusMap[status.status as keyof typeof StatusMap] ?? "NULL"}
+                <AgentName
+                  text="{status.gameName} ({status.originalName})"
+                  key={status.gameName}
+                />
+                {RoleMap[status.role as keyof typeof RoleMap] ?? ""} -
+                {StatusMap[status.status as keyof typeof StatusMap] ?? ""}
               </li>
             {/each}
           </ul>
@@ -64,11 +68,16 @@
             {#each dayStatus.talks as talk}
               <li
                 class:opacity-25={talk.text === "Over"}
-                class={"p-2 my-2 border-4 rounded-md agent" +
-                  talk.agentIdx.padStart(2, "0")}
+                style={`border-color: ${getColorFromName(dayStatus.agents[talk.agentIdx].gameName)}`}
+                class="p-2 my-2 border-4 rounded-md"
               >
-                <AgentName agentIdx={talk.agentIdx} />
-                <FormatText text={talk.text} />
+                <AgentName text={dayStatus.agents[talk.agentIdx].gameName} />
+                <FormatText
+                  text={talk.text}
+                  names={Object.values(dayStatus.agents).map(
+                    (agent) => agent.gameName
+                  )}
+                />
               </li>
             {/each}
           </ul>
@@ -80,12 +89,15 @@
           <ul>
             {#each dayStatus.votes as vote}
               <li
-                class={"p-2 my-2 border-4 rounded-md agent" +
-                  vote.agentIdx.padStart(2, "0")}
+                class="p-2 my-2 border-4 rounded-md"
+                style={`border-color: ${getColorFromName(dayStatus.agents[vote.agentIdx].gameName)}`}
               >
-                <AgentName agentIdx={vote.agentIdx} />
+                <AgentName text={dayStatus.agents[vote.agentIdx].gameName} />
                 が
-                <AgentName agentIdx={vote.targetIdx} highlight />
+                <AgentName
+                  text={dayStatus.agents[vote.targetIdx].gameName}
+                  highlight
+                />
                 に投票
               </li>
             {/each}
@@ -96,7 +108,10 @@
         <div>
           <h3 class="text-lg font-bold my-2">追放</h3>
           <p>
-            <AgentName agentIdx={dayStatus.execution.agentIdx} highlight />
+            <AgentName
+              text={dayStatus.agents[dayStatus.execution.agentIdx].gameName}
+              highlight
+            />
             を追放
           </p>
         </div>
@@ -107,12 +122,15 @@
           <ul>
             {#each dayStatus.attackVotes as vote}
               <li
-                class={"p-2 my-2 border-4 rounded-md agent" +
-                  vote.agentIdx.padStart(2, "0")}
+                class="p-2 my-2 border-4 rounded-md"
+                style={`border-color: ${getColorFromName(dayStatus.agents[vote.agentIdx].gameName)}`}
               >
-                <AgentName agentIdx={vote.agentIdx} />
+                <AgentName text={dayStatus.agents[vote.agentIdx].gameName} />
                 が
-                <AgentName agentIdx={vote.targetIdx} highlight />
+                <AgentName
+                  text={dayStatus.agents[vote.targetIdx].gameName}
+                  highlight
+                />
                 に投票
               </li>
             {/each}
@@ -124,7 +142,10 @@
           <h3 class="text-lg font-bold my-2">襲撃</h3>
           {#if dayStatus.attack.targetIdx !== "-1"}
             <p>
-              <AgentName agentIdx={dayStatus.attack.targetIdx} highlight />
+              <AgentName
+                text={dayStatus.agents[dayStatus.attack.targetIdx].gameName}
+                highlight
+              />
               を襲撃:
               <strong>
                 {dayStatus.attack.isSuccessful ? "成功" : "失敗"}
@@ -139,13 +160,18 @@
         <div>
           <h3 class="text-lg font-bold my-2">占い</h3>
           <p>
-            <AgentName agentIdx={dayStatus.divine.agentIdx} highlight />
+            <AgentName
+              text={dayStatus.agents[dayStatus.divine.agentIdx].gameName}
+            />
             が
-            <AgentName agentIdx={dayStatus.divine.targetIdx} highlight />
+            <AgentName
+              text={dayStatus.agents[dayStatus.divine.targetIdx].gameName}
+              highlight
+            />
             を占い:
             <strong>
               {SpecieMap[dayStatus.divine.result as keyof typeof SpecieMap] ??
-                "NULL"}
+                ""}
             </strong>
           </p>
         </div>
@@ -166,33 +192,3 @@
     </div>
   </div>
 </div>
-
-<style>
-  :root {
-    --color-agent01: #942d40;
-    --color-agent02: #ec754f;
-    --color-agent03: #bcdaf2;
-    --color-agent04: #062d68;
-    --color-agent05: #ebdf83;
-  }
-
-  li.agent01 {
-    border-color: var(--color-agent01);
-  }
-
-  li.agent02 {
-    border-color: var(--color-agent02);
-  }
-
-  li.agent03 {
-    border-color: var(--color-agent03);
-  }
-
-  li.agent04 {
-    border-color: var(--color-agent04);
-  }
-
-  li.agent05 {
-    border-color: var(--color-agent05);
-  }
-</style>

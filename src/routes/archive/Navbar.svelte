@@ -13,9 +13,11 @@
 
   let {
     loadAssetLog,
+    loadClipboardLog,
     handleFileSelect,
   }: {
     loadAssetLog: (path: string, name: string) => void;
+    loadClipboardLog: () => void;
     handleFileSelect: (event: Event) => void;
   } = $props();
 </script>
@@ -24,8 +26,11 @@
   <a class="text-3xl font-bold text-nowrap ml-2" href="./">
     aiwolf-nlp-viewer
   </a>
+  <button class="btn ml-auto" onclick={loadClipboardLog}
+    >クリップボードから貼り付け</button
+  >
   <select
-    class="select min-w-3xs w-3xs ml-auto"
+    class="select min-w-3xs w-3xs"
     onchange={(e) => {
       const key = e.currentTarget.value;
       if (key) {

@@ -1,4 +1,6 @@
+import { IdxToName } from '$lib/constants/translate';
 import type { DayStatus } from '$lib/types/archive';
+import ColorHash from 'color-hash'
 
 export function processArchiveLog(data: string): Record<string, DayStatus> {
     const lines = data.split(/\r?\n/).filter((line) => line.trim());
@@ -30,8 +32,8 @@ function initializeDayLog(): DayStatus {
 
 function processLogEntry(dayLog: DayStatus, type: string, data: string[]): void {
     const handlers: Record<string, (data: string[]) => void> = {
-        status: ([idx, role, status, name]) => {
-            dayLog.agents[idx] = { role, status, name };
+        status: ([idx, role, status, originalName, gameName]) => {
+            dayLog.agents[idx] = { role, status, originalName, gameName: gameName || IdxToName(idx) };
         },
         talk: ([talkIdx, turn, agentIdx, text]) => {
             dayLog.talks.push({ talkIdx, turnIdx: turn, agentIdx, text });
@@ -71,4 +73,13 @@ function processLogEntry(dayLog: DayStatus, type: string, data: string[]): void 
         handler(data);
     }
 }
-
+export function getColorFromName(name: string) {
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+        hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const h = Math.abs(hash) % 360;
+    const s = 85 + (hash % 10);
+    const l = 60 + (hash % 10);
+    return `hsla(${h}, ${s}%, ${l}%, 0.7)`;
+}

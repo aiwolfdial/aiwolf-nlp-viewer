@@ -1,54 +1,80 @@
 <script lang="ts">
-  import { ReplaceWords } from "$lib/constants/translate";
   import AgentName from "./AgentName.svelte";
-
-  let { text = "" } = $props();
+  let { text = "", names = [] as string[] } = $props();
 
   function formatTalkText(text: string): {
     parts: Array<{
       text: string;
-      agentIdx: number | null;
-      isAgentTag: boolean;
+      key: string | undefined;
+      tag: boolean;
     }>;
   } {
-    const regex = /Agent\[(\d+)\]/g;
     const parts: Array<{
       text: string;
-      agentIdx: number | null;
-      isAgentTag: boolean;
+      key: string | undefined;
+      tag: boolean;
     }> = [];
 
-    let lastIndex = 0;
-    let match;
+    let currentIndex = 0;
+    while (currentIndex < text.length) {
+      let found = false;
+      let nearestIndex = text.length;
+      let nearestMatch = "";
+      let nearestKey = "";
 
-    while ((match = regex.exec(text)) !== null) {
-      if (match.index > lastIndex) {
-        parts.push({
-          text: text.slice(lastIndex, match.index),
-          agentIdx: null,
-          isAgentTag: false,
-        });
+      for (const name of names) {
+        const atIndex = text.indexOf("@" + name, currentIndex);
+        if (atIndex !== -1 && atIndex < nearestIndex) {
+          nearestIndex = atIndex;
+          nearestMatch = "@" + name;
+          nearestKey = name;
+          found = true;
+        }
+
+        const arrowIndex = text.indexOf(">>" + name, currentIndex);
+        if (arrowIndex !== -1 && arrowIndex < nearestIndex) {
+          nearestIndex = arrowIndex;
+          nearestMatch = ">>" + name;
+          nearestKey = name;
+          found = true;
+        }
+
+        const nameIndex = text.indexOf(name, currentIndex);
+        if (nameIndex !== -1 && nameIndex < nearestIndex) {
+          if (
+            nameIndex === 0 ||
+            (text[nameIndex - 1] !== "@" && text[nameIndex - 1] !== ">")
+          ) {
+            nearestIndex = nameIndex;
+            nearestMatch = name;
+            nearestKey = name;
+            found = true;
+          }
+        }
       }
 
-      parts.push({
-        text: match[0],
-        agentIdx: parseInt(match[1]),
-        isAgentTag: true,
-      });
-
-      lastIndex = regex.lastIndex;
-    }
-
-    if (lastIndex < text.length) {
-      var replaceText = text.slice(lastIndex);
-      Object.entries(ReplaceWords).forEach(([key, value]: [string, string]) => {
-        replaceText = replaceText.replaceAll(key, value);
-      });
-      parts.push({
-        text: replaceText,
-        agentIdx: null,
-        isAgentTag: false,
-      });
+      if (found) {
+        if (nearestIndex > currentIndex) {
+          parts.push({
+            text: text.slice(currentIndex, nearestIndex),
+            key: undefined,
+            tag: false,
+          });
+        }
+        parts.push({
+          text: nearestMatch,
+          key: nearestKey,
+          tag: true,
+        });
+        currentIndex = nearestIndex + nearestMatch.length;
+      } else {
+        parts.push({
+          text: text.slice(currentIndex),
+          key: undefined,
+          tag: false,
+        });
+        break;
+      }
     }
 
     return { parts };
@@ -56,8 +82,8 @@
 </script>
 
 {#each formatTalkText(text).parts as part}
-  {#if part.isAgentTag}
-    <AgentName agentIdx={part.agentIdx?.toString() ?? ""} highlight />
+  {#if part.tag}
+    <AgentName text={part.text ?? ""} key={part.key} highlight />
   {:else}
     {part.text}
   {/if}

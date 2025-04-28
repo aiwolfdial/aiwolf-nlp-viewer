@@ -29,6 +29,19 @@
     }
   }
 
+  function loadClipboardLog() {
+    navigator.clipboard
+      .readText()
+      .then((text) => {
+        const key = "Clipboard" + new Date().toISOString();
+        records[key] = processArchiveLog(text);
+        selectedKey = key;
+      })
+      .catch((error) => {
+        console.error("Error reading clipboard:", error);
+      });
+  }
+
   function closeTab(key: string) {
     delete records[key];
     selectedKey = Object.keys(records)[0] || "";
@@ -51,7 +64,7 @@
 </svelte:head>
 
 <main class="h-screen flex flex-col">
-  <Navbar {loadAssetLog} {handleFileSelect} />
+  <Navbar {loadAssetLog} {loadClipboardLog} {handleFileSelect} />
 
   <div class="w-full h-full flex flex-col overflow-hidden bg-base-300">
     {#if Object.keys(records).length > 0}

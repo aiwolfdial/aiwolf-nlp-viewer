@@ -1,7 +1,8 @@
 export interface Agent {
     role: string;
     status: string;
-    name: string;
+    originalName: string;
+    gameName: string;
 }
 
 export interface Talk {
