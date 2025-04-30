@@ -32,7 +32,6 @@
 		"@types/color-hash": "^2.0.0",
 		"@types/crypto-js": "^4.2.2",
 		"@types/jsonwebtoken": "^9.0.9",
-		"color-hash": "^2.0.2",
 		"crypto-js": "^4.2.0",
 		"daisyui": "^5.0.19",
 		"iconify-icon": "^2.3.0",

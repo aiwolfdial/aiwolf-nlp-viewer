@@ -1,6 +1,6 @@
 import { IdxToName } from '$lib/constants/translate';
 import type { DayStatus } from '$lib/types/archive';
-import ColorHash from 'color-hash'
+
 
 export function processArchiveLog(data: string): Record<string, DayStatus> {
     const lines = data.split(/\r?\n/).filter((line) => line.trim());
