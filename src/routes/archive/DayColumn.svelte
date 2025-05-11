@@ -50,10 +50,7 @@
                 style={`border-color: ${getColorFromName(status.gameName)}`}
                 class:opacity-25={status.status !== "ALIVE"}
               >
-                <AgentName
-                  text="{status.gameName} ({status.originalName})"
-                  key={status.gameName}
-                />
+                <AgentName text={status.gameName} key={status.gameName} />
                 {RoleMap[status.role as keyof typeof RoleMap] ?? ""} -
                 {StatusMap[status.status as keyof typeof StatusMap] ?? ""}
               </li>
