@@ -20,10 +20,13 @@ export function processArchiveLog(data: string): Record<string, DayStatus> {
 function initializeDayLog(): DayStatus {
     return {
         agents: {},
+        beforeWhisper: [],
         talks: [],
         votes: [],
         execution: null,
         divine: null,
+        afterWhisper: [],
+        guard: null,
         attackVotes: [],
         attack: null,
         result: null,
@@ -50,6 +53,16 @@ function processLogEntry(dayLog: DayStatus, type: string, data: string[]): void 
                 targetIdx: divineTargetAgentIdx,
                 result: divineResult,
             };
+        },
+        whisper: ([talkIdx, turn, agentIdx, text]) => {
+            if (dayLog.talks.length > 0) {
+                dayLog.afterWhisper.push({ talkIdx: talkIdx, turnIdx: turn, agentIdx, text });
+            } else {
+                dayLog.beforeWhisper.push({ talkIdx: talkIdx, turnIdx: turn, agentIdx, text });
+            }
+        },
+        guard: ([agentIdx, targetIdx, result]) => {
+            dayLog.guard = { agentIdx: agentIdx, targetIdx: targetIdx, result: result }
         },
         attackVote: ([attackVoteAgentIdx, attackTargetAgentIdx]) => {
             dayLog.attackVotes.push({

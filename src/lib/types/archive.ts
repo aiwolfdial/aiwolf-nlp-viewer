@@ -28,6 +28,12 @@ export interface Divine {
     result: string;
 }
 
+export interface Guard {
+    agentIdx: string;
+    targetIdx: string;
+    result: string;
+}
+
 export interface Attack {
     targetIdx: string;
     isSuccessful: boolean;
@@ -41,10 +47,13 @@ export interface Result {
 
 export interface DayStatus {
     agents: Record<string, Agent>;
+    beforeWhisper: Talk[];
     talks: Talk[];
     votes: Vote[];
     execution: Execution | null;
     divine: Divine | null;
+    afterWhisper: Talk[];
+    guard: Guard | null;
     attackVotes: Vote[];
     attack: Attack | null;
     result: Result | null;

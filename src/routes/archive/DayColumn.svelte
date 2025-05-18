@@ -58,9 +58,31 @@
           </ul>
         </div>
       {/if}
+      {#if dayStatus.beforeWhisper.length > 0}
+        <div>
+          <h3 class="text-lg font-bold my-2">囁き</h3>
+          <ul>
+            {#each dayStatus.beforeWhisper as whisper}
+              <li
+                class:opacity-25={whisper.text === "Over"}
+                style={`border-color: ${getColorFromName(dayStatus.agents[whisper.agentIdx].gameName)}`}
+                class="p-2 my-2 border-4 rounded-md"
+              >
+                <AgentName text={dayStatus.agents[whisper.agentIdx].gameName} />
+                <FormatText
+                  text={whisper.text}
+                  names={Object.values(dayStatus.agents).map(
+                    (agent) => agent.gameName
+                  )}
+                />
+              </li>
+            {/each}
+          </ul>
+        </div>
+      {/if}
       {#if dayStatus.talks.length > 0}
         <div>
-          <h3 class="text-lg font-bold my-2">会話</h3>
+          <h3 class="text-lg font-bold my-2">トーク</h3>
           <ul>
             {#each dayStatus.talks as talk}
               <li
@@ -113,6 +135,64 @@
           </p>
         </div>
       {/if}
+      {#if dayStatus.divine}
+        <div>
+          <h3 class="text-lg font-bold my-2">占い</h3>
+          <p>
+            <AgentName
+              text={dayStatus.agents[dayStatus.divine.agentIdx].gameName}
+            />
+            が
+            <AgentName
+              text={dayStatus.agents[dayStatus.divine.targetIdx].gameName}
+              highlight
+            />
+            を占い:
+            <strong>
+              {SpecieMap[dayStatus.divine.result as keyof typeof SpecieMap] ??
+                ""}
+            </strong>
+          </p>
+        </div>
+      {/if}
+      {#if dayStatus.afterWhisper.length > 0}
+        <div>
+          <h3 class="text-lg font-bold my-2">囁き</h3>
+          <ul>
+            {#each dayStatus.afterWhisper as whisper}
+              <li
+                class:opacity-25={whisper.text === "Over"}
+                style={`border-color: ${getColorFromName(dayStatus.agents[whisper.agentIdx].gameName)}`}
+                class="p-2 my-2 border-4 rounded-md"
+              >
+                <AgentName text={dayStatus.agents[whisper.agentIdx].gameName} />
+                <FormatText
+                  text={whisper.text}
+                  names={Object.values(dayStatus.agents).map(
+                    (agent) => agent.gameName
+                  )}
+                />
+              </li>
+            {/each}
+          </ul>
+        </div>
+      {/if}
+      {#if dayStatus.guard}
+        <div>
+          <h3 class="text-lg font-bold my-2">護衛</h3>
+          <p>
+            <AgentName
+              text={dayStatus.agents[dayStatus.guard.agentIdx].gameName}
+            />
+            が
+            <AgentName
+              text={dayStatus.agents[dayStatus.guard.targetIdx].gameName}
+              highlight
+            />
+            を護衛
+          </p>
+        </div>
+      {/if}
       {#if dayStatus.attackVotes.length > 0}
         <div>
           <h3 class="text-lg font-bold my-2">襲撃投票</h3>
@@ -151,26 +231,6 @@
           {:else}
             <p>襲撃対象なし</p>
           {/if}
-        </div>
-      {/if}
-      {#if dayStatus.divine}
-        <div>
-          <h3 class="text-lg font-bold my-2">占い</h3>
-          <p>
-            <AgentName
-              text={dayStatus.agents[dayStatus.divine.agentIdx].gameName}
-            />
-            が
-            <AgentName
-              text={dayStatus.agents[dayStatus.divine.targetIdx].gameName}
-              highlight
-            />
-            を占い:
-            <strong>
-              {SpecieMap[dayStatus.divine.result as keyof typeof SpecieMap] ??
-                ""}
-            </strong>
-          </p>
         </div>
       {/if}
       {#if dayStatus.result}
