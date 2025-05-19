@@ -17,6 +17,9 @@
   <div class="flex flex-col h-full p-4">
     <h2 class="text-xl font-bold pb-2">
       Day {dayIdx}
+      {#if dayStatus.beforeWhisper.length > 0}
+        <iconify-icon inline icon="mdi:conversation-outline"></iconify-icon>
+      {/if}
       {#if dayStatus.talks.length > 0}
         <iconify-icon inline icon="mdi:conversation"></iconify-icon>
       {/if}
@@ -24,16 +27,22 @@
         <iconify-icon inline icon="mdi:vote"></iconify-icon>
       {/if}
       {#if dayStatus.execution}
-        <iconify-icon inline icon="mdi:account-remove"></iconify-icon>
+        <iconify-icon inline icon="mdi:exit-run"></iconify-icon>
+      {/if}
+      {#if dayStatus.divine}
+        <iconify-icon inline icon="mdi:eye"></iconify-icon>
+      {/if}
+      {#if dayStatus.afterWhisper.length > 0}
+        <iconify-icon inline icon="mdi:conversation-outline"></iconify-icon>
       {/if}
       {#if dayStatus.attackVotes.length > 0}
         <iconify-icon inline icon="mdi:vote"></iconify-icon>
       {/if}
+      {#if dayStatus.guard}
+        <iconify-icon inline icon="mdi:shield-account"></iconify-icon>
+      {/if}
       {#if dayStatus.attack}
         <iconify-icon inline icon="mdi:sword"></iconify-icon>
-      {/if}
-      {#if dayStatus.divine}
-        <iconify-icon inline icon="mdi:account-eye"></iconify-icon>
       {/if}
       {#if dayStatus.result}
         <iconify-icon inline icon="mdi:trophy"></iconify-icon>
