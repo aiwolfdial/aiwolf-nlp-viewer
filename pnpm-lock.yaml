@@ -32,6 +32,9 @@ importers:
       daisyui:
         specifier: ^5.0.19
         version: 5.0.19
+      hls.js:
+        specifier: ^1.6.2
+        version: 1.6.2
       iconify-icon:
         specifier: ^2.3.0
         version: 2.3.0
@@ -672,6 +675,9 @@ packages:
 
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
+
+  hls.js@1.6.2:
+    resolution: {integrity: sha512-rx+pETSCJEDThm/JCm8CuadcAC410cVjb1XVXFNDKFuylaayHk1+tFxhkjvnMDAfqsJHxZXDAJ3Uc2d5xQyWlQ==}
 
   iconify-icon@2.3.0:
     resolution: {integrity: sha512-C0beI9oTDxQz6voI5CKl7MiJf0Lw4UU8K4G4t6pcUDClLmCvuMOpcvd8MAztQ2SfoH0iv7WHdxBFjekKPFKH2Q==}
@@ -1464,6 +1470,8 @@ snapshots:
       slash: 3.0.0
 
   graceful-fs@4.2.11: {}
+
+  hls.js@1.6.2: {}
 
   iconify-icon@2.3.0:
     dependencies:

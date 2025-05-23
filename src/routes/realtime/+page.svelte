@@ -10,6 +10,7 @@
   import { derived, writable } from "svelte/store";
   import "../../app.css";
   import Canvas from "./Canvas.svelte";
+  import HlsAudioPlayer from "./HlsAudioPlayer.svelte";
   import Navbar from "./Navbar.svelte";
 
   const selectedId = writable<string | null>(null);
@@ -21,7 +22,7 @@
     idx: -1,
     day: 0,
     is_day: true,
-    agents: initializeAgents(5),
+    agents: initializeAgents(13),
     event: "未接続",
     message: undefined,
     from_idx: undefined,
@@ -30,12 +31,9 @@
   };
 
   const currentPacket = writable<Packet>(defaultPacket);
-
   const entries = writable<Record<string, Packet[]>>({});
   const status = writable("");
-
   let settings = $state<RealtimeSettings>();
-
   let width = $state<number>(80);
   let isDragging = false;
   let containerRef: HTMLDivElement | null = null;
@@ -45,7 +43,6 @@
       const params = page.url.searchParams;
       const url = params.get("url");
       const token = params.get("token");
-
       if (url) {
         realtimeSettings.update((value) => ({
           ...value,
@@ -54,7 +51,6 @@
             token: token ?? "",
           },
         }));
-
         realtimeSocketState.connect();
       }
     }
@@ -72,24 +68,20 @@
     isDragging = true;
     document.body.style.cursor = "ew-resize";
     document.body.style.userSelect = "none";
-
     const moveHandler = (e: MouseEvent | TouchEvent) => {
       const clientX =
         e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
       onMouseMove(clientX);
     };
-
     const stopHandler = () => {
       isDragging = false;
       document.body.style.cursor = "";
       document.body.style.userSelect = "";
-
       window.removeEventListener("mousemove", moveHandler);
       window.removeEventListener("touchmove", moveHandler);
       window.removeEventListener("mouseup", stopHandler);
       window.removeEventListener("touchend", stopHandler);
     };
-
     window.addEventListener("mousemove", moveHandler);
     window.addEventListener("touchmove", moveHandler);
     window.addEventListener("mouseup", stopHandler);
@@ -98,16 +90,13 @@
 
   onMount(() => {
     connectWithParams();
-
     const unsubscribeEntries = realtimeSocketState.entries.subscribe(
       (value) => {
         entries.set(value);
-
         selectedId.update((currentId) => {
           if (currentId) return currentId;
           return Object.keys(value)[0];
         });
-
         selectedIdx.update(() => {
           if (!$selectedId) return null;
           const currentEntries = value[$selectedId];
@@ -115,11 +104,9 @@
         });
       }
     );
-
     const unsubscribeStatus = realtimeSocketState.subscribe((value) => {
       status.set(value.status);
     });
-
     const unsubscribeSelectedId = selectedId.subscribe((id) => {
       if (id && $entries[id]?.length > 0) {
         selectedIdx.set($entries[id].length - 1);
@@ -127,11 +114,9 @@
         selectedIdx.set(null);
       }
     });
-
     const unsubscribeSettings = realtimeSettings.subscribe((value) => {
       settings = value;
     });
-
     const unsubscribeCurrentPacket = derived(
       [selectedId, selectedIdx, entries],
       ([$selectedId, $selectedIdx, $entries]) => {
@@ -169,7 +154,6 @@
   });
 
   let listRef: HTMLDivElement | null = null;
-
   $effect(() => {
     if (listRef && $selectedIdx !== null) {
       const buttons = listRef.querySelectorAll("button");
@@ -189,6 +173,7 @@
 
 <main class="h-screen flex flex-col bg-base-300">
   <Navbar />
+
   <div
     class="flex flex-1 overflow-hidden w-full flex-row h-full"
     bind:this={containerRef}
@@ -204,6 +189,9 @@
     ></button>
     <div class="flex-1 overflow-y-auto h-full pr-2">
       <div class="flex flex-col p-2">
+        {#if browser}
+          <HlsAudioPlayer gameId={$selectedId} />
+        {/if}
         <select class="w-full select" bind:value={$selectedId}>
           {#each Object.keys($entries) as id}
             <option value={id}>{id}</option>
