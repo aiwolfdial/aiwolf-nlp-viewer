@@ -213,24 +213,14 @@
 
 <div class="h-full flex flex-col">
   <div class="bg-secondary" bind:this={arrowContainer}></div>
-  {#if !settings?.display.largeScale}
-    <div role="alert" class="alert m-4">
-      <span class="text-lg font-bold">
-        {packet.day}日目 {packet.is_day ? "昼" : "夜"}
-        {packet.event}フェーズ
-      </span>
-    </div>
-  {/if}
   <div class="w-full flex-1 mt-8">
     <div
       class="h-full flex items-center justify-center relative rounded-1/2 box-border"
       bind:this={container}
     >
-      {#if settings?.display.largeScale}
-        <pre
-          class="base-content w-2/5 text-5xl font-bold opacity-70 absolute top-0 left-0 -mt-4 ml-8 select-none">{packet.day}日目<br
-          />{packet.is_day ? "昼" : "夜"}<br />{packet.event}</pre>
-      {/if}
+      <pre
+        class="base-content w-2/5 text-5xl font-bold opacity-70 absolute top-0 left-0 -mt-4 ml-8 select-none">{packet.day}日目<br
+        />{packet.is_day ? "昼" : "夜"}<br />{packet.event}</pre>
       <canvas
         bind:this={bubble}
         class="w-full h-full absolute top-0 left-0 pointer-events-none"
@@ -322,7 +312,14 @@
   </div>
   <footer class="footer footer-center text-base-content p-2">
     <aside>
-      <span>イラスト : 石黒正数氏</span>
+      <span class="text-xs">
+        イラスト:石黒正数氏, VOICEVOX:四国めたん,ずんだもん,春日部つむぎ,
+        波音リツ,玄野武宏,白上虎太郎,青山龍星,冥鳴ひまり,九州そら,もち子(cv
+        明日葉よもぎ),剣崎雌雄,WhiteCUL,後鬼,No.7,ちび式じい,
+        櫻歌ミコ,小夜/SAYO,ナースロボ＿タイプＴ,†聖騎士 紅桜†,雀松朱司,
+        麒ヶ島宗麟,春歌ナナ,猫使アル,猫使ビィ,中国うさぎ,栗田まろん,
+        あいえるたん,満別花丸,琴詠ニア,Voidoll(CV:丹下桜),ぞん子,中部つるぎ</span
+      >
     </aside>
   </footer>
 </div>
