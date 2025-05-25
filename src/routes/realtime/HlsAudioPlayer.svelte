@@ -33,7 +33,6 @@
 
     if (Hls.isSupported()) {
       hls = new Hls({
-        debug: true,
         enableWorker: true,
         lowLatencyMode: true,
         backBufferLength: 90,
@@ -43,11 +42,11 @@
       hls.attachMedia(audioElement);
 
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        console.log(`HLS manifest loaded for game: ${gameId}`);
+        console.log("Received HLS manifest");
         playAudio();
       });
 
-      hls.on(Hls.Events.ERROR, (event, data) => {
+      hls.on(Hls.Events.ERROR, (_, data) => {
         console.error("HLS error:", data);
         if (data.fatal) {
           switch (data.type) {
@@ -125,6 +124,7 @@
   onDestroy(() => {
     if (hls) {
       hls.destroy();
+      hls = null;
     }
   });
 </script>

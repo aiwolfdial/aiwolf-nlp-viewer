@@ -74,7 +74,7 @@
       case "終了":
         return packet.message + " が勝利しました";
       default:
-        return undefined;
+        return packet.message ?? "不明なイベント";
     }
   });
 
