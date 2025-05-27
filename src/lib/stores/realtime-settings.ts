@@ -12,7 +12,7 @@ const defaultRealtimeSettings: RealtimeSettings = {
         canvas: {
             name: true,
             team: false,
-            role: true
+            role: false
         },
         bubble: {
             name: true,
