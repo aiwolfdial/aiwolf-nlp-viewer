@@ -338,6 +338,7 @@
   .ring-error {
     --tw-ring-color: var(--color-error);
   }
+
   .bg-focus {
     background-color: oklch(
       from var(--color-primary) calc(l + (1 - l) / 2) c h / 0.3
