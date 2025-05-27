@@ -60,6 +60,7 @@
                 class:opacity-25={status.status !== "ALIVE"}
               >
                 <AgentName text={status.gameName} key={status.gameName} />
+                {status.originalName}
                 {RoleMap[status.role as keyof typeof RoleMap] ?? ""} -
                 {StatusMap[status.status as keyof typeof StatusMap] ?? ""}
               </li>
