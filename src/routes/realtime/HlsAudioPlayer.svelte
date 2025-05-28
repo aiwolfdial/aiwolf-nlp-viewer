@@ -29,7 +29,7 @@
       hls = null;
     }
 
-    const streamUrl = `http://localhost:8080/tts/${gameId}/playlist.m3u8`;
+    const streamUrl = `https://pug-square-toucan.ngrok-free.app/tts/${gameId}/playlist.m3u8`;
 
     if (Hls.isSupported()) {
       hls = new Hls({
