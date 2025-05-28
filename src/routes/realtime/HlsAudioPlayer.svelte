@@ -29,7 +29,6 @@
       hls.destroy();
       hls = null;
     }
-
     const streamUrl = `${url.replace("wss://", "https://").replace("ws://", "http://").replace("realtime", "tts")}/${gameId}/playlist.m3u8`;
 
     if (Hls.isSupported()) {
@@ -37,6 +36,9 @@
         enableWorker: true,
         lowLatencyMode: true,
         backBufferLength: 90,
+        xhrSetup: function (xhr) {
+          xhr.setRequestHeader("ngrok-skip-browser-warning", "true");
+        },
       });
 
       hls.loadSource(streamUrl);
