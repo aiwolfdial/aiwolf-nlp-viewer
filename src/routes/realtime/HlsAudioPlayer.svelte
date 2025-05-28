@@ -2,11 +2,12 @@
   import { browser } from "$app/environment";
   import Hls from "hls.js/dist/hls.js";
   import { onDestroy } from "svelte";
-
   let {
+    url,
     gameId,
   }: {
-    gameId: string | null;
+    url: string;
+    gameId: string;
   } = $props();
 
   let audioElement: HTMLAudioElement;
@@ -29,7 +30,7 @@
       hls = null;
     }
 
-    const streamUrl = `http://localhost:8080/tts/${gameId}/playlist.m3u8`;
+    const streamUrl = `${url.replace("realtime", "tts")}/${gameId}/playlist.m3u8`;
 
     if (Hls.isSupported()) {
       hls = new Hls({

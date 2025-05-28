@@ -190,7 +190,10 @@
     <div class="flex-1 overflow-y-auto h-full pr-2">
       <div class="flex flex-col p-2">
         {#if browser}
-          <HlsAudioPlayer gameId={$selectedId} />
+          <HlsAudioPlayer
+            url={settings?.connection.url ?? "http://localhost:8080/tts"}
+            gameId={$selectedId ?? ""}
+          />
         {/if}
         <select class="w-full select" bind:value={$selectedId}>
           {#each Object.keys($entries) as id}
