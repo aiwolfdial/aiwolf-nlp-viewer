@@ -16,6 +16,7 @@
   import { onDestroy, onMount } from "svelte";
 
   let {
+    agent,
     role,
     profile,
     request,
@@ -25,6 +26,7 @@
     executedAgents,
     attackedAgents,
   }: {
+    agent: String | null;
     role: Role | null;
     profile: string | null;
     request: Request | null;
@@ -50,7 +52,10 @@
   <div class="flex flex-col h-full p-4">
     {#if settings?.display.largeScale}
       <div class="grow overflow-y-auto pr-4">
-        <pre class="text-5xl font-bold text-center">{role
+        <pre class="text-3xl font-bold text-center">{agent
+            ? agent
+            : "ゲーム外"}</pre>
+        <pre class="text-3xl font-bold text-center">{role
             ? RoleJA[role]
             : "ゲーム外"}</pre>
         <pre class="text-3xl text-center my-2">{info
@@ -141,6 +146,10 @@
       <h2 class="text-xl font-bold pb-2">エージェント</h2>
       <div class="grow overflow-y-auto pr-4">
         <div class="flex justify-around">
+          <div>
+            <h2 class="text-lg font-bold text-center">名前</h2>
+            <pre class="text-lg text-center">{agent ? agent : "ゲーム外"}</pre>
+          </div>
           <div>
             <h2 class="text-lg font-bold text-center">役職</h2>
             <pre class="text-lg text-center">{role

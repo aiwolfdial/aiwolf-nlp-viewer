@@ -7,6 +7,7 @@ export interface AgentSocket {
     status: 'disconnected' | 'connecting' | 'connected';
     deadline: Date | null;
     entries: (Packet | string)[];
+    agent: string | null;
     role: Role | null;
     profile: string | null;
     request: Request | null;
@@ -25,6 +26,7 @@ function createAgentSocketState() {
         status: 'disconnected',
         deadline: null,
         entries: [],
+        agent: null,
         role: null,
         profile: null,
         request: null,
@@ -68,6 +70,7 @@ function createAgentSocketState() {
                 status: "disconnected",
                 deadline: null,
                 entries: [],
+                agent: null,
                 role: null,
                 profile: null,
                 request: null,
@@ -149,6 +152,7 @@ function createAgentSocketState() {
                     }
                     if (packet.request === Request.INITIALIZE &&
                         newState.info) {
+                        newState.agent = newState.info.agent;
                         newState.role = newState.info.role_map[newState.info.agent];
                         newState.profile = newState.info.profile || null;
                     }
