@@ -30,7 +30,7 @@
             <a
               class="btn btn-primary"
               href="https://github.com/aiwolfdial/aiwolf-nlp-server"
-              >対戦サーバ</a
+              >ゲームサーバ</a
             >
             <a
               class="btn btn-primary"
