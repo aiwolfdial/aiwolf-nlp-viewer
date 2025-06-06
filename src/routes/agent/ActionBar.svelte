@@ -1,9 +1,9 @@
 <script lang="ts">
+  import { Status } from "$lib/constants/common";
   import { agentSettings } from "$lib/stores/agent-settings";
   import {
     Request,
     RequestJA,
-    Status,
     type Info,
     type Setting,
   } from "$lib/types/agent";
