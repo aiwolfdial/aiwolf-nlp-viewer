@@ -1,10 +1,5 @@
 <script lang="ts">
-  import {
-    RoleMap,
-    SpecieMap,
-    StatusMap,
-    TeamMap,
-  } from "$lib/constants/translate";
+  import { RoleJA, SpeciesJA, StatusJA, TeamsJA } from "$lib/constants/common";
   import type { DayStatus } from "$lib/types/archive";
   import { getColorFromName } from "$lib/utils/archive";
   import AgentName from "./AgentName.svelte";
@@ -61,8 +56,8 @@
               >
                 <AgentName text={status.gameName} key={status.gameName} />
                 {status.originalName}
-                {RoleMap[status.role as keyof typeof RoleMap] ?? ""} -
-                {StatusMap[status.status as keyof typeof StatusMap] ?? ""}
+                {RoleJA[status.role] ?? ""} -
+                {StatusJA[status.status] ?? ""}
               </li>
             {/each}
           </ul>
@@ -159,8 +154,7 @@
             />
             を占い:
             <strong>
-              {SpecieMap[dayStatus.divine.result as keyof typeof SpecieMap] ??
-                ""}
+              {SpeciesJA[dayStatus.divine.result] ?? ""}
             </strong>
           </p>
         </div>
@@ -235,7 +229,7 @@
               />
               を襲撃:
               <strong>
-                {dayStatus.attack.isSuccessful ? "成功" : "失敗"}
+                {dayStatus.attack.result ? "成功" : "失敗"}
               </strong>
             </p>
           {:else}
@@ -247,11 +241,7 @@
         <div>
           <h3 class="text-lg font-bold my-2">結果</h3>
           <p>
-            <strong
-              >{TeamMap[
-                dayStatus.result.winSide as keyof typeof TeamMap
-              ]}</strong
-            >
+            <strong>{TeamsJA[dayStatus.result.winSide]}</strong>
             が勝利
           </p>
         </div>

@@ -1,13 +1,15 @@
 <script lang="ts">
-  import { agentSettings } from "$lib/stores/agent-settings";
   import {
-    RequestJA,
     Role,
     RoleJA,
     Species,
     SpeciesJA,
     Status,
     StatusJA,
+  } from "$lib/constants/common";
+  import { agentSettings } from "$lib/stores/agent-settings";
+  import {
+    RequestJA,
     type Info,
     type Judge,
     type Request,

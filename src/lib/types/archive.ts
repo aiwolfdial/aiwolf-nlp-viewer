@@ -1,6 +1,8 @@
+import type { Role, Species, Status, Teams } from "$lib/constants/common";
+
 export interface Agent {
-    role: string;
-    status: string;
+    role: Role;
+    status: Status;
     originalName: string;
     gameName: string;
 }
@@ -19,13 +21,13 @@ export interface Vote {
 
 export interface Execution {
     agentIdx: string;
-    role: string;
+    role: Role;
 }
 
 export interface Divine {
     agentIdx: string;
     targetIdx: string;
-    result: string;
+    result: Species;
 }
 
 export interface Guard {
@@ -36,13 +38,13 @@ export interface Guard {
 
 export interface Attack {
     targetIdx: string;
-    isSuccessful: boolean;
+    result: boolean;
 }
 
 export interface Result {
     villagers: string;
     werewolves: string;
-    winSide: string;
+    winSide: Teams;
 }
 
 export interface DayStatus {

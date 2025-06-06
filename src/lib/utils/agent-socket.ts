@@ -1,5 +1,6 @@
+import type { Role } from '$lib/constants/common';
 import { agentSettings } from '$lib/stores/agent-settings';
-import { Request, Role, type Info, type Judge, type Packet, type Setting, type Talk } from '$lib/types/agent';
+import { Request, type Info, type Judge, type Packet, type Setting, type Talk } from '$lib/types/agent';
 import type { AgentSettings } from '$lib/types/agent-settings';
 import { writable } from 'svelte/store';
 

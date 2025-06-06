@@ -1,10 +1,10 @@
 <script lang="ts">
   import { browser } from "$app/environment";
   import { page } from "$app/state";
+  import { Role } from "$lib/constants/common";
   import { agentSettings } from "$lib/stores/agent-settings";
   import {
     Request,
-    Role,
     type Info,
     type Judge,
     type Packet,

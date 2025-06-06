@@ -1,4 +1,4 @@
-import { IdxToName } from '$lib/constants/translate';
+import { IdxToName, Role, Species, Status, Teams } from '$lib/constants/common';
 import type { DayStatus } from '$lib/types/archive';
 
 
@@ -36,7 +36,7 @@ function initializeDayLog(): DayStatus {
 function processLogEntry(dayLog: DayStatus, type: string, data: string[]): void {
     const handlers: Record<string, (data: string[]) => void> = {
         status: ([idx, role, status, originalName, gameName]) => {
-            dayLog.agents[idx] = { role, status, originalName, gameName: gameName || IdxToName(idx) };
+            dayLog.agents[idx] = { role: Role[role as keyof typeof Role], status: Status[status as keyof typeof Status], originalName, gameName: gameName || IdxToName(idx) };
         },
         talk: ([talkIdx, turn, agentIdx, text]) => {
             dayLog.talks.push({ talkIdx, turnIdx: turn, agentIdx, text });
@@ -45,13 +45,13 @@ function processLogEntry(dayLog: DayStatus, type: string, data: string[]): void 
             dayLog.votes.push({ agentIdx: voteAgentIdx, targetIdx: targetAgentIdx });
         },
         execute: ([executedAgentIdx, executedRole]) => {
-            dayLog.execution = { agentIdx: executedAgentIdx, role: executedRole };
+            dayLog.execution = { agentIdx: executedAgentIdx, role: Role[executedRole as keyof typeof Role] };
         },
         divine: ([divineAgentIdx, divineTargetAgentIdx, divineResult]) => {
             dayLog.divine = {
                 agentIdx: divineAgentIdx,
                 targetIdx: divineTargetAgentIdx,
-                result: divineResult,
+                result: Species[divineResult as keyof typeof Species],
             };
         },
         whisper: ([talkIdx, turn, agentIdx, text]) => {
@@ -73,11 +73,11 @@ function processLogEntry(dayLog: DayStatus, type: string, data: string[]): void 
         attack: ([attackedAgentIdx, isSuccessful]) => {
             dayLog.attack = {
                 targetIdx: attackedAgentIdx,
-                isSuccessful: isSuccessful === "true",
+                result: isSuccessful === "true",
             };
         },
         result: ([villagers, werewolves, winSide]) => {
-            dayLog.result = { villagers, werewolves, winSide };
+            dayLog.result = { villagers, werewolves, winSide: Teams[winSide as keyof typeof Teams] };
         },
     };
 

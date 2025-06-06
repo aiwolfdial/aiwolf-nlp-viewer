@@ -1,5 +1,4 @@
-import { IdxToName } from "$lib/constants/translate";
-import { RoleToSpecies, SpeciesJA } from "$lib/types/agent";
+import { IdxToName, RoleToSpecies, SpeciesJA } from "$lib/constants/common";
 import type { Agent, Packet } from "$lib/types/realtime";
 import type { Agent as SettingsAgent } from "$lib/types/realtime-settings";
 
