@@ -253,9 +253,7 @@
         >
           <div class="avatar rounded-full bg-base-300">
             <div
-              class={settings?.display.largeScale
-                ? "relative w-48 rounded-full ring-offset-base-100 ring ring-offset-2"
-                : "relative w-24 rounded-full ring-offset-base-100 ring ring-offset-2"}
+              class={"relative w-24 rounded-full ring-offset-base-100 ring ring-offset-2"}
               class:ring-info={agent.is_alive}
               class:ring-error={!agent.is_alive}
               style:opacity={!agent.is_alive ? 0.25 : 1}

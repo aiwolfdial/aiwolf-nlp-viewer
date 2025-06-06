@@ -4,8 +4,8 @@ import type { RealtimeSettings } from '$lib/types/realtime-settings';
 import { writable } from 'svelte/store';
 
 export interface RealtimeSocket {
-    status: 'disconnected' | 'connecting' | 'connected';
-    entries: Record<string, Packet[]>
+    status: 'disconnected' | 'connecting' | 'connected' | 'loaded';
+    entries: Record<string, Packet[]>;
 }
 
 function createRealtimeSocketState() {
@@ -66,10 +66,75 @@ function createRealtimeSocketState() {
         }
     }
 
+    async function loadFromClipboard() {
+        try {
+            const text = await navigator.clipboard.readText();
+
+            if (!text.trim()) {
+                return;
+            }
+
+            const lines = text.trim().split('\n');
+            const packets: Packet[] = [];
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (line) {
+                    try {
+                        const packet = JSON.parse(line) as Packet;
+                        packets.push(packet);
+                    } catch (e) {
+                        console.error(`Line ${i + 1} is not valid JSON:`, line);
+                        return;
+                    }
+                }
+            }
+
+            if (packets.length === 0) {
+                console.error('No valid packets found in clipboard');
+                return;
+            }
+
+            const newEntries: Record<string, Packet[]> = {};
+            packets.forEach(packet => {
+                if (!newEntries[packet.id]) {
+                    newEntries[packet.id] = [];
+                }
+                newEntries[packet.id].push(packet);
+            });
+
+            Object.keys(newEntries).forEach(id => {
+                newEntries[id].sort((a, b) => {
+                    if (a.day !== b.day) return a.day - b.day;
+                    if (a.is_day !== b.is_day) return a.is_day ? -1 : 1;
+                    return a.idx - b.idx;
+                });
+            });
+
+            if (socket) {
+                socket.close();
+                socket = null;
+            }
+
+            update(state => ({
+                ...state,
+                status: 'loaded',
+                entries: newEntries,
+            }));
+
+            console.log(`JSONL data loaded: ${packets.length} packets across ${Object.keys(newEntries).length} games`);
+
+        } catch (error) {
+            console.error('Failed to load JSONL from clipboard:', error);
+        }
+    }
+
+
     return {
         subscribe,
         connect,
         disconnect,
+        loadFromClipboard,
         entries: {
             subscribe: (callback: (value: Record<string, Packet[]>) => void) => {
                 return subscribe(state => callback(state.entries));

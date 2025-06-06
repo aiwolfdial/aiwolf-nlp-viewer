@@ -46,6 +46,10 @@
     realtimeSocketState.disconnect();
   }
 
+  async function loadClipboardLog() {
+    await realtimeSocketState.loadFromClipboard();
+  }
+
   let modal: HTMLDialogElement;
 </script>
 
@@ -94,13 +98,16 @@
   <button
     class="btn btn-info"
     onclick={handleConnect}
-    disabled={status !== "disconnected"}>接続</button
+    disabled={status !== "disconnected" && status !== "loaded"}>接続</button
   >
   <button
     class="btn btn-error"
     onclick={handleDisconnect}
-    disabled={status === "disconnected"}>切断</button
+    disabled={status === "disconnected" || status === "loaded"}>切断</button
   >
+  <button class="btn" onclick={loadClipboardLog}>
+    クリップボードから貼り付け
+  </button>
   <button class="btn" onclick={() => modal.showModal()}>設定</button>
   <dialog class="modal" bind:this={modal}>
     <div class="modal-box">

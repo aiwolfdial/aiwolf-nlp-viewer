@@ -94,19 +94,24 @@
       (value) => {
         entries.set(value);
         selectedId.update((currentId) => {
-          if (currentId) return currentId;
-          return Object.keys(value)[0];
+          if (currentId && value[currentId]) return currentId;
+          const keys = Object.keys(value);
+          return keys.length > 0 ? keys[0] : null;
         });
         selectedIdx.update(() => {
           if (!$selectedId) return null;
           const currentEntries = value[$selectedId];
-          return currentEntries.length - 1;
+          return currentEntries && currentEntries.length > 0
+            ? currentEntries.length - 1
+            : null;
         });
       }
     );
-    const unsubscribeStatus = realtimeSocketState.subscribe((value) => {
+
+    const unsubscribeSocketState = realtimeSocketState.subscribe((value) => {
       status.set(value.status);
     });
+
     const unsubscribeSelectedId = selectedId.subscribe((id) => {
       if (id && $entries[id]?.length > 0) {
         selectedIdx.set($entries[id].length - 1);
@@ -114,9 +119,11 @@
         selectedIdx.set(null);
       }
     });
+
     const unsubscribeSettings = realtimeSettings.subscribe((value) => {
       settings = value;
     });
+
     const unsubscribeCurrentPacket = derived(
       [selectedId, selectedIdx, entries],
       ([$selectedId, $selectedIdx, $entries]) => {
@@ -133,7 +140,7 @@
 
     onDestroy(() => {
       unsubscribeEntries();
-      unsubscribeStatus();
+      unsubscribeSocketState();
       unsubscribeSettings();
       unsubscribeSelectedId();
       unsubscribeCurrentPacket();
@@ -195,13 +202,15 @@
             gameId={$selectedId ?? ""}
           />
         {/if}
+
         <select class="w-full select" bind:value={$selectedId}>
           {#each Object.keys($entries) as id}
             <option value={id}>{id}</option>
           {/each}
         </select>
+
         <div class="list overflow-y-auto flex-1 my-2" bind:this={listRef}>
-          {#if $selectedId}
+          {#if $selectedId && $entries[$selectedId]}
             {#each $entries[$selectedId] || [] as packet, idx}
               {#if (idx > 0 && (packet.day !== $entries[$selectedId][idx - 1].day || packet.is_day !== $entries[$selectedId][idx - 1].is_day)) || idx === 0}
                 <div class="divider">
