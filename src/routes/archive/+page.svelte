@@ -62,17 +62,17 @@
     event.preventDefault();
     event.stopPropagation();
     if (event.dataTransfer) {
-      event.dataTransfer.dropEffect = 'copy';
+      event.dataTransfer.dropEffect = "copy";
     }
   }
 
   function handleDrop(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
-    
+
     const files = event.dataTransfer?.files;
     if (!files || files.length === 0) return;
-    
+
     Array.from(files).forEach((file) => {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -92,10 +92,11 @@
 <main class="h-screen flex flex-col">
   <Navbar {loadAssetLog} {loadClipboardLog} {handleFileSelect} />
 
-  <div 
+  <div
     class="w-full h-full flex flex-col overflow-hidden bg-base-300"
     ondragover={handleDragOver}
     ondrop={handleDrop}
+    role="region"
   >
     {#if Object.keys(records).length > 0}
       <div class="w-full shrink-0 overflow-x-auto flex gap-4 m-4">

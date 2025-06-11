@@ -204,6 +204,7 @@
     bind:this={containerRef}
     ondragover={handleDragOver}
     ondrop={handleDrop}
+    role="region"
   >
     <div class="overflow-y-auto pr-2 h-full" style="width: {width}%">
       <Canvas packet={$currentPacket} bind:focusIdx />
