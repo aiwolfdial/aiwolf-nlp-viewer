@@ -56,6 +56,24 @@
     }
   }
 
+  function handleDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = "copy";
+    }
+  }
+
+  function handleDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const files = event.dataTransfer?.files;
+    if (!files || files.length === 0) return;
+
+    realtimeSocketState.loadFromFiles(files);
+  }
+
   function onMouseMove(clientX: number) {
     if (!isDragging || !containerRef) return;
     const containerRect = containerRef.getBoundingClientRect();
@@ -184,6 +202,8 @@
   <div
     class="flex flex-1 overflow-hidden w-full flex-row h-full"
     bind:this={containerRef}
+    ondragover={handleDragOver}
+    ondrop={handleDrop}
   >
     <div class="overflow-y-auto pr-2 h-full" style="width: {width}%">
       <Canvas packet={$currentPacket} bind:focusIdx />
