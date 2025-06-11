@@ -90,12 +90,8 @@
   <a class="text-3xl font-bold text-nowrap ml-2" href="./">
     aiwolf-nlp-viewer
   </a>
-  <button class="btn ml-auto" onclick={loadClipboardLog}
-    >クリップボードから貼り付け</button
-  >
-
   <select
-    class="select min-w-3xs w-3xs"
+    class="select min-w-3xs w-3xs ml-auto"
     bind:value={selectedFolder}
     onchange={handleFolderChange}
   >
@@ -104,7 +100,6 @@
       <option value={folder}>{folder}</option>
     {/each}
   </select>
-
   <select
     class="select min-w-3xs w-3xs"
     bind:value={selectedLog}
@@ -118,7 +113,6 @@
       {/each}
     {/if}
   </select>
-
   <input
     class="file-input min-w-3xs w-3xs"
     type="file"
@@ -126,6 +120,9 @@
     multiple
     onchange={handleFileSelect}
   />
+  <button class="btn" onclick={loadClipboardLog}
+    >クリップボードから貼り付け</button
+  >
   <label class="flex items-center cursor-pointer gap-2">
     <iconify-icon inline icon="mdi:white-balance-sunny"></iconify-icon>
     <input type="checkbox" value="dark" class="toggle theme-controller" />
