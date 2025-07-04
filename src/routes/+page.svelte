@@ -10,7 +10,7 @@
 <main>
   <div class="hero bg-base-200 min-h-screen">
     <div class="hero-content text-center">
-      <div class="max-w-md">
+      <div class="max-w-5xl">
         <h1 class="text-5xl font-bold py-8">aiwolf-nlp-viewer</h1>
         <div class="flex flex-wrap justify-center gap-4">
           <div class="card bg-base-100 image-full w-80 shadow-sm">

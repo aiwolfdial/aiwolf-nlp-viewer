@@ -3,7 +3,6 @@
   import type { AgentSettings } from "$lib/types/agent-settings";
   import { agentSocketState } from "$lib/utils/agent-socket";
   import { onDestroy } from "svelte";
-  import "../../app.css";
 
   let settings = $state<AgentSettings>();
   let status = $state<string>();

@@ -3,7 +3,6 @@
   import type { RealtimeSettings } from "$lib/types/realtime-settings";
   import { realtimeSocketState } from "$lib/utils/realtime-socket";
   import { onDestroy } from "svelte";
-  import "../../app.css";
 
   let settings = $state<RealtimeSettings>();
   let status = $state<string>();

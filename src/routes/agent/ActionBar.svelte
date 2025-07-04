@@ -34,6 +34,14 @@
     remain !== null ? (remain / (setting?.timeout.action ?? 60000)) * 100 : 0
   );
 
+  const remainMinutes = $derived(
+    remain !== null ? Math.floor(remain / 60000) : 0
+  );
+
+  const remainSeconds = $derived(
+    remain !== null ? Math.floor((remain % 60000) / 1000) : 0
+  );
+
   const isTargetSelectionMode = $derived(
     [Request.VOTE, Request.DIVINE, Request.GUARD, Request.ATTACK].includes(
       request as Request
@@ -109,18 +117,15 @@
       <span class="countdown font-mono text-3xl">
         {#if remain && remain > 60000}
           <span
-            style="--value:{Math.floor(remain / 60000)};"
+            style="--value:{remainMinutes};"
             aria-live="polite"
-            aria-label={Math.floor(remain / 60000).toString()}
-            >{Math.floor(remain / 60000)}</span
+            aria-label={remainMinutes.toString()}>{remainMinutes}</span
           >m
         {/if}
         <span
-          style="--value:{Math.floor((remain ? remain % 60000 : 0) / 1000)};"
+          style="--value:{remainSeconds};"
           aria-live="polite"
-          aria-label={Math.floor(
-            (remain ? remain % 60000 : 0) / 1000
-          ).toString()}>{Math.floor((remain ? remain % 60000 : 0) / 1000)}</span
+          aria-label={remainSeconds.toString()}>{remainSeconds}</span
         >s
       </span>
       <span
@@ -128,7 +133,7 @@
       >
         {isTargetSelectionMode
           ? `${RequestJA[request as Request]}対象を選択してください`
-          : `${RequestJA[request ?? Request.INITIALIZE]}内容を入力してください`}
+          : `${RequestJA[request as Request]}内容を入力してください`}
       </span>
     </div>
     <div class="flex gap-2 items-center px-4 pt-2 pb-4 overflow-x-auto">
@@ -237,7 +242,7 @@
         <span
           class="bg-primary text-primary-content text-lg font-bold text-nowrap"
         >
-          {RequestJA[request ?? Request.INITIALIZE]}内容を入力してください
+          {RequestJA[request as Request]}内容を入力してください
         </span>
         {#if (info?.remain_skip ?? 0) > 0}
           <button
