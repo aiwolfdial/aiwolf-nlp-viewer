@@ -45,7 +45,41 @@
     "teamName": "チーム名",
     "role": "役職",
     "enable": "有効",
-    "notConnected": "未接続"
+    "notConnected": "未接続",
+    "day": "{day}日目",
+    "daytime": "昼",
+    "nighttime": "夜",
+    "events": {
+      "disconnected": "未接続",
+      "whispered": "囁きました",
+      "attack_voted_with_target": "{from} が {to} に襲撃投票しました",
+      "attack_voted": "襲撃投票しました",
+      "voted_with_target": "{from} が {to} に投票しました",
+      "voted": "{from} が投票しました",
+      "no_exile": "誰も追放されませんでした",
+      "exiled": "{target} を追放しました",
+      "no_attack": "誰も襲撃されませんでした",
+      "attacked_but_guarded": "{target} が襲撃されましたが、護衛されました",
+      "attacked": "{target} が襲撃されました",
+      "divined_with_result": "{from} が {to} を占った結果、{result} でした",
+      "divined": "占いました",
+      "guarded_with_target": "{from} が {to} を護衛対象にしました",
+      "guarded": "護衛しました",
+      "game_ended": "{winner} が勝利しました",
+      "unknown": "不明なイベント"
+    },
+    "eventTypes": {
+      "未接続": "未接続",
+      "トーク": "トーク",
+      "囁き": "囁き",
+      "投票": "投票",
+      "襲撃投票": "襲撃投票",
+      "追放": "追放",
+      "襲撃": "襲撃",
+      "占い": "占い",
+      "護衛": "護衛",
+      "終了": "終了"
+    }
   },
   "archive": {
     "selectFolder": "フォルダを選択",

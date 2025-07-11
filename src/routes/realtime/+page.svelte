@@ -7,6 +7,7 @@
   import { IdxToCustomName, initializeAgents } from "$lib/utils/realtime";
   import { realtimeSocketState } from "$lib/utils/realtime-socket";
   import { onDestroy, onMount } from "svelte";
+  import { _ } from "svelte-i18n";
   import { derived, writable } from "svelte/store";
   import "../../app.css";
   import Canvas from "./Canvas.svelte";
@@ -245,7 +246,9 @@
                 {#if packet.event === "トーク" || packet.event === "囁き"}
                   {#if packet.event === "囁き" && focusIdx !== undefined && packet.agents.find((agent) => agent.idx === focusIdx)?.role !== "WEREWOLF"}
                     <p class="overflow-hidden text-ellipsis whitespace-nowrap">
-                      {packet.event}
+                      {$_(`realtime.eventTypes.${packet.event}`, {
+                        default: packet.event,
+                      })}
                     </p>
                   {:else if packet.message === "Over"}
                     <p class="overflow-hidden text-ellipsis whitespace-nowrap">
@@ -292,7 +295,9 @@
                         packet.to_idx
                       )}
                     {/if}
-                    {packet.event}
+                    {$_(`realtime.eventTypes.${packet.event}`, {
+                      default: packet.event,
+                    })}
                   </p>
                 {/if}
               </button>

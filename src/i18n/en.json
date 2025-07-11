@@ -45,7 +45,41 @@
     "teamName": "Team Name",
     "role": "Role",
     "enable": "Enable",
-    "notConnected": "Not Connected"
+    "notConnected": "Not Connected",
+    "day": "Day {day}",
+    "daytime": "Day",
+    "nighttime": "Night",
+    "events": {
+      "disconnected": "Disconnected",
+      "whispered": "Whispered",
+      "attack_voted_with_target": "{from} voted to attack {to}",
+      "attack_voted": "Voted to attack",
+      "voted_with_target": "{from} voted for {to}",
+      "voted": "{from} voted",
+      "no_exile": "No one was exiled",
+      "exiled": "{target} was exiled",
+      "no_attack": "No one was attacked",
+      "attacked_but_guarded": "{target} was attacked but guarded",
+      "attacked": "{target} was attacked",
+      "divined_with_result": "{from} divined {to} and found them to be {result}",
+      "divined": "Divined",
+      "guarded_with_target": "{from} set {to} as guard target",
+      "guarded": "Guarded",
+      "game_ended": "{winner} won",
+      "unknown": "Unknown event"
+    },
+    "eventTypes": {
+      "未接続": "Disconnected",
+      "トーク": "Talk",
+      "囁き": "Whisper",
+      "投票": "Vote",
+      "襲撃投票": "Attack Vote",
+      "追放": "Exile",
+      "襲撃": "Attack",
+      "占い": "Divine",
+      "護衛": "Guard",
+      "終了": "End"
+    }
   },
   "archive": {
     "selectFolder": "Select Folder",

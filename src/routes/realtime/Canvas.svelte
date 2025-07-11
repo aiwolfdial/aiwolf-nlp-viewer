@@ -24,7 +24,7 @@
   let message = $derived.by(() => {
     switch (packet.event) {
       case "未接続":
-        return "未接続";
+        return $_("realtime.events.disconnected");
       case "トーク":
         return packet.message;
       case "囁き":
@@ -37,30 +37,88 @@
         ) {
           return packet.message;
         }
-        return "囁きました";
+        return $_("realtime.events.whispered");
       case "襲撃投票":
         if (xor(focusIdx === undefined, packet.from_idx === focusIdx)) {
-          return `${IdxToCustomName(settings?.display.bubble, packet, packet.from_idx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.to_idx)} に襲撃投票しました`;
+          return $_("realtime.events.attack_voted_with_target", {
+            values: {
+              from: IdxToCustomName(
+                settings?.display.bubble,
+                packet,
+                packet.from_idx
+              ),
+              to: IdxToCustomName(
+                settings?.display.bubble,
+                packet,
+                packet.to_idx
+              ),
+            },
+          });
         }
-        return `襲撃投票しました`;
+        return $_("realtime.events.attack_voted");
       case "投票":
         if (xor(focusIdx === undefined, packet.from_idx === focusIdx)) {
-          return `${IdxToCustomName(settings?.display.bubble, packet, packet.from_idx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.to_idx)} に投票しました`;
+          return $_("realtime.events.voted_with_target", {
+            values: {
+              from: IdxToCustomName(
+                settings?.display.bubble,
+                packet,
+                packet.from_idx
+              ),
+              to: IdxToCustomName(
+                settings?.display.bubble,
+                packet,
+                packet.to_idx
+              ),
+            },
+          });
         }
-        return `${IdxToCustomName(settings?.display.bubble, packet, packet.from_idx)} が投票しました`;
+        return $_("realtime.events.voted", {
+          values: {
+            from: IdxToCustomName(
+              settings?.display.bubble,
+              packet,
+              packet.from_idx
+            ),
+          },
+        });
       case "追放":
         if (packet.to_idx === undefined) {
-          return "誰も追放されませんでした";
+          return $_("realtime.events.no_exile");
         }
-        return `${IdxToCustomName(settings?.display.bubble, packet, packet.to_idx)} を追放しました`;
+        return $_("realtime.events.exiled", {
+          values: {
+            target: IdxToCustomName(
+              settings?.display.bubble,
+              packet,
+              packet.to_idx
+            ),
+          },
+        });
       case "襲撃":
         if (packet.to_idx === undefined) {
-          return "誰も襲撃されませんでした";
+          return $_("realtime.events.no_attack");
         }
         if (packet.from_idx === -1) {
-          return `${IdxToCustomName(settings?.display.bubble, packet, packet.to_idx)} が襲撃されましたが、護衛されました`;
+          return $_("realtime.events.attacked_but_guarded", {
+            values: {
+              target: IdxToCustomName(
+                settings?.display.bubble,
+                packet,
+                packet.to_idx
+              ),
+            },
+          });
         }
-        return `${IdxToCustomName(settings?.display.bubble, packet, packet.to_idx)} が襲撃されました`;
+        return $_("realtime.events.attacked", {
+          values: {
+            target: IdxToCustomName(
+              settings?.display.bubble,
+              packet,
+              packet.to_idx
+            ),
+          },
+        });
       case "占い":
         if (xor(focusIdx === undefined, packet.from_idx === focusIdx)) {
           const targetRole = packet.agents.find(
@@ -69,18 +127,49 @@
           const species = targetRole
             ? RoleToSpecies[targetRole as keyof typeof RoleToSpecies]
             : undefined;
-          return `${IdxToCustomName(settings?.display.bubble, packet, packet.from_idx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.to_idx)} を占った結果、${species ? $_(`game.species.${species}`) : ""} でした`;
+          return $_("realtime.events.divined_with_result", {
+            values: {
+              from: IdxToCustomName(
+                settings?.display.bubble,
+                packet,
+                packet.from_idx
+              ),
+              to: IdxToCustomName(
+                settings?.display.bubble,
+                packet,
+                packet.to_idx
+              ),
+              result: species ? $_(`game.species.${species}`) : "",
+            },
+          });
         }
-        return "占いました";
+        return $_("realtime.events.divined");
       case "護衛":
         if (xor(focusIdx === undefined, packet.from_idx === focusIdx)) {
-          return `${IdxToCustomName(settings?.display.bubble, packet, packet.from_idx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.to_idx)} を護衛対象にしました`;
+          return $_("realtime.events.guarded_with_target", {
+            values: {
+              from: IdxToCustomName(
+                settings?.display.bubble,
+                packet,
+                packet.from_idx
+              ),
+              to: IdxToCustomName(
+                settings?.display.bubble,
+                packet,
+                packet.to_idx
+              ),
+            },
+          });
         }
-        return "護衛しました";
+        return $_("realtime.events.guarded");
       case "終了":
-        return packet.message + " が勝利しました";
+        return $_("realtime.events.game_ended", {
+          values: {
+            winner: packet.message,
+          },
+        });
       default:
-        return packet.message ?? "不明なイベント";
+        return packet.message ?? $_("realtime.events.unknown");
     }
   });
 
@@ -225,8 +314,15 @@
       bind:this={container}
     >
       <pre
-        class="base-content w-2/5 text-5xl font-bold opacity-70 absolute top-0 left-0 -mt-4 ml-8 select-none">{packet.day}日目<br
-        />{packet.is_day ? "昼" : "夜"}<br />{packet.event}</pre>
+        class="base-content w-2/5 text-5xl font-bold opacity-70 absolute top-0 left-0 -mt-4 ml-8 select-none">{$_(
+          "realtime.day",
+          { values: { day: packet.day } }
+        )}<br />{packet.is_day
+          ? $_("realtime.daytime")
+          : $_("realtime.nighttime")}<br />{$_(
+          `realtime.eventTypes.${packet.event}`,
+          { default: packet.event }
+        )}</pre>
       <canvas
         bind:this={bubble}
         class="w-full h-full absolute top-0 left-0 pointer-events-none"
