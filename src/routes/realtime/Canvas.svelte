@@ -84,9 +84,9 @@
         });
       case "追放":
         if (packet.to_idx === undefined) {
-          return $_("realtime.events.no_exile");
+          return $_("realtime.events.no_execute");
         }
-        return $_("realtime.events.exiled", {
+        return $_("realtime.events.executed", {
           values: {
             target: IdxToCustomName(
               settings?.display.bubble,

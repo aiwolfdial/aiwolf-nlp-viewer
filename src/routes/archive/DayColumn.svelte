@@ -157,13 +157,13 @@
       {/if}
       {#if dayStatus.execution}
         <div>
-          <h3 class="text-lg font-bold my-2">{$_("archive.exile")}</h3>
+          <h3 class="text-lg font-bold my-2">{$_("archive.execute")}</h3>
           <p>
             <AgentName
               text={dayStatus.agents[dayStatus.execution.agentIdx].gameName}
               highlight
             />
-            {$_("archive.wasExiled")}
+            {$_("archive.wasExecuted")}
           </p>
         </div>
       {/if}
