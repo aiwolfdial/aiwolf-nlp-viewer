@@ -3,7 +3,9 @@
   import { realtimeSettings } from "$lib/stores/realtime-settings";
   import type { Packet } from "$lib/types/realtime";
   import type { RealtimeSettings } from "$lib/types/realtime-settings";
-  import { IdxToCustomName, RoleToSpecie, xor } from "$lib/utils/realtime";
+  import { IdxToCustomName, xor } from "$lib/utils/realtime";
+  import { RoleToSpecies } from "$lib/constants/common";
+  import { _ } from 'svelte-i18n';
   import { onDestroy, onMount } from "svelte";
 
   let {
@@ -61,9 +63,9 @@
         return `${IdxToCustomName(settings?.display.bubble, packet, packet.to_idx)} が襲撃されました`;
       case "占い":
         if (xor(focusIdx === undefined, packet.from_idx === focusIdx)) {
-          return `${IdxToCustomName(settings?.display.bubble, packet, packet.from_idx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.to_idx)} を占った結果、${RoleToSpecie(
-            packet.agents.find((agent) => agent.idx === packet.to_idx)?.role
-          )} でした`;
+          const targetRole = packet.agents.find((agent) => agent.idx === packet.to_idx)?.role;
+          const species = targetRole ? RoleToSpecies[targetRole as keyof typeof RoleToSpecies] : undefined;
+          return `${IdxToCustomName(settings?.display.bubble, packet, packet.from_idx)} が ${IdxToCustomName(settings?.display.bubble, packet, packet.to_idx)} を占った結果、${species ? $_(`game.species.${species}`) : ""} でした`;
         }
         return "占いました";
       case "護衛":

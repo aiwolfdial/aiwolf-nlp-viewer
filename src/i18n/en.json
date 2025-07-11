@@ -1,0 +1,128 @@
+{
+  "appName": "aiwolf-nlp-viewer",
+  "navigation": {
+    "home": "Home",
+    "realtime": "Realtime Log",
+    "archive": "Archive Log",
+    "agent": "Agent",
+    "token": "Token Generation",
+    "statistics": "Statistics"
+  },
+  "home": {
+    "title": "aiwolf-nlp-viewer",
+    "realtimeLog": {
+      "title": "Realtime Log",
+      "description": "Display game logs in real-time\nSupports JSONL format files"
+    },
+    "archiveLog": {
+      "title": "Archive Log",
+      "description": "Display archived game logs\nSupports LOG format files"
+    },
+    "agent": {
+      "title": "Agent",
+      "description": "Connect to game server and participate as an agent"
+    },
+    "sourceCode": "Source Code",
+    "gameServer": "Game Server",
+    "sampleAgent": "Sample Agent",
+    "sampleAgentLLM": "Sample Agent (LLM)",
+    "viewer": "Viewer"
+  },
+  "realtime": {
+    "connect": "Connect",
+    "disconnect": "Disconnect",
+    "settings": "Settings",
+    "pasteFromClipboard": "Paste from Clipboard",
+    "websocketUrl": "WebSocket URL",
+    "authKey": "Authorization Key",
+    "optional": "Optional",
+    "displaySettings": "Display Settings",
+    "canvasAgentInfo": "Agent Information on Canvas",
+    "messageBoxAgentInfo": "Agent Information on Message Box",
+    "listAgentInfo": "Agent Information on List",
+    "largeScreen": "Large Screen",
+    "name": "Name",
+    "teamName": "Team Name",
+    "role": "Role",
+    "enable": "Enable",
+    "notConnected": "Not Connected"
+  },
+  "archive": {
+    "selectFolder": "Select Folder",
+    "selectLog": "Select Log",
+    "pasteFromClipboard": "Paste from Clipboard",
+    "agents": "Agents",
+    "whispers": "Whispers",
+    "talk": "Talk",
+    "voting": "Voting",
+    "votedFor": " voted for ",
+    "exile": "Exile",
+    "wasExiled": " was exiled",
+    "divination": "Divination",
+    "divined": " divined ",
+    "guard": "Guard",
+    "protected": " protected ",
+    "attackVotes": "Attack Votes",
+    "attack": "Attack",
+    "wasAttacked": " was attacked: ",
+    "success": "Success",
+    "failure": "Failure",
+    "noAttackTarget": "No attack target",
+    "result": "Result",
+    "won": " won",
+    "particle": ""
+  },
+  "agent": {
+    "talkHistory": "Talk History",
+    "whisperHistory": "Whisper History",
+    "agentSettings": "Agent Settings",
+    "teamName": "Team Name",
+    "notConnected": "Not Connected",
+    "selectTarget": "Please select a target",
+    "enterContent": "Please enter content",
+    "remainingChars": "{count} characters remaining",
+    "exceededChars": "{count} characters exceeded",
+    "send": "Send"
+  },
+  "statistics": {
+    "downloadCsv": "Download as CSV"
+  },
+  "token": {
+    "title": "Token Generation",
+    "description": "Generate tokens required when connection authentication is enabled on the game server. The secret key is generated in the browser and never sent to the server.",
+    "agentDescription": "If connecting as an agent, please enter a team name.",
+    "generateSecret": "Generate Secret Key",
+    "secretKey": "Secret Key",
+    "agent": "Agent",
+    "realtimeLog": "Realtime Log",
+    "teamName": "Team Name",
+    "copyToken": "Copy Token",
+    "errorOccurred": "An error occurred"
+  },
+  "common": {
+    "close": "Close",
+    "language": "Language"
+  },
+  "game": {
+    "role": {
+      "WEREWOLF": "Werewolf",
+      "POSSESSED": "Possessed",
+      "SEER": "Seer",
+      "BODYGUARD": "Bodyguard",
+      "VILLAGER": "Villager",
+      "MEDIUM": "Medium"
+    },
+    "species": {
+      "HUMAN": "Human",
+      "WEREWOLF": "Werewolf"
+    },
+    "status": {
+      "ALIVE": "Alive",
+      "DEAD": "Dead"
+    },
+    "teams": {
+      "VILLAGER": "Villager Team",
+      "WEREWOLF": "Werewolf Team"
+    }
+  }
+}

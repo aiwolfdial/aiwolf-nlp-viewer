@@ -1,5 +1,7 @@
 <script lang="ts">
   import { SignJWT } from "jose";
+  import { _ } from 'svelte-i18n';
+  import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
   import "../../app.css";
 
   let state = $state({
@@ -41,7 +43,7 @@
         .sign(secretKey);
       state.token = jwt;
     } catch (error) {
-      state.token = "エラーが発生しました";
+      state.token = $_('token.errorOccurred');
     }
   }
 </script>
@@ -53,18 +55,21 @@
 <main>
   <div class="hero bg-base-200 min-h-screen">
     <div class="hero-content">
+      <div class="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       <div>
         <div class="w-md card bg-base-100 shadow-xl">
           <div class="card-body">
-            <h2 class="text-xl font-bold text-center">トークン生成</h2>
+            <h2 class="text-xl font-bold text-center">{$_('token.title')}</h2>
             <p class="text-sm">
-              対戦サーバにおける接続認証を有効にした場合に必要となるトークンを生成します。秘密鍵はブラウザ上で生成され、サーバには一切送信されません。
+              {$_('token.description')}
             </p>
             <p class="text-sm">
-              エージェントとして接続する場合は、チーム名を入力してください。
+              {$_('token.agentDescription')}
             </p>
             <button class="btn mt-2" onclick={generateSecret}>
-              秘密鍵を生成する
+              {$_('token.generateSecret')}
             </button>
             <label class="input w-full mt-2 block">
               <iconify-icon class="h-[1em] opacity-50" inline icon="mdi:key"
@@ -72,13 +77,13 @@
               <input
                 type="text"
                 class="grow"
-                placeholder="秘密鍵"
+                placeholder={$_('token.secretKey')}
                 bind:value={state.secret}
               />
             </label>
             <select class="select w-full mt-2" bind:value={state.role}>
-              <option value="PLAYER">エージェント</option>
-              <option value="RECEIVER">リアルタイムログ</option>
+              <option value="PLAYER">{$_('token.agent')}</option>
+              <option value="RECEIVER">{$_('token.realtimeLog')}</option>
             </select>
             <label class="input w-full mt-2 block">
               <iconify-icon
@@ -89,7 +94,7 @@
               <input
                 type="text"
                 class="grow"
-                placeholder="チーム名"
+                placeholder={$_('token.teamName')}
                 bind:value={state.team}
                 disabled={state.role !== "PLAYER"}
               />
@@ -104,7 +109,7 @@
                 class="btn"
                 onclick={() => navigator.clipboard.writeText(state.token)}
               >
-                トークンをコピーする
+                {$_('token.copyToken')}
               </button>
             </div>
           </div>

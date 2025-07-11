@@ -2,6 +2,8 @@
   import { realtimeSettings } from "$lib/stores/realtime-settings";
   import type { RealtimeSettings } from "$lib/types/realtime-settings";
   import { realtimeSocketState } from "$lib/utils/realtime-socket";
+  import { _ } from 'svelte-i18n';
+  import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
   import { onDestroy } from "svelte";
 
   let settings = $state<RealtimeSettings>();
@@ -54,7 +56,7 @@
 
 <div class="navbar bg-base-100 flex justify-start gap-4 overflow-x-auto">
   <a class="text-3xl font-bold text-nowrap ml-2" href="./">
-    aiwolf-nlp-viewer
+    {$_('appName')}
   </a>
   <div class="ml-auto">
     <div class="inline-grid *:[grid-area:1/1]">
@@ -77,7 +79,7 @@
     <input
       type="text"
       class="grow"
-      placeholder="WebSocket URL"
+      placeholder={$_('realtime.websocketUrl')}
       value={settings?.connection.url}
       oninput={(e) => updateSettings("connection.url", e.currentTarget.value)}
     />
@@ -88,34 +90,34 @@
     <input
       type="text"
       class="grow"
-      placeholder="Authorization Key"
+      placeholder={$_('realtime.authKey')}
       value={settings?.connection.token}
       oninput={(e) => updateSettings("connection.token", e.currentTarget.value)}
     />
-    <span class="badge badge-neutral badge-xs">Optional</span>
+    <span class="badge badge-neutral badge-xs">{$_('realtime.optional')}</span>
   </label>
   <button
     class="btn btn-info"
     onclick={handleConnect}
-    disabled={status !== "disconnected" && status !== "loaded"}>接続</button
+    disabled={status !== "disconnected" && status !== "loaded"}>{$_('realtime.connect')}</button
   >
   <button
     class="btn btn-error"
     onclick={handleDisconnect}
-    disabled={status === "disconnected" || status === "loaded"}>切断</button
+    disabled={status === "disconnected" || status === "loaded"}>{$_('realtime.disconnect')}</button
   >
   <button class="btn" onclick={loadClipboardLog}>
-    クリップボードから貼り付け
+    {$_('realtime.pasteFromClipboard')}
   </button>
-  <button class="btn" onclick={() => modal.showModal()}>設定</button>
+  <button class="btn" onclick={() => modal.showModal()}>{$_('realtime.settings')}</button>
   <dialog class="modal" bind:this={modal}>
     <div class="modal-box">
       <div class="form-control my-2">
-        <h3 class="text-lg font-bold">表示設定</h3>
-        <h4 class="text-base font-bold mt-2">キャンバス上のエージェント情報</h4>
+        <h3 class="text-lg font-bold">{$_('realtime.displaySettings')}</h3>
+        <h4 class="text-base font-bold mt-2">{$_('realtime.canvasAgentInfo')}</h4>
         <div class="flex gap-4 my-2">
           <label class="label cursor-pointer">
-            <span class="label-text">名前</span>
+            <span class="label-text">{$_('realtime.name')}</span>
             <input
               type="checkbox"
               checked={settings?.display.canvas.name}
@@ -125,7 +127,7 @@
             />
           </label>
           <label class="label cursor-pointer">
-            <span class="label-text">チーム名</span>
+            <span class="label-text">{$_('realtime.teamName')}</span>
             <input
               type="checkbox"
               checked={settings?.display.canvas.team}
@@ -135,7 +137,7 @@
             />
           </label>
           <label class="label cursor-pointer">
-            <span class="label-text">役職</span>
+            <span class="label-text">{$_('realtime.role')}</span>
             <input
               type="checkbox"
               checked={settings?.display.canvas.role}
@@ -146,11 +148,11 @@
           </label>
         </div>
         <h4 class="text-base font-bold mt-2">
-          メッセージボックス上のエージェント情報
+          {$_('realtime.messageBoxAgentInfo')}
         </h4>
         <div class="flex gap-4 my-2">
           <label class="label cursor-pointer">
-            <span class="label-text">名前</span>
+            <span class="label-text">{$_('realtime.name')}</span>
             <input
               type="checkbox"
               checked={settings?.display.bubble.name}
@@ -160,7 +162,7 @@
             />
           </label>
           <label class="label cursor-pointer">
-            <span class="label-text">チーム名</span>
+            <span class="label-text">{$_('realtime.teamName')}</span>
             <input
               type="checkbox"
               checked={settings?.display.bubble.team}
@@ -170,7 +172,7 @@
             />
           </label>
           <label class="label cursor-pointer">
-            <span class="label-text">役職</span>
+            <span class="label-text">{$_('realtime.role')}</span>
             <input
               type="checkbox"
               checked={settings?.display.bubble.role}
@@ -180,10 +182,10 @@
             />
           </label>
         </div>
-        <h4 class="text-base font-bold mt-2">一覧のエージェント情報</h4>
+        <h4 class="text-base font-bold mt-2">{$_('realtime.listAgentInfo')}</h4>
         <div class="flex gap-4 my-2">
           <label class="label cursor-pointer">
-            <span class="label-text">名前</span>
+            <span class="label-text">{$_('realtime.name')}</span>
             <input
               type="checkbox"
               checked={settings?.display.text.name}
@@ -193,7 +195,7 @@
             />
           </label>
           <label class="label cursor-pointer">
-            <span class="label-text">チーム名</span>
+            <span class="label-text">{$_('realtime.teamName')}</span>
             <input
               type="checkbox"
               checked={settings?.display.text.team}
@@ -203,7 +205,7 @@
             />
           </label>
           <label class="label cursor-pointer">
-            <span class="label-text">役職</span>
+            <span class="label-text">{$_('realtime.role')}</span>
             <input
               type="checkbox"
               checked={settings?.display.text.role}
@@ -213,9 +215,9 @@
             />
           </label>
         </div>
-        <h4 class="text-base font-bold mt-2">大画面向け</h4>
+        <h4 class="text-base font-bold mt-2">{$_('realtime.largeScreen')}</h4>
         <label class="label cursor-pointer my-2">
-          <span class="label-text">有効</span>
+          <span class="label-text">{$_('realtime.enable')}</span>
           <input
             type="checkbox"
             checked={settings?.display.largeScale}
@@ -227,9 +229,10 @@
       </div>
     </div>
     <form method="dialog" class="modal-backdrop">
-      <button>close</button>
+      <button>{$_('common.close')}</button>
     </form>
   </dialog>
+  <LanguageSwitcher />
   <label class="flex items-center cursor-pointer gap-2">
     <iconify-icon inline icon="mdi:white-balance-sunny"></iconify-icon>
     <input type="checkbox" value="dark" class="toggle theme-controller" />

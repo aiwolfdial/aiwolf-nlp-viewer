@@ -1,4 +1,4 @@
-import { IdxToName, RoleToSpecies, SpeciesJA } from "$lib/constants/common";
+import { IdxToName } from "$lib/constants/common";
 import type { Agent, Packet } from "$lib/types/realtime";
 import type { Agent as SettingsAgent } from "$lib/types/realtime-settings";
 
@@ -29,10 +29,6 @@ export function IdxToCustomName(agent: SettingsAgent | undefined, packet: Packet
     return values.join(" ");
 }
 
-export function RoleToSpecie(role: string | undefined) {
-    if (!role) return "";
-    return SpeciesJA[RoleToSpecies[role as keyof typeof RoleToSpecies]];
-}
 
 export function xor(a: boolean, b: boolean) {
     return (a || b) && !(a && b);

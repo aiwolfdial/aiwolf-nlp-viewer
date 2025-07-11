@@ -8,6 +8,7 @@
     type Setting,
   } from "$lib/types/agent";
   import type { AgentSettings } from "$lib/types/agent-settings";
+  import { _ } from 'svelte-i18n';
   import { runes } from "runes2";
   import { onMount } from "svelte";
 
@@ -132,8 +133,8 @@
         class="bg-primary text-primary-content w-full py-2 text-3xl font-bold text-nowrap text-center"
       >
         {isTargetSelectionMode
-          ? `${RequestJA[request as Request]}対象を選択してください`
-          : `${RequestJA[request as Request]}内容を入力してください`}
+          ? `${RequestJA[request as Request]}${$_('agent.selectTarget')}`
+          : `${RequestJA[request as Request]}${$_('agent.enterContent')}`}
       </span>
     </div>
     <div class="flex gap-2 items-center px-4 pt-2 pb-4 overflow-x-auto">
@@ -189,10 +190,9 @@
         {/if}
       </datalist>
       {#if remainingLength >= 0}
-        <pre class="text-2xl">残り{remainingLength}文字</pre>
+        <pre class="text-2xl">{$_('agent.remainingChars', { values: { count: remainingLength } })}</pre>
       {:else}
-        <pre class="text-2xl bg-error text-error-content">{remainingLength *
-            -1}文字超過</pre>
+        <pre class="text-2xl bg-error text-error-content">{$_('agent.exceededChars', { values: { count: remainingLength * -1 } })}</pre>
       {/if}
       <button
         class="btn btn-xl"
@@ -200,7 +200,7 @@
         aria-label="Send"
       >
         <iconify-icon icon="mdi:send"></iconify-icon>
-        送信
+        {$_('agent.send')}
       </button>
     </div>
     <div class="-mt-2 mx-4 mb-2">
@@ -229,7 +229,7 @@
         <span
           class="bg-primary text-primary-content text-lg font-bold text-nowrap"
         >
-          {RequestJA[request as Request]}対象を選択してください
+          {RequestJA[request as Request]}{$_('agent.selectTarget')}
         </span>
         {#each Object.entries(info?.status_map ?? {}) as [key, value]}
           {#if value === Status.ALIVE && key !== info?.agent}
@@ -242,7 +242,7 @@
         <span
           class="bg-primary text-primary-content text-lg font-bold text-nowrap"
         >
-          {RequestJA[request as Request]}内容を入力してください
+          {RequestJA[request as Request]}{$_('agent.enterContent')}
         </span>
         {#if (info?.remain_skip ?? 0) > 0}
           <button
@@ -287,10 +287,9 @@
         {/if}
       </datalist>
       {#if remainingLength >= 0}
-        <pre class="text-md">残り{remainingLength}文字</pre>
+        <pre class="text-md">{$_('agent.remainingChars', { values: { count: remainingLength } })}</pre>
       {:else}
-        <pre class="text-md bg-error text-error-content">{remainingLength *
-            -1}文字超過</pre>
+        <pre class="text-md bg-error text-error-content">{$_('agent.exceededChars', { values: { count: remainingLength * -1 } })}</pre>
       {/if}
       <button
         class="btn"
@@ -298,7 +297,7 @@
         aria-label="Send"
       >
         <iconify-icon icon="mdi:send"></iconify-icon>
-        送信
+        {$_('agent.send')}
       </button>
     </div>
     <div class="-mt-2 mx-4 mb-2">

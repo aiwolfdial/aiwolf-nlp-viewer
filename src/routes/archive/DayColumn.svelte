@@ -1,11 +1,29 @@
 <script lang="ts">
-  import { RoleJA, SpeciesJA, StatusJA, TeamsJA } from "$lib/constants/common";
   import type { DayStatus } from "$lib/types/archive";
   import { getColorFromName } from "$lib/utils/archive";
+  import { _, locale } from "svelte-i18n";
   import AgentName from "./AgentName.svelte";
   import FormatText from "./FormatText.svelte";
 
+  const isEnglish = $derived($locale === "en");
+
   let { dayIdx = "", dayStatus = {} as DayStatus } = $props();
+
+  function getRoleTranslation(role: string) {
+    return $_("game.role." + role);
+  }
+
+  function getStatusTranslation(status: string) {
+    return $_("game.status." + status);
+  }
+
+  function getSpeciesTranslation(species: string) {
+    return $_("game.species." + species);
+  }
+
+  function getTeamTranslation(team: string) {
+    return $_("game.teams." + team);
+  }
 </script>
 
 <div class="flex-[0_0_400px] rounded-lg bg-base-200">
@@ -46,7 +64,7 @@
     <div class="grow overflow-y-auto pr-4">
       {#if Object.keys(dayStatus.agents).length > 0}
         <div>
-          <h3 class="text-lg font-bold my-2">エージェント</h3>
+          <h3 class="text-lg font-bold my-2">{$_("archive.agents")}</h3>
           <ul>
             {#each Object.entries(dayStatus.agents) as [_, status]}
               <li
@@ -56,8 +74,8 @@
               >
                 <AgentName text={status.gameName} key={status.gameName} />
                 {status.originalName}
-                {RoleJA[status.role] ?? ""} -
-                {StatusJA[status.status] ?? ""}
+                {getRoleTranslation(status.role)} -
+                {getStatusTranslation(status.status)}
               </li>
             {/each}
           </ul>
@@ -65,7 +83,7 @@
       {/if}
       {#if dayStatus.beforeWhisper.length > 0}
         <div>
-          <h3 class="text-lg font-bold my-2">囁き</h3>
+          <h3 class="text-lg font-bold my-2">{$_("archive.whispers")}</h3>
           <ul>
             {#each dayStatus.beforeWhisper as whisper}
               <li
@@ -87,7 +105,7 @@
       {/if}
       {#if dayStatus.talks.length > 0}
         <div>
-          <h3 class="text-lg font-bold my-2">トーク</h3>
+          <h3 class="text-lg font-bold my-2">{$_("archive.talk")}</h3>
           <ul>
             {#each dayStatus.talks as talk}
               <li
@@ -109,20 +127,29 @@
       {/if}
       {#if dayStatus.votes.length > 0}
         <div>
-          <h3 class="text-lg font-bold my-2">投票</h3>
+          <h3 class="text-lg font-bold my-2">{$_("archive.voting")}</h3>
           <ul>
             {#each dayStatus.votes as vote}
               <li
                 class="p-2 my-2 border-4 rounded-md"
                 style={`border-color: ${getColorFromName(dayStatus.agents[vote.agentIdx].gameName)}`}
               >
-                <AgentName text={dayStatus.agents[vote.agentIdx].gameName} />
-                が
-                <AgentName
-                  text={dayStatus.agents[vote.targetIdx].gameName}
-                  highlight
-                />
-                に投票
+                {#if isEnglish}
+                  <AgentName text={dayStatus.agents[vote.agentIdx].gameName} />
+                  {$_("archive.votedFor")}
+                  <AgentName
+                    text={dayStatus.agents[vote.targetIdx].gameName}
+                    highlight
+                  />
+                {:else}
+                  <AgentName text={dayStatus.agents[vote.agentIdx].gameName} />
+                  {$_("archive.particle")}
+                  <AgentName
+                    text={dayStatus.agents[vote.targetIdx].gameName}
+                    highlight
+                  />
+                  {$_("archive.votedFor")}
+                {/if}
               </li>
             {/each}
           </ul>
@@ -130,38 +157,48 @@
       {/if}
       {#if dayStatus.execution}
         <div>
-          <h3 class="text-lg font-bold my-2">追放</h3>
+          <h3 class="text-lg font-bold my-2">{$_("archive.exile")}</h3>
           <p>
             <AgentName
               text={dayStatus.agents[dayStatus.execution.agentIdx].gameName}
               highlight
             />
-            を追放
+            {$_("archive.wasExiled")}
           </p>
         </div>
       {/if}
       {#if dayStatus.divine}
         <div>
-          <h3 class="text-lg font-bold my-2">占い</h3>
+          <h3 class="text-lg font-bold my-2">{$_("archive.divination")}</h3>
           <p>
-            <AgentName
-              text={dayStatus.agents[dayStatus.divine.agentIdx].gameName}
-            />
-            が
-            <AgentName
-              text={dayStatus.agents[dayStatus.divine.targetIdx].gameName}
-              highlight
-            />
-            を占い:
-            <strong>
-              {SpeciesJA[dayStatus.divine.result] ?? ""}
-            </strong>
+            {#if isEnglish}
+              <AgentName
+                text={dayStatus.agents[dayStatus.divine.agentIdx].gameName}
+              />
+              {$_("archive.divined")}
+              <AgentName
+                text={dayStatus.agents[dayStatus.divine.targetIdx].gameName}
+                highlight
+              />
+              <strong>{getSpeciesTranslation(dayStatus.divine.result)}</strong>
+            {:else}
+              <AgentName
+                text={dayStatus.agents[dayStatus.divine.agentIdx].gameName}
+              />
+              {$_("archive.particle")}
+              <AgentName
+                text={dayStatus.agents[dayStatus.divine.targetIdx].gameName}
+                highlight
+              />
+              {$_("archive.divined")}
+              <strong>{getSpeciesTranslation(dayStatus.divine.result)}</strong>
+            {/if}
           </p>
         </div>
       {/if}
       {#if dayStatus.afterWhisper.length > 0}
         <div>
-          <h3 class="text-lg font-bold my-2">囁き</h3>
+          <h3 class="text-lg font-bold my-2">{$_("archive.whispers")}</h3>
           <ul>
             {#each dayStatus.afterWhisper as whisper}
               <li
@@ -183,36 +220,56 @@
       {/if}
       {#if dayStatus.guard}
         <div>
-          <h3 class="text-lg font-bold my-2">護衛</h3>
+          <h3 class="text-lg font-bold my-2">{$_("archive.guard")}</h3>
           <p>
-            <AgentName
-              text={dayStatus.agents[dayStatus.guard.agentIdx].gameName}
-            />
-            が
-            <AgentName
-              text={dayStatus.agents[dayStatus.guard.targetIdx].gameName}
-              highlight
-            />
-            を護衛
+            {#if isEnglish}
+              <AgentName
+                text={dayStatus.agents[dayStatus.guard.agentIdx].gameName}
+              />
+              {$_("archive.protected")}
+              <AgentName
+                text={dayStatus.agents[dayStatus.guard.targetIdx].gameName}
+                highlight
+              />
+            {:else}
+              <AgentName
+                text={dayStatus.agents[dayStatus.guard.agentIdx].gameName}
+              />
+              {$_("archive.particle")}
+              <AgentName
+                text={dayStatus.agents[dayStatus.guard.targetIdx].gameName}
+                highlight
+              />
+              {$_("archive.protected")}
+            {/if}
           </p>
         </div>
       {/if}
       {#if dayStatus.attackVotes.length > 0}
         <div>
-          <h3 class="text-lg font-bold my-2">襲撃投票</h3>
+          <h3 class="text-lg font-bold my-2">{$_("archive.attackVotes")}</h3>
           <ul>
             {#each dayStatus.attackVotes as vote}
               <li
                 class="p-2 my-2 border-4 rounded-md"
                 style={`border-color: ${getColorFromName(dayStatus.agents[vote.agentIdx].gameName)}`}
               >
-                <AgentName text={dayStatus.agents[vote.agentIdx].gameName} />
-                が
-                <AgentName
-                  text={dayStatus.agents[vote.targetIdx].gameName}
-                  highlight
-                />
-                に投票
+                {#if isEnglish}
+                  <AgentName text={dayStatus.agents[vote.agentIdx].gameName} />
+                  {$_("archive.votedFor")}
+                  <AgentName
+                    text={dayStatus.agents[vote.targetIdx].gameName}
+                    highlight
+                  />
+                {:else}
+                  <AgentName text={dayStatus.agents[vote.agentIdx].gameName} />
+                  {$_("archive.particle")}
+                  <AgentName
+                    text={dayStatus.agents[vote.targetIdx].gameName}
+                    highlight
+                  />
+                  {$_("archive.votedFor")}
+                {/if}
               </li>
             {/each}
           </ul>
@@ -220,29 +277,31 @@
       {/if}
       {#if dayStatus.attack}
         <div>
-          <h3 class="text-lg font-bold my-2">襲撃</h3>
+          <h3 class="text-lg font-bold my-2">{$_("archive.attack")}</h3>
           {#if dayStatus.attack.targetIdx !== "-1"}
             <p>
               <AgentName
                 text={dayStatus.agents[dayStatus.attack.targetIdx].gameName}
                 highlight
               />
-              を襲撃:
-              <strong>
-                {dayStatus.attack.result ? "成功" : "失敗"}
-              </strong>
+              {$_("archive.wasAttacked")}
+              <strong
+                >{dayStatus.attack.result
+                  ? $_("archive.success")
+                  : $_("archive.failure")}</strong
+              >
             </p>
           {:else}
-            <p>襲撃対象なし</p>
+            <p>{$_("archive.noAttackTarget")}</p>
           {/if}
         </div>
       {/if}
       {#if dayStatus.result}
         <div>
-          <h3 class="text-lg font-bold my-2">結果</h3>
+          <h3 class="text-lg font-bold my-2">{$_("archive.result")}</h3>
           <p>
-            <strong>{TeamsJA[dayStatus.result.winSide]}</strong>
-            が勝利
+            <strong>{getTeamTranslation(dayStatus.result.winSide)}</strong>
+            {$_("archive.won")}
           </p>
         </div>
       {/if}

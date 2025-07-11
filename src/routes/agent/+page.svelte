@@ -13,6 +13,7 @@
   } from "$lib/types/agent";
   import { type AgentSettings } from "$lib/types/agent-settings";
   import { agentSocketState } from "$lib/utils/agent-socket";
+  import { _ } from 'svelte-i18n';
   import { onDestroy } from "svelte";
   import "../../app.css";
   import ActionBar from "./ActionBar.svelte";
@@ -173,13 +174,13 @@
         {attackedAgents}
       />
       <TalkColumn
-        header="トーク履歴"
+        header={$_('agent.talkHistory')}
         talks={talkHistory}
         agents={Object.keys(info?.status_map ?? {})}
       />
       {#if role === Role.WEREWOLF}
         <TalkColumn
-          header="囁き履歴"
+          header={$_('agent.whisperHistory')}
           talks={whisperHistory}
           agents={Object.keys(info?.status_map ?? {})}
         />
@@ -197,11 +198,11 @@
   {:else if settings?.display.largeScale}
     <div class="flex items-center justify-center h-full">
       <pre
-        class="base-content text-9xl font-bold opacity-70 select-none">未接続</pre>
+        class="base-content text-9xl font-bold opacity-70 select-none">{$_('agent.notConnected')}</pre>
     </div>
   {:else}
     <div role="alert" class="alert m-4">
-      <span class="text-lg font-bold">未接続</span>
+      <span class="text-lg font-bold">{$_('agent.notConnected')}</span>
     </div>
   {/if}
 </main>

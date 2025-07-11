@@ -1,5 +1,7 @@
 <script lang="ts">
   import { base } from "$app/paths";
+  import { _ } from 'svelte-i18n';
+  import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
   import "../../app.css";
 
   interface CsvFile {
@@ -128,6 +130,9 @@
 <main>
   <div class="hero bg-base-200 min-h-screen">
     <div class="hero-content text-center max-w-screen mx-2">
+      <div class="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       {#await loadCsvFiles() then}
         {#if csvFiles.length > 0}
           <div class="w-full">
@@ -181,7 +186,7 @@
                 href={csvFiles.find((f) => f.name === selectedFile)?.path ||
                   "#"}
               >
-                CSV形式でダウンロードする
+                {$_('statistics.downloadCsv')}
               </a>
             {/if}
           </div>
