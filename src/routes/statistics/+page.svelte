@@ -1,7 +1,7 @@
 <script lang="ts">
   import { base } from "$app/paths";
-  import { _ } from 'svelte-i18n';
-  import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
+  import LanguageSwitcher from "$lib/components/LanguageSwitcher.svelte";
+  import { _ } from "svelte-i18n";
   import "../../app.css";
 
   interface CsvFile {
@@ -186,7 +186,7 @@
                 href={csvFiles.find((f) => f.name === selectedFile)?.path ||
                   "#"}
               >
-                {$_('statistics.downloadCsv')}
+                {$_("statistics.downloadCsv")}
               </a>
             {/if}
           </div>

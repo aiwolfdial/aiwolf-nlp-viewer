@@ -1,10 +1,10 @@
 <script lang="ts">
+  import LanguageSwitcher from "$lib/components/LanguageSwitcher.svelte";
   import { agentSettings } from "$lib/stores/agent-settings";
   import type { AgentSettings } from "$lib/types/agent-settings";
   import { agentSocketState } from "$lib/utils/agent-socket";
-  import { _ } from 'svelte-i18n';
-  import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
   import { onDestroy } from "svelte";
+  import { _ } from "svelte-i18n";
 
   let settings = $state<AgentSettings>();
   let status = $state<string>();
@@ -52,7 +52,7 @@
 
 <div class="navbar bg-base-100 flex justify-start gap-4 overflow-x-auto">
   <a class="text-3xl font-bold text-nowrap ml-2" href="./">
-    {$_('appName')}
+    {$_("appName")}
   </a>
   <div class="ml-auto">
     <div class="inline-grid *:[grid-area:1/1]">
@@ -75,7 +75,7 @@
     <input
       type="text"
       class="grow"
-      placeholder={$_('realtime.websocketUrl')}
+      placeholder={$_("realtime.websocketUrl")}
       value={settings?.connection.url}
       oninput={(e) => updateSettings("connection.url", e.currentTarget.value)}
     />
@@ -86,28 +86,30 @@
     <input
       type="text"
       class="grow"
-      placeholder={$_('realtime.authKey')}
+      placeholder={$_("realtime.authKey")}
       value={settings?.connection.token}
       oninput={(e) => updateSettings("connection.token", e.currentTarget.value)}
     />
-    <span class="badge badge-neutral badge-xs">{$_('realtime.optional')}</span>
+    <span class="badge badge-neutral badge-xs">{$_("realtime.optional")}</span>
   </label>
   <button
     class="btn btn-info"
     onclick={handleConnect}
-    disabled={status !== "disconnected"}>{$_('realtime.connect')}</button
+    disabled={status !== "disconnected"}>{$_("realtime.connect")}</button
   >
   <button
     class="btn btn-error"
     onclick={handleDisconnect}
-    disabled={status === "disconnected"}>{$_('realtime.disconnect')}</button
+    disabled={status === "disconnected"}>{$_("realtime.disconnect")}</button
   >
-  <button class="btn" onclick={() => modal.showModal()}>{$_('realtime.settings')}</button>
+  <button class="btn" onclick={() => modal.showModal()}
+    >{$_("realtime.settings")}</button
+  >
   <dialog class="modal" bind:this={modal}>
     <div class="modal-box">
       <div class="form-control my-2">
-        <h3 class="text-lg font-bold">{$_('agent.agentSettings')}</h3>
-        <h4 class="text-base font-bold mt-2">{$_('agent.teamName')}</h4>
+        <h3 class="text-lg font-bold">{$_("agent.agentSettings")}</h3>
+        <h4 class="text-base font-bold mt-2">{$_("agent.teamName")}</h4>
         <label class="input min-w-3xs w-3xs my-2">
           <iconify-icon class="h-[1em] opacity-50" inline icon="mdi:rename"
           ></iconify-icon>
@@ -118,10 +120,10 @@
             oninput={(e) => updateSettings("team", e.currentTarget.value)}
           />
         </label>
-        <h3 class="text-lg font-bold mt-4">{$_('realtime.displaySettings')}</h3>
-        <h4 class="text-base font-bold mt-2">{$_('realtime.largeScreen')}</h4>
+        <h3 class="text-lg font-bold mt-4">{$_("realtime.displaySettings")}</h3>
+        <h4 class="text-base font-bold mt-2">{$_("realtime.largeScreen")}</h4>
         <label class="label cursor-pointer my-2">
-          <span class="label-text">{$_('realtime.enable')}</span>
+          <span class="label-text">{$_("realtime.enable")}</span>
           <input
             type="checkbox"
             checked={settings?.display.largeScale}
@@ -130,13 +132,16 @@
             class="checkbox"
           />
         </label>
+        <h4 class="text-base font-bold mt-2">{$_("common.language")}</h4>
+        <div class="my-2">
+          <LanguageSwitcher />
+        </div>
       </div>
     </div>
     <form method="dialog" class="modal-backdrop">
-      <button>{$_('common.close')}</button>
+      <button>{$_("common.close")}</button>
     </form>
   </dialog>
-  <LanguageSwitcher />
   <label class="flex items-center cursor-pointer gap-2">
     <iconify-icon inline icon="mdi:white-balance-sunny"></iconify-icon>
     <input type="checkbox" value="dark" class="toggle theme-controller" />

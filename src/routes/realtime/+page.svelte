@@ -6,7 +6,6 @@
   import type { RealtimeSettings } from "$lib/types/realtime-settings";
   import { IdxToCustomName, initializeAgents } from "$lib/utils/realtime";
   import { realtimeSocketState } from "$lib/utils/realtime-socket";
-  import { _ } from 'svelte-i18n';
   import { onDestroy, onMount } from "svelte";
   import { derived, writable } from "svelte/store";
   import "../../app.css";

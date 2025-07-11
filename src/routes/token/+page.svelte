@@ -1,7 +1,7 @@
 <script lang="ts">
+  import LanguageSwitcher from "$lib/components/LanguageSwitcher.svelte";
   import { SignJWT } from "jose";
-  import { _ } from 'svelte-i18n';
-  import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
+  import { _ } from "svelte-i18n";
   import "../../app.css";
 
   let state = $state({
@@ -43,7 +43,7 @@
         .sign(secretKey);
       state.token = jwt;
     } catch (error) {
-      state.token = $_('token.errorOccurred');
+      state.token = $_("token.errorOccurred");
     }
   }
 </script>
@@ -61,15 +61,15 @@
       <div>
         <div class="w-md card bg-base-100 shadow-xl">
           <div class="card-body">
-            <h2 class="text-xl font-bold text-center">{$_('token.title')}</h2>
+            <h2 class="text-xl font-bold text-center">{$_("token.title")}</h2>
             <p class="text-sm">
-              {$_('token.description')}
+              {$_("token.description")}
             </p>
             <p class="text-sm">
-              {$_('token.agentDescription')}
+              {$_("token.agentDescription")}
             </p>
             <button class="btn mt-2" onclick={generateSecret}>
-              {$_('token.generateSecret')}
+              {$_("token.generateSecret")}
             </button>
             <label class="input w-full mt-2 block">
               <iconify-icon class="h-[1em] opacity-50" inline icon="mdi:key"
@@ -77,13 +77,13 @@
               <input
                 type="text"
                 class="grow"
-                placeholder={$_('token.secretKey')}
+                placeholder={$_("token.secretKey")}
                 bind:value={state.secret}
               />
             </label>
             <select class="select w-full mt-2" bind:value={state.role}>
-              <option value="PLAYER">{$_('token.agent')}</option>
-              <option value="RECEIVER">{$_('token.realtimeLog')}</option>
+              <option value="PLAYER">{$_("token.agent")}</option>
+              <option value="RECEIVER">{$_("token.realtimeLog")}</option>
             </select>
             <label class="input w-full mt-2 block">
               <iconify-icon
@@ -94,7 +94,7 @@
               <input
                 type="text"
                 class="grow"
-                placeholder={$_('token.teamName')}
+                placeholder={$_("token.teamName")}
                 bind:value={state.team}
                 disabled={state.role !== "PLAYER"}
               />
@@ -109,7 +109,7 @@
                 class="btn"
                 onclick={() => navigator.clipboard.writeText(state.token)}
               >
-                {$_('token.copyToken')}
+                {$_("token.copyToken")}
               </button>
             </div>
           </div>
