@@ -2,6 +2,7 @@
   import { browser } from "$app/environment";
   import Hls from "hls.js/dist/hls.js";
   import { onDestroy } from "svelte";
+  import { _ } from "svelte-i18n";
   let {
     url,
     gameId,
@@ -147,7 +148,7 @@
     onclick={toggleAudio}
     disabled={!gameId}
   >
-    {isPlaying ? "停止" : "再生"}
+    {isPlaying ? $_("audio.stop") : $_("audio.play")}
   </button>
   <iconify-icon inline icon="mdi:volume"></iconify-icon>
   <input

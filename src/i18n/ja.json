@@ -137,6 +137,10 @@
     "close": "閉じる",
     "language": "言語"
   },
+  "audio": {
+    "play": "再生",
+    "stop": "停止"
+  },
   "game": {
     "role": {
       "WEREWOLF": "人狼",

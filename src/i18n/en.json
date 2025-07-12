@@ -137,6 +137,10 @@
     "close": "Close",
     "language": "Language"
   },
+  "audio": {
+    "play": "Play",
+    "stop": "Stop"
+  },
   "game": {
     "role": {
       "WEREWOLF": "Werewolf",
