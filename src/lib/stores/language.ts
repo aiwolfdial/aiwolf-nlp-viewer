@@ -17,6 +17,25 @@ function isValidLanguage(lang: string): lang is Language {
     return SUPPORTED_LANGUAGES.includes(lang as Language);
 }
 
+function getBrowserLanguage(): Language {
+    if (typeof window === 'undefined') {
+        return DEFAULT_LANGUAGE;
+    }
+
+    const browserLang = navigator.language || navigator.languages?.[0];
+    if (!browserLang) {
+        return DEFAULT_LANGUAGE;
+    }
+
+    if (browserLang.startsWith('ja')) {
+        return 'ja';
+    } else if (browserLang.startsWith('en')) {
+        return 'en';
+    }
+
+    return DEFAULT_LANGUAGE;
+}
+
 function saveLanguage(lang: Language): void {
     if (typeof window !== 'undefined') {
         localStorage.setItem(STORAGE_KEY, lang);
@@ -34,7 +53,9 @@ export function initializeLanguage(): void {
         if (saved && isValidLanguage(saved)) {
             currentLanguage.set(saved);
         } else {
-            saveLanguage(DEFAULT_LANGUAGE);
+            const browserLang = getBrowserLanguage();
+            currentLanguage.set(browserLang);
+            saveLanguage(browserLang);
         }
     }
 }

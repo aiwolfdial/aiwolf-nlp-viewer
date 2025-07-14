@@ -1,14 +1,8 @@
 <script lang="ts">
   import { base } from "$app/paths";
   import LanguageSwitcher from "$lib/components/LanguageSwitcher.svelte";
-  import { initializeLanguage } from "$lib/stores/language";
-  import { onMount } from "svelte";
   import { _ } from "svelte-i18n";
   import "../app.css";
-
-  onMount(() => {
-    initializeLanguage();
-  });
 </script>
 
 <svelte:head>
