@@ -2,6 +2,7 @@ import { browser } from "$app/environment";
 import { Convert, type AgentSettings } from "$lib/types/agent-settings";
 import { writable } from "svelte/store";
 
+const STORAGE_KEY = 'agent-settings';
 
 const defaultAgentSettings: AgentSettings = {
     connection: {
@@ -12,26 +13,30 @@ const defaultAgentSettings: AgentSettings = {
     display: {
         largeScale: false
     }
-}
+};
 
-function load(): AgentSettings {
+function loadSettings(): AgentSettings {
     if (!browser) return defaultAgentSettings;
-    const value = localStorage.getItem('agent-settings');
+
+    const value = localStorage.getItem(STORAGE_KEY);
     if (value) {
         try {
             return Convert.fromJson(value);
         } catch (e) {
-            console.error(e);
+            console.error('Failed to parse agent settings:', e);
         }
     }
-    localStorage.setItem('agent-settings', Convert.toJson(defaultAgentSettings));
+
+    saveSettings(defaultAgentSettings);
     return defaultAgentSettings;
 }
 
-export const agentSettings = writable<AgentSettings>(load());
-
-agentSettings.subscribe(value => {
+function saveSettings(settings: AgentSettings): void {
     if (browser) {
-        localStorage.setItem('agent-settings', Convert.toJson(value));
+        localStorage.setItem(STORAGE_KEY, Convert.toJson(settings));
     }
-});
+}
+
+export const agentSettings = writable<AgentSettings>(loadSettings());
+
+agentSettings.subscribe(saveSettings);

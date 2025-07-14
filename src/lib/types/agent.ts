@@ -22,19 +22,19 @@ export enum Request {
     FINISH = "FINISH"
 }
 
-export const RequestJA = {
-    NAME: "名前",
-    TALK: "トーク",
-    WHISPER: "囁き",
-    VOTE: "投票",
-    DIVINE: "占い",
-    GUARD: "護衛",
-    ATTACK: "襲撃",
-    INITIALIZE: "ゲーム開始",
-    DAILY_INITIALIZE: "昼開始",
-    DAILY_FINISH: "昼終了",
-    FINISH: "ゲーム終了"
-}
+export const RequestJA: Record<Request, string> = {
+    [Request.NAME]: "名前",
+    [Request.TALK]: "トーク",
+    [Request.WHISPER]: "囁き",
+    [Request.VOTE]: "投票",
+    [Request.DIVINE]: "占い",
+    [Request.GUARD]: "護衛",
+    [Request.ATTACK]: "襲撃",
+    [Request.INITIALIZE]: "ゲーム開始",
+    [Request.DAILY_INITIALIZE]: "昼開始",
+    [Request.DAILY_FINISH]: "昼終了",
+    [Request.FINISH]: "ゲーム終了"
+};
 
 export interface Info {
     game_id: string;
@@ -67,50 +67,49 @@ export interface Vote {
     target: string;
 }
 
+export interface MaxLength {
+    count_in_word?: boolean;
+    per_talk?: number;
+    mention_length?: number;
+    per_agent?: number;
+    base_length?: number;
+}
+
+export interface MaxCount {
+    per_agent: number;
+    per_day: number;
+}
+
+export interface TalkSettings {
+    max_count: MaxCount;
+    max_length: MaxLength;
+    max_skip: number;
+}
+
+export interface VoteSettings {
+    max_count: number;
+}
+
+export interface AttackVoteSettings {
+    max_count: number;
+    allow_no_target: boolean;
+}
+
+export interface TimeoutSettings {
+    action: number;
+    response: number;
+}
+
 export interface Setting {
     agent_count: number;
     role_num_map: Record<Role, number>;
     vote_visibility: boolean;
     talk_on_first_day: boolean;
-    talk: {
-        max_count: {
-            per_agent: number;
-            per_day: number;
-        }
-        max_length: {
-            count_in_word: boolean | undefined;
-            per_talk: number | undefined;
-            mention_length: number | undefined;
-            per_agent: number | undefined;
-            base_length: number | undefined;
-        }
-        max_skip: number;
-    }
-    whisper: {
-        max_count: {
-            per_agent: number;
-            per_day: number;
-        }
-        max_length: {
-            count_in_word: boolean | undefined;
-            per_talk: number | undefined;
-            mention_length: number | undefined;
-            per_agent: number | undefined;
-            base_length: number | undefined;
-        }
-        max_skip: number;
-    }
-    vote: {
-        max_count: number;
-    }
-    attack_vote: {
-        max_count: number;
-        allow_no_target: boolean;
-    }
-    timeout: {
-        action: number;
-        response: number;
-    }
+    talk: TalkSettings;
+    whisper: TalkSettings;
+    vote: VoteSettings;
+    attack_vote: AttackVoteSettings;
+    timeout: TimeoutSettings;
 }
 
 export interface Talk {
@@ -123,7 +122,7 @@ export interface Talk {
     over: boolean;
 }
 
-export const DefaultProfileAvatars = {
+export const DefaultProfileAvatars: Record<string, string> = {
     'ミナト': '/images/male/01.png',
     'タクミ': '/images/male/02.png',
     'ケンジ': '/images/male/03.png',

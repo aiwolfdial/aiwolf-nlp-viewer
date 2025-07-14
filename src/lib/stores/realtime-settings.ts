@@ -2,6 +2,13 @@ import { browser } from "$app/environment";
 import { Convert, type RealtimeSettings } from "$lib/types/realtime-settings";
 import { writable } from "svelte/store";
 
+const STORAGE_KEY = 'realtime-settings';
+
+const defaultDisplayAgent = {
+    name: true,
+    team: false,
+    role: false
+};
 
 const defaultRealtimeSettings: RealtimeSettings = {
     connection: {
@@ -9,43 +16,35 @@ const defaultRealtimeSettings: RealtimeSettings = {
         token: ""
     },
     display: {
-        canvas: {
-            name: true,
-            team: false,
-            role: false
-        },
-        bubble: {
-            name: true,
-            team: false,
-            role: false
-        },
-        text: {
-            name: true,
-            team: false,
-            role: false
-        },
+        canvas: defaultDisplayAgent,
+        bubble: defaultDisplayAgent,
+        text: defaultDisplayAgent,
         largeScale: false,
     }
-}
+};
 
-function load(): RealtimeSettings {
+function loadSettings(): RealtimeSettings {
     if (!browser) return defaultRealtimeSettings;
-    const value = localStorage.getItem('realtime-settings');
+
+    const value = localStorage.getItem(STORAGE_KEY);
     if (value) {
         try {
             return Convert.fromJson(value);
         } catch (e) {
-            console.error(e);
+            console.error('Failed to parse realtime settings:', e);
         }
     }
-    localStorage.setItem('realtime-settings', Convert.toJson(defaultRealtimeSettings));
+
+    saveSettings(defaultRealtimeSettings);
     return defaultRealtimeSettings;
 }
 
-export const realtimeSettings = writable<RealtimeSettings>(load());
-
-realtimeSettings.subscribe(value => {
+function saveSettings(settings: RealtimeSettings): void {
     if (browser) {
-        localStorage.setItem('realtime-settings', Convert.toJson(value));
+        localStorage.setItem(STORAGE_KEY, Convert.toJson(settings));
     }
-});
+}
+
+export const realtimeSettings = writable<RealtimeSettings>(loadSettings());
+
+realtimeSettings.subscribe(saveSettings);

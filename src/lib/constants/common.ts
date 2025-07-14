@@ -31,6 +31,6 @@ export const RoleToSpecies: Record<Role, Species> = {
     MEDIUM: Species.HUMAN
 }
 
-export function IdxToName(idx: number | string) {
-    return `Agent[${idx.toString().padStart(2, "0")}]`
+export function IdxToName(idx: number | string): string {
+    return `Agent[${idx.toString().padStart(2, "0")}]`;
 }

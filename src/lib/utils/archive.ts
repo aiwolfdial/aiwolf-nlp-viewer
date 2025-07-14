@@ -34,9 +34,22 @@ function initializeDayLog(): DayStatus {
 }
 
 function processLogEntry(dayLog: DayStatus, type: string, data: string[]): void {
-    const handlers: Record<string, (data: string[]) => void> = {
+    const handlers = createLogHandlers(dayLog);
+    const handler = handlers[type];
+    if (handler) {
+        handler(data);
+    }
+}
+
+function createLogHandlers(dayLog: DayStatus): Record<string, (data: string[]) => void> {
+    return {
         status: ([idx, role, status, originalName, gameName]) => {
-            dayLog.agents[idx] = { role: Role[role as keyof typeof Role], status: Status[status as keyof typeof Status], originalName, gameName: gameName || IdxToName(idx) };
+            dayLog.agents[idx] = {
+                role: Role[role as keyof typeof Role],
+                status: Status[status as keyof typeof Status],
+                originalName,
+                gameName: gameName || IdxToName(idx)
+            };
         },
         talk: ([talkIdx, turn, agentIdx, text]) => {
             dayLog.talks.push({ talkIdx, turnIdx: turn, agentIdx, text });
@@ -45,7 +58,10 @@ function processLogEntry(dayLog: DayStatus, type: string, data: string[]): void 
             dayLog.votes.push({ agentIdx: voteAgentIdx, targetIdx: targetAgentIdx });
         },
         execute: ([executedAgentIdx, executedRole]) => {
-            dayLog.execution = { agentIdx: executedAgentIdx, role: Role[executedRole as keyof typeof Role] };
+            dayLog.execution = {
+                agentIdx: executedAgentIdx,
+                role: Role[executedRole as keyof typeof Role]
+            };
         },
         divine: ([divineAgentIdx, divineTargetAgentIdx, divineResult]) => {
             dayLog.divine = {
@@ -55,14 +71,15 @@ function processLogEntry(dayLog: DayStatus, type: string, data: string[]): void 
             };
         },
         whisper: ([talkIdx, turn, agentIdx, text]) => {
+            const whisperEntry = { talkIdx, turnIdx: turn, agentIdx, text };
             if (dayLog.talks.length > 0) {
-                dayLog.afterWhisper.push({ talkIdx: talkIdx, turnIdx: turn, agentIdx, text });
+                dayLog.afterWhisper.push(whisperEntry);
             } else {
-                dayLog.beforeWhisper.push({ talkIdx: talkIdx, turnIdx: turn, agentIdx, text });
+                dayLog.beforeWhisper.push(whisperEntry);
             }
         },
         guard: ([agentIdx, targetIdx, result]) => {
-            dayLog.guard = { agentIdx: agentIdx, targetIdx: targetIdx, result: result }
+            dayLog.guard = { agentIdx, targetIdx, result };
         },
         attackVote: ([attackVoteAgentIdx, attackTargetAgentIdx]) => {
             dayLog.attackVotes.push({
@@ -77,22 +94,26 @@ function processLogEntry(dayLog: DayStatus, type: string, data: string[]): void 
             };
         },
         result: ([villagers, werewolves, winSide]) => {
-            dayLog.result = { villagers, werewolves, winSide: Teams[winSide as keyof typeof Teams] };
+            dayLog.result = {
+                villagers,
+                werewolves,
+                winSide: Teams[winSide as keyof typeof Teams]
+            };
         },
     };
-
-    const handler = handlers[type];
-    if (handler) {
-        handler(data);
-    }
 }
-export function getColorFromName(name: string) {
-    let hash = 0;
-    for (let i = 0; i < name.length; i++) {
-        hash = name.charCodeAt(i) + ((hash << 5) - hash);
-    }
+export function getColorFromName(name: string): string {
+    const hash = calculateStringHash(name);
     const h = Math.abs(hash) % 360;
     const s = 85 + (hash % 10);
     const l = 60 + (hash % 10);
     return `hsla(${h}, ${s}%, ${l}%, 0.7)`;
+}
+
+function calculateStringHash(str: string): number {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return hash;
 }

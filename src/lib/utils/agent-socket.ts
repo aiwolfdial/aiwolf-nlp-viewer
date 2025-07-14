@@ -4,8 +4,10 @@ import { Request, type Info, type Judge, type Packet, type Setting, type Talk } 
 import type { AgentSettings } from '$lib/types/agent-settings';
 import { writable } from 'svelte/store';
 
+export type ConnectionStatus = 'disconnected' | 'connecting' | 'connected';
+
 export interface AgentSocket {
-    status: 'disconnected' | 'connecting' | 'connected';
+    status: ConnectionStatus;
     deadline: Date | null;
     entries: (Packet | string)[];
     agent: string | null;
@@ -22,32 +24,33 @@ export interface AgentSocket {
     attackedAgents: string[];
 }
 
+const createInitialState = (): AgentSocket => ({
+    status: 'disconnected',
+    deadline: null,
+    entries: [],
+    agent: null,
+    role: null,
+    profile: null,
+    request: null,
+    info: null,
+    mediumResults: [],
+    divineResults: [],
+    setting: null,
+    talkHistory: [],
+    whisperHistory: [],
+    executedAgents: [],
+    attackedAgents: [],
+});
+
 function createAgentSocketState() {
-    const { subscribe, update } = writable<AgentSocket>({
-        status: 'disconnected',
-        deadline: null,
-        entries: [],
-        agent: null,
-        role: null,
-        profile: null,
-        request: null,
-        info: null,
-        mediumResults: [],
-        divineResults: [],
-        setting: null,
-        talkHistory: [],
-        whisperHistory: [],
-        executedAgents: [],
-        attackedAgents: [],
-    });
+    const { subscribe, update } = writable<AgentSocket>(createInitialState());
 
     let socket: WebSocket | null = null;
     let settings: AgentSettings | null = null;
-
     let actionTimeout: number | null = null;
     let actionTimer: Timer | null = null;
 
-    agentSettings.subscribe((value) => {
+    const unsubscribe = agentSettings.subscribe((value) => {
         settings = value;
     });
 
@@ -55,7 +58,7 @@ function createAgentSocketState() {
         if (socket) {
             socket.close();
             socket = null;
-            update(state => ({ ...state, status: "disconnected" }))
+            update(state => ({ ...state, status: "disconnected" }));
         }
         if (actionTimer) {
             actionTimer.clear();
@@ -65,25 +68,9 @@ function createAgentSocketState() {
 
     function connect() {
         if (!settings) return;
+
         if (socket) {
-            update(state => ({
-                ...state,
-                status: "disconnected",
-                deadline: null,
-                entries: [],
-                agent: null,
-                role: null,
-                profile: null,
-                request: null,
-                info: null,
-                mediumResults: [],
-                divineResults: [],
-                setting: null,
-                talkHistory: [],
-                whisperHistory: [],
-                executedAgents: [],
-                attackedAgents: [],
-            }));
+            update(() => createInitialState());
         }
 
         update(state => ({ ...state, status: "connecting" }));
@@ -100,88 +87,19 @@ function createAgentSocketState() {
 
         socket.onclose = () => {
             disconnect();
-        }
+        };
 
         socket.onerror = () => {
             disconnect();
-        }
+        };
 
         socket.onmessage = (event) => {
             try {
                 const date = Date.now();
                 const packet = JSON.parse(event.data) as Packet;
-                update(state => {
-                    const newEntries = state.entries.slice();
-                    newEntries.push(packet);
 
-                    const newState = {
-                        ...state,
-                        entries: newEntries,
-                        request: packet.request
-                    };
-
-                    if (packet.info) {
-                        newState.info = packet.info;
-                        if (packet.info.medium_result) {
-                            const judge = packet.info.medium_result;
-                            if (newState.mediumResults.findIndex(j => j.day === judge.day && j.agent === judge.agent) < 0) {
-                                newState.mediumResults.push(packet.info.medium_result);
-                            }
-                        }
-                        if (packet.info.divine_result) {
-                            const judge = packet.info.divine_result;
-                            if (newState.divineResults.findIndex(j => j.day === judge.day && j.agent === judge.agent) < 0) {
-                                newState.divineResults.push(packet.info.divine_result);
-                            }
-                        }
-                        if (packet.info.executed_agent) {
-                            newState.executedAgents.push(packet.info.executed_agent);
-                        }
-                        if (packet.info.attacked_agent) {
-                            newState.attackedAgents.push(packet.info.attacked_agent);
-                        }
-                    }
-                    if (packet.setting) {
-                        newState.setting = packet.setting;
-                        actionTimeout = packet.setting.timeout.action;
-                    }
-                    if (packet.talk_history) {
-                        newState.talkHistory.push(...packet.talk_history);
-                    }
-                    if (packet.whisper_history) {
-                        newState.whisperHistory.push(...packet.whisper_history);
-                    }
-                    if (packet.request === Request.INITIALIZE &&
-                        newState.info) {
-                        newState.agent = newState.info.agent;
-                        newState.role = newState.info.role_map[newState.info.agent];
-                        newState.profile = newState.info.profile || null;
-                    }
-                    return newState;
-                });
-
-                switch (packet.request) {
-                    case Request.NAME:
-                        send(settings?.team || 'viewer' + Math.floor(Math.random() * 1000));
-                        break;
-                    case Request.TALK:
-                    case Request.WHISPER:
-                    case Request.VOTE:
-                    case Request.DIVINE:
-                    case Request.GUARD:
-                    case Request.ATTACK:
-                        if (actionTimer) {
-                            actionTimer.clear();
-                        }
-                        actionTimer = new Timer(() => {
-                            send("TIMEOUT");
-                        }, new Date(date + (actionTimeout ?? 60000)));
-                        update(state => ({ ...state, deadline: actionTimer?.deadline() ?? null }));
-                        break;
-                    case Request.FINISH:
-                        disconnect();
-                        break;
-                }
+                update(state => processPacket(state, packet));
+                handlePacketRequest(packet, date);
             } catch (e) {
                 console.error("Failed to parse message:", e);
             }
@@ -206,6 +124,86 @@ function createAgentSocketState() {
             } catch (e) {
                 console.error("Failed to send message:", e);
             }
+        }
+    }
+
+    function processPacket(state: AgentSocket, packet: Packet): AgentSocket {
+        const newState = {
+            ...state,
+            entries: [...state.entries, packet],
+            request: packet.request
+        };
+
+        if (packet.info) {
+            newState.info = packet.info;
+
+            if (packet.info.medium_result) {
+                const judge = packet.info.medium_result;
+                if (!newState.mediumResults.some(j => j.day === judge.day && j.agent === judge.agent)) {
+                    newState.mediumResults.push(judge);
+                }
+            }
+
+            if (packet.info.divine_result) {
+                const judge = packet.info.divine_result;
+                if (!newState.divineResults.some(j => j.day === judge.day && j.agent === judge.agent)) {
+                    newState.divineResults.push(judge);
+                }
+            }
+
+            if (packet.info.executed_agent) {
+                newState.executedAgents.push(packet.info.executed_agent);
+            }
+
+            if (packet.info.attacked_agent) {
+                newState.attackedAgents.push(packet.info.attacked_agent);
+            }
+        }
+
+        if (packet.setting) {
+            newState.setting = packet.setting;
+            actionTimeout = packet.setting.timeout.action;
+        }
+
+        if (packet.talk_history) {
+            newState.talkHistory.push(...packet.talk_history);
+        }
+
+        if (packet.whisper_history) {
+            newState.whisperHistory.push(...packet.whisper_history);
+        }
+
+        if (packet.request === Request.INITIALIZE && newState.info) {
+            newState.agent = newState.info.agent;
+            newState.role = newState.info.role_map[newState.info.agent];
+            newState.profile = newState.info.profile || null;
+        }
+
+        return newState;
+    }
+
+    function handlePacketRequest(packet: Packet, date: number) {
+        switch (packet.request) {
+            case Request.NAME:
+                send(settings?.team || 'viewer' + Math.floor(Math.random() * 1000));
+                break;
+            case Request.TALK:
+            case Request.WHISPER:
+            case Request.VOTE:
+            case Request.DIVINE:
+            case Request.GUARD:
+            case Request.ATTACK:
+                if (actionTimer) {
+                    actionTimer.clear();
+                }
+                actionTimer = new Timer(() => {
+                    send("TIMEOUT");
+                }, new Date(date + (actionTimeout ?? 60000)));
+                update(state => ({ ...state, deadline: actionTimer?.deadline() ?? null }));
+                break;
+            case Request.FINISH:
+                disconnect();
+                break;
         }
     }
 

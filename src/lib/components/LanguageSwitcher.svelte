@@ -7,11 +7,11 @@
 
   let selectedLanguage = $state<Language>("ja");
 
-  currentLanguage.subscribe((lang) => {
+  const unsubscribe = currentLanguage.subscribe((lang) => {
     selectedLanguage = lang;
   });
 
-  function handleLanguageChange(event: Event) {
+  function handleLanguageChange(event: Event): void {
     const target = event.target as HTMLInputElement;
     const newLang: Language = target.checked ? "en" : "ja";
     switchLanguage(newLang);
