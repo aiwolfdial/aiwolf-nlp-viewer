@@ -2,7 +2,6 @@
   import { Role, Species, Status } from "$lib/constants/common";
   import { agentSettings } from "$lib/stores/agent-settings";
   import {
-    RequestJA,
     type Info,
     type Judge,
     type Request,
@@ -59,9 +58,9 @@
             : "ゲーム外"}</pre>
         {#if request}
           <pre
-            class="bg-primary text-primary-content text-3xl font-bold text-center my-2">{RequestJA[
-              request
-            ]}</pre>
+            class="bg-primary text-primary-content text-3xl font-bold text-center my-2">{$_(
+              `game.request.${request}`
+            )}</pre>
         {/if}
         {#if profile}
           <pre class="text-md text-pretty break-all my-2">{profile}</pre>
@@ -165,7 +164,7 @@
           <div>
             <h2 class="text-lg font-bold text-center">リクエスト</h2>
             {#if request}
-              <pre class="text-lg text-center">{RequestJA[request]}</pre>
+              <pre class="text-lg text-center">{$_(`game.request.${request}`)}</pre>
             {/if}
           </div>
         </div>

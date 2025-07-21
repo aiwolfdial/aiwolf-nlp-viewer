@@ -161,6 +161,19 @@
     "teams": {
       "VILLAGER": "Villager Team",
       "WEREWOLF": "Werewolf Team"
+    },
+    "request": {
+      "NAME": "Name",
+      "TALK": "Talk",
+      "WHISPER": "Whisper",
+      "VOTE": "Vote",
+      "DIVINE": "Divine",
+      "GUARD": "Guard",
+      "ATTACK": "Attack",
+      "INITIALIZE": "Game Start",
+      "DAILY_INITIALIZE": "Day Start",
+      "DAILY_FINISH": "Day End",
+      "FINISH": "Game End"
     }
   }
 }

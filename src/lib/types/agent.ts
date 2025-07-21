@@ -22,20 +22,6 @@ export enum Request {
     FINISH = "FINISH"
 }
 
-export const RequestJA: Record<Request, string> = {
-    [Request.NAME]: "名前",
-    [Request.TALK]: "トーク",
-    [Request.WHISPER]: "囁き",
-    [Request.VOTE]: "投票",
-    [Request.DIVINE]: "占い",
-    [Request.GUARD]: "護衛",
-    [Request.ATTACK]: "襲撃",
-    [Request.INITIALIZE]: "ゲーム開始",
-    [Request.DAILY_INITIALIZE]: "昼開始",
-    [Request.DAILY_FINISH]: "昼終了",
-    [Request.FINISH]: "ゲーム終了"
-};
-
 export interface Info {
     game_id: string;
     day: number;

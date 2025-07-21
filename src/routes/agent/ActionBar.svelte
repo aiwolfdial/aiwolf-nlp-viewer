@@ -3,7 +3,6 @@
   import { agentSettings } from "$lib/stores/agent-settings";
   import {
     Request,
-    RequestJA,
     type Info,
     type Setting,
   } from "$lib/types/agent";
@@ -133,8 +132,8 @@
         class="bg-primary text-primary-content w-full py-2 text-3xl font-bold text-nowrap text-center"
       >
         {isTargetSelectionMode
-          ? `${RequestJA[request as Request]}${$_("agent.selectTarget")}`
-          : `${RequestJA[request as Request]}${$_("agent.enterContent")}`}
+          ? `${$_(`game.request.${request}`)}${$_("agent.selectTarget")}`
+          : `${$_(`game.request.${request}`)}${$_("agent.enterContent")}`}
       </span>
     </div>
     <div class="flex gap-2 items-center px-4 pt-2 pb-4 overflow-x-auto">
@@ -234,7 +233,7 @@
         <span
           class="bg-primary text-primary-content text-lg font-bold text-nowrap"
         >
-          {RequestJA[request as Request]}{$_("agent.selectTarget")}
+          {$_(`game.request.${request}`)}{$_("agent.selectTarget")}
         </span>
         {#each Object.entries(info?.status_map ?? {}) as [key, value]}
           {#if value === Status.ALIVE && key !== info?.agent}
@@ -247,7 +246,7 @@
         <span
           class="bg-primary text-primary-content text-lg font-bold text-nowrap"
         >
-          {RequestJA[request as Request]}{$_("agent.enterContent")}
+          {$_(`game.request.${request}`)}{$_("agent.enterContent")}
         </span>
         {#if (info?.remain_skip ?? 0) > 0}
           <button

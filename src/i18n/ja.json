@@ -161,6 +161,19 @@
     "teams": {
       "VILLAGER": "村人陣営",
       "WEREWOLF": "人狼陣営"
+    },
+    "request": {
+      "NAME": "名前",
+      "TALK": "トーク",
+      "WHISPER": "囁き",
+      "VOTE": "投票",
+      "DIVINE": "占い",
+      "GUARD": "護衛",
+      "ATTACK": "襲撃",
+      "INITIALIZE": "ゲーム開始",
+      "DAILY_INITIALIZE": "昼開始",
+      "DAILY_FINISH": "昼終了",
+      "FINISH": "ゲーム終了"
     }
   }
 }
