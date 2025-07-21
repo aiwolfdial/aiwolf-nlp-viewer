@@ -4,11 +4,16 @@
     switchLanguage,
     type Language,
   } from "$lib/stores/language";
+  import { onDestroy } from "svelte";
 
   let selectedLanguage = $state<Language>("ja");
 
   const unsubscribe = currentLanguage.subscribe((lang) => {
     selectedLanguage = lang;
+  });
+
+  onDestroy(() => {
+    unsubscribe();
   });
 
   function handleLanguageChange(event: Event): void {
