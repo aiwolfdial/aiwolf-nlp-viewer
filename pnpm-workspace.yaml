@@ -3,3 +3,6 @@ overrides:
 
 ignoredBuiltDependencies:
   - esbuild
+
+onlyBuiltDependencies:
+  - '@tailwindcss/oxide'
