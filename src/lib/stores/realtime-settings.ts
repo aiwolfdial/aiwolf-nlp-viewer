@@ -12,7 +12,7 @@ const defaultDisplayAgent = {
 
 const defaultRealtimeSettings: RealtimeSettings = {
     connection: {
-        url: "http://localhost:8080/realtime",
+        url: "http://localhost:8080",
         token: ""
     },
     display: {

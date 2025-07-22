@@ -54,7 +54,7 @@ function createRealtimeSocketState() {
     async function fetchGameList(): Promise<RealtimeGameItem[] | null> {
         if (!settings) return null;
         try {
-            const response = await fetch(`${settings.connection.url}/games.json`);
+            const response = await fetch(`${settings.connection.url}/realtime/games.json`);
             if (!response.ok) throw new Error('Failed to fetch game list');
             const games = await response.json() as RealtimeGameItem[];
             return games;
@@ -67,7 +67,7 @@ function createRealtimeSocketState() {
     async function fetchGamePackets(filename: string): Promise<Packet[]> {
         if (!settings) return [];
         try {
-            const response = await fetch(`${settings.connection.url}/${filename}.jsonl`);
+            const response = await fetch(`${settings.connection.url}/realtime/${filename}.jsonl`);
             if (!response.ok) throw new Error(`Failed to fetch game packets for ${filename}`);
             const text = await response.text();
             return parseJSONLText(text);
@@ -161,6 +161,7 @@ function createRealtimeSocketState() {
         const pollGameList = async () => {
             const games = await fetchGameList();
             if (games === null) {
+                update(state => ({ ...state, status: RealtimeConnectionStatus.CONNECTING }));
                 return;
             }
 

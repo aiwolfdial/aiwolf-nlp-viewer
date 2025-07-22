@@ -30,7 +30,7 @@
       hls.destroy();
       hls = null;
     }
-    const streamUrl = `${url.replace("wss://", "https://").replace("ws://", "http://").replace("realtime", "tts")}/${gameId}/playlist.m3u8`;
+    const streamUrl = `${url}/tts/${gameId}/playlist.m3u8`;
 
     if (Hls.isSupported()) {
       hls = new Hls({
