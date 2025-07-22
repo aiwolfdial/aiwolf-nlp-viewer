@@ -2,24 +2,20 @@
   import LanguageSwitcher from "$lib/components/LanguageSwitcher.svelte";
   import { realtimeSettings } from "$lib/stores/realtime-settings";
   import type { RealtimeSettings } from "$lib/types/realtime-settings";
-  import { realtimeSocketState } from "$lib/utils/realtime-socket";
+  import {
+    RealtimeConnectionStatus,
+    realtimeSocketState,
+  } from "$lib/utils/realtime-socket";
   import { onDestroy } from "svelte";
   import { _ } from "svelte-i18n";
 
   let settings = $state<RealtimeSettings>();
-  let status = $state<string>();
-
   const unsubscribeSettings = realtimeSettings.subscribe((value) => {
     settings = value;
   });
 
-  const unsubscribeStatus = realtimeSocketState.subscribe((state) => {
-    status = state.status;
-  });
-
   onDestroy(() => {
     unsubscribeSettings();
-    unsubscribeStatus();
   });
 
   function updateSettings(path: string, value: any) {
@@ -60,11 +56,11 @@
   </a>
   <div class="ml-auto">
     <div class="inline-grid *:[grid-area:1/1]">
-      {#if status === "connected"}<div
+      {#if $realtimeSocketState.status === RealtimeConnectionStatus.CONNECTED}<div
           class="status status-success animate-ping"
         ></div>
         <div class="status status-success"></div>
-      {:else if status === "connecting"}<div
+      {:else if $realtimeSocketState.status === RealtimeConnectionStatus.CONNECTING}<div
           class="status status-warning animate-ping"
         ></div>
         <div class="status status-warning"></div>
@@ -99,14 +95,14 @@
   <button
     class="btn btn-info"
     onclick={handleConnect}
-    disabled={status !== "disconnected" && status !== "loaded"}
-    >{$_("realtime.connect")}</button
+    disabled={$realtimeSocketState.status !==
+      RealtimeConnectionStatus.DISCONNECTED}>{$_("realtime.connect")}</button
   >
   <button
     class="btn btn-error"
     onclick={handleDisconnect}
-    disabled={status === "disconnected" || status === "loaded"}
-    >{$_("realtime.disconnect")}</button
+    disabled={$realtimeSocketState.status ===
+      RealtimeConnectionStatus.DISCONNECTED}>{$_("realtime.disconnect")}</button
   >
   <button class="btn" onclick={loadClipboardLog}>
     {$_("realtime.pasteFromClipboard")}

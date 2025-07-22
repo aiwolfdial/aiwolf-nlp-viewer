@@ -3,7 +3,13 @@ import type { Packet } from '$lib/types/realtime';
 import type { RealtimeSettings } from '$lib/types/realtime-settings';
 import { writable } from 'svelte/store';
 
-export type RealtimeConnectionStatus = 'disconnected' | 'connecting' | 'connected' | 'loaded';
+export const RealtimeConnectionStatus = {
+    DISCONNECTED: 'disconnected',
+    CONNECTING: 'connecting',
+    CONNECTED: 'connected',
+} as const;
+
+export type RealtimeConnectionStatus = typeof RealtimeConnectionStatus[keyof typeof RealtimeConnectionStatus];
 
 export interface RealtimeGameItem {
     id: string;
@@ -17,19 +23,17 @@ export interface RealtimeSocket {
     gameItems: RealtimeGameItem[];
     currentGameId: string | null;
     selectedPacketIdx: number | null;
-    lastGameListChecksum: string | null;
     isManualGameSelection: boolean;
     isManualPacketSelection: boolean;
     previousEntriesLengths: Record<string, number>;
 }
 
 const createInitialRealtimeState = (): RealtimeSocket => ({
-    status: 'disconnected',
+    status: RealtimeConnectionStatus.DISCONNECTED,
     entries: {},
     gameItems: [],
     currentGameId: null,
     selectedPacketIdx: null,
-    lastGameListChecksum: null,
     isManualGameSelection: false,
     isManualPacketSelection: false,
     previousEntriesLengths: {},
@@ -43,12 +47,12 @@ function createRealtimeSocketState() {
     let lastGameUpdates: Record<string, string> = {};
     let settings: RealtimeSettings | null = null;
 
-    const unsubscribe = realtimeSettings.subscribe((value) => {
+    realtimeSettings.subscribe((value) => {
         settings = value;
     });
 
-    async function fetchGameList(): Promise<RealtimeGameItem[]> {
-        if (!settings) return [];
+    async function fetchGameList(): Promise<RealtimeGameItem[] | null> {
+        if (!settings) return null;
         try {
             const response = await fetch(`${settings.connection.url}/games.json`);
             if (!response.ok) throw new Error('Failed to fetch game list');
@@ -56,7 +60,7 @@ function createRealtimeSocketState() {
             return games;
         } catch (error) {
             console.error('Error fetching game list:', error);
-            return [];
+            return null;
         }
     }
 
@@ -78,6 +82,7 @@ function createRealtimeSocketState() {
 
         const pollGame = async () => {
             const currentGame = await fetchGameList();
+            if (currentGame === null) return;
             const game = currentGame.find(g => g.id === gameId);
 
             if (game && game.updated_at !== lastGameUpdates[gameId]) {
@@ -87,15 +92,14 @@ function createRealtimeSocketState() {
                         const newEntries = { ...state.entries };
                         const previousLength = state.previousEntriesLengths[gameId] || 0;
                         const newLength = packets.length;
-                        
+
                         newEntries[gameId] = packets;
-                        
-                        // 新しいパケットが追加された場合、自動的に最新に切り替え
+
                         let newSelectedIdx = state.selectedPacketIdx;
                         if (gameId === state.currentGameId && newLength > previousLength) {
                             newSelectedIdx = newLength - 1;
                         }
-                        
+
                         return {
                             ...state,
                             entries: newEntries,
@@ -112,20 +116,18 @@ function createRealtimeSocketState() {
             }
         };
 
-        // 初回実行のために直接パケットを取得
         const initialFetch = async () => {
             const packets = await fetchGamePackets(filename);
             if (packets.length > 0) {
                 update(state => {
                     const newEntries = { ...state.entries };
                     newEntries[gameId] = packets;
-                    
-                    // 現在選択中のゲームの場合、最新パケットを選択
+
                     let newSelectedIdx = state.selectedPacketIdx;
                     if (gameId === state.currentGameId) {
                         newSelectedIdx = packets.length - 1;
                     }
-                    
+
                     return {
                         ...state,
                         entries: newEntries,
@@ -154,17 +156,15 @@ function createRealtimeSocketState() {
 
     function connect() {
         if (!settings) return;
-        update(state => ({ ...state, status: "connecting" }));
+        update(state => ({ ...state, status: RealtimeConnectionStatus.CONNECTING }));
 
         const pollGameList = async () => {
             const games = await fetchGameList();
-            const gameListChecksum = JSON.stringify(games.map(g => ({ id: g.id, updated_at: g.updated_at })));
+            if (games === null) {
+                return;
+            }
 
             update(state => {
-                if (state.lastGameListChecksum === gameListChecksum) {
-                    return state;
-                }
-
                 const currentGameIds = new Set(Object.keys(gamePollingIntervals));
                 const newGameIds = new Set(games.map(g => g.id));
 
@@ -187,22 +187,19 @@ function createRealtimeSocketState() {
                         return new Date(game.updated_at) > new Date(latest.updated_at) ? game : latest;
                     });
 
-                    // 初回接続時または新しいゲームが追加された場合
                     if (!state.currentGameId || (!state.isManualGameSelection && games.length > state.gameItems.length)) {
                         autoSwitchGameId = mostRecentGame.id;
                     }
                 }
 
-                // ゲーム切り替え時にパケット選択もリセット
                 const shouldResetPacketSelection = autoSwitchGameId !== state.currentGameId;
-                
+
                 return {
                     ...state,
-                    status: "connected",
+                    status: RealtimeConnectionStatus.CONNECTED,
                     gameItems: games,
                     currentGameId: autoSwitchGameId,
                     selectedPacketIdx: shouldResetPacketSelection ? null : state.selectedPacketIdx,
-                    lastGameListChecksum: gameListChecksum,
                     isManualGameSelection: shouldResetPacketSelection ? false : state.isManualGameSelection,
                     isManualPacketSelection: shouldResetPacketSelection ? false : state.isManualPacketSelection,
                 };
@@ -223,14 +220,14 @@ function createRealtimeSocketState() {
             stopGamePolling(gameId);
         });
 
-        update(state => ({ ...state, status: "disconnected" }));
+        update(state => ({ ...state, status: RealtimeConnectionStatus.DISCONNECTED }));
     }
 
     function switchToGame(gameId: string, isManual: boolean = false) {
         update(state => {
             const packets = state.entries[gameId];
             const newSelectedIdx = packets && packets.length > 0 ? packets.length - 1 : null;
-            
+
             return {
                 ...state,
                 currentGameId: gameId,
@@ -240,7 +237,7 @@ function createRealtimeSocketState() {
             };
         });
     }
-    
+
     function selectPacket(idx: number, isManual: boolean = false) {
         update(state => ({
             ...state,
@@ -273,7 +270,6 @@ function createRealtimeSocketState() {
 
         update(state => ({
             ...state,
-            status: 'loaded',
             entries: newEntries,
         }));
 

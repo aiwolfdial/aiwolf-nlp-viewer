@@ -5,7 +5,7 @@
   import type { Packet } from "$lib/types/realtime";
   import type { RealtimeSettings } from "$lib/types/realtime-settings";
   import { IdxToCustomName, initializeAgents } from "$lib/utils/realtime";
-  import { realtimeSocketState } from "$lib/utils/realtime-socket";
+  import { realtimeSocketState, RealtimeConnectionStatus } from "$lib/utils/realtime-socket";
   import { onDestroy, onMount } from "svelte";
   import { _ } from "svelte-i18n";
   import { writable } from "svelte/store";
@@ -122,12 +122,12 @@
 
     if (browser) {
       window.addEventListener("beforeunload", (e) => {
-        if ($realtimeSocketState.status === "connected") {
+        if ($realtimeSocketState.status === RealtimeConnectionStatus.CONNECTED) {
           e.preventDefault();
         }
       });
       window.addEventListener("popstate", (e) => {
-        if ($realtimeSocketState.status === "connected") {
+        if ($realtimeSocketState.status === RealtimeConnectionStatus.CONNECTED) {
           e.preventDefault();
         }
       });
@@ -184,13 +184,7 @@
         {/if}
 
         <div class="mb-2">
-          <label class="label" for="game-select">
-            {#if $realtimeSocketState.status === "connected"}
-              <span class="label-text-alt text-success">● Auto-polling</span>
-            {/if}
-          </label>
           <select
-            id="game-select"
             class="w-full select"
             value={$realtimeSocketState.currentGameId}
             onchange={(e) => {
