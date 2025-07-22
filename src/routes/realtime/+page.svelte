@@ -16,7 +16,13 @@
 
   const selectedId = writable<string | null>(null);
   const selectedIdx = writable<number | null>(null);
+  const isManualSelection = writable<boolean>(false);
+  const isManualGameSelection = writable<boolean>(false);
   let focusIdx = $state<number | undefined>(undefined);
+  let gameList = $state<{ id: string; filename: string; updated_at: string }[]>(
+    []
+  );
+  let currentGameId = $state<string | null>(null);
 
   const defaultPacket: Packet = {
     id: "",
@@ -109,23 +115,46 @@
 
   onMount(() => {
     connectWithParams();
-    const unsubscribeEntries = realtimeSocketState.entries.subscribe(
+
+    const unsubscribeSocketEntries = realtimeSocketState.entries.subscribe(
       (value) => {
         entries.set(value);
-        selectedId.update((currentId) => {
-          if (currentId && value[currentId]) return currentId;
-          const keys = Object.keys(value);
-          return keys.length > 0 ? keys[0] : null;
-        });
-        selectedIdx.update(() => {
-          if (!$selectedId) return null;
-          const currentEntries = value[$selectedId];
-          return currentEntries && currentEntries.length > 0
-            ? currentEntries.length - 1
-            : null;
-        });
       }
     );
+
+    const unsubscribeGameList = realtimeSocketState.gameList.subscribe(
+      (value) => {
+        const previousGameList = gameList;
+        gameList = value;
+
+        // 何も選択されていない状態で新しいゲームがある場合、そのゲームを選択
+        if (!$selectedId && value.length > 0) {
+          const mostRecentGame = value.reduce((latest, game) => {
+            return new Date(game.updated_at) > new Date(latest.updated_at)
+              ? game
+              : latest;
+          });
+          selectedId.set(mostRecentGame.id);
+        }
+
+        // 新しいゲームが追加された場合、最新ゲームに切り替え
+        if (value.length > previousGameList.length && value.length > 0) {
+          const mostRecentGame = value.reduce((latest, game) => {
+            return new Date(game.updated_at) > new Date(latest.updated_at)
+              ? game
+              : latest;
+          });
+          selectedId.set(mostRecentGame.id);
+          isManualGameSelection.set(false);
+        }
+      }
+    );
+
+    const unsubscribeCurrentGameId =
+      realtimeSocketState.currentGameId.subscribe((value) => {
+        currentGameId = value;
+        selectedId.set(value);
+      });
 
     const unsubscribeSocketState = realtimeSocketState.subscribe((value) => {
       status.set(value.status);
@@ -134,8 +163,22 @@
     const unsubscribeSelectedId = selectedId.subscribe((id) => {
       if (id && $entries[id]?.length > 0) {
         selectedIdx.set($entries[id].length - 1);
+        isManualSelection.set(false);
       } else {
         selectedIdx.set(null);
+        isManualSelection.set(false);
+      }
+    });
+
+    const unsubscribeEntries = entries.subscribe((entriesValue) => {
+      const currentId = $selectedId;
+      if (currentId && entriesValue[currentId]?.length > 0) {
+        const currentIdx = $selectedIdx;
+        const maxIdx = entriesValue[currentId].length - 1;
+        if (currentIdx === null || currentIdx < maxIdx) {
+          selectedIdx.set(maxIdx);
+          isManualSelection.set(false);
+        }
       }
     });
 
@@ -158,7 +201,10 @@
     });
 
     onDestroy(() => {
+      unsubscribeSocketEntries();
       unsubscribeEntries();
+      unsubscribeGameList();
+      unsubscribeCurrentGameId();
       unsubscribeSocketState();
       unsubscribeSettings();
       unsubscribeSelectedId();
@@ -225,11 +271,31 @@
           />
         {/if}
 
-        <select class="w-full select" bind:value={$selectedId}>
-          {#each Object.keys($entries) as id}
-            <option value={id}>{id}</option>
-          {/each}
-        </select>
+        <div class="mb-2">
+          <label class="label" for="game-select">
+            <span class="label-text">Available Games ({gameList.length})</span>
+            {#if $status === "connected"}
+              <span class="label-text-alt text-success">● Auto-polling</span>
+            {/if}
+          </label>
+          <select
+            id="game-select"
+            class="w-full select"
+            value={currentGameId}
+            onchange={(e) => {
+              const gameId = e.currentTarget.value;
+              isManualGameSelection.set(true);
+              realtimeSocketState.switchToGame(gameId);
+            }}
+          >
+            {#each gameList as game}
+              <option value={game.id}>
+                {game.filename || game.id}
+                ({new Date(game.updated_at).toLocaleTimeString()})
+              </option>
+            {/each}
+          </select>
+        </div>
 
         <div class="list overflow-y-auto flex-1 my-2" bind:this={listRef}>
           {#if $selectedId && $entries[$selectedId]}
@@ -241,7 +307,10 @@
               {/if}
               <button
                 class="btn {idx === $selectedIdx ? 'btn-primary' : ''}"
-                onclick={() => selectedIdx.set(idx)}
+                onclick={() => {
+                  selectedIdx.set(idx);
+                  isManualSelection.set(true);
+                }}
               >
                 {#if packet.event === "トーク" || packet.event === "囁き"}
                   {#if packet.event === "囁き" && focusIdx !== undefined && packet.agents.find((agent) => agent.idx === focusIdx)?.role !== "WEREWOLF"}
