@@ -250,6 +250,10 @@ function createRealtimeSocketState() {
     async function loadFromClipboard() {
         try {
             const text = await navigator.clipboard.readText();
+            if (!text.trim()) {
+                console.warn('Clipboard is empty');
+                return;
+            }
             await loadFromText(text);
         } catch (error) {
             console.error('Failed to load JSONL from clipboard:', error);
@@ -269,10 +273,29 @@ function createRealtimeSocketState() {
 
         const newEntries = groupAndSortPackets(packets);
 
-        update(state => ({
-            ...state,
-            entries: newEntries,
-        }));
+        update(state => {
+            const gameIds = Object.keys(newEntries);
+            const firstGameId = gameIds.length > 0 ? gameIds[0] : null;
+            const firstGamePackets = firstGameId ? newEntries[firstGameId] : null;
+            const lastPacketIdx = firstGamePackets ? firstGamePackets.length - 1 : null;
+
+            return {
+                ...state,
+                entries: newEntries,
+                currentGameId: firstGameId,
+                selectedPacketIdx: lastPacketIdx,
+                gameItems: gameIds.map(id => ({
+                    id,
+                    filename: id,
+                    updated_at: new Date().toISOString()
+                })),
+                isManualGameSelection: false,
+                isManualPacketSelection: false,
+                previousEntriesLengths: Object.fromEntries(
+                    gameIds.map(id => [id, newEntries[id].length])
+                )
+            };
+        });
 
         console.log(`JSONL data loaded: ${packets.length} packets across ${Object.keys(newEntries).length} games`);
     }
