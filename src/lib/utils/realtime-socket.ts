@@ -16,7 +16,11 @@ export interface RealtimeSocket {
     entries: Record<string, Packet[]>;
     gameItems: RealtimeGameItem[];
     currentGameId: string | null;
+    selectedPacketIdx: number | null;
     lastGameListChecksum: string | null;
+    isManualGameSelection: boolean;
+    isManualPacketSelection: boolean;
+    previousEntriesLengths: Record<string, number>;
 }
 
 const createInitialRealtimeState = (): RealtimeSocket => ({
@@ -24,7 +28,11 @@ const createInitialRealtimeState = (): RealtimeSocket => ({
     entries: {},
     gameItems: [],
     currentGameId: null,
+    selectedPacketIdx: null,
     lastGameListChecksum: null,
+    isManualGameSelection: false,
+    isManualPacketSelection: false,
+    previousEntriesLengths: {},
 });
 
 function createRealtimeSocketState() {
@@ -77,8 +85,27 @@ function createRealtimeSocketState() {
                 if (packets.length > 0) {
                     update(state => {
                         const newEntries = { ...state.entries };
+                        const previousLength = state.previousEntriesLengths[gameId] || 0;
+                        const newLength = packets.length;
+                        
                         newEntries[gameId] = packets;
-                        return { ...state, entries: newEntries };
+                        
+                        // 新しいパケットが追加された場合、自動的に最新に切り替え
+                        let newSelectedIdx = state.selectedPacketIdx;
+                        if (gameId === state.currentGameId && newLength > previousLength) {
+                            newSelectedIdx = newLength - 1;
+                        }
+                        
+                        return {
+                            ...state,
+                            entries: newEntries,
+                            selectedPacketIdx: newSelectedIdx,
+                            previousEntriesLengths: {
+                                ...state.previousEntriesLengths,
+                                [gameId]: newLength
+                            },
+                            isManualPacketSelection: false
+                        };
                     });
                 }
                 lastGameUpdates[gameId] = game.updated_at;
@@ -92,7 +119,22 @@ function createRealtimeSocketState() {
                 update(state => {
                     const newEntries = { ...state.entries };
                     newEntries[gameId] = packets;
-                    return { ...state, entries: newEntries };
+                    
+                    // 現在選択中のゲームの場合、最新パケットを選択
+                    let newSelectedIdx = state.selectedPacketIdx;
+                    if (gameId === state.currentGameId) {
+                        newSelectedIdx = packets.length - 1;
+                    }
+                    
+                    return {
+                        ...state,
+                        entries: newEntries,
+                        selectedPacketIdx: newSelectedIdx,
+                        previousEntriesLengths: {
+                            ...state.previousEntriesLengths,
+                            [gameId]: packets.length
+                        }
+                    };
                 });
             }
             lastGameUpdates[gameId] = updatedAt;
@@ -145,22 +187,24 @@ function createRealtimeSocketState() {
                         return new Date(game.updated_at) > new Date(latest.updated_at) ? game : latest;
                     });
 
-                    if (state.gameItems.length > 0) {
-                        const existingGame = state.gameItems.find(g => g.id === mostRecentGame.id);
-                        if (!existingGame || new Date(mostRecentGame.updated_at) > new Date(existingGame.updated_at)) {
-                            autoSwitchGameId = mostRecentGame.id;
-                        }
-                    } else if (!state.currentGameId) {
+                    // 初回接続時または新しいゲームが追加された場合
+                    if (!state.currentGameId || (!state.isManualGameSelection && games.length > state.gameItems.length)) {
                         autoSwitchGameId = mostRecentGame.id;
                     }
                 }
 
+                // ゲーム切り替え時にパケット選択もリセット
+                const shouldResetPacketSelection = autoSwitchGameId !== state.currentGameId;
+                
                 return {
                     ...state,
                     status: "connected",
                     gameItems: games,
                     currentGameId: autoSwitchGameId,
-                    lastGameListChecksum: gameListChecksum
+                    selectedPacketIdx: shouldResetPacketSelection ? null : state.selectedPacketIdx,
+                    lastGameListChecksum: gameListChecksum,
+                    isManualGameSelection: shouldResetPacketSelection ? false : state.isManualGameSelection,
+                    isManualPacketSelection: shouldResetPacketSelection ? false : state.isManualPacketSelection,
                 };
             });
         };
@@ -182,8 +226,27 @@ function createRealtimeSocketState() {
         update(state => ({ ...state, status: "disconnected" }));
     }
 
-    function switchToGame(gameId: string) {
-        update(state => ({ ...state, currentGameId: gameId }));
+    function switchToGame(gameId: string, isManual: boolean = false) {
+        update(state => {
+            const packets = state.entries[gameId];
+            const newSelectedIdx = packets && packets.length > 0 ? packets.length - 1 : null;
+            
+            return {
+                ...state,
+                currentGameId: gameId,
+                selectedPacketIdx: newSelectedIdx,
+                isManualGameSelection: isManual,
+                isManualPacketSelection: false
+            };
+        });
+    }
+    
+    function selectPacket(idx: number, isManual: boolean = false) {
+        update(state => ({
+            ...state,
+            selectedPacketIdx: idx,
+            isManualPacketSelection: isManual
+        }));
     }
 
     async function loadFromClipboard() {
@@ -274,6 +337,7 @@ function createRealtimeSocketState() {
         connect,
         disconnect,
         switchToGame,
+        selectPacket,
         loadFromClipboard,
         loadFromFiles,
         entries: {
@@ -289,6 +353,28 @@ function createRealtimeSocketState() {
         currentGameId: {
             subscribe: (callback: (value: string | null) => void) => {
                 return subscribe(state => callback(state.currentGameId));
+            },
+        },
+        selectedPacketIdx: {
+            subscribe: (callback: (value: number | null) => void) => {
+                return subscribe(state => callback(state.selectedPacketIdx));
+            },
+        },
+        currentPacket: {
+            subscribe: (callback: (value: Packet | null) => void) => {
+                return subscribe(state => {
+                    const { currentGameId, selectedPacketIdx, entries } = state;
+                    if (!currentGameId || selectedPacketIdx === null) {
+                        callback(null);
+                        return;
+                    }
+                    const packets = entries[currentGameId];
+                    if (!packets || selectedPacketIdx < 0 || selectedPacketIdx >= packets.length) {
+                        callback(null);
+                        return;
+                    }
+                    callback(packets[selectedPacketIdx]);
+                });
             },
         },
     };

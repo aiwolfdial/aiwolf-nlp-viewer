@@ -8,21 +8,13 @@
   import { realtimeSocketState } from "$lib/utils/realtime-socket";
   import { onDestroy, onMount } from "svelte";
   import { _ } from "svelte-i18n";
-  import { derived, writable } from "svelte/store";
+  import { writable } from "svelte/store";
   import "../../app.css";
   import Canvas from "./Canvas.svelte";
   import HlsAudioPlayer from "./HlsAudioPlayer.svelte";
   import Navbar from "./Navbar.svelte";
 
-  const selectedId = writable<string | null>(null);
-  const selectedIdx = writable<number | null>(null);
-  const isManualSelection = writable<boolean>(false);
-  const isManualGameSelection = writable<boolean>(false);
   let focusIdx = $state<number | undefined>(undefined);
-  let gameList = $state<{ id: string; filename: string; updated_at: string }[]>(
-    []
-  );
-  let currentGameId = $state<string | null>(null);
 
   const defaultPacket: Packet = {
     id: "",
@@ -38,8 +30,6 @@
   };
 
   const currentPacket = writable<Packet>(defaultPacket);
-  const entries = writable<Record<string, Packet[]>>({});
-  const status = writable("");
   let settings = $state<RealtimeSettings>();
   let width = $state<number>(80);
   let isDragging = false;
@@ -116,109 +106,28 @@
   onMount(() => {
     connectWithParams();
 
-    const unsubscribeSocketEntries = realtimeSocketState.entries.subscribe(
-      (value) => {
-        entries.set(value);
-      }
-    );
-
-    const unsubscribeGameList = realtimeSocketState.gameList.subscribe(
-      (value) => {
-        const previousGameList = gameList;
-        gameList = value;
-
-        // 何も選択されていない状態で新しいゲームがある場合、そのゲームを選択
-        if (!$selectedId && value.length > 0) {
-          const mostRecentGame = value.reduce((latest, game) => {
-            return new Date(game.updated_at) > new Date(latest.updated_at)
-              ? game
-              : latest;
-          });
-          selectedId.set(mostRecentGame.id);
-        }
-
-        // 新しいゲームが追加された場合、最新ゲームに切り替え
-        if (value.length > previousGameList.length && value.length > 0) {
-          const mostRecentGame = value.reduce((latest, game) => {
-            return new Date(game.updated_at) > new Date(latest.updated_at)
-              ? game
-              : latest;
-          });
-          selectedId.set(mostRecentGame.id);
-          isManualGameSelection.set(false);
-        }
-      }
-    );
-
-    const unsubscribeCurrentGameId =
-      realtimeSocketState.currentGameId.subscribe((value) => {
-        currentGameId = value;
-        selectedId.set(value);
+    const unsubscribeCurrentPacket =
+      realtimeSocketState.currentPacket.subscribe((packet) => {
+        currentPacket.set(packet || defaultPacket);
       });
-
-    const unsubscribeSocketState = realtimeSocketState.subscribe((value) => {
-      status.set(value.status);
-    });
-
-    const unsubscribeSelectedId = selectedId.subscribe((id) => {
-      if (id && $entries[id]?.length > 0) {
-        selectedIdx.set($entries[id].length - 1);
-        isManualSelection.set(false);
-      } else {
-        selectedIdx.set(null);
-        isManualSelection.set(false);
-      }
-    });
-
-    const unsubscribeEntries = entries.subscribe((entriesValue) => {
-      const currentId = $selectedId;
-      if (currentId && entriesValue[currentId]?.length > 0) {
-        const currentIdx = $selectedIdx;
-        const maxIdx = entriesValue[currentId].length - 1;
-        if (currentIdx === null || currentIdx < maxIdx) {
-          selectedIdx.set(maxIdx);
-          isManualSelection.set(false);
-        }
-      }
-    });
 
     const unsubscribeSettings = realtimeSettings.subscribe((value) => {
       settings = value;
     });
 
-    const unsubscribeCurrentPacket = derived(
-      [selectedId, selectedIdx, entries],
-      ([$selectedId, $selectedIdx, $entries]) => {
-        if (!$selectedId || $selectedIdx === null) return defaultPacket;
-        const packets = $entries[$selectedId];
-        if (!packets || $selectedIdx < 0 || $selectedIdx >= packets.length) {
-          return defaultPacket;
-        }
-        return packets[$selectedIdx];
-      }
-    ).subscribe((packet) => {
-      currentPacket.set(packet);
-    });
-
     onDestroy(() => {
-      unsubscribeSocketEntries();
-      unsubscribeEntries();
-      unsubscribeGameList();
-      unsubscribeCurrentGameId();
-      unsubscribeSocketState();
-      unsubscribeSettings();
-      unsubscribeSelectedId();
       unsubscribeCurrentPacket();
+      unsubscribeSettings();
     });
 
     if (browser) {
       window.addEventListener("beforeunload", (e) => {
-        if ($status === "connected") {
+        if ($realtimeSocketState.status === "connected") {
           e.preventDefault();
         }
       });
       window.addEventListener("popstate", (e) => {
-        if ($status === "connected") {
+        if ($realtimeSocketState.status === "connected") {
           e.preventDefault();
         }
       });
@@ -227,10 +136,13 @@
 
   let listRef: HTMLDivElement | null = null;
   $effect(() => {
-    if (listRef && $selectedIdx !== null) {
+    if (listRef && $realtimeSocketState.selectedPacketIdx !== null) {
       const buttons = listRef.querySelectorAll("button");
-      if ($selectedIdx >= 0 && $selectedIdx < buttons.length) {
-        buttons[$selectedIdx].scrollIntoView({
+      if (
+        $realtimeSocketState.selectedPacketIdx >= 0 &&
+        $realtimeSocketState.selectedPacketIdx < buttons.length
+      ) {
+        buttons[$realtimeSocketState.selectedPacketIdx].scrollIntoView({
           behavior: "smooth",
           block: "center",
         });
@@ -267,28 +179,26 @@
         {#if browser}
           <HlsAudioPlayer
             url={settings?.connection.url ?? "http://localhost:8080/tts"}
-            gameId={$selectedId ?? ""}
+            gameId={$realtimeSocketState.currentGameId ?? ""}
           />
         {/if}
 
         <div class="mb-2">
           <label class="label" for="game-select">
-            <span class="label-text">Available Games ({gameList.length})</span>
-            {#if $status === "connected"}
+            {#if $realtimeSocketState.status === "connected"}
               <span class="label-text-alt text-success">● Auto-polling</span>
             {/if}
           </label>
           <select
             id="game-select"
             class="w-full select"
-            value={currentGameId}
+            value={$realtimeSocketState.currentGameId}
             onchange={(e) => {
               const gameId = e.currentTarget.value;
-              isManualGameSelection.set(true);
-              realtimeSocketState.switchToGame(gameId);
+              realtimeSocketState.switchToGame(gameId, true);
             }}
           >
-            {#each gameList as game}
+            {#each $realtimeSocketState.gameItems as game}
               <option value={game.id}>
                 {game.filename || game.id}
                 ({new Date(game.updated_at).toLocaleTimeString()})
@@ -298,18 +208,19 @@
         </div>
 
         <div class="list overflow-y-auto flex-1 my-2" bind:this={listRef}>
-          {#if $selectedId && $entries[$selectedId]}
-            {#each $entries[$selectedId] || [] as packet, idx}
-              {#if (idx > 0 && (packet.day !== $entries[$selectedId][idx - 1].day || packet.is_day !== $entries[$selectedId][idx - 1].is_day)) || idx === 0}
+          {#if $realtimeSocketState.currentGameId && $realtimeSocketState.entries[$realtimeSocketState.currentGameId]}
+            {#each $realtimeSocketState.entries[$realtimeSocketState.currentGameId] || [] as packet, idx}
+              {#if (idx > 0 && (packet.day !== $realtimeSocketState.entries[$realtimeSocketState.currentGameId][idx - 1].day || packet.is_day !== $realtimeSocketState.entries[$realtimeSocketState.currentGameId][idx - 1].is_day)) || idx === 0}
                 <div class="divider">
                   {packet.day}日目 {packet.is_day ? "昼" : "夜"}
                 </div>
               {/if}
               <button
-                class="btn {idx === $selectedIdx ? 'btn-primary' : ''}"
+                class="btn {idx === $realtimeSocketState.selectedPacketIdx
+                  ? 'btn-primary'
+                  : ''}"
                 onclick={() => {
-                  selectedIdx.set(idx);
-                  isManualSelection.set(true);
+                  realtimeSocketState.selectPacket(idx, true);
                 }}
               >
                 {#if packet.event === "トーク" || packet.event === "囁き"}
