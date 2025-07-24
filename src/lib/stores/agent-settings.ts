@@ -1,8 +1,5 @@
-import { browser } from "$app/environment";
 import { Convert, type AgentSettings } from "$lib/types/agent-settings";
-import { writable } from "svelte/store";
-
-const STORAGE_KEY = 'agent-settings';
+import { createPersistentStore } from "./store-utils";
 
 const defaultAgentSettings: AgentSettings = {
     connection: {
@@ -15,28 +12,9 @@ const defaultAgentSettings: AgentSettings = {
     }
 };
 
-function loadSettings(): AgentSettings {
-    if (!browser) return defaultAgentSettings;
-
-    const value = localStorage.getItem(STORAGE_KEY);
-    if (value) {
-        try {
-            return Convert.fromJson(value);
-        } catch (e) {
-            console.error('Failed to parse agent settings:', e);
-        }
-    }
-
-    saveSettings(defaultAgentSettings);
-    return defaultAgentSettings;
-}
-
-function saveSettings(settings: AgentSettings): void {
-    if (browser) {
-        localStorage.setItem(STORAGE_KEY, Convert.toJson(settings));
-    }
-}
-
-export const agentSettings = writable<AgentSettings>(loadSettings());
-
-agentSettings.subscribe(saveSettings);
+export const agentSettings = createPersistentStore<AgentSettings>({
+    storageKey: 'agent-settings',
+    defaultValue: defaultAgentSettings,
+    serialize: Convert.toJson,
+    deserialize: Convert.fromJson
+});

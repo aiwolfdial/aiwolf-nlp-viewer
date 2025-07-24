@@ -1,14 +1,10 @@
 <script lang="ts">
-  import {
-    currentLanguage,
-    switchLanguage,
-    type Language,
-  } from "$lib/stores/language";
+  import { language, type Language } from "$lib/stores/language";
   import { onDestroy } from "svelte";
 
   let selectedLanguage = $state<Language>("ja");
 
-  const unsubscribe = currentLanguage.subscribe((lang) => {
+  const unsubscribe = language.subscribe((lang) => {
     selectedLanguage = lang;
   });
 
@@ -19,7 +15,7 @@
   function handleLanguageChange(event: Event): void {
     const target = event.target as HTMLInputElement;
     const newLang: Language = target.checked ? "en" : "ja";
-    switchLanguage(newLang);
+    language.set(newLang);
   }
 </script>
 

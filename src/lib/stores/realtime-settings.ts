@@ -1,8 +1,5 @@
-import { browser } from "$app/environment";
 import { Convert, type RealtimeSettings } from "$lib/types/realtime-settings";
-import { writable } from "svelte/store";
-
-const STORAGE_KEY = 'realtime-settings';
+import { createPersistentStore } from "./store-utils";
 
 const defaultDisplayAgent = {
     name: true,
@@ -23,28 +20,9 @@ const defaultRealtimeSettings: RealtimeSettings = {
     }
 };
 
-function loadSettings(): RealtimeSettings {
-    if (!browser) return defaultRealtimeSettings;
-
-    const value = localStorage.getItem(STORAGE_KEY);
-    if (value) {
-        try {
-            return Convert.fromJson(value);
-        } catch (e) {
-            console.error('Failed to parse realtime settings:', e);
-        }
-    }
-
-    saveSettings(defaultRealtimeSettings);
-    return defaultRealtimeSettings;
-}
-
-function saveSettings(settings: RealtimeSettings): void {
-    if (browser) {
-        localStorage.setItem(STORAGE_KEY, Convert.toJson(settings));
-    }
-}
-
-export const realtimeSettings = writable<RealtimeSettings>(loadSettings());
-
-realtimeSettings.subscribe(saveSettings);
+export const realtimeSettings = createPersistentStore<RealtimeSettings>({
+    storageKey: 'realtime-settings',
+    defaultValue: defaultRealtimeSettings,
+    serialize: Convert.toJson,
+    deserialize: Convert.fromJson
+});

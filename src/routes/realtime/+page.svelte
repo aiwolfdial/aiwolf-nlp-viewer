@@ -151,10 +151,6 @@
   });
 </script>
 
-<svelte:head>
-  <title>aiwolf-nlp-viewer</title>
-</svelte:head>
-
 <main class="h-screen flex flex-col bg-base-300">
   <Navbar />
 

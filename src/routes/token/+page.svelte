@@ -48,10 +48,6 @@
   }
 </script>
 
-<svelte:head>
-  <title>aiwolf-nlp-viewer</title>
-</svelte:head>
-
 <main>
   <div class="hero bg-base-200 min-h-screen">
     <div class="hero-content">
