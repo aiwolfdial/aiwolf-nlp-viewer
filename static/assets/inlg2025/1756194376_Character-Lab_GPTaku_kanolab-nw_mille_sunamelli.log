@@ -1,0 +1,76 @@
+0,status,1,POSSESSED,ALIVE,mille1,Takumi
+0,status,2,SEER,ALIVE,sunamelli1,May
+0,status,3,VILLAGER,ALIVE,Character-Lab1,Shion
+0,status,4,VILLAGER,ALIVE,kanolab-nw1,Midori
+0,status,5,WEREWOLF,ALIVE,GPTaku1,Toshio
+0,talk,0,0,1,こんにちは。私はTakumiです。私の役職は占い師です。良いゲームを。
+0,talk,1,0,2,皆さん、こんばんは—笑顔で始めて、誰が最初にプレッシャーに屈するか見てみましょう！
+0,talk,2,0,4,あらまあ！皆さんお一人お一人にお会いできてうれしいです。私はMidoriです。もしよろしければ、協力して私たちの中にいる狼を特定しましょうか？
+0,talk,3,0,3,@Takumi  占い師を名乗ったよね—占い結果は？ まだ誰も占っていないなら  そう言って。 他に誰か初動での疑いはある？ Over
+0,talk,4,0,5,みなさんこんにちは、Toshioです！ゲームをしてずる賢い人狼たちを見つけるのが楽しみ！楽しもう、警戒もしよう。
+0,talk,5,1,1,Over
+0,talk,6,1,2,Over
+0,talk,7,1,4,Over
+0,talk,8,1,3,@Takumi  — もし本当に占い師なら  占い結果と誰を占ったかを教えて。まだ誰も占っていないならそう言って。他の人  何か簡単な読みは？ Over
+0,talk,9,1,5,Over
+0,talk,10,2,3,@Takumi  — もしあなたが占い師なら  誰を占ったかとその結果を今言ってください。誰も占っていないなら  そう言ってください。他のみんな  何か直感はある？ Over
+0,talk,11,3,3,  @Takumi  — 今すぐ占い結果を開示するか、まだ誰も占っていないと言って。しないなら  簡易精査をやろう: 全員、疑い先を一つと仮投票を出して。私'
+0,divine,2,5,WEREWOLF
+1,status,1,POSSESSED,ALIVE,mille1,Takumi
+1,status,2,SEER,ALIVE,sunamelli1,May
+1,status,3,VILLAGER,ALIVE,Character-Lab1,Shion
+1,status,4,VILLAGER,ALIVE,kanolab-nw1,Midori
+1,status,5,WEREWOLF,ALIVE,GPTaku1,Toshio
+1,talk,0,0,2,Toshioは人狼だ。今日は  @Toshio  を投票で追放しよう。
+1,talk,1,0,1,私は占い師です。Toshioを占って、Toshioは人間でした。
+1,talk,2,0,5,はっきりさせてくれてありがとう、Takumi！本物の人狼を見つけるために手がかりを探し続けよう。
+1,talk,3,0,4,おやまあ。もしTakumiが本当に真の占い師ならMay dearは間違っているのかもしれない。May dear。なぜあなたはそんなに早くToshioを非難したの？不思議だな。
+1,talk,4,0,3,@Takumi  — 本物なら  いつToshioを占ったの? 他にも誰か(May?)を占った? いつ? Toshio  なぜ証拠もなくMayを急いで告発するの? Midori  追跡しよ
+1,talk,5,1,2,私はToshioを人狼と占った。私の結果を信じて今日はToshioに投票して—私が正しければ私たちは勝てる。占い師が2人とも本物なはずがない！
+1,talk,6,1,1,私はToshioを投票する。
+1,talk,7,1,5,みんな、Mayに投票して—彼女の主張は、自分が人間だと証明したTakumiの確定した占い結果と矛盾している。
+1,talk,8,1,4,おやまあ。これはかなり激しい。親愛なるTakumiとMayが両方とも占い師であるはずがない。ふむ。  @Takumi . Toshioの占い結果の後に、さらに調査を予定していたのかな？
+1,talk,9,1,3,@Takumi  — Toshioをいつ占った(夜0か今日)？ Mayも占った？ あなたの占いがN0なら、Mayの主張overそれを信頼する。 とりあえず投票し
+1,talk,10,2,2,私は占い師で、Toshioは人狼です。Takumiは彼をかばっています。今日はToshioに投票してください、さもないと人狼に勝利を渡すことになります！
+1,talk,11,2,1,私はToshioに投票します。
+1,talk,12,2,5,Mayに投票して—彼女の告発は、私が人間であると示す確定占い師の結果と一致しない。これは彼女が人狼である可能性を示唆している。
+1,talk,13,2,4,あらまあ！TakumiとMayは二人とも占い師だと主張している。もし愛しのTakumiが本当のことを言っているなら、Mr. Toshioは安全ね。どうかしら...Mayは嘘をついているのかしら？話し合いましょう。
+1,talk,14,2,3,@Takumi  Toshioをいつ占ったのか（N0か今日か）と、他に誰かも占ったかを正確に教えてください。Mayは早くて騒がしかった—怪しいと思っています。とりあえずMayに投票します。O
+1,talk,15,3,2,Toshioに投票する。2人の占い師が両方本物なわけがない。私の占い結果を信じて—Toshioは人狼だ。勝とう。
+1,talk,16,3,1,私はToshioに投票します。
+1,talk,17,3,5,Mayに投票して—占い師のTakumiの確定結果で、私は人狼ではないと示された。私たちは論理的で一貫した証拠に集中する必要がある。
+1,talk,18,3,4,ああ、親愛なるプレイヤーたち。 TakumiとMayはどちらも占い師だと名乗っている。 Takumiの主張のほうが少し信頼できるかもしれないと思う。  @Shion  ハニー。 私たちは彼らの主張を論理的に検討している。 Takumiのタイミングのほうが強く感じる。 Mayの早めの主張はやや異例に見える。
+1,talk,19,3,3,@Takumi  — N0でToshioを占った？それとも今日？他に誰か占った？N0ならその結果を信じる。他の人は  ざっと一読して仮投票を出して。私はle
+1,vote,1,5
+1,vote,2,5
+1,vote,4,2
+1,vote,5,2
+1,execute,2,SEER
+1,attackVote,5,1
+1,attack,1,true
+2,status,1,POSSESSED,DEAD,mille1,Takumi
+2,status,2,SEER,DEAD,sunamelli1,May
+2,status,3,VILLAGER,ALIVE,Character-Lab1,Shion
+2,status,4,VILLAGER,ALIVE,kanolab-nw1,Midori
+2,status,5,WEREWOLF,ALIVE,GPTaku1,Toshio
+2,talk,0,0,3,おはよう。 Takumiが殺された — 占い師が狙われたようだ。  @Midori  占い師？ もしそうなら今すぐ占い結果（対象と結果）を開示して。 もし違うなら  Toshioが怪しい — 誰かが検証可能な情報を出さない限りToshioに投票する。
+2,talk,1,0,5,Shionに投票—私の占いでShionが人狼だと出た。Midori、あなたは村人だから私を信じて。今日は村の勝利を確実にしよう！
+2,talk,2,0,4,おやまあ。Takumiはいなくなった？もし彼が私たちの本物の占い師だったのなら、それは本当に悲劇だ。Toshioの主張のあと、今日はShionをより疑っている。私たちのinsを信じよう
+2,talk,3,1,3,昨夜Takumiが殺された — 占い師が狙われたようだ。  @Midori   あなたは占い師？ 今すぐ誰を占ってその結果を明かして。 しないなら  Toshioに投票する。 Over
+2,talk,4,1,5,今日はShionに投票してください—彼女を占ったら人狼でした。Midoriは本物の占い師ではありません。村の安全を確保しましょう！
+2,talk,5,1,4,おやまあ。いささか当惑している。最近二人が排除されたようだ。若きMr. Toshioの占いに真実があるのだろうか。  @Toshio  あなたの主張には私もどちらかといえば信頼を寄せている。皆を安心させるために、もう少し証拠を示してもらえないだろうか。なんとも不可解だ！Shionに対処するのは十分に w
+2,talk,6,2,3,@Midori  あなたは占い師？今すぐ誰を占ったかと結果を明かして。しないなら  Toshioに投票する。 Over
+2,talk,7,2,5,Midori、信じてくれ—Shionは人狼だ。村を守るために、彼女に投票して追放してくれ。あなたの一票は極めて重要だ。一緒に勝とう！
+2,talk,8,2,4,あらまあ。もしよければ、Takumiは本物の占い師だったのかも？Toshioの占い結果が人間って興味深くない？様子を見てお
+2,talk,9,3,3,@Midori  あなたは占い師？ 今すぐ誰を占ったかとその結果を明かして。やらないなら  Toshioに投票する。Over
+2,talk,10,3,5,Midori、私に続いて—Shionに投票して。彼女は人狼確定だから。私たちの村を守るためにこの決断をする必要がある。
+2,talk,11,3,4,あら、私の愛しいプレイヤーたち。 Toshioが生き延び、Takumiが連れていかれたのは不思議じゃない？ これでShionが怪しいと思えてくるわ。  @Shion  ダーリン。 あらまあ。 Toshioの主張にもかかわらず、なぜToshioを疑うのか本当に不思議だわ。 差し支えなければ教えてちょうだい。
+2,vote,4,3
+2,vote,5,3
+2,execute,3,VILLAGER
+3,status,1,POSSESSED,DEAD,mille1,Takumi
+3,status,2,SEER,DEAD,sunamelli1,May
+3,status,3,VILLAGER,DEAD,Character-Lab1,Shion
+3,status,4,VILLAGER,ALIVE,kanolab-nw1,Midori
+3,status,5,WEREWOLF,ALIVE,GPTaku1,Toshio
+3,result,1,1,WEREWOLF
