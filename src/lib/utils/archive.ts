@@ -47,7 +47,7 @@ function createLogHandlers(dayLog: DayStatus): Record<string, (data: string[]) =
             dayLog.agents[idx] = {
                 role: Role[role as keyof typeof Role],
                 status: Status[status as keyof typeof Status],
-                originalName,
+                originalName: "",
                 gameName: gameName || IdxToName(idx)
             };
         },
