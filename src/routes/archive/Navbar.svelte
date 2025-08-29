@@ -6,7 +6,7 @@
   import { _ } from "svelte-i18n";
 
   const assetLogs = Object.entries(
-    import.meta.glob("/static/assets/*.log", { query: "?raw" })
+    import.meta.glob("/static/assets/**/*.log", { query: "?raw" })
   ).reduce<Record<string, Record<string, string>>>((acc, [path, _]) => {
     const name = path.split("/").pop() || "";
     const folderPath = path
