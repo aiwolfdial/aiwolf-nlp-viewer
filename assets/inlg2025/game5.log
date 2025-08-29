@@ -1,0 +1,78 @@
+0,status,1,WEREWOLF,ALIVE,yharada1,Rin
+0,status,2,POSSESSED,ALIVE,Character-Lab1,Mizuki
+0,status,3,SEER,ALIVE,GPTaku1,Misaki
+0,status,4,VILLAGER,ALIVE,sunamelli1,Shizue
+0,status,5,VILLAGER,ALIVE,mille1,Shunichi
+0,talk,0,0,5,こんにちは。私はShunichiです。私の役職は村人です。良いゲームを。
+0,talk,1,0,4,皆さん、こんにちは。今日のゲームが皆さんの最も優しい一面を引き出してくれることを願っています。一緒に楽しんで、気持ちを上げていきましょう。
+0,talk,2,0,2,おはよう。0日目 — 具体的にいこう。役職持ちは  もし結果があるなら、誰/いつ/結果を正確に述べてください。  @Misaki  占い師を主張してる？もしそうなら、いつ占って、結果をどう報告するか言ってください。Shunichiの村人の主張は確認したが、有益なものは何ももたらさない。私
+0,talk,3,0,3,みなさん、こんにちは！私はMisaki、人狼をプレイする準備ができてる。みんなと一緒に参加して、最後まで誰が生き残るかを見るのが楽しみ！
+0,talk,4,0,1,みんな、こんにちは！Rinだよ！楽しもう、そして誰が狼を出し抜けるか見てみよう！ :)
+0,talk,5,1,5,Over
+0,talk,6,1,4,Over
+0,talk,7,1,2,まだ具体的な能力COがない。Day 0のランダム吊りには反対だ — 事実が必要だ。能力役職を持っているなら  誰/いつ/結果を正確に明記して。  @Misaki  もしあなたが占い師なら  いつ占うつもりか、どう結果を報告するかを言って。投票する前に情報を集めよう。 Over
+0,talk,8,1,3,Over
+0,talk,9,1,1,前向きにいよう、考えを共有しよう！誰が怪しいか心当たりはある？
+0,talk,10,2,2,まだ確かな勘はない — 感情より事実を優先している。  @Misaki   もう一度: もしあなたが占い師なら  いつ、どのように占うかを正確に言って。 ランダムなDay 0吊りには反対だ。 Over
+0,talk,11,2,1,事実が重要だということに同意します！情報を集めて、誰かが目立つか見てみましょう。
+0,talk,12,3,2,まだ具体的な名乗りがない。  @Misaki  — もしあなたが占い師なら  誰/いつ/結果を正確に示し、公に発表するかどうかを明言して。沈黙や曖昧さは疑念を招くだけだ。私はaに反対だ
+0,talk,13,3,1,辛抱強く待とう、Misakiか誰かがすぐに共有してくれることを願おう。まだ早いから落ち着いていよう！
+0,divine,3,4,HUMAN
+1,status,1,WEREWOLF,ALIVE,yharada1,Rin
+1,status,2,POSSESSED,ALIVE,Character-Lab1,Mizuki
+1,status,3,SEER,ALIVE,GPTaku1,Misaki
+1,status,4,VILLAGER,ALIVE,sunamelli1,Shizue
+1,status,5,VILLAGER,ALIVE,mille1,Shunichi
+1,talk,0,0,1,おはようございます！共有できる昨夜の新たな洞察や発見はありますか？
+1,talk,1,0,3,占い師として昨夜Shizueを占いました。結果はShizueは人間です。この情報を今後に活かしていきましょう。
+1,talk,2,0,4,Misakiは占い師を主張し、私に人間判定を出した。 @Shunichi  @Rin  先に進めるように、あなたの意見や役職のスタンスを共有してください。
+1,talk,3,0,2,Misakiが占い師COしてShizueは人間だと言っている—それは有用だけど具体が必要。Misaki  何夜に占ったの、そしてなぜ今それを明かすの？ 曖昧 ti @Shunichi  村人って言った—それをなぜ信じるべき？ 何か具体的な観察や理由はある？ 俺は性急な吊りには反対；まずは明確な情報を得よう。Over
+1,talk,4,0,5,私はMisakiに投票します。
+1,talk,5,1,1,情報ありがとう、Misaki! Shunichi、なぜMisakiに投票するの？私たちが考慮すべき理由はある？
+1,talk,6,1,3,不審な行動を踏まえて、今日はMizukiに追放投票することを検討しよう。
+1,talk,7,1,4,  @Shunichi  彼女が占い師COしていて、しかも私に人間判定を出しているにもかかわらず、Misakiへの投票の理由を説明してくれる？唐突に感じる。
+1,talk,8,1,2,@Shunichi  Misakiへの投票理由を説明してください — いつそう決めたのか、彼女の占い師COにもかかわらず彼女を疑わせている具体的な読みや行動は何ですか？ Misaki  も述べて
+1,talk,9,1,5,Over
+1,talk,10,2,1,投票するかどうかを決める前にShunichiの説明を待った方がいいかもしれない。
+1,talk,11,2,3,Mizukiはこれまでのゲームと著しく異なる戦略を示しており、具体的な証拠の提示を強く要求する一方で、自分では一切提示していない。 Mizukに投票
+1,talk,12,2,4,@Shunichi  Misakiへのあなたの投票は唐突だ。人間結果を出した占い師をなぜ狙うの？彼女の主張を疑う理由があるの？
+1,talk,13,2,2,どの投票の前でも確定情報が必要だ。  @Shunichi  なぜMisakiに投票したのか — 具体的な理由とタイミングを挙げてくれ。 Misaki  もしあなたが占い師なら  Shizueをどの夜に占ったのかを正確に述べて、そしてなぜあなたがre
+1,talk,14,3,1,Shunichiからさらなる情報を得ることに集中し、Misakiの主張について慎重に議論しましょう。
+1,talk,15,3,3,序盤の判断の指針とするため、初夜にShizueを占って人間と確認した。Mizukiの圧力と疑念が彼らのmに影を落とした
+1,talk,16,3,4,今日の全ての動きの中で、占い師に対するShunichiの噛みつきが最も危険だと際立っている。私はShunichiに投票する。
+1,talk,17,3,2,@Shunichi  あなたはまだなぜMisakiに投票したのか説明していない。いつ決めたのか、そして彼女の占い師COにもかかわらずどんな具体的な読みや行動があなたに彼女を疑わせたのかan
+1,vote,1,4
+1,vote,3,2
+1,vote,4,5
+1,vote,5,3
+1,execute,5,VILLAGER
+1,divine,3,2,HUMAN
+1,attackVote,1,2
+1,attack,2,true
+2,status,1,WEREWOLF,ALIVE,yharada1,Rin
+2,status,2,POSSESSED,DEAD,Character-Lab1,Mizuki
+2,status,3,SEER,ALIVE,GPTaku1,Misaki
+2,status,4,VILLAGER,ALIVE,sunamelli1,Shizue
+2,status,5,VILLAGER,DEAD,mille1,Shunichi
+2,talk,0,0,4,@Misaki  今すぐ占い結果を共有してください。投票する前に狼を見つけることに集中できるように
+2,talk,1,0,1,おはよう！Misaki 今日私たちを助けてくれる新しい占いの結果はある？
+2,talk,2,0,3,Shizue、Rinに投票して。昨夜Rinを占って人狼だと出た。これは私たちの生存にとって極めて重要だ。村を守ろう。
+2,talk,3,1,4,@Rin  あなたは狼として疑われている。そうでないなら  今すぐ発言して—あなたは占い師？それとも村人？なぜ黙っている？
+2,talk,4,1,1,私はただの村人だ！Misakiが私たちをミスリードしているかもしれない。よく考えよう！
+2,talk,5,1,3,Shizue、Rinが人狼であると私は確信している。占い師として初夜にShizueを人間と占った。Rinが証拠もなく否定しようと躍起になっていることを踏まえると、それは sup
+2,talk,6,2,4,@Rin  Misakiが占い師COして誰も対抗しなかったので、彼女の結果を信じます。なぜMisakiの主張を疑うべきなのですか？
+2,talk,7,2,1,Misakiは私たちを惑わせるために嘘をついているかもしれない。自分の直感を信じて Shizue!
+2,talk,8,2,3,Shizue は私の占い師としての洞察を信じる。私は騙す理由がない。Rin は晒されたとき、防御的に反応した。それは人狼に典型的な反応であることを裏付けている。
+2,talk,9,3,4,占い師の結果を信じて  @Rin に投票する 。対抗COは出なかった。これが村にとって最も安全だ。ここで脅威を終わらせよう。
+2,talk,10,3,1,Shizueのことはわかる。この決定が村に平和をもたらすことを願おう。
+2,talk,11,3,3,Shizueは得られる限りの事実に基づいて正しい選択をした。今、私たちが一緒に村を守れることを願おう。
+2,vote,1,3
+2,vote,3,1
+2,vote,4,1
+2,execute,1,WEREWOLF
+3,status,1,WEREWOLF,DEAD,yharada1,Rin
+3,status,2,POSSESSED,DEAD,Character-Lab1,Mizuki
+3,status,3,SEER,ALIVE,GPTaku1,Misaki
+3,status,4,VILLAGER,ALIVE,sunamelli1,Shizue
+3,status,5,VILLAGER,DEAD,mille1,Shunichi
+3,result,2,0,VILLAGER

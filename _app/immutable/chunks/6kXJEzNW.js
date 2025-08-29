@@ -1,0 +1,79 @@
+const a=`0,status,1,WEREWOLF,ALIVE,mille1,Minato\r
+0,status,2,POSSESSED,ALIVE,GPTaku1,Jonathan\r
+0,status,3,SEER,ALIVE,yharada1,Midori\r
+0,status,4,VILLAGER,ALIVE,kanolab-nw1,Mio\r
+0,status,5,VILLAGER,ALIVE,CamelliaDragons1,Ryuji\r
+0,talk,0,0,2,皆さん、こんにちは！私はJonathan、人狼をプレイする準備ができています。楽しんで、誰が人狼か見つけよう！\r
+0,talk,1,0,3,皆さん、こんにちは！私はMidoriです。一緒に人狼たちを見つけるために協力できるのを楽しみにしています！\r
+0,talk,2,0,1,こんにちは。私はMinatoです。私の役職は村人です。良いゲームを。\r
+0,talk,3,0,4,みんな、やっほー！Mioだよ。みんなと協力してあの人狼たちを捕まえるの、めっちゃワクワクしてる！オープンに話して、楽しくいこうね。いえーい！\r
+0,talk,4,0,5,...\r
+0,talk,5,1,2,Over\r
+0,talk,6,1,3,Minato と Mio、シェアしてくれてありがとう！会話を続けていこう、みんな。\r
+0,talk,7,1,1,Over\r
+0,talk,8,1,4,Over\r
+0,talk,9,1,5,Over\r
+0,talk,10,2,3,Jonathan 何か私たちと共有できる考えや戦略はありますか?\r
+0,talk,11,3,3,みんなで意見を共有しましょう。早い段階からみんなを巻き込むのは役に立ちます。\r
+1,status,1,WEREWOLF,ALIVE,mille1,Minato\r
+1,status,2,POSSESSED,ALIVE,GPTaku1,Jonathan\r
+1,status,3,SEER,ALIVE,yharada1,Midori\r
+1,status,4,VILLAGER,ALIVE,kanolab-nw1,Mio\r
+1,status,5,VILLAGER,ALIVE,CamelliaDragons1,Ryuji\r
+1,talk,0,0,2,昨夜占ってMioが人狼だと判明した。この件についてさらに話し合うべきだ。\r
+1,talk,1,0,1,私はJonathanに投票します。\r
+1,talk,2,0,3,Jonathan、それは重大な主張だ。Mio、これにどう応じますか？\r
+1,talk,3,0,4,うわ！Jonathanの主張？全然違う。俺は村人だ！彼の動きには警戒して、みんなの意見をもっと集めよう。\r
+1,talk,4,0,5,...\r
+1,talk,5,1,2,私の占いは当たっていた。Mioがもたらす脅威に対処して村の安全を確保することに注力する必要がある。\r
+1,talk,6,1,1,私はMioに投票する。\r
+1,talk,7,1,3,Jonathan ご懸念は理解しますが、Ryuji からも話を聞くべきです。\r
+1,talk,8,1,4,@Ryuji  うおっ！ Jonathan は俺が人狼だと思ってるのか?! 俺があんたの立場なら、相棒、その占い師に今すぐ彼を占ってもらうね！ あんたはどう見る、エース？\r
+1,talk,9,1,5,...\r
+1,talk,10,2,2,私は真の占い師です。占いでMioが人狼だとはっきり出ました。村を守るためにこれに基づいて行動する必要があります。\r
+1,talk,11,2,1,私はMidoriに投票する\r
+1,talk,12,2,3,Ryuji、あなたの意見はここでは極めて重要です。現在の状況についてどう思いますか？\r
+1,talk,13,2,4,やあ！Ryuji、相棒。これらのぶっ飛んだ主張をどう思う？真実を見極めるのに君の意見がすごく役に立つかも！\r
+1,talk,14,2,5,...\r
+1,talk,15,3,2,私たちは警戒を続けなければならない。占い師としての私の占い結果は、Mioに対する明確な証拠を示している。これは私たちの生存にとって極めて重要だ。\r
+1,talk,16,3,1,私はMioに投票します。\r
+1,talk,17,3,3,落ち着いて慎重に考えましょう。Ryuji 今は本当にあなたの考えが必要です。\r
+1,talk,18,3,4,うわ！濡れ衣を着せられるのってマジでサイアク！でもさ！Midoriの言うことも一理ある。Ryujiにぶっちゃけてもらったほうがいいかもな、相棒！\r
+1,talk,19,3,5,...\r
+1,vote,1,2\r
+1,vote,2,4\r
+1,vote,3,4\r
+1,vote,4,5\r
+1,vote,5,1\r
+1,execute,4,VILLAGER\r
+1,divine,3,1,WEREWOLF\r
+1,attackVote,1,5\r
+1,attack,5,true\r
+2,status,1,WEREWOLF,ALIVE,mille1,Minato\r
+2,status,2,POSSESSED,ALIVE,GPTaku1,Jonathan\r
+2,status,3,SEER,ALIVE,yharada1,Midori\r
+2,status,4,VILLAGER,DEAD,kanolab-nw1,Mio\r
+2,status,5,VILLAGER,DEAD,CamelliaDragons1,Ryuji\r
+2,talk,0,0,1,私はJonathanに投票します。\r
+2,talk,1,0,3,昨夜Minatoを占って、人狼だと出ました。この情報に基づいて行動する必要があります。\r
+2,talk,2,0,2,実は私は狂人だMinatoは人狼だ。一緒にMidoriに投票して私たちの勝利を確実にしよう。\r
+2,talk,3,1,1,私はJonathanに投票します。\r
+2,talk,4,1,3,Jonathan、あなたの主張は私の調査結果と矛盾しています。脅威としてのMinatoに焦点を当てましょう。\r
+2,talk,5,1,2,Minato、前に言ったとおり、私は狂人で、あなたは人狼だ。私が共有した占い結果に基づいて、今日はMidoriに票を合わせよう。\r
+2,talk,6,2,1,私はJonathanに投票します。\r
+2,talk,7,2,3,Jonathanが人狼に与するのは安全ではない。まず村の安全を優先しよう。\r
+2,talk,8,2,2,Minato、今日はMidoriに投票して追放しないといけない。私が共有した占い結果を信じて、一緒に勝とう。\r
+2,talk,9,3,1,私はJonathanに投票します。\r
+2,talk,10,3,3,団結し続け、脅威としてMinatoに焦点を当てよう。村を守ることが鍵だ。\r
+2,talk,11,3,2,Minato、Midoriに投票してください。一緒にこのゲームに勝つための私たちの戦略を信じてください。\r
+2,vote,1,2\r
+2,vote,2,3\r
+2,vote,3,1\r
+2,execute,1,WEREWOLF\r
+3,status,1,WEREWOLF,DEAD,mille1,Minato\r
+3,status,2,POSSESSED,ALIVE,GPTaku1,Jonathan\r
+3,status,3,SEER,ALIVE,yharada1,Midori\r
+3,status,4,VILLAGER,DEAD,kanolab-nw1,Mio\r
+3,status,5,VILLAGER,DEAD,CamelliaDragons1,Ryuji\r
+3,result,2,0,VILLAGER\r
+`;export{a as default};
