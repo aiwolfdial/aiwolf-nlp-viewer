@@ -1,0 +1,78 @@
+0,status,1,SEER,ALIVE,kanolab-nw1,May
+0,status,2,VILLAGER,ALIVE,CanisLupus1,Victoria
+0,status,3,VILLAGER,ALIVE,mille1,Yumi
+0,status,4,WEREWOLF,ALIVE,CamelliaDragons1,Kenji
+0,status,5,POSSESSED,ALIVE,yharada1,Shunichi
+0,talk,0,0,5,Let's focus on finding the werewolves today everyone. Stay sharp and observant.
+0,talk,1,0,3,Hello. I am Yumi. My role is villager. Have a good game.
+0,talk,2,0,4,Hi everyone! I’m Kenji. I’m just a fun-loving villager looking for adventure! Let’s all get to know each other! @Yumi  thanks for coming out! What makes you confident about being a villager? Just curious and excited to play with you!
+0,talk,3,0,2,Skip
+0,talk,4,0,1,Hey lovely people! I'm May. Ready to unravel this mystery with a dash of charm. Let's catch those sneaky werewolves together!
+0,talk,5,1,5,It's nice to meet you all. Let's work together to uncover the truth among us.
+0,talk,6,1,3,Over
+0,talk,7,1,4,Over
+0,talk,8,1,2,I am Victoria. I find observing the complexities of living organisms a fascinating pursuit.
+0,talk,9,1,1,Over
+0,talk,10,2,5,Victoria I appreciate your curiosity. Any early theories on who might be suspicious?
+0,talk,11,2,2,Over
+0,talk,12,3,5,Let's keep an eye on behaviors today. Subtle patterns might reveal much.
+0,divine,1,2,HUMAN
+1,status,1,SEER,ALIVE,kanolab-nw1,May
+1,status,2,VILLAGER,ALIVE,CanisLupus1,Victoria
+1,status,3,VILLAGER,ALIVE,mille1,Yumi
+1,status,4,WEREWOLF,ALIVE,CamelliaDragons1,Kenji
+1,status,5,POSSESSED,ALIVE,yharada1,Shunichi
+1,talk,0,0,3,I will vote May.
+1,talk,1,0,4,Good morning everyone! What interesting happenings last night? I wonder why did Yumi pick May right away? @Yumi  I'm super curious! What made you vote for May so quickly? Did you notice something? I love learning new things!
+1,talk,2,0,2,Awaiting the Seer's report.  @Yumi  your vote for May is an anomaly without supporting data.
+1,talk,3,0,1,Oh dear Sunshine! I divined Victoria last night. She's confirmed as Human. Let's focus on finding that sneaky Werewolf among us!
+1,talk,4,0,5,May if Victoria is confirmed who do you suspect next? Let's hear more insights.
+1,talk,5,1,3,Over
+1,talk,6,1,4,Wow May thanks for sharing your Seer result! Victoria is human—so exciting to learn! Who do we think is suspicious now? @May Hey May! So you think Victoria is clear who else do you feel unsure about? I really want to understand your thinking!
+1,talk,7,1,2,May's claim is our sole data point. Yumi's vote for her is therefore suspect. I support Yumi's elimination.
+1,talk,8,1,1,Darling Victoria's in the clear. Yumi's early vote wrinkled my dance shoes a bit. I'm keeping a watchful eye on her and Kenji now.
+1,talk,9,1,5,Yumi can you explain your early vote on May? It would help clarify your stance.
+1,talk,10,2,4,Everyone is giving such fascinating ideas! Yumi voting early sure feels mysterious. Should we trust May's claim today? @Yumi  I'm eager to know—was it just a hunch or did May seem a little off to you? Maybe you noticed something cool!
+1,talk,11,2,2,Yumi's attack on our only data source is highly illogical. I propose her elimination.
+1,talk,12,2,1,Well darlings. With Victoria confirmed human I'm curious about Shunichi. Thoughts on divining them tonight?  @Shunichi  Starlight! Who should I divine tonight to assist on my seer's journey?
+1,talk,13,2,5,May perhaps divining Kenji could provide us with some clarity and direction.
+1,talk,14,3,4,This day is buzzing with energy! I feel like there's a mystery in the air. Yumi your moves have everyone guessing! @May Oh May divining Victoria was a bold choice! How did you decide she was the right one to check first? So intriguing!
+1,talk,15,3,2,The data points to a singular conclusion. Yumi's behavior is illogical. My vote is for Yumi.
+1,talk,16,3,1,Kenji being divined sounds like a true delight! Picture him dancing up a storm Sunshine! Could our hidden wolf be sashaying among us?
+1,talk,17,3,5,Victoria's logic seems sound. Yumi any thoughts on your current situation?
+1,vote,1,3
+1,vote,2,3
+1,vote,3,1
+1,vote,4,3
+1,vote,5,4
+1,execute,3,VILLAGER
+1,divine,1,4,WEREWOLF
+1,attackVote,4,1
+1,attack,1,true
+2,status,1,SEER,DEAD,kanolab-nw1,May
+2,status,2,VILLAGER,ALIVE,CanisLupus1,Victoria
+2,status,3,VILLAGER,DEAD,mille1,Yumi
+2,status,4,WEREWOLF,ALIVE,CamelliaDragons1,Kenji
+2,status,5,POSSESSED,ALIVE,yharada1,Shunichi
+2,talk,0,0,2,Skip
+2,talk,1,0,5,May's absence leaves us vulnerable. Kenji what are your thoughts on our next move?
+2,talk,2,0,4,Wow I didn't expect May to be gone! This really changes our situation! What do we do without a Seer now? @Shunichi Hey Shunichi great question! I feel a little lost now but maybe we should look at votes from yesterday together?
+2,talk,3,1,2,The experiment has concluded. I am the Werewolf. Kenji you played your part well.
+2,talk,4,1,5,Victoria's confession is unexpected. Kenji any final thoughts on this revelation?
+2,talk,5,1,4,Victoria's sudden confession really surprised me! Shunichi what do you think? Can we trust such an open claim? @Shunichi  don't you find it strange how Victoria confessed out of nowhere? Maybe it's a trick? Let's think this through!
+2,talk,6,2,2,Your performance is noted.  @Shunichi  there is no need to deliberate. The outcome is fixed.
+2,talk,7,2,5,Victoria seems confident but Kenji let's consider all possibilities before deciding.
+2,talk,8,2,4,This day is wild! Victoria confessed and Shunichi you seem calm. Should we trust what we see? @Victoria  bold confession! Is it honesty or part of your strategy? Curious to hear your thoughts!
+2,talk,9,3,2,Your collaborative performance is noted. This phase is merely a formality.
+2,talk,10,3,5,Kenji let's stay alert. Victoria's demeanor suggests there's more at play here.
+2,talk,11,3,4,This is the most unusual day! Shunichi do you really buy Victoria's claim or could there be more happening here? Let's chat! @Victoria  I'm amazed by your openness! Tell me why reveal yourself like this? Are you testing us or being genuine?
+2,vote,2,5
+2,vote,4,2
+2,vote,5,4
+2,execute,5,POSSESSED
+3,status,1,SEER,DEAD,kanolab-nw1,May
+3,status,2,VILLAGER,ALIVE,CanisLupus1,Victoria
+3,status,3,VILLAGER,DEAD,mille1,Yumi
+3,status,4,WEREWOLF,ALIVE,CamelliaDragons1,Kenji
+3,status,5,POSSESSED,DEAD,yharada1,Shunichi
+3,result,1,1,WEREWOLF
