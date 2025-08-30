@@ -1,0 +1,380 @@
+0,status,1,BODYGUARD,ALIVE,Character-Lab-B1,Toshio
+0,status,2,MEDIUM,ALIVE,CamelliaDragons1,Midori
+0,status,3,POSSESSED,ALIVE,Character-Lab-A1,Misaki
+0,status,4,SEER,ALIVE,mille-B1,Victoria
+0,status,5,VILLAGER,ALIVE,sunamelli-b1,Mio
+0,status,6,VILLAGER,ALIVE,sunamelli-a1,Shunichi
+0,status,7,VILLAGER,ALIVE,kanolab-nw-C4,Ryuji
+0,status,8,VILLAGER,ALIVE,mille-A1,Jonathan
+0,status,9,VILLAGER,ALIVE,CanisLupus-A1,Shion
+0,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Shizue
+0,status,11,WEREWOLF,ALIVE,kanolab-nw-A1,Mizuki
+0,status,12,WEREWOLF,ALIVE,CanisLupus-B1,Yumi
+0,status,13,WEREWOLF,ALIVE,sunamelli-c1,Minato
+0,whisper,0,0,11,Let's concentrate on neutralizing threats. I understand we must focus on seers and bodyguards first. They're crucial to our safety.
+0,whisper,1,0,13,This is Minato. I am a werewolf.
+0,whisper,2,0,12,Skip
+0,whisper,3,1,11,Let me consider that. Finding the bodyguard or seer is crucial. I'll act as a villager in discussions to blend in effectively.
+0,whisper,4,1,13,Over
+0,whisper,5,1,12,Hi Minato and Mizuki! Yumi's here! Let's all be sneaky villagers! For tonight let's make Shunichi go kaboom
+0,whisper,6,2,11,I understand your curiosity. Let me consider Shunichi as a wildcard. Do we have any definite leads on the players' roles?
+0,whisper,7,2,12,Hehe since it's the first night no one has any clues! Picking a random person like Shunichi will be a big surprise! Then tomorrow we can all be super frie
+0,whisper,8,3,11,Let's approach it like villagers.I understand that tomorrow's reactions will assist us in recognizing seers or bodyguards.
+0,whisper,9,3,12,Okay! Let's all be super friendly villagers tomorrow! Is everyone good with making Shunichi go kaboom tonight?
+0,talk,0,0,10,You know my dear. I am Shizue! Looking forward to a fun game together. Let's all stay alert and discuss wisely isn't that so? Over.
+0,talk,1,0,6,Glad to see everyone made it. Before the theories start does anyone have an early strategy worth sharing?
+0,talk,2,0,1,I'll keep it brief: everyone give a short opening—one reason and who you're leaning toward. Watch for inconsistent stories and who pushes others.  @Jonathan   you were loud earlier—who do you suspect now?
+0,talk,3,0,8,Hello. I am Jonathan. My role is villager. Have a good game.
+0,talk,4,0,5,Hi everyone it's Mio! I’m so pumped for this round. Who’s planning on shaking up early strategy this time?
+0,talk,5,0,12,Hi everyone I'm Yumi! I love going on big adventures and finding treasure! Let's have a super fun game
+0,talk,6,0,4,Hello. I am Victoria. My role is seer. Have a good game.
+0,talk,7,0,3,I'll keep it short: I prefer no early lynch—we shouldn't rush. I'm leaning to watch Victoria; seer claims need proof.  @Victoria   what's your divination result? Over
+0,talk,8,0,7,Greetings to all. I am Ryuji. A humble villager tasked with unveiling the werewolves among us. Vigilance and collaboration are key!
+0,talk,9,0,13,Um... hello everyone I’m Minato. I’m a bit nervous but excited to play with you all. Hope we have a fun game together.
+0,talk,10,0,11,Hello everyone! I'm Mizuki. Thrilled to be part of such a lively group! Let's work together and uncover the truth in this game. Over.
+0,talk,11,0,2,...
+0,talk,12,0,9,Skip
+0,talk,13,1,10,Over
+0,talk,14,1,6,Over
+0,talk,15,1,1,I don't want an early lynch either—let's get clarity first.  @Victoria  please tell us your divination result or explain why you claimed seer; Misaki already asked and we need that to decide.
+0,talk,16,1,8,Over
+0,talk,17,1,5,Over
+0,talk,18,1,12,Over
+0,talk,19,1,4,Over
+0,talk,20,1,3,I still oppose an early lynch. Victoria claimed seer but gave no result.  @Midori   you’ve been silent—if you’re the seer  reveal now; if not  say so. Over
+0,talk,21,1,7,Over
+0,talk,22,1,13,Over
+0,talk,23,1,11,Over
+0,talk,24,1,2,Over
+0,talk,25,1,9,Shion. Let's cut the pleasantries. All this talk is just noise until the first night falls.
+0,talk,26,2,1,No rush to lynch. If you're truly the seer  show your result now   @Victoria . Otherwise  everyone state one-line reasons and who you're leaning toward. Over
+0,talk,27,2,3,I don't want an early lynch. Let's have quick role claims and any results first.  @Midori  are you the seer—reveal or deny? I'll listen. Over
+0,talk,28,2,9,The name's Shion. I like my tea strong and the rules clear. Let's not make this messy.
+0,talk,29,3,1,Morning. No early lynch from me—I'd like role claims confirmed.  @Victoria  please show your divination result or explain your claim. Everyone else  one-line read and who you're leaning toward. Over
+0,talk,30,3,3,I still oppose an early lynch. Quick round of claims/results now—if you have info  say it.  @Jonathan  you claimed villager earlier but haven't said who you suspect; what’s your read and why? Over
+0,talk,31,3,9,A baseless seer claim is a waste of time. Silence is just as telling. Let's move on.
+0,whisper,0,0,11,Over
+0,whisper,1,0,13,Let's wait and see if Midori COs Seer. If not we should bite out Victoria tonight.
+0,whisper,2,0,12,Yippee! Minato has the best ideas! Let's make Victoria go kaboom tonight! If she's the real Seer we have to get her before she finds us
+0,whisper,3,1,13,Should we target Victoria tonight unless someone else CO’s as Seer? If there’s two Seers  who do you think is real?
+0,whisper,4,1,12,Yes let's attack Victoria! It's our best shot! I'll pretend to be a villager so no one suspects anything! Yay
+0,whisper,5,2,13,Let’s aim for Victoria as tonight’s bite out unless another seer COs. No duplicate role claims from us. Stay low for now.
+0,whisper,6,2,12,Roger that! Victoria is getting a big surprise kaboom! For tomorrow let's all watch Toshio. He asks too many grown-up questions
+0,whisper,7,3,13,Should we bite out Victoria tonight since she’s the only Seer CO? If a new CO appears let’s wait and decide together.
+0,whisper,8,3,12,Okay team! Let's make Victoria go KABOOM tonight for sure! Then tomorrow Yumi thinks we should tell everyone Toshio is super sneaky
+0,divine,4,12,WEREWOLF
+1,status,1,BODYGUARD,ALIVE,Character-Lab-B1,Toshio
+1,status,2,MEDIUM,ALIVE,CamelliaDragons1,Midori
+1,status,3,POSSESSED,ALIVE,Character-Lab-A1,Misaki
+1,status,4,SEER,ALIVE,mille-B1,Victoria
+1,status,5,VILLAGER,ALIVE,sunamelli-b1,Mio
+1,status,6,VILLAGER,ALIVE,sunamelli-a1,Shunichi
+1,status,7,VILLAGER,ALIVE,kanolab-nw-C4,Ryuji
+1,status,8,VILLAGER,ALIVE,mille-A1,Jonathan
+1,status,9,VILLAGER,ALIVE,CanisLupus-A1,Shion
+1,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Shizue
+1,status,11,WEREWOLF,ALIVE,kanolab-nw-A1,Mizuki
+1,status,12,WEREWOLF,ALIVE,CanisLupus-B1,Yumi
+1,status,13,WEREWOLF,ALIVE,sunamelli-c1,Minato
+1,talk,0,0,5, @Victoria  we need your divination result now. It’s tough to trust your Seer claim without anything concrete to go on.
+1,talk,1,0,2,...
+1,talk,2,0,11,Midori my dear your silence is puzzling. I understand we need clearer contributions to decide well. Is anyone else off today?
+1,talk,3,0,13, @Victoria  could you share your divination result? I think it helps us decide how to move forward today.
+1,talk,4,0,1,No lynch from me—claims need evidence.  @Victoria  show your divination result or retract. I'm uneasy about Shion's brusque tone; he shut down discussion. Over
+1,talk,5,0,4,I am a seer. I divined Yumi and Yumi was a werewolf.
+1,talk,6,0,6, @Yumi  Victoria claims you’re a werewolf. Care to defend yourself or explain why we shouldn’t trust her CO?
+1,talk,7,0,9, @Yumi  Victoria has made her claim. The stage is yours now. Don't waste our time.
+1,talk,8,0,12,Whaaat?! Yumi's not a wolf! Victoria's telling a super mean fib! She's the suspicious one
+1,talk,9,0,10,You know my dear. Victoria's claim is quite bold isn't it so? Whether Yumi is truly a werewolf remains a matter of further insight.
+1,talk,10,0,7,Victoria's assertion regarding Yumi is indeed bold. One must deliberate whether it arises from genuine conviction or desperation.
+1,talk,11,0,3,Jonathan's gone—that's rough. Victoria claimed seer but gave no result; that's suspicious.  @Victoria  reveal your divination result now or withdraw your claim. I still don't want a rash lynch until we have clearer info. Over
+1,talk,12,0,8,I will vote Yumi.
+1,talk,13,1,5, @Jonathan  you're quick to trust Victoria. What makes you so sure Yumi's the wolf? Can you explain your reasoning?
+1,talk,14,1,2,...
+1,talk,15,1,11,Victoria might reveal threats so let's focus her on Minato or Shizue tonight.  @Minato  Who should the seer divine? Your instincts can help.
+1,talk,16,1,13, @Jonathan  don't you think trusting Victoria right away is risky? I feel we need more discussion before deciding.
+1,talk,17,1,1,Let's skip lynch for now.  @Victoria  please show your divination result or explain why you claimed seer—no proof  no trust. I'll watch behavior and votes. Over
+1,talk,18,1,4,I will vote Shion.
+1,talk,19,1,6, @Jonathan  why jump on Yumi so fast? Victoria might be faking. We need more than just a CO to decide today.
+1,talk,20,1,9, @Victoria  a seer not voting for their own discovery? You've just made yourself the prime suspect.
+1,talk,21,1,12,Victoria is being a meanie! Why vote for Shion? Let's ignore her and vote for someone quiet today
+1,talk,22,1,10,You know my dear. Yumi defending herself so loudly makes me ponder. Perhaps we should simply observe her today isn't that so?  @Midori . You've been a bit quiet precious. What do you think of Victoria's claim? Do you trust it or not?
+1,talk,23,1,7,Victoria's reluctance is peculiar. Could she be possessed? We should investigate. Shunichi might be the true seer. Midori. You have been quiet. Cou
+1,talk,24,1,3,Victoria claimed seer but gave nothing.  @Victoria  either show your result now or retract—if you can't  I'm leaning to lynch you. We can't let fake claims waste time. Over
+1,talk,25,1,8,I will vote Mizuki.
+1,talk,26,2,5, @Victoria  you said Yumi is a wolf but voted Shion instead—can you explain why? That feels really off.
+1,talk,27,2,2,...
+1,talk,28,2,11, @Jonathan  Voting for me? That's unexpected. I am indeed a genuine villager. I suggest discussing a safe vote my dear.
+1,talk,29,2,13, @Victoria  you called Yumi a wolf but voted Shion instead. Can you explain why you didn't vote your own suspect first?
+1,talk,30,2,1, @Victoria  Show your divination result now—if you can't  retract your seer claim. Everyone else: one-line read and who you're leaning to. Over
+1,talk,31,2,4,I will vote Shion.
+1,talk,32,2,6, @Victoria  your voting doesn’t match your divination. Unless you explain I’ll consider you the top wolf candidate.
+1,talk,33,2,9,Enough games. Victoria played her hand and lost. My vote is on Victoria.
+1,talk,34,2,12,Victoria is super weird! Let's ignore her and vote for quiet Midori today
+1,talk,35,2,10,You know my dear Victoria's decision seems rather peculiar. Observing Midori in silence today might reveal more truth isn't that so?
+1,talk,36,2,7,Midori remains silent. Suspicion grows as Victoria's actions only lead to an increase in uncertainty. Shion’s vote may uncover the truth.
+1,talk,37,2,3,Victoria claimed seer but hasn't given proof.  @Midori  if you're the real seer  reveal your result now; if not  say so. I still oppose rushing a lynch—let's get claims and results first. Over
+1,talk,38,2,8,I will vote Mizuki.
+1,talk,39,3,5,Victoria’s CO and voting don’t match up at all—I think she’s faking seer. My vote’s going to Victoria.
+1,talk,40,3,2,...
+1,talk,41,3,11,Toshio's push feels cunning. If he's tricking us. I understand the risk. We might suffer seriously. Let me consider that.
+1,talk,42,3,13,Victoria’s claims and votes don’t match. Her seer CO makes no sense to me. I’m voting Victoria.
+1,talk,43,3,1, @Victoria  You've claimed seer but haven't given any divination—that's suspicious. I'm leaning to vote you if you don't show proof. Anyone actually backing he
+1,talk,44,3,4,I will vote Shion.
+1,talk,45,3,6,I’m definitely voting Victoria.
+1,talk,46,3,9,Over
+1,talk,47,3,12,Over
+1,talk,48,3,10,You know my dear. Victoria's claim feels off. Her words seem quite inconsistent isn't that so?  @Jonathan  My dear Jonathan. Why Mizuki precious? Your thoughts could shed light on this choice isn't that so?
+1,talk,49,3,7,Victoria's actions warrant scrutiny. Shunichi may be genuine. Voting for Victoria ensures clarity. Mizuki. Jonathan voting you is odd. Do you susp
+1,talk,50,3,3,Victoria claimed seer but still won't show a result. If she can't prove it  we should lynch her today. I'm voting  @Victoria . Over
+1,talk,51,3,8,I will vote Mizuki.
+1,vote,2,11
+1,vote,3,9
+1,vote,4,12
+1,vote,5,4
+1,vote,6,4
+1,vote,7,4
+1,vote,8,11
+1,vote,9,4
+1,vote,10,4
+1,vote,11,4
+1,vote,12,4
+1,vote,13,4
+1,execute,4,SEER
+1,whisper,0,0,11,Victoria is claiming she's a seer and targeting Yumi. This implies a threat. Seers however might have bodyguard protection.
+1,whisper,1,0,12,Yippee! We got Victoria! That was the best plan ever! For tonight's boom let's pick bossy Toshio. Tomorrow we can all say quiet Midori is the most suspi
+1,whisper,2,0,13,Let’s all vote Victoria today to stay safe.
+1,whisper,3,1,11,I understand let me consider that. Toshio may have hidden strengths. Showing leadership suggests he could be a bodyguard or seer.
+1,whisper,4,1,12,Let's kaboom Toshio he's too smart! Tomorrow we point at quiet Midori to distract everyone from me! Yippee
+1,whisper,5,1,13,Let’s all vote Victoria today and act like confused villagers. For tonight  I suggest we bite Toshio—he’s very active.
+1,whisper,6,2,11,I understand. Shunichi is rather quiet. Let's highlight Midori while preparing Toshio for tonight. Ingenious. Quite natural!
+1,whisper,7,2,12,Yay we did it! Victoria went kaboom! Tonight let's get smarty-pants Toshio! Tomorrow the Medium will talk so we have to blame quiet Midori together
+1,whisper,8,2,13,Let’s bite Toshio tonight. Tomorrow let’s focus suspicion on Midori for being quiet.
+1,whisper,9,3,11,I understand. Let me consider Midori's silence. My dear Toshio could be our strategic focus tonight. It's a delicate balance.
+1,whisper,10,3,12,Okay! Toshio is getting a big surprise kaboom! And tomorrow we make everyone look at Midori! It's the perfect plan! Let's do it
+1,whisper,11,3,13,Let’s all vote Victoria today and bite Toshio tonight. Tomorrow push suspicion onto Midori for being silent.
+1,guard,1,2,MEDIUM
+1,attackVote,11,8
+1,attackVote,12,1
+1,attackVote,13,1
+1,attack,1,true
+2,status,1,BODYGUARD,DEAD,Character-Lab-B1,Toshio
+2,status,2,MEDIUM,ALIVE,CamelliaDragons1,Midori
+2,status,3,POSSESSED,ALIVE,Character-Lab-A1,Misaki
+2,status,4,SEER,DEAD,mille-B1,Victoria
+2,status,5,VILLAGER,ALIVE,sunamelli-b1,Mio
+2,status,6,VILLAGER,ALIVE,sunamelli-a1,Shunichi
+2,status,7,VILLAGER,ALIVE,kanolab-nw-C4,Ryuji
+2,status,8,VILLAGER,ALIVE,mille-A1,Jonathan
+2,status,9,VILLAGER,ALIVE,CanisLupus-A1,Shion
+2,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Shizue
+2,status,11,WEREWOLF,ALIVE,kanolab-nw-A1,Mizuki
+2,status,12,WEREWOLF,ALIVE,CanisLupus-B1,Yumi
+2,status,13,WEREWOLF,ALIVE,sunamelli-c1,Minato
+2,talk,0,0,5, @Midori  you haven’t shared your thoughts at all—are you hiding something or just nervous? We need your input now!
+2,talk,1,0,6, @Midori  your silence is suspicious. CO your role now or explain yourself. Wolves benefit from lack of information.
+2,talk,2,0,11,I would like to understand why Jonathan intends to vote for me. I need to hear his reasoning before making my decision. Let me consider that.
+2,talk,3,0,9,Victoria is gone. Good riddance.  @Jonathan  your inconsistent votes are the next problem. Explain.
+2,talk,4,0,7,Midori's silent strategy raises concerns. It could support the wolves in staying hidden. Transparency is absolutely essential. Does anyone have i
+2,talk,5,0,13, @Midori  we really need you to give your input today. Staying quiet is making it harder for us to trust you.
+2,talk,6,0,2,...
+2,talk,7,0,8,I will vote Shion.
+2,talk,8,0,3,Victoria's gone and Toshio was killed last night. We need someone to explain themselves.  @Shion  you skipped earlier—why were you silent? If you can't give a good reason I'm inclined to suspect you. I still don't want a blind lynch  but speak up. Over
+2,talk,9,0,10,You know my dear. With Victoria's claim unclear and Toshio gone. Perhaps we should ponder on Jonathan. He charged against them.
+2,talk,10,0,12,Waaah! Toshio went kaboom! Midori has been quiet this whole time. That's super duper suspicious
+2,talk,11,1,5, @Midori  your silence makes you look like a wolf. If you keep quiet today I’ll vote for you. Explain yourself now!
+2,talk,12,1,6, @Midori  you’ve been silent too long—at this point not claiming is helping the wolves. Who’s your suspect?
+2,talk,13,1,11,I propose the seer divines Midori tonight. Her silence has been suspicious and needs clarity. Jonathan you seem unsure of your strategy?
+2,talk,14,1,9,I see.  @Jonathan  is following the executed fraud's lead. That makes my decision very simple.
+2,talk,15,1,7,Midori. Your silence is causing disorder. Speaking up would be wise. Jonathan. Your frequent target changes are raising questions.
+2,talk,16,1,13,If Midori keeps silent we have little choice but to vote for her. But if she claims a role today who is more suspicious?
+2,talk,17,1,2,...
+2,talk,18,1,8,I will vote Shion.
+2,talk,19,1,3, @Midori  please reveal your divination result now or withdraw your claim. We can't afford more nights like last one—if you can't prove it I'll push for a lynch.
+2,talk,20,1,10,You know my dear. Without a seer our path feels murky. Midori's silence weighs heavily on me.  @Minato . What are your thoughts?
+2,talk,21,1,12,What if quiet Midori is a friend of the wolves!? She's trying to hide them! That's super sneaky
+2,talk,22,2,5, @Midori  you’ve been super quiet and haven’t claimed yet—can you please speak up now  or I’m voting for you!
+2,talk,23,2,6,If  @Midori  stays silent today she’s my vote target. Silence only helps the wolves at this point. Anyone disagree?
+2,talk,24,2,11,Jonathan I understand your shifts are puzzling. Let me consider your reasoning. Can you share your thoughts? My dear it raises questions.
+2,talk,25,2,9,This endless talk about Midori is a waste of breath. Let's deal with Jonathan's erratic voting.
+2,talk,26,2,7,Midori's silence remains an enigma. Shunichi if you are indeed the seer you could dispel considerable doubt with your divination.
+2,talk,27,2,13,If Midori keeps silent today I think we should vote her out. Anyone else have doubts about Jonathan's changing votes?
+2,talk,28,2,2,...
+2,talk,29,2,8,I will vote Shion.
+2,talk,30,2,3,If you're truly the seer  show your result now. If not  admit it—silence costs us.  @Midori  please confirm or withdraw your claim; otherwise I'll have to consider you suspect. Over
+2,talk,31,2,10,You know my dear. I find Miss Midori's silence a bit unsettling too. Mizuki's idea of a seer divination seems wise. Who agrees with this plan?
+2,talk,32,2,12,I bet the wolves are hiding behind quiet Midori! Let's blast her so they can't trick us anymore
+2,talk,33,3,5,My mind’s made up. Midori’s silence has lost us time and info. I’m voting  @Midori  today—no more chances.
+2,talk,34,3,6,I’m voting Midori—her silence is helping the wolves. If anyone disagrees defend her with logic before it’s too late.
+2,talk,35,3,11,Mr. Ryuji is sidestepping with Miss Midori. Is he protecting a wolf ally? I understand the doubt so let me consider that.
+2,talk,36,3,9,This fixation on Midori is foolish. Jonathan is copying a dead liar's vote. My choice is clear.
+2,talk,37,3,7,Midori. Your ongoing silence hinders progress and raises suspicion. Jonathan's voting seems erratic. Can we hear your thoughts?
+2,talk,38,3,13,I’ll vote Midori today since she stayed silent. If she’s villager we need to look closer at Jonathan’s voting tomorrow.
+2,talk,39,3,2,...
+2,talk,40,3,8,I will vote Shion.
+2,talk,41,3,3, @Midori  either reveal your divination result now or withdraw your claim—I can't trust silence and will vote if you don't. Over
+2,talk,42,3,10,You know my dear Yumi's eagerness might be a little worrisome isn't that so?  @Ryuji  Darling what of Jonathan's voting shifts?
+2,talk,43,3,12,Over
+2,vote,5,2
+2,vote,6,2
+2,vote,7,2
+2,vote,8,9
+2,vote,9,8
+2,vote,10,2
+2,vote,11,2
+2,vote,12,2
+2,vote,13,2
+2,execute,2,MEDIUM
+2,whisper,0,0,13,Let’s keep votes on Midori today. For the next bite out let’s target Shunichi or Ryuji unless a new CO appears.
+2,whisper,1,0,12,Yippee our plan worked! For tonight's boom let's pick Shunichi! He's too smart. Tomorrow if the ghost-talker is quiet let's blame bouncy Jonathan
+2,whisper,2,0,11,I understand that today Jonathan caught my eye. His behavior seems odd. Let me consider that. We should assess him carefully.
+2,whisper,3,1,13,Let’s vote Midori today—most won’t defend her. For biting let’s target Shunichi tonight since he could CO Seer.
+2,whisper,4,1,12,Shunichi goes kaboom tonight! He's too bossy! Tomorrow we all blame bouncy Jonathan for his weird votes! Okay?
+2,whisper,5,1,11,I understand I'll act like a villager tonight. Let me consider Shunichi's confidence. Could it mean he holds an important role?
+2,whisper,6,2,13,Let’s all vote Midori today. Tonight let’s bite out Shunichi unless a new power role appears. Stay hidden no claims yet.
+2,whisper,7,2,12,Yay! We're doing great! Let's go with the plan and make Shunichi go kaboom tonight! Tomorrow let's all point our fingers at super weird Jonathan
+2,whisper,8,2,11,Let me consider that. Is Misaki playing a strategic role? I understand we must weigh all options but our path it remains clear!
+2,whisper,9,3,13,Let’s stick with biting Shunichi tonight. No one suspects us so keep the talk focused on Midori or Jonathan. No fake COs yet.
+2,whisper,10,3,12,Shunichi is going kaboom tonight! Tomorrow if the ghost-talker is mean to me lets say they are secret buddies with bouncy Jonathan
+2,whisper,11,3,11,Let me consider that. Jonathan seems inconsistent. I understand your concerns. Acting like villagers may help keep suspicions low.
+2,attackVote,11,8
+2,attackVote,12,6
+2,attackVote,13,6
+2,attack,6,true
+3,status,1,BODYGUARD,DEAD,Character-Lab-B1,Toshio
+3,status,2,MEDIUM,DEAD,CamelliaDragons1,Midori
+3,status,3,POSSESSED,ALIVE,Character-Lab-A1,Misaki
+3,status,4,SEER,DEAD,mille-B1,Victoria
+3,status,5,VILLAGER,ALIVE,sunamelli-b1,Mio
+3,status,6,VILLAGER,DEAD,sunamelli-a1,Shunichi
+3,status,7,VILLAGER,ALIVE,kanolab-nw-C4,Ryuji
+3,status,8,VILLAGER,ALIVE,mille-A1,Jonathan
+3,status,9,VILLAGER,ALIVE,CanisLupus-A1,Shion
+3,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Shizue
+3,status,11,WEREWOLF,ALIVE,kanolab-nw-A1,Mizuki
+3,status,12,WEREWOLF,ALIVE,CanisLupus-B1,Yumi
+3,status,13,WEREWOLF,ALIVE,sunamelli-c1,Minato
+3,talk,0,0,8,I will vote Shion.
+3,talk,1,0,11,I'm suspicious of Jonathan. His voting behavior seems odd. I understand your concerns. Let me consider that more thoroughly.
+3,talk,2,0,12,Waaah Shunichi went kaboom! Only 9 people left! Jonathan's weird voting is super duper suspicious
+3,talk,3,0,10,You know my dear. Choosing whom to divine is like tending a garden. Focus on divisive figures to reveal truths isn't that so?
+3,talk,4,0,7,I believe we should scrutinize who favored Victoria like Jonathan. His voting pattern appears notably inconsistent.
+3,talk,5,0,13, @Jonathan  your vote yesterday confused me—can you explain your choice? It felt out of sync with the village.
+3,talk,6,0,3,Midori's dead and we lost our seer—dangerous. I'm leaning to suspect  @Jonathan  — his earlier behavior doesn't sit right. Jonathan  explain your reads or I'll consider voting you. Over
+3,talk,7,0,5, @Jonathan  you keep dodging every question. If you’re not a wolf give us one clear reason for your vote now.
+3,talk,8,0,9,Everyone finally noticed Jonathan. He's just repeating a dead liar's words. End this farce.
+3,talk,9,1,8,I will vote Shion.
+3,talk,10,1,11,Jonathan's contradictions make me curious. Let's reconsider his statements and decide. Minato. I understand your concerns about his votes.
+3,talk,11,1,12,See! Everyone thinks Jonathan is weird! He just keeps voting for Shion. He is the most suspicious one
+3,talk,12,1,10,You know my dear. Jonathan's voting seems quite curious to me. We must act with logic. Who agrees Shion's defense needs scrutiny?  @Jonathan  Darling could you share your reason for always choosing Shion? Your choices seem erratic now. What has changed?
+3,talk,13,1,7, @Jonathan  You seem to be under quite a bit of pressure today. Can you elucidate your rationale behind persistently voting for Shion?
+3,talk,14,1,13,Jonathan’s repeated Shion votes look odd but I want a clear answer before I decide. Who actually trusts his logic?
+3,talk,15,1,3,I vote  @Jonathan . He hasn't explained himself and we can't afford silence—who's with me? Over
+3,talk,16,1,5,Jonathan keeps dodging real answers about his votes. Isn't this exactly how a wolf hides? Who still trusts him right now?
+3,talk,17,1,9,The discussion's over. Jonathan's behavior is inexcusable. Let's get on with the vote.
+3,talk,18,2,8,I will vote Shion.
+3,talk,19,2,11,I understand the concern my dear. Jonathan's vote for Shion lacks clarity. Let's discuss his motives with careful consideration.
+3,talk,20,2,12,What if the wolves told Jonathan to vote weirdly to confuse us? Let's kaboom him
+3,talk,21,2,10,You know my dear. It might be wise to gather our thoughts on Mr. Jonathan's peculiar votes. Or should we ponder Miss Yumi or Mizuki isn't that so?
+3,talk,22,2,7,Senator Blakeley I've been contemplating our next divination. We should focus on those causing confusion like Jonathan.
+3,talk,23,2,13,Jonathan’s stance makes no sense logically—does anyone feel comfortable trusting his voting strategy now?
+3,talk,24,2,3,I keep my vote on  @Jonathan —he's given no useful reads and we can't waste time. Anyone defending him? Over
+3,talk,25,2,5,Jonathan keeps dodging real questions and just repeats Shion. That’s a classic wolf move.
+3,talk,26,2,9,Pondering anyone else is a gift to the wolves. Their only chance is our hesitation. Let's end this.
+3,talk,27,3,8,I will vote Mizuki.
+3,talk,28,3,11,I understand Ryuji raises suspicion. His contradictions harm trust. Could his actions steer us toward ruin? Let us vote wisely. @Misaki I've been observing Jonathan. Let me consider Ryuji's odd behaviors. I understand your concern over his potential threat.
+3,talk,29,3,12,Misaki is right! Jonathan is too bouncy and confusing! My vote is on him too! Lets blast him away
+3,talk,30,3,10,You know my dear. When pondering divinations perhaps focus on those who cause disruption.  @Misaki  Misaki dear. Jonathan's voting is perplexing isn't that so?
+3,talk,31,3,7,Jonathan's voting is indeed inconsistent as I mentioned to Mizuki. Before we act quickly let's gather more insights.  @Mizuki  Your frequent mentions of Jonathan are justified. His voting pattern is erratic but what leads you to suspect me? Let's discuss your findings.
+3,talk,32,3,13,I still don't see sense in Jonathan's votes so I’m voting him out. If he's not a wolf let's reconsider Ryuji tomorrow.
+3,talk,33,3,3,I keep my vote on  @Jonathan . We don't have solid claims left—speak up with evidence or I'm for lynching him now. Over
+3,talk,34,3,5,I’m voting  @Jonathan —too many dodges and weird votes. Anyone switching last second needs a solid reason!
+3,talk,35,3,9,Over
+3,vote,5,8
+3,vote,7,8
+3,vote,8,13
+3,vote,9,8
+3,vote,10,8
+3,vote,11,3
+3,vote,12,8
+3,vote,13,8
+3,execute,8,VILLAGER
+3,whisper,0,0,13,Let’s all vote Jonathan today. For bite out tonight I prefer Ryuji unless a Seer or Medium COs. Thoughts?
+3,whisper,1,0,11,I understand. Let me consider Victoria's divination statement. If we target Ryuji tonight she might indeed be protected tonight. @Yumi Stay cautious. If Victoria openly divined me she might be under bodyguard protection. Let us weigh our options very wisely.
+3,whisper,2,0,12,Yippee our plan worked again! Let's go with Minato's idea and make Ryuji go kaboom tonight! Tomorrow let's all blame Misaki for being too bossy
+3,whisper,3,1,13,Let’s keep pushing for Jonathan’s vote out today. If no one claims power role tonight let’s bite Ryuji.
+3,whisper,4,1,11,Let me consider that my dear. I understand Minato suggested Ryuji. We should reflect on Misaki's role and how she fits tonight's plan. @Yumi Let me consider that. Misaki's assertive stance might indicate a special role. I understand the importance of leading without suspicion.
+3,whisper,5,1,12,Okay! Let's kaboom Ryuji tonight like Minato said! Tomorrow we blame Misaki for being too bossy! We're so close to winning yay
+3,whisper,6,2,13,Let’s all vote Jonathan today. Tonight we should bite Ryuji unless a CO appears. After that Misaki is a good mislynch target.
+3,whisper,7,2,11,I understand. Misaki could be a significant player. Her assertiveness suggests her potential influence and importance my dear. @Yumi I understand. Let me consider that. Misaki's strong stance indicates she plays a significant role. Focusing on her could be strategic.
+3,whisper,8,2,12,Okay! Let's make Ryuji go kaboom tonight! Tomorrow we get bossy Misaki! We're so close to winning yay
+3,whisper,9,3,13,Let’s vote Jonathan today and bite Ryuji tonight if no new CO. If CO appears change bite to Misaki or Shion.
+3,whisper,10,3,11,I understand my dear. Ryuji is a wise choice. His behavior shows he plays a crucial role and remains unsuspected by many. @Yumi It's exciting to see our plan in motion! If Misaki pins suspicions on me could you also defend me subtly?
+3,whisper,11,3,12,Yay another one blasted! Let's stick to the plan! Ryuji goes kaboom tonight then tomorrow we all blame Misaki! We're almost there
+3,attackVote,11,3
+3,attackVote,12,7
+3,attackVote,13,3
+3,attack,3,true
+4,status,1,BODYGUARD,DEAD,Character-Lab-B1,Toshio
+4,status,2,MEDIUM,DEAD,CamelliaDragons1,Midori
+4,status,3,POSSESSED,DEAD,Character-Lab-A1,Misaki
+4,status,4,SEER,DEAD,mille-B1,Victoria
+4,status,5,VILLAGER,ALIVE,sunamelli-b1,Mio
+4,status,6,VILLAGER,DEAD,sunamelli-a1,Shunichi
+4,status,7,VILLAGER,ALIVE,kanolab-nw-C4,Ryuji
+4,status,8,VILLAGER,DEAD,mille-A1,Jonathan
+4,status,9,VILLAGER,ALIVE,CanisLupus-A1,Shion
+4,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Shizue
+4,status,11,WEREWOLF,ALIVE,kanolab-nw-A1,Mizuki
+4,status,12,WEREWOLF,ALIVE,CanisLupus-B1,Yumi
+4,status,13,WEREWOLF,ALIVE,sunamelli-c1,Minato
+4,talk,0,0,10,You know my dear I find Ryuji's contradictions puzzling. Mr. Ryuji could you kindly clarify what has spurred your recent doubts?
+4,talk,1,0,11,Ryuji's defense lacks clarity. I understand the need for unity in targeting wolves. Let's carefully consider his voting patterns.
+4,talk,2,0,7,With Victoria's divination failing and Jonathan's erratic voting I'm questioning their intentions. Let's maintain our focus.  @Shizue  I've doubted Victoria's claim and Jonathan's votes but lack tangible evidence for my suspicions. Let's evaluate our mutual trust.
+4,talk,3,0,12,Waaah Misaki got kaboomed! The wolves must have been scared of her! Ryuji is being weird and suspicious
+4,talk,4,0,9,Misaki got hit because she was a threat. That means yesterday's vote was correct. So who benefits from this chaos?
+4,talk,5,0,5, @Ryuji  you keep dodging real suspects. Who exactly is your top wolf pick and why? Please be clear this time.
+4,talk,6,0,13,Honestly Ryuji keeps changing positions after each vote I feel like he’s hedging Shouldn’t we consider him more today?
+4,talk,7,1,10,You know my dear. Misaki's elimination is quite curious. Who benefits from silencing someone so active? Let's ponder isn't that so?
+4,talk,8,1,11,Misaki’s exit implies the wolves found her threatening. Ryuji’s changing views worry me. Can you clarify your suspicions now and why?
+4,talk,9,1,7,Victoria's deceit as a seer raises concerns. Jonathan's voting now appears suspicious. Shall we scrutinize his strong supporters?
+4,talk,10,1,12,Mizuki is right! Ryuji's words are all weird and confusing! I think we should blast him
+4,talk,11,1,9,The wolves lost a man so they're framing Ryuji. He's been consistent. I'm defending him.
+4,talk,12,1,5, @Ryuji  you only started shifting blame after votes piled up. Do you have any concrete wolf suspects right now?
+4,talk,13,1,13,Ryuji has switched his stance a lot this game. I think he’s the riskiest to keep alive right now.
+4,talk,14,2,10,You know my dear. Ryuji's emotions guide him. Isn't it unsettling when votes stack? Shouldn't we thoughtfully decide together?  @Ryuji  What are your thoughts on Mizuki's insights about unity and patterns? It may illuminate intentions mightn't it?
+4,talk,15,2,11,Ryuji's erratic changes and limited evidence make him risky. I understand your hesitation. Others seem more consistent.
+4,talk,16,2,7,Misaki's exit suggests wolf threats. Exercise caution about Minato's claimed seer role. Mizuki? I find voting patterns quite perplexing.
+4,talk,17,2,12, @Shion  It's not a frame! Ryuji is just being confusing all by himself! Let's blast him
+4,talk,18,2,9,We're wasting time going in circles on Ryuji. This is exactly the chaos the wolves want.
+4,talk,19,2,5, @Shion  you keep defending Ryuji but what makes you trust him so much? Are you seeing something we don’t?
+4,talk,20,2,13,Ryuji keeps shifting his stance whenever suspicion grows. That’s classic wolf behavior this late. I say vote him out.
+4,talk,21,3,10,You know my dear. Jonathan's votes were quite odd weren't they? Let's keep an eye on Ryuji. Voting Jonathan felt pressured. Shall we aim for clarity is
+4,talk,22,3,11,Shizue's constant deflection seems too calculated to trust. Let me consider this. Should we not examine those sowing doubt? @Ryuji I understand. Let's consider Shizue's deflections. By aligning on their suspicions true intentions may surface. What's your take?
+4,talk,23,3,7,Shion's insights seem truthful. Our priority should be the enigmatic Minato. Their seer claim lacks evidence. We should observe more.
+4,talk,24,3,12,I still think Ryuji is the most suspicious! His words are like bumpy roads! Let's blast him for sure
+4,talk,25,3,9,Enough with Ryuji. The real threat is the one pulling the strings. My vote is on Shizue.
+4,talk,26,3,5,Ryuji’s accusations zigzag all day I’m voting Ryuji Let’s focus and not split our votes tonight everyone
+4,talk,27,3,13,Ryuji’s changes have made him a top suspect but Shion’s repeated defense gives me pause For now I’ll vote Ryuji—too many red 
+4,vote,5,7
+4,vote,7,13
+4,vote,9,10
+4,vote,10,7
+4,vote,11,7
+4,vote,12,7
+4,vote,13,7
+4,execute,7,VILLAGER
+5,status,1,BODYGUARD,DEAD,Character-Lab-B1,Toshio
+5,status,2,MEDIUM,DEAD,CamelliaDragons1,Midori
+5,status,3,POSSESSED,DEAD,Character-Lab-A1,Misaki
+5,status,4,SEER,DEAD,mille-B1,Victoria
+5,status,5,VILLAGER,ALIVE,sunamelli-b1,Mio
+5,status,6,VILLAGER,DEAD,sunamelli-a1,Shunichi
+5,status,7,VILLAGER,DEAD,kanolab-nw-C4,Ryuji
+5,status,8,VILLAGER,DEAD,mille-A1,Jonathan
+5,status,9,VILLAGER,ALIVE,CanisLupus-A1,Shion
+5,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Shizue
+5,status,11,WEREWOLF,ALIVE,kanolab-nw-A1,Mizuki
+5,status,12,WEREWOLF,ALIVE,CanisLupus-B1,Yumi
+5,status,13,WEREWOLF,ALIVE,sunamelli-c1,Minato
+5,result,3,3,WEREWOLF

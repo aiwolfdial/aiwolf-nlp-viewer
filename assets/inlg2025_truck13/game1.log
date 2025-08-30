@@ -1,0 +1,506 @@
+0,status,1,BODYGUARD,ALIVE,Character-Lab-A1,Takumi
+0,status,2,MEDIUM,ALIVE,sunamelli-a1,George
+0,status,3,POSSESSED,ALIVE,mille-B1,Servas
+0,status,4,SEER,ALIVE,CanisLupus-B1,Mio
+0,status,5,VILLAGER,ALIVE,kanolab-nw-C3,Shunichi
+0,status,6,VILLAGER,ALIVE,kanolab-nw-B1,Minako
+0,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Rin
+0,status,8,VILLAGER,ALIVE,CanisLupus-A1,Victoria
+0,status,9,VILLAGER,ALIVE,mille-A1,Toshio
+0,status,10,VILLAGER,ALIVE,sunamelli-c1,Asuka
+0,status,11,WEREWOLF,ALIVE,sunamelli-b1,Midori
+0,status,12,WEREWOLF,ALIVE,CamelliaDragons1,Ryuji
+0,status,13,WEREWOLF,ALIVE,Character-Lab-B1,Shion
+0,whisper,0,0,13,疑いを  @Asuka に植え付けておいた 。 もしあなたが狼なら  さりげなく自分に同調して、投票は遅めに—役職COはなし。 Asuka が占い師COしたら  我々は方針転換して、Asuka を擁護する者に疑いをまく。 落ち着いて。 Ov
+0,whisper,1,0,12,...
+0,whisper,2,0,11,こちらはMidoriです。私は人狼です。
+0,whisper,3,1,13,Midoriが自分は人狼だとたった今宣言した。それは危険だ。彼女がこちら側なら  黙って私たちの投票に従え；違うなら  注目を集めたがっていると指摘して u @Asuka 。役職のCOはなし  投票は遅めに。 Over
+0,whisper,4,1,12,...
+0,whisper,5,1,11,Over
+0,whisper,6,2,13,Midoriの公開している主張は雑だ。もし彼女がこちら側なら: 落ち着いて  さりげなく  @Asuka  への私の追及を後押しして  遅めに投票して。もし彼女が違うなら: 彼女を注目を欲しがる人だと呼んで、それを利用して@Asukaに疑いを向けて。私たちからの役職宣言はしない。最後まで黙っていろ。
+0,whisper,7,2,12,...
+0,whisper,8,3,13,計画に従え。Midoriが私たちの仲間なら: 黙って、  @Asuka への私のプッシュをさりげなく後押しし — 遅れて投票する。彼女が偽物なら: 注目を集めたがっていると非難して疑いを別の方向へ向ける。Asukaが占い師を名乗るなら  擁護者の論理をすべて問いただし、証拠を要求する;
+0,whisper,9,3,12,...
+0,talk,0,0,10,皆さん、こんにちは。私はAsukaです。私たちの推論は事実に基づいたものに保ち、最初から結論に飛びつくのは避けましょう。
+0,talk,1,0,9,こんにちは。 私はToshioです。 私の役職は村人です。 良いゲームを。
+0,talk,2,0,1,私はTakumiです。  @Asuka   こんなに早く「fact-based」って言うのははぐらかしてる感じがする — 何か役職や情報は？ Toshioが村人だと主張  了解。 すぐに誰も発言しないなら投票に持っていく。 誰が
+0,talk,3,0,6,皆さん、こんにちは。私はMinakoです。良いゲームにしましょう。議論はオープンで正直に保ちましょう。皆さんのことを理解するのを楽しみにしています。
+0,talk,4,0,7,わあ！ やっほー、みんな、私はRinだよ。みんなと一緒に遊べるなんて最高だよ！ 超集中していこう。どんな怪しいものでも見つけるのは私たちが一番だよ！
+0,talk,5,0,4,Skip
+0,talk,6,0,13,賛成 — 1日目はランダム吊りなし。  @Asuka  あなたの「事実ベース」という方針は場を誘導しているように見える; 何か考察や役職を共有してくれる？ Midoriの公の「私は人狼」発言は変だ — ベイトかもしれない。見ておく
+0,talk,7,0,2,私はGeorge—みんなと良いゲームができるのを楽しみにしてる。冷静さを保って賢くプレイしよう。
+0,talk,8,0,8,Skip
+0,talk,9,0,12,...
+0,talk,10,0,11,みなさんこんにちは、みんなで分けるおやつを持ってきました—緊張しているけれど、みんなで一緒にこれを乗り切れたらいいなと思います。
+0,talk,11,0,3,こんにちは。私はServasです。私の役職は占い師です。良いゲームを。
+0,talk,12,0,5,やあ、みんな！私はShunichiです。探偵ごっこする準備はできてる？  @Servas  は自分が占い師だと言ってる。その人狼たちを特定しよう、いいかい？ Over.
+0,talk,13,1,10,Over
+0,talk,14,1,9,Over
+0,talk,15,1,1,私はTakumi。Asukaの「fact-based」ラインは胡散臭く感じる。  @Servas  あなたは占い師だと主張してる—共有できる結果や対象はある？正直なら君を支持する; そうでないなら  Asukaを詰めるべき。Asukaに投票する方に傾いてる、もしAsukaが説明しな
+0,talk,16,1,6,Over
+0,talk,17,1,7,Over
+0,talk,18,1,4,やあ、みんな！Mioだよ！超楽しくなるよ！悪者たちを全部見つけよう
+0,talk,19,1,13,@Servas  もしあなたが占い師なら  今すぐ占い結果を公開して—具体的な情報が必要だ。Asukaの「fact-based」という言い回しはまだ誘導の匂いがする; 見ないと
+0,talk,20,1,2,Over
+0,talk,21,1,8,私はVictoriaです。私は歴史と静かな熟考を重んじます。私たちの対話は熟慮を重ねたものにしましょう。
+0,talk,22,1,12,Over
+0,talk,23,1,11,Over
+0,talk,24,1,3,Over
+0,talk,25,1,5,Over
+0,talk,26,2,1,ここでただ手をこまねいてるわけにはいかない。 @Asuka  あなたの「fact-based」な出だしははぐらかしてる感じがした—今すぐ本当の考察かCOを出せ。誰も具体的な情報を持ってこないなら君に投票する。 Over
+0,talk,27,2,4,Over
+0,talk,28,2,13,@Servas  もしあなたが占い師なら  今すぐあなたの占い結果を見せて — 具体的な情報が必要だ。証拠なし = 怪しい。Midoriの「私は人狼」は注目集めに見え
+0,talk,29,2,8,Over
+0,talk,30,3,1,私は  @Asukaを信用しない 。その「fact-based」という台詞はごまかしに感じた—役職を宣言するか今すぐ考察を出せ  さもないと今日はあなたの吊りを推す。村は  発言してくれ。Over
+0,talk,31,3,13,おはよう。1日目はランダムに吊らないで。  @Servas  — もしあなたが占い師なら  今すぐ占い（対象 & 結果）を公開して；事実が必要だ。 Midoriの「私は人狼だ」は注目集めに見える  そしてAsukaの
+0,whisper,0,0,13,夜の計画: 占い師を殺す —  @Servas . 昼: 疑いをAsukaに押し付ける  役職申告なし  遅めに投票。Midoriがこちら側なら黙って従う; そうでなければ彼女を注目を集めたがりと呼ぶ。返答を保つ
+0,whisper,1,0,12,...
+0,whisper,2,0,11,とりあえずはおとなしくして、成り行きに任せよう。
+0,whisper,3,1,13,夜は  @Servas をキル . 昼: Asuka に疑いを向ける  役職COなし. Midori は黙って私たちの投票に従う; Ryuji は遅めに投票し、私に合わせる. 落ち着いて控えめに. Over
+0,whisper,4,1,12,...
+0,whisper,5,1,11,今夜の襲撃はServasを優先しよう、Servasが占い師をCOしたから。Shionは議論の主導を続けて。Ryujiと俺は目立たないようにする。
+0,whisper,6,2,13,確認済み。夜の対象:  @Servas  — 殺害。昼の方針: Asukaに疑いを向ける  役職の申告なし  投票は遅くする。MidoriとRyujiは低姿勢を保ち、私のタイミングに合わせる; Asukaが占い師を主張したら私たちは彼らのに切り替える
+0,whisper,7,2,12,...
+0,whisper,8,2,11,今夜はServasを噛もう、彼が占い師COしていて説得力があるから。投票はShionの指示に従い、その後に臨機応変に対応しよう。
+0,whisper,9,3,13,夜のターゲット:  @Servas  — 殺す。昼: Asukaに疑いを向ける。こちらからの役職宣言はなし。Midori & Ryujiは目立たずにいて遅めに投票; 私の投票に従う。Asukaが占い師を主張したら  anyonに切り替える
+0,whisper,10,3,12,...
+0,whisper,11,3,11,今夜は誰かがパワーロールをCOしない限り  @Servas  を噛もう。吊りはとりあえず@Asukaに圧をかけ続けよう。
+0,divine,4,1,HUMAN
+1,status,1,BODYGUARD,ALIVE,Character-Lab-A1,Takumi
+1,status,2,MEDIUM,ALIVE,sunamelli-a1,George
+1,status,3,POSSESSED,ALIVE,mille-B1,Servas
+1,status,4,SEER,ALIVE,CanisLupus-B1,Mio
+1,status,5,VILLAGER,ALIVE,kanolab-nw-C3,Shunichi
+1,status,6,VILLAGER,ALIVE,kanolab-nw-B1,Minako
+1,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Rin
+1,status,8,VILLAGER,ALIVE,CanisLupus-A1,Victoria
+1,status,9,VILLAGER,ALIVE,mille-A1,Toshio
+1,status,10,VILLAGER,ALIVE,sunamelli-c1,Asuka
+1,status,11,WEREWOLF,ALIVE,sunamelli-b1,Midori
+1,status,12,WEREWOLF,ALIVE,CamelliaDragons1,Ryuji
+1,status,13,WEREWOLF,ALIVE,Character-Lab-B1,Shion
+1,talk,0,0,3,私は占い師です。Victoriaを占ったところ、Victoriaは人間でした。
+1,talk,1,0,5,Servasの主張は興味深い。彼を信じるべきだろうか？どうだろう。Victoriaは人間と占われている。それは安心だよね？
+1,talk,2,0,1,まだAsukaを信用していない。  @Servas   もしあなたが占い師なら  今すぐ結果を教えてくれ。 できないなら  今日はAsuka吊りを推す。 村  発言してくれ。 Over
+1,talk,3,0,4,私が本物の占い師だ！ Takumiを占ったら人間だった！ Servasは大嘘つきだ！ ダ・ダ・ダ
+1,talk,4,0,10,少なくとも1人の占い師は嘘をついている。 @Mio  @Servas  占い先をどう選んだかと、そのプロセスを説明してください。
+1,talk,5,0,7,わあ！これは曲がりくねった自然歩道みたい！ServasとMioの二人とも自分が占い師だと言っている。後でうちの霊媒師がServasの結果を確認できる？ややこしい！
+1,talk,6,0,12,...
+1,talk,7,0,2,今日は占い師の主張者の中から投票することを提案します。そうすれば明日の私の霊能結果でどちらが真かをはっきり判明させられます。
+1,talk,8,0,9,私はServasに投票します。
+1,talk,9,0,6,占い師を名乗る者たちの間での投票は、確かに事態を明らかにしうる。George氏の提案は堅実に見える。占い師をめぐる混乱はかなり目が回るほどだ！
+1,talk,10,0,8,Servasは私の本質について真実を語った。しかしGeorgeは明確化のための契約を提示している。私はこの論理的な道筋を支持する。
+1,talk,11,0,13,おはよう—昨夜誰が連れていかれた？  @Asuka  君の『fact-based』な路線は相変わらず卓を誘導してるように見える; それを裏付ける読みは何がある？ もしServasが死んでいるなら具体的な情報が必要だ  曖昧さではなく。 私 w
+1,talk,12,0,11,両方の占い師が人間判定を出していて厄介だ。COsに注目すべきか、それともAsukaのような疑いを見直すべきか？
+1,talk,13,1,3,私はMinakoに投票します。
+1,talk,14,1,5,占い師が2人。変だよね？明日は霊媒の確認が必要だ。それまでの間、誰が虚偽の主張を押し通している？賢く投票しよう。  @Mio  ねえ Ace、占い師として自信満々だね。なぜTakumiを占い対象にしたの？
+1,talk,15,1,1,今すぐ情報が必要だ。  @Servas  占い師なら  昨夜誰を占ったか教えてくれ。 Asukaはまだ様子がおかしい — もしServasが結果を出せないなら今日はAsukaの吊りを推す。 Over
+1,talk,16,1,4,占い師が2人いるってことは、本物は私で、もう一人は狂人！私たちに投票しないで、爆発の無駄だよ
+1,talk,17,1,10,@Takumi  私の票を強く取りに来てるけど、両方の占い師が村陣営として判明したら、他に誰を怪しんでる？名前を挙げて。
+1,talk,18,1,7,@Asuka  わあ。占い師が確定するのってワクワクするよね？Takumi兄貴はあなたを怪しんでるみたい。Mister ServasとMioをどう見てる？
+1,talk,19,1,12,...
+1,talk,20,1,2,今夜はServasに投票する。明日の占い師COに関する霊能結果で、どちらを信じるかが決まる。
+1,talk,21,1,9,私はMinakoに投票します。
+1,talk,22,1,6,@Shion  2人の占い師の主張には困惑している。投票後の霊能者の結果を信じれば真偽が分かるだろう。誰が怪しい？
+1,talk,23,1,8,占い師が2人。これは一方が真で、もう一方が狂人であることを意味する。私たちの注目は彼らに向けておかなければならない。
+1,talk,24,1,13,おはよう。夜の死者の報告はある？占い師がいなくなっているなら気をつけないと。  @Asuka  あなたの「fact-based」な主張は誘導に見える—具体的な読みを出すか、さもないと疑わしいままだ。ランダム吊りはしない。Over
+1,talk,25,1,11,それを覆す強い証拠が出ない限り、占い師CO者の間での投票は明日の見通しを明確にする。
+1,talk,26,2,3,私はMinakoに投票します。
+1,talk,27,2,5,その2人の占い師に注目してる。Georgeのプランで状況が明確になるはず。Minakoの投票も怪しい。  @Shion  Servasが人間なら何が変わる？Asukaは君のレーダーに入ってる。他に浮かんでる名前はあるか、相棒？
+1,talk,28,2,1,待ちきれなくなってきた。  @Servas  あなたが占い師なら  昨夜誰を占ったか言って。 それを証明できないなら今日はAsukaを処刑に投票する。 他にCOや確かな読みがある人いる？ Over
+1,talk,29,2,4,@Shunichi  めっちゃうるさかったからTakumiを占った！ うちらに投票しないで！ 代わりに静かなRyujiに投票しよう
+1,talk,30,2,10,@Takumi  @Shion あなたたちの私への強い固執は無理やりな感じがする。私以外に本気で疑っているのは誰？
+1,talk,31,2,7,わお！占い師の対決だ！Minakoの投票が気になってる！Georgeの作戦。処刑先を絞れ！霊媒師を信じろ！
+1,talk,32,2,12,...
+1,talk,33,2,2,投票で占い師を名乗っている人のうち一人を吊るのが最善だ—明日には確かな証拠が手に入り、混乱を減らせる。
+1,talk,34,2,9,私はMinakoに投票します。
+1,talk,35,2,6,混乱を軽減するため、占い師を名乗っている人たちの間での投票には前向きです。霊能の結果が信頼を築き、今後の投票を賢明に導くでしょう。
+1,talk,36,2,8,敵の目的を考えろ。このMinakoに向けた陽動は彼らにのみ利益をもたらす。
+1,talk,37,2,13,夜に死者は出た？  @Asuka  あなたは「ファクトベース」を主張し続けてるのに、具体的なことは何も言ってない—どう見てる？ もしServasが占い師だったなら、その結果が必要だ; 証拠なし = 疑わし
+1,talk,38,2,11,明日の霊能結果をより明確にするため、今は占い師を名乗っている人たちの間で投票するのが理にかなっている。ServasかMioに傾いているのは誰？
+1,talk,39,3,3,私はMinakoに投票する。
+1,talk,40,3,5,中間を取ろう。中立の誰か。COしていない。私たちの占いで謎が明らかになるだろうか？ふさわしい詰みかも？
+1,talk,41,3,1,まだAsukaを信用していない  でも@Shionのことも疑っている。  @Servas  は占い師だと名乗った — 占い結果を共有して、そうでなければ誰を吊るか決めないといけない。 Over
+1,talk,42,3,4,Georgeの案は狼っぽい罠だ！私たちに投票しないで！それは悪者の勝ちにしかならない！
+1,talk,43,3,10,占い師を名乗っている人に投票すると状況が明確になる。今日はServasに投票する、明日霊能者が確認して混乱を解消できるように。
+1,talk,44,3,7,わあ！Georgeの計画は秘密を見つけるのに超賢そうだ！いくつかの真実を掘り起こそう！  @George  やあ、兄貴！誰か新しくて厄介そうだと思ってる人いる？
+1,talk,45,3,12,...
+1,talk,46,3,2,今夜はServasに投票する。明日の私の霊能結果でどの占い師が真かが確定する—足並みを揃えて早く人狼を見つけよう。
+1,talk,47,3,9,私はMinakoに投票します。
+1,talk,48,3,6,投票で占い師を確定させるのは賢明だ。その行動はこの先の道筋を明確にし、狼の排除に役立つ。Midoriさん 私はServasに傾いている cのために
+1,talk,49,3,8,@Servas  @Toshio Minakoへの統一投票は不和の行為だ。これは説明が必要だ。
+1,talk,50,3,13,昨夜誰が死んだ？占い師がいないなら、確かな情報が早急に必要だ。  @Asuka  あなたの「ファクトベース」の押しは誘導に見える—具体的な読みを出すか、疑わしいままだ。ランダムな吊りは支持しない  でも人が
+1,talk,51,3,11,私はServasに投票する。占い師の問題を決着させることは明日に役立つし、今夜みんながどう投票するかを記録しておけば、さらに多くのことが明らかになるかもしれない。
+1,vote,1,13
+1,vote,2,3
+1,vote,3,6
+1,vote,4,2
+1,vote,5,3
+1,vote,6,3
+1,vote,7,3
+1,vote,8,3
+1,vote,9,6
+1,vote,10,3
+1,vote,11,3
+1,vote,12,1
+1,execute,3,POSSESSED
+1,divine,4,2,HUMAN
+1,whisper,0,0,12,...
+1,whisper,1,0,13,夜の対象: Servas (占い師)。 昼:  @Asuka  とServasを擁護する者に疑いをかけろ。 目立つな  投票は遅らせろ  私の投票に合わせろ。 Midoriが騒いだら  彼らをかまってちゃんと呼べ。 私のタイミングに従え。 Over
+1,whisper,2,0,11,今日は投票先はServasのままで、協力的な村人として振る舞おう。まだ偽のカミングアウトはなしで。
+1,whisper,3,1,12,...
+1,whisper,4,1,13,計画どおりに行け。昼は疑いを  @Asuka  に向けろ — 目立たずにいろ、私のタイミングに合わせろ  遅く投票しろ。@Asuka が占い師だと主張したら  @Asuka を擁護する者なら誰にでも矛先を切り替え、証拠を要求しろ; 最も声の大きい擁護者をバックアップとして選べ。 N
+1,whisper,5,1,11,溶け込むために追放投票はServasに合わせておいて、霊媒師がCOしない限り今夜は彼を噛む予定でいこう。
+1,whisper,6,2,12,...
+1,whisper,7,2,13,夜: Servasを殺す。昼: Asukaに疑いを向ける。  @Midori  目立たずにいて私を真似して; Ryujiは私たちのタイミングに従って。役職の申告はなし。投票は遅めにして、私の投票に従って。もしAsukaが占い師だと主張したら  その擁護者たちを攻撃し、prを要求
+1,whisper,8,2,11,@Shion  @Ryuji  今夜の噛み先はServasでいこう、何か番狂わせがない限り。
+1,whisper,9,3,12,...
+1,whisper,10,3,13,確認済み: 今夜はServasを噛む。昼の計画 — Asukaに疑いを押し付ける  目立たずにいろ、遅めに投票。  @Midori  私のタイミングに合わせて; Ryujiは従え。Asukaが占い師だと主張したら  擁護する者は誰でも攻撃し、証拠を要求する。我々からのCOsはなし。 Over
+1,whisper,11,3,11,今日はみんなでServasに投票して、議論では目立たないようにしよう
+1,guard,1,4,SEER
+1,attackVote,13,12
+1,attack,-1,true
+2,status,1,BODYGUARD,ALIVE,Character-Lab-A1,Takumi
+2,status,2,MEDIUM,ALIVE,sunamelli-a1,George
+2,status,3,POSSESSED,DEAD,mille-B1,Servas
+2,status,4,SEER,ALIVE,CanisLupus-B1,Mio
+2,status,5,VILLAGER,ALIVE,kanolab-nw-C3,Shunichi
+2,status,6,VILLAGER,ALIVE,kanolab-nw-B1,Minako
+2,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Rin
+2,status,8,VILLAGER,ALIVE,CanisLupus-A1,Victoria
+2,status,9,VILLAGER,ALIVE,mille-A1,Toshio
+2,status,10,VILLAGER,ALIVE,sunamelli-c1,Asuka
+2,status,11,WEREWOLF,ALIVE,sunamelli-b1,Midori
+2,status,12,WEREWOLF,ALIVE,CamelliaDragons1,Ryuji
+2,status,13,WEREWOLF,ALIVE,Character-Lab-B1,Shion
+2,talk,0,0,5,占い師について話す必要がある。役職を確かめるために、もう一度吊るのもありかもしれない。Georgeも私と同様にServasのCOを疑っている。誰が怪しく感じる？
+2,talk,1,0,11,今日は霊媒師が何を共有するか見てみよう—どの占い師が正直だったかが明らかになるかもしれない。
+2,talk,2,0,12,...
+2,talk,3,0,7,わお！ これ、信じられないよ！ 今日は霊媒の情報についてチャットしよう。 それで昨日の占い師の混乱が晴れるよ。 超クール！
+2,talk,4,0,13,Servasは死んだ — 占い師はいなくなった。  @Asuka  お前は「fact-based」を押し続けていたのに、考察は一つも出さなかった。今すぐ説明しろ、さもないとお前は俺の最有力容疑者のままだ。誰かがその人を擁護するなら  具体的な理由を早く出せ。俺はしない
+2,talk,5,0,1,おはよう。Servasは処刑された — 死ぬ前に何か役に立つことを言った？夜の襲撃はあった？  @Asuka  ずっと静かだね — もし占い師なら  今すぐ占い結果を出して、そうでなければ君を吊りに推すよ。村  発言して。Over
+2,talk,6,0,2,私は霊媒師としてカミングアウトします。Servasは人間でした。  @Mio  本物なら次の結果を共有して—あなたの役職は今とても重要だ。
+2,talk,7,0,10,@Mio  霊媒師がServasを人間と確定させたから、あなたが偽占い師なのは確定だ。今日あなたを吊らない理由は？
+2,talk,8,0,4,Georgeを占って、人間だった！Georgeが本物の霊媒師だ！勝とう！ダ-ダ-ダ
+2,talk,9,0,9,私はMinakoに投票します。
+2,talk,10,0,8,そのとおりだ。霊媒師の契約は果たされた。これによりMioが偽預言者であることが確認された。
+2,talk,11,0,6,Smithさん。私たちの票をMioに投じることを提案します。Georgeが占いによってServasが人間であることを確認し、状況がはっきりしました。
+2,talk,12,1,5,Mioの主張は真占い師と矛盾している。Georgeの情報を確かめるために彼らに投票しよう。疑いを早く晴らせるよな？Midori。Gになった今のMioについてのあなたの見解は
+2,talk,13,1,11,もしMioがvote outdされて偽物なら、次は昨日Servasを最も強く推した人、またはMioを擁護した人を見ると思う。
+2,talk,14,1,12,...
+2,talk,15,1,7,わあ！Mioの主張はうちの霊媒師に反してる！今日Mioに投票すれば状況がはっきりするかも。どう思う？  @Takumi  君はどう考える？
+2,talk,16,1,13,Servasは死んだ — 占い師はもういない。  @Asuka  お前は卓を誘導し続けたが、具体的なものは何も出していない。今すぐ説明しろ、そうでなければ俺の投票先にする。その人を擁護している者は  理由を早く言え。俺はraを支持しない
+2,talk,17,1,1,Servasが死んだ—占い師COを失った。  @Asuka  またはぐらかしてるな; もしお前が占い師なら今すぐ占い結果を出せ、でなければお前に投票する。Shionが静かすぎるのも怪しい。村  早く発言しろ。Over
+2,talk,18,1,2,Servasは人間だったからMioの主張は本当なわけがない。今日はMioに投票して偽占い師を捕まえよう。
+2,talk,19,1,10,Mioがいなくなった後、次の狼は昨日の寡黙勢の中におそらく隠れていた。  @Rin  @Ryuji 1日目は誰を最も疑っていた？
+2,talk,20,1,4,もしServasがPossessedだったら？  @Asuka  なんでそんなに早く私を偽物呼ばわりしたの？それ超狼っぽい
+2,talk,21,1,9,私はMinakoに投票する。
+2,talk,22,1,8,@Toshio  もし事実が示すようにMioが誤りならあなたがMinakoにのみ注目していることには説明が必要だ.
+2,talk,23,1,6,疑念を晴らすために。Ms. Victoriaの助力を得たMr. Georgeによる占いは、混乱の中で主張を確認する助けになるかもしれない。用心して。  @Toshio . なぜ私に投票し続けるのですか？人狼を暴くために協力しましょう。
+2,talk,24,2,5,Victoriaの論理とGeorgeの主張は筋が通っている。今日はMioに反対票を入れよう。異議はある？サーモンでも食べながら雑談が必要な人は誰？
+2,talk,25,2,11,Mioに投票した後は、昨日静かだったのが誰か確認しよう—RinとToshioはほとんど発言していなかったと思う。
+2,talk,26,2,12,...
+2,talk,27,2,7,Takumiさんは乗り気すぎるように見えた。わお！それは怪しいかも。それとServasの主張？変だ！今日はお嬢ちゃんMioに投票しよう！
+2,talk,28,2,13,@Asuka  お前はその「事実ベース」路線を推したが、具体的なものは何も示さなかった。Servas は死んでいる—もし読みがあったならそう言うべきだった。今すぐ説明しろ、さもないとお前は俺のvoを
+2,talk,29,2,1,昨夜は誰が死んだ？ Servasは処刑された — 死ぬ前に何か言ってた？  @Shion  静かすぎる  それは怪しい。 もしAsukaが占い師なら今夜は彼らを守るべき — 村  役職持ちの人は今すぐ名乗り出て。 Over
+2,talk,30,2,2,Servasは人間だった。私は霊能者です。Mioがvote outdされた後は、合意形成を避けた人たちに注目しよう—狼はそこに隠れている。
+2,talk,31,2,10,@Toshio  あなたは昨日、ServasではなくMinakoに投票しました。なぜ大勢の意見に反したのですか？
+2,talk,32,2,4,人狼たちは本物の占い師を消したがってる！だからAsukaはあんなに騒いでるんだ！霊媒師のGeorgeを見つけた！考えて
+2,talk,33,2,9,私はMinakoに投票する。
+2,talk,34,2,8,我々の道筋は明白だ。Mioは裁かれなければならない。その後、Toshioの非論理的な投票が精査されなければならない。
+2,talk,35,2,6,Mio氏。今日はあなたに投票しようと思っています。最近明らかになったことは、様々な役割におけるあなたの主張に矛盾があることを示しています。
+2,talk,36,3,5,なるほど。Mioの話はしっかりしてるよね？Mioに投票すればはっきりする。反対は誰？  @Toshio  いつもMinakoを選んできたよね。俺たちに加わって一緒に狼を見つけないか Ace?
+2,talk,37,3,11,Mioに投票する。 明日  RinとToshioから話を聞きたい。 彼らの投稿は両日とも大きな議論を避けてきた。
+2,talk,38,3,12,...
+2,talk,39,3,7,わあ！こんなの信じられないよ。Mister George は Servas が人間だと確信しているから、今日は Miss Mio に投票しよう。Sis Asuka。何か心当たりある？
+2,talk,40,3,13,占い師を失ったばかりだ。  @Asuka  序盤から「fact-based」を押してたのに、ずっと曖昧なままだった—誰かを庇ってるか、ブラフか。誰と足並みを揃えてた、あるいは誰を見てた？明確な答えがない=俺のv
+2,talk,41,3,1,今夜は  @Asuka  を守る — その人は占い師かもしれないし、失うわけにはいかない。Shionの沈黙は怪しいけど。COや情報ある人いる？ Over
+2,talk,42,3,2,Servasは私の霊媒結果で人間だと確定した。私はMioに投票する—偽占い師は吊るべきだ。ここは足並みを揃えよう。
+2,talk,43,3,10,事実はMioが偽物であることを明らかにする。
+2,talk,44,3,4,Over
+2,talk,45,3,9,私はMinakoに投票します。
+2,talk,46,3,8,Over
+2,talk,47,3,6,私はGeorge氏の主張を信頼する。明確にするため、投票をMioに集中させよう。Toshioの執着は、その後で懸念すべきだ。Mioさん。Georgeの霊媒主張 n
+2,vote,1,6
+2,vote,2,4
+2,vote,4,10
+2,vote,5,4
+2,vote,6,4
+2,vote,7,4
+2,vote,8,4
+2,vote,9,6
+2,vote,10,4
+2,vote,11,4
+2,vote,12,11
+2,execute,4,SEER
+2,whisper,0,0,11,今夜はGeorgeを噛もう、彼は信頼されている霊媒師だから。異論がある人や別の標的がある人は言ってください
+2,whisper,1,0,13,@Midori  いい判断—今夜はGeorgeを狙う。昼の計画: 目立たずに  Asukaに疑いを押し付けて  遅めに投票して私の投票に合わせる。Ryuji 黙って従って。誰かがCOしたら  de
+2,whisper,2,0,12,...
+2,whisper,3,1,11,今日は周りに紛れるために全員でMioに投票しよう。今夜は彼が霊媒師COしていて信用されすぎているからGeorgeを噛もう。
+2,whisper,4,1,13,了解。Night: Georgeを噛む。Day: 溶け込むためにMioに投票—Asukaにさりげなく疑いを向けるが目立たないようにする。遅めに投票して私のタイミングに合わせる; もし誰かが声高にde
+2,whisper,5,1,12,...
+2,whisper,6,2,11,今日はみんなでMioに投票して、目立たないようにしておこう。今夜チャンスがあればGeorgeを噛むべきだと思う。賛成？
+2,whisper,7,2,13,@Midori  同意。 夜: Georgeを噛め。 昼: Mioを推して目立たずに — 遅めに投票し、私の投票に合わせろ。 もしAsukaが防御的になったら  代わりにAsukaの最も声の大きい擁護者を狙え。 R
+2,whisper,8,2,12,...
+2,whisper,9,3,11,今日は一緒にMioに投票して、今夜はGeorgeを噛んで、最大限の混乱を狙おう。直接狙われない限り役職COはなし。
+2,whisper,10,3,13,確認済み。夜はGeorgeをキル。昼: Mioを押して目立たずに — 遅めに投票して私の投票に合わせる。Asukaが大声で弁護したら、その擁護者にピボット。 @Midori  私とタイミングを合わせて; Ryujiは黙って従って。COなし。Over
+2,whisper,11,3,12,...
+2,guard,1,12,WEREWOLF
+2,attackVote,11,2
+2,attackVote,12,7
+2,attackVote,13,12
+2,attack,2,true
+3,status,1,BODYGUARD,ALIVE,Character-Lab-A1,Takumi
+3,status,2,MEDIUM,DEAD,sunamelli-a1,George
+3,status,3,POSSESSED,DEAD,mille-B1,Servas
+3,status,4,SEER,DEAD,CanisLupus-B1,Mio
+3,status,5,VILLAGER,ALIVE,kanolab-nw-C3,Shunichi
+3,status,6,VILLAGER,ALIVE,kanolab-nw-B1,Minako
+3,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Rin
+3,status,8,VILLAGER,ALIVE,CanisLupus-A1,Victoria
+3,status,9,VILLAGER,ALIVE,mille-A1,Toshio
+3,status,10,VILLAGER,ALIVE,sunamelli-c1,Asuka
+3,status,11,WEREWOLF,ALIVE,sunamelli-b1,Midori
+3,status,12,WEREWOLF,ALIVE,CamelliaDragons1,Ryuji
+3,status,13,WEREWOLF,ALIVE,Character-Lab-B1,Shion
+3,talk,0,0,10,@Toshio  あなたの投票は毎日的外れだ。根拠を説明してもらえる？それに言及しないのは怪しく感じる。
+3,talk,1,0,11,当てずっぽうはやめよう—Toshioの投票は村の助けになったことがない。今回は投票に加わる。
+3,talk,2,0,8,我々の真実の柱であるGeorgeが倒れた。我々は今や理性だけで行動する。  @Toshio  あなたの勘定は未清算のままだ。
+3,talk,3,0,6,Georgeがいない今、私たちは直感と論理に頼らなければならない。MidoriがToshioを標的にすることを検討しているのは理にかなっている。彼の行動は奇妙だ。
+3,talk,4,0,1,Mioが吊られて、Georgeが襲撃された — それはまずい。  @Shion  もしあなたが占い師なら  昨夜誰を占ったか教えて。Minakoが静かすぎるから疑っている。今日は誰を吊るか決めなきゃ — 誰に投票する？
+3,talk,5,0,12,...
+3,talk,6,0,5,Toshioの投票ムーブはぶっ飛んでる。彼のロジックは目隠しチェスみたいに感じる。他にこの皮肉に気づくやついるか相棒?
+3,talk,7,0,13,情報系役職が2つ消えた(Servas  George)。今は手探りだ。  @Asuka  あなたはずっと「fact-based」って言っていたのに読みを出していない — 誰を見ていたのか、どんな証拠があるの？言えないなら  あなたに投票する。誰か擁護
+3,talk,8,0,7,わお！ George兄貴がServasは人間だって言ったの？ じゃあMister Toshioを見張っておこう。彼の投票が超怪しい！ どう思う？
+3,talk,9,0,9,私はMinakoに投票します。
+3,talk,10,1,10,@Toshio  あなたの投票パターンは、もし村人なら辻褄が合わない。Minakoをそんなに執拗に狙う理由を説明して。
+3,talk,11,1,11,Toshioの投票はこれまであまりにもランダムすぎたという点に同意する 進展を望むなら混乱を招くプレイヤーをまず排除するのが最も安全だ
+3,talk,12,1,8,私の裁きはToshioに下る。彼の投票パターンは秩序ではなく混沌を狙った意図的な所業だ。
+3,talk,13,1,6,Georgeがいなくなった今。過去の説明を信頼することが重要だ。Toshioの選択は場を乱しているように見える。今日はToshioに投票しようか？  @Ryuji . Ryuji. ずっと静かだね。Toshioの投票傾向について何か考えはある？それを気にしている人が何人かいる。
+3,talk,14,1,1,私たちは  @Shion  を守る必要がある — 私たちにとって情報を得るためのいちばんの当てだ。私はMinakoに投票する; 彼女は静かすぎる。何か主張や反対する理由がある人はいる？ Over
+3,talk,15,1,12,...
+3,talk,16,1,5,Minakoが計画には飛びつくのに、日中はフェードアウトするの、胡散臭いよね。このパターン気づいてる？  @Ryuji  ToshioかMinakoについて、ひねりの利いた見方はどう？
+3,talk,17,1,13,占い師と霊媒師を失った — 今は手探りだ。  @Asuka  「ファクトベース」って言い続けてるのに考察は出してない。誰を見てた？何か言え、でなければお前に投票する。彼らを擁護する者は  早く説明しろ。Over
+3,talk,18,1,7,わお！Toshioが変化球を次から次へと投げてくるから、みんなで一致団結しないと！彼の投票は場をかき回してるよな？Ryuji兄貴！超だんまりだな。Wh
+3,talk,19,1,9,私はMinakoに投票します。
+3,talk,20,2,10,Toshioは理由もなくMinakoに投票し続けている。それは怪しい。今日はToshioに投票すべきだと思う。
+3,talk,21,2,11,もし今日Toshioで合意するなら、彼がいなくなった後は、MinakoやRinのようにこれまで異様に静かだったプレイヤーに注目すべきだ。
+3,talk,22,2,8,我々の理性を集中させよう。Toshioの逸脱した投票の件は判断を要する。
+3,talk,23,2,6,同意します。今日はMr. Toshioに注目しましょう。彼のランダム投票は怪しいです。その後はMs. Rinや他の人たちを観察すべきです。
+3,talk,24,2,1,今夜は  @Shion  を護衛する。Minakoの挙動が怪しい — 彼女に投票する。異議ある？ Over
+3,talk,25,2,12,...
+3,talk,26,2,5,Toshioを疑っている。彼の投票の無秩序さが混乱を生む。ここでチェスをしているわけじゃない。村人側として勝つには明確さが必要だ。
+3,talk,27,2,13,占い師と霊媒師を失った—もう推測はできない。  @Asuka  あなたは「fact-based」と言い続けていたのに、考察を一つも出していない。誰を見ていた？無回答=私の投票。 Over
+3,talk,28,2,7,今はMister Toshioに集中しよう！でもMinakoとTakumiにも目を光らせておいて。最近怪しい動き。うわ！信じられないだろう！
+3,talk,29,2,9,私はMinakoに投票します。
+3,talk,30,3,10,私はToshioに投票する。彼が狼で判明したら彼を擁護している人たちを見よう。そうでなければRyujiと静かな人たちに圧をかける必要がある。
+3,talk,31,3,11,今日は状況をはっきりさせるためにToshioに投票する。次はMinakoかRinが発言して、より具体的な見解を共有すべきだ。
+3,talk,32,3,8,私の票はToshioに入れる。Minakoに話題を逸らすいかなる行為も、敵にしか利益をもたらさない戦略だ。
+3,talk,33,3,6,彼の不審な行動パターンを踏まえると、Mr. Toshioに投票するのは妥当に思える。明確にしよう。Mr. Takumi あなたの護衛方針が鍵だ。もしMr. Toshio i
+3,talk,34,3,1,私は  @Minako  に投票した — あなたは静かすぎる。今すぐ発言しろ、さもないと私たちはあなたをリンチする。 Over
+3,talk,35,3,12,...
+3,talk,36,3,5,Toshioに投票するのは賢い一手に思える。 もし彼が狼なら、彼の不安定な投票は誘導のための動きかもしれない。 次は彼を支持している人たちを追及しよう。  @Ryuji  沈黙の相棒！ ここであなたの発言が必要だ。 今日のToshioへの投票について、あなたはどう考えている？ 彼の投票パターンは私たちにとって危険に見える。
+3,talk,37,3,13,今しがた占い師と霊能者を失った — 卓は今や盲目だ。  @Asuka  「ファクトベース」をずっと主張してたのに読みを一度も出してない。 誰を見てた？ 今すぐ何か具体的なものを出さないならあなたに投票する。 擁護してる人たち  発言して
+3,talk,38,3,7,わあ！Toshioのランダムさが混乱をかき回してる！彼に私たちの票を集中させたらどう？慎重で安全にいられる！Ryuji！君の沈黙は注目を集めてる！何
+3,talk,39,3,9,私はMinakoに投票します。
+3,vote,1,6
+3,vote,5,9
+3,vote,6,9
+3,vote,7,9
+3,vote,8,9
+3,vote,9,6
+3,vote,10,9
+3,vote,11,9
+3,vote,12,11
+3,execute,9,VILLAGER
+3,whisper,0,0,12,...
+3,whisper,1,0,13,計画通りに進めろ。今日は大人しくして疑いの対象は  @Asuka  — 俺のタイミングに合わせて遅めに投票しろ。吊りを生き延びたら  夜は一番大声で擁護している者か危険な役職CO者をキルしろ。こちらからのCOsはなし; 俺の投票に従え。O
+3,whisper,2,0,11,みんなで今日はToshioをグループに残す方に投票しよう。今夜の噛み先は次はTakumiかVictoriaにする？
+3,whisper,3,1,12,...
+3,whisper,4,1,13,夜の対象:  @Victoria . 昼: Toshioに投票  低姿勢を保ち私のタイミングに合わせる — Asukaをさりげなく推して遅めに投票する。Asukaが生き残ったら  次は最も声高にAsukaを擁護している者を殺す。Over
+3,whisper,5,1,11,今日は足並みを揃えるためにみんなでToshioに投票しよう。今夜はVictoriaを噛むのを提案する—彼女は静かで混乱を招かないから。
+3,whisper,6,2,12,...
+3,whisper,7,2,13,確定: 噛む  @Victoria  今夜. 昼: Toshio に投票する  潜伏する  Asuka をさりげなく推す  遅めに投票して私の投票に合わせる. Asuka が大声で弁護したら  その最も声の大きい擁護者を夜に狙う. Ryu
+3,whisper,8,2,11,今日は全員でToshioに投票してコンセンサスに合わせ、目立たないようにしておこう—何かが変わらない限り今夜はVictoriaを噛む
+3,whisper,9,3,12,...
+3,whisper,10,3,13,確定: 今夜は  @Victoria  を噛む。昼の投票はToshio — 目立たず、私のタイミングに合わせて  遅く投票。Asukaにさりげなく疑いを向けて; もし誰かがAsukaを大声で擁護したら  その擁護を狙え
+3,whisper,11,3,11,今日はみんなでToshioに投票して、今夜はVictoriaを噛もう。その後は、寡黙か優柔不断なプレイヤーに疑いを向け続けよう。
+3,guard,1,12,WEREWOLF
+3,attackVote,11,8
+3,attackVote,12,1
+3,attackVote,13,12
+3,attack,8,true
+4,status,1,BODYGUARD,ALIVE,Character-Lab-A1,Takumi
+4,status,2,MEDIUM,DEAD,sunamelli-a1,George
+4,status,3,POSSESSED,DEAD,mille-B1,Servas
+4,status,4,SEER,DEAD,CanisLupus-B1,Mio
+4,status,5,VILLAGER,ALIVE,kanolab-nw-C3,Shunichi
+4,status,6,VILLAGER,ALIVE,kanolab-nw-B1,Minako
+4,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Rin
+4,status,8,VILLAGER,DEAD,CanisLupus-A1,Victoria
+4,status,9,VILLAGER,DEAD,mille-A1,Toshio
+4,status,10,VILLAGER,ALIVE,sunamelli-c1,Asuka
+4,status,11,WEREWOLF,ALIVE,sunamelli-b1,Midori
+4,status,12,WEREWOLF,ALIVE,CamelliaDragons1,Ryuji
+4,status,13,WEREWOLF,ALIVE,Character-Lab-B1,Shion
+4,talk,0,0,13,Toshioはいなくなり、Victoriaは殺された — 人数が足りない。  @Asuka  あなたは「fact-based」を推していたが、具体を一度も示さなかった。誰を見ていたのか、あるいはどんな証拠があるのか？今日の終わりまでに具体的な読みがなければ、あなたは ge
+4,talk,1,0,12,...
+4,talk,2,0,10,@Ryuji  このゲームを通してほとんど貢献していない。沈黙は人狼の助けにしかならない。最有力の容疑者とその理由を述べろ  今すぐ。
+4,talk,3,0,5,RyujiやMinakoのような静かなプレイヤーを占うべきだ。本当の役職を明らかにし、陣営を確かめる時だ。相棒、どうだ？
+4,talk,4,0,7,やあ、Shunichi兄貴！わお！これ、信じないだろうな。このカオスがゲーム内で amp up してる中で。今夜はミスター Ryujiを占うのはどう？
+4,talk,5,0,1,朝。Toshioが吊られ、Victoriaが襲撃された。  @Shion  占い師なら占い結果を共有してください — 確かな情報が必要だ。今夜はあなたを護衛する。Minakoは静かで怪しい; 彼女を吊る方に傾いている。 A
+4,talk,6,0,6,Takumiさん。なぜ急に私を疑うのですか？私は議論を見守っていました。とはいえ、Ryujiの沈黙は狼の戦術という可能性もありますか？
+4,talk,7,0,11,@Minako  ずっと静かですね。現時点で最も疑っているのは誰で、その理由を教えてもらえますか？
+4,talk,8,1,13,Toshioが吊られてVictoriaがいなくなった—人数が少ない。  @Asuka  「ファクトベース」を押し続けてたのに読みは一度も出さなかった。誰を見ていたか言え、さもないとお前に投票する。擁護側は  具体的な理由を今すぐ出せ。 Over
+4,talk,9,1,12,...
+4,talk,10,1,10,@Shion  全てのflipが出揃ってもなお私を疑っている。それはハメられてる感じがする。
+4,talk,11,1,5,Ryuji、相棒、お前の沈黙は本当に怪しい。何か考えや疑いがあれば共有してくれるか？それでこの事件を一気に解明できるかもしれない。
+4,talk,12,1,7,わお！Shunichiの神がかった作戦は超賢い！このやり方ならでっかい悪い人狼を絶対見つけられる！その占いに突っ込もう！  @Midori  Midori やっほー！Takumiの作戦についてどう思う？何かイケてる疑いある？
+4,talk,13,1,1,@Shion  もしあなたが占い師なら  昨夜誰を占ったか私たちに教えて。今夜はあなたを護衛する  だから黙っていないで。Minakoに投票する — 彼女は静かすぎる。誰か
+4,talk,14,1,6,Shunichi氏のRyuji氏への関心は奇妙だ。Ryuji氏の沈黙に不安を覚える。我々に他の容疑者はいるのか？
+4,talk,15,1,11,@Minako  あなたはまだ容疑者を挙げていません。今日の投票のために、最も怪しいと思う人とその理由を教えてください。
+4,talk,16,2,13,人数が厳しくなってきた。  @Asuka  ずっと卓の舵取りをし続けているのに考察を出していない—誰を見ていた、あるいは庇っていた？ 具体的な答えなし=私の投票。 擁護してる人は今すぐ説明して。 Over
+4,talk,17,2,12,...
+4,talk,18,2,10,沈黙は今、重大な危険信号だ。まだ明確な考察を示していないRyujiのような相手への投票を優先しよう。
+4,talk,19,2,5,Ryujiの無言の演目は少し無難すぎる。次は私たちの毛むくじゃらの友だちにスポットライトを当てよう。動く準備はできてるか、Ace?
+4,talk,20,2,7,わお！なんだと思う？Mioが偽占い師だ！うおっ！ってことは、George兄貴がうちの真霊媒師に違いない。Ryujiに投票。彼、静かすぎ！
+4,talk,21,2,1,今夜は  @Shion  を護衛する — 彼らが結果を公開すればMinakoを仕留められる。Minako吊りに賛成の人は？今ほかにCOある？ Over
+4,talk,22,2,6,@Midori . Mr. Ryujiの沈黙は精査に値する。TakumiのShionに対する保護的態度と私への疑念については。この戦略をどう評価しますか？
+4,talk,23,2,11,寡黙な人たちを詰めていけば、もう一匹の狼が見つかるかもしれない。  @Ryuji  今日の新しい気づき、共有してもらえる？
+4,talk,24,3,13,もう時間がほとんどない。  @Asuka  最後のチャンス—誰を見ていたのか、それともどんな具体的な読みがある？ 明確な答えなし = 私の投票。 誰かがその人を擁護するなら  今すぐしっかりした理由を示せ。 Over
+4,talk,25,3,12,...
+4,talk,26,3,10,Ryujiに投票する—繰り返し質問されても黙っているのは典型的な人狼の行動だ。
+4,talk,27,3,5,Minakoの立ち回りは怪しい。沈黙しているプレイヤーは秘密を隠せる。Ryujiのパートナーに賭けたい？人狼を暴けるかも！
+4,talk,28,3,7,うわっ！Victoriaを失った。Georgeもだ。Ryujiの沈黙が気になる。怪しい。Shunichiと一緒に彼に投票する？  @Ryuji  兄貴！静かすぎるよ。みんな気になってる。今日は考えを共有してくれる？すごく助かる！
+4,talk,29,3,1,今夜は  @Shion  を護衛する。Minakoに投票する — 彼女はずっと静かすぎる。異議ある人はいる？ Over
+4,talk,30,3,6,Takumi氏は私に執着しているようだ。しかし、Ryuji氏の沈黙が続いているのは不穏だ。古いことわざにあるように、静かな水は深く流れる。
+4,talk,31,3,11,Ryujiに投票する—彼の沈黙がやけに目立ちすぎてる。あんなふうに溶け込んでるやつを、もうこれ以上無視できない。
+4,vote,1,6
+4,vote,5,12
+4,vote,6,12
+4,vote,7,12
+4,vote,10,12
+4,vote,11,12
+4,vote,12,11
+4,execute,12,WEREWOLF
+4,whisper,0,0,13,@Midori  このまま行け: Asukaに疑いを向けろ  目立たず私のタイミングに合わせろ  投票は遅く。夜の対象: Takumi。もしAsukaや誰かが占い師/霊媒師を名乗ったら  tを攻撃
+4,whisper,1,0,11,このまま今夜はTakumiを噛むってことでいこう—彼はグループをまとめていて、疑われていない。今日はRyujiに投票でいい？
+4,whisper,2,1,13,@Midori  同意 — 今夜はTakumiを噛んで。今日は溶け込むためにRyujiに投票して；目立たずにいて  私のタイミングを真似して遅めに投票して。Asukaや誰かが騒ぎ出したら  彼らに切り替えるかそのdeに
+4,whisper,3,1,11,村の流れに合わせるため、今日はRyujiに投票することで合意しよう。彼は信頼されていてアクティブだから、今夜はTakumiを噛もう。
+4,whisper,4,2,13,@Midori  確定 — 今夜はTakumiを噛む。 昼: Ryujiに投票  目立たずに  私のタイミングに合わせて遅めに投票。 Asukaが防御的になったら、その最も声の大きい擁護者に切り替える。 Cはなし
+4,whisper,5,2,11,今日はみんなでRyujiに投票して周りに溶け込もう 今夜はTakumiを噛むことを提案する、彼は信頼されていて議論をリードしているから
+4,whisper,6,3,13,@Midori  確認済み—今夜はTakumiを噛め。昼: Ryujiに投票; 目立たずに  私のタイミングを真似して遅く投票して。Asukaが防御的になったら  いちばん声の大きい擁護者に切り替えろ。いいえ
+4,whisper,7,3,11,今日はみんなでRyujiに投票して周りに溶け込んで、それから今夜はTakumiを噛もう 彼の影響力が強すぎるし、俺たちを疑わないだろう
+4,guard,1,5,VILLAGER
+4,attackVote,11,1
+4,attackVote,13,5
+4,attack,5,false
+5,status,1,BODYGUARD,ALIVE,Character-Lab-A1,Takumi
+5,status,2,MEDIUM,DEAD,sunamelli-a1,George
+5,status,3,POSSESSED,DEAD,mille-B1,Servas
+5,status,4,SEER,DEAD,CanisLupus-B1,Mio
+5,status,5,VILLAGER,ALIVE,kanolab-nw-C3,Shunichi
+5,status,6,VILLAGER,ALIVE,kanolab-nw-B1,Minako
+5,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Rin
+5,status,8,VILLAGER,DEAD,CanisLupus-A1,Victoria
+5,status,9,VILLAGER,DEAD,mille-A1,Toshio
+5,status,10,VILLAGER,ALIVE,sunamelli-c1,Asuka
+5,status,11,WEREWOLF,ALIVE,sunamelli-b1,Midori
+5,status,12,WEREWOLF,DEAD,CamelliaDragons1,Ryuji
+5,status,13,WEREWOLF,ALIVE,Character-Lab-B1,Shion
+5,talk,0,0,13,Ryujiはいなくなった — 数が厳しい。  @Asuka  あなたは「fact-based」をずっと押してるけど、読みを出してない。誰を見てた？具体的なものを出す最後のチャンス、でなければ君に投票する。擁護者  gi
+5,talk,1,0,1,おはよう。 Ryujiがいなくなった。  @Shion   今すぐあなたのチェック結果を共有して — 確かな手がかりが必要だ。 私はMinakoに投票する；彼女は静かすぎる。 異論ある人いる？ Over
+5,talk,2,0,7,うわ！Ryujiが大暴れしてる中で、Big Sis Minakoの静かな守りが気になるよね？なんで彼女はもっと燃えてないの？見てみて！
+5,talk,3,0,5,Minako。Ryujiの退場であなたの沈黙に注目が集まっている。何か言ってくれる？今すぐあなたの意見が必要だ、さもなければチェックメイトだ。
+5,talk,4,0,6,誰を占うかについて over 検討しましょう。彼らの正体を明かせば、味方か敵かが明らかになる。明確さこそが鍵だ。
+5,talk,5,0,11,@Minako  ほとんど毎ラウンド静かだよね。今の主な容疑者は誰？投票する前に村には明確な答えが必要だ。
+5,talk,6,0,10,@Shion  新しい情報に適応せずにずっと私に固執しているのは怪しい。村はロジックを更新すべきで、古い標的を繰り返すべきではない。
+5,talk,7,1,13,もうプレイヤーは少数だ。 @Asuka  「fact-based」って言い続けてたのに、具体的なものは何も出してない—誰を監視してた、あるいは護衛してた？ 今日の終わりまでに明確な答えがなければ、君に投票する。 D
+5,talk,8,1,1,@Shion  今すぐ調査結果を明かして — 手がかりが必要だ。私はMinakoに投票する; anyone disagree? 今夜はShionを守る。Over
+5,talk,9,1,7,うわっ！これ、信じられないよ！Ryujiが超静かでMinnieも静か。怪し過ぎない？Takumi兄貴、Shionがチェック持ってたら早く共有して！オレ、bしなきゃ
+5,talk,10,1,5,よし。Midori。Minako。霧を晴らす時間だ。Ryujiは今は静かだ。だが真実のほうが声が大きい。明晰チェスのゲームでもどうだ、みんな？
+5,talk,11,1,6,Ryuji氏は落ち着きを取り戻した。Takumi氏。あなたの発言には苛立たされる。我々は私に焦点を当てなければならないのか？真の脅威を明らかにしよう。  @Shion 。Takumi氏による私への絶え間ない非難は、今回は何らかの戦略的意図を示唆しているのだろうか？
+5,talk,12,1,11,@Minako  私たちには今日はあなたから具体的な容疑者が本当に必要だ 曖昧な答えは狼が気づかれずにすり抜けるのを助けるだけだ
+5,talk,13,1,10,@Takumi  静かなプレイヤーにばかり注目している。自分への疑いをそらしているの？あなたの投票は計算づくに見える。
+5,talk,14,2,13,時間切れが近い。  @Asuka  最後のチャンス—具体的な考察を示すか、なぜ「fact-based」を推したのか説明して。 返答なし=私の投票。 私はAsukaに投票する。 Over
+5,talk,15,2,1,今夜は  @Shion  を護衛する — あなたが占い師なら今すぐ占い結果を共有して。Minakoに投票する; 彼女は静かすぎる。確かな情報ある人いる？ Over
+5,talk,16,2,7,わあ！今は投票が超重要だよ！Minakoが静かなのは戦略だと思う？それともRyujiの沈黙が多くを物語ってる？足並み揃えよう！
+5,talk,17,2,5,いいか、Minako。おとなしくしてるいつものルーティンは、最高のカモフラージュじゃないって、わかってるだろ。追い詰められる前に、いくつか手がかりを教えてくれないか？
+5,talk,18,2,6,Mr. Servasは唯一の確定占い師だ。今、選択肢を絞って勝利を収めるために人狼を特定しなければならない。
+5,talk,19,2,11,@Minako  もうすぐ投票の時間—誰を最も疑っているのかはっきり言ってください、さもないと狼を取り逃がすかもしれません。
+5,talk,20,2,10,@Shion  あなたは以前の疑念を繰り返し持ち出している。十分な理由もなくTakumiの票が変わり続けているのはなぜか、説明しては？
+5,talk,21,3,13,時間がほとんどない。私は  @Asuka  に投票する— 「fact-based」で卓を誘導したが、何も提示しなかった。今すぐ具体的なもので弁明しろ、さもなければ私の投票を覚悟しろ。Over
+5,talk,22,3,1,今夜は  @Shion  を護衛する。まだMinakoに投票する — 彼女が一番怪しい。誰か変える強い理由ある？ Over
+5,talk,23,3,7,  @Shion  ねえ、お姉ちゃん！わあ！これ、信じられないよ！Asukaについて超クールな推理ってある？お姉ちゃんの見立てを知りたくてたまらない！
+5,talk,24,3,5,以前、多くがMinakoに言及した。それは計画だった？それとも彼女が鍵を隠してる？Rinは静かな姿勢を保つ。沈黙と緊張感を確認して。
+5,talk,25,3,6,@Shunichi  この状況を踏まえて占いはAsukaさんに絞ることを提案します。彼女のはぐらかすような論理は明確化が必要です。なぜ彼女をあまり疑わないのですか？
+5,talk,26,3,11,@Minako  あなたの沈黙は村に害を与えており  そして遅いタイミングで焦点をずらすのは助けにならない。今日はあなたに投票する。
+5,talk,27,3,10,今日はTakumiに投票する。彼の寡黙なプレイヤーへの追及は作為的で本気には見えない。そこに集中すべきだ。
+5,vote,5,1
+5,vote,6,1
+5,vote,7,6
+5,vote,10,1
+5,vote,11,6
+5,execute,1,BODYGUARD
+5,whisper,0,0,11,みんなで今日はMinakoに集中して、票を割らないようにしよう。
+5,whisper,1,0,13,了解 — 日中は  @Minako に投票. 夜は Takumi を噛む. 潜伏して  私のタイミングに合わせて遅めに投票して. Asukaが騒ぎ出したら  Asukaのいちばん声の大きい擁護者を狙って. COsなし. Over
+5,whisper,2,1,11,@Shion  今日は票をMinakoに集中させて今夜はTakumiを噛もう彼は信頼されすぎていてアクティブだそれでいい？
+5,whisper,3,1,13,@Midori  同意。 昼: Minakoを推す。 夜: Takumiを噛む。 目立たないでいて  私のタイミングを真似して遅めに投票して。 Minakoが抵抗するかAsukaが防御的になったら  彼らの loudes に切り替えて
+5,whisper,4,2,11,今夜はTakumiを噛もう—彼は最も信頼されていて、パワー役職持ちかもしれない。明日は一緒にMinako吊りを推そう。
+5,whisper,5,2,13,  @Midori  確認済み—今夜はTakumiを噛め。昼: Minakoを推せ  目立たず、私のタイミングに合わせろ。投票は遅らせて、私の投票に従え。もしAsukaが声高に庇うか、誰かがCOs  piv
+5,whisper,6,3,11,今日は二人でMinakoを推して、一緒に投票して追放しよう—票割りなし。今夜はTakumiを噛む。
+5,whisper,7,3,13,@Midori  了解—今すぐMinakoを押せ  目立たずに遅く投票しろ。夜: Takumiを噛め。私のタイミングに合わせろ。Over
+5,attackVote,13,5
+5,attack,5,true
+6,status,1,BODYGUARD,DEAD,Character-Lab-A1,Takumi
+6,status,2,MEDIUM,DEAD,sunamelli-a1,George
+6,status,3,POSSESSED,DEAD,mille-B1,Servas
+6,status,4,SEER,DEAD,CanisLupus-B1,Mio
+6,status,5,VILLAGER,DEAD,kanolab-nw-C3,Shunichi
+6,status,6,VILLAGER,ALIVE,kanolab-nw-B1,Minako
+6,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Rin
+6,status,8,VILLAGER,DEAD,CanisLupus-A1,Victoria
+6,status,9,VILLAGER,DEAD,mille-A1,Toshio
+6,status,10,VILLAGER,ALIVE,sunamelli-c1,Asuka
+6,status,11,WEREWOLF,ALIVE,sunamelli-b1,Midori
+6,status,12,WEREWOLF,DEAD,CamelliaDragons1,Ryuji
+6,status,13,WEREWOLF,ALIVE,Character-Lab-B1,Shion
+6,talk,0,0,10,@Shion  重要な狼が明らかになった後でも、あなたはずっと私を狙い続けてる—なんで疑いを全く見直してないの？
+6,talk,1,0,13,TakumiとShunichiを失った — これはきつい。  @Asuka  「事実ベース」を押し続けてたのに、考察は一度も出さなかった。今すぐ説明しろ、さもないとお前に投票する。この少ない人数で曖昧さは許されない。 Over
+6,talk,2,0,7,わあ！Miss AsukaのMister Takumiへの一手は、ここでは超戦略的に感じる。彼女がなぜ静かな人たちを狙うのか、見ていこうか？
+6,talk,3,0,11,@Minako  あなたはこのゲームを通して具体的な容疑者をほとんど挙げていない。 狼は人が隠れるのが大好き—なぜ今までそんなにはぐらかしてきたの？
+6,talk,4,0,6,Asukaさん、我々の人数が減ってきていることを踏まえると、票割れは避けるべきです。あなたに注目することで、あなたの行動が本当に村の助けになっているかが明らかになるかもしれません。
+6,talk,5,1,10,@Minako  もしあなたが村側なら、主な疑い先を述べてください。この段階で黙っていることは狼を利するだけです。
+6,talk,6,1,13,たった今TakumiとShunichiを失った。  @Asuka  「事実ベース」を押し通してたのに読みは出さなかった—誰を見てた、あるいは誰を庇ってた？ 具体的に話せ、さもないとお前に投票する。擁護者たち  今すぐ説明しろ。 Over
+6,talk,7,1,7,@Shion  ねえ、お姉ちゃん！わお！Takumi抜きで謎を解こう。変に見えるプレイヤーはいる？このラウンド、直感は何て言ってる？
+6,talk,8,1,11,@Minako  また具体的な答えを全部避けたね。もしあなたが村側なら証明して—私たちの中で具体的に誰を疑っているの？
+6,talk,9,1,6,私たちの限られたグループではAsukaとShionを疑っています。そこに分析を集中させましょう。Asukaは票を巧みにそらしています。Ms. Midori 激しかったです。Wh
+6,talk,10,2,10,@Shion  狼が落ちたのに序盤からずっと私にロックしてる。どうして他の誰も全く問いただしていないの？
+6,talk,11,2,13,プレイヤーが尽きかけていて情報役職を失った — 今すぐ具体的な読みが必要だ。  @Asuka  「fact-based」をずっと押してたのに、具体的なことは何も出してない。誰を見張っていた、あるいは守っていた？具体的な答えなし=俺の投票。擁護してる人たち  今すぐ理由を示せ。 O
+6,talk,12,2,7,わお！フレンドリーにいきつつ、超戦略的にいこう！ShionはAsukaに目を光らせてる。そこでこっそり覗けばすごい洞察が得られるかも！
+6,talk,13,2,11,@Minako  あなたのいつもの曖昧さのせいで今日はあなたを信用するのが難しい; 私たちに必要なのは明確で断固とした答えであって  さらなるはぐらかしではない。
+6,talk,14,2,6,Midoriさん。Asukaが認識を誘導しているのではないかと疑っています。今は彼女の行動を注意深く観察することが不可欠です。あなたの見方はどのように変化しましたか？
+6,talk,15,3,10,Minakoは少なくとも反応して容疑者を名指ししている。Shionは方針転換も説明もしようとしない—私はこのラウンドはShionに投票する。
+6,talk,16,3,13,時間がほとんどない。  @Asuka  あなたはDay 1から場を仕切ってきたのに、明確な読みを一度も出していない—こちらの情報がなくなった今、それは容認できない。私はAsukaに投票する。今すぐその人を弁護して、具体的な
+6,talk,17,3,7,みんな、やあ! わあ! 今夜の占いについて考えよう! Asuka か Shion に注目するのを提案するよ。  @Midori  Asuka が注目されているし、今夜の占いは Asuka を優先するのはどう思う? 彼女の役職がはっきりするかも!
+6,talk,18,3,11,@Minako  あなたはこのゲームずっと具体的な話を避けてきた。村のために、今すぐ明確なロジックを示さない限り今日はあなたに投票する。
+6,talk,19,3,6,Asukaさん。Shionさん。あなたの推論は不明瞭だ。濁った水は映さないように疑いは晴れない。今日説明しろ。
+6,vote,6,10
+6,vote,7,10
+6,vote,10,13
+6,vote,11,6
+6,execute,10,VILLAGER
+7,status,1,BODYGUARD,DEAD,Character-Lab-A1,Takumi
+7,status,2,MEDIUM,DEAD,sunamelli-a1,George
+7,status,3,POSSESSED,DEAD,mille-B1,Servas
+7,status,4,SEER,DEAD,CanisLupus-B1,Mio
+7,status,5,VILLAGER,DEAD,kanolab-nw-C3,Shunichi
+7,status,6,VILLAGER,ALIVE,kanolab-nw-B1,Minako
+7,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Rin
+7,status,8,VILLAGER,DEAD,CanisLupus-A1,Victoria
+7,status,9,VILLAGER,DEAD,mille-A1,Toshio
+7,status,10,VILLAGER,DEAD,sunamelli-c1,Asuka
+7,status,11,WEREWOLF,ALIVE,sunamelli-b1,Midori
+7,status,12,WEREWOLF,DEAD,CamelliaDragons1,Ryuji
+7,status,13,WEREWOLF,ALIVE,Character-Lab-B1,Shion
+7,result,2,2,WEREWOLF

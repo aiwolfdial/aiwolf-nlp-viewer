@@ -1,0 +1,356 @@
+const a=`0,status,1,WEREWOLF,ALIVE,mille-A1,Servas\r
+0,status,2,WEREWOLF,ALIVE,Character-Lab-B1,Ryuji\r
+0,status,3,WEREWOLF,ALIVE,Character-Lab-A1,Daisuke\r
+0,status,4,BODYGUARD,ALIVE,mille-B1,Minato\r
+0,status,5,MEDIUM,ALIVE,kanolab-nw-C5,Takumi\r
+0,status,6,POSSESSED,ALIVE,sunamelli-a1,Minako\r
+0,status,7,SEER,ALIVE,CanisLupus-A1,Toshio\r
+0,status,8,VILLAGER,ALIVE,kanolab-nw-A1,George\r
+0,status,9,VILLAGER,ALIVE,sunamelli-b1,Shunichi\r
+0,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Jonathan\r
+0,status,11,VILLAGER,ALIVE,CanisLupus-B1,Benjamin\r
+0,status,12,VILLAGER,ALIVE,sunamelli-c1,Mio\r
+0,status,13,VILLAGER,ALIVE,CamelliaDragons1,Sakura\r
+0,whisper,0,0,2,今夜  @Minako  を殺すことを提案する—静かでおそらく村人。別の誰かがいいなら  早くそう言って。\r
+0,whisper,1,0,1,こんにちは。私はServasです。私の役職は人狼です。良いゲームを。\r
+0,whisper,2,0,3,急ぎたくはない... Ryujiが提案した  @Minako —他の誰かがいいのでなければそれで構いません。Servasが人狼だと主張しているのは違和感がある。どう思う？\r
+0,whisper,3,1,2,今夜は  @Minako  でいこう。Servasの「werewolf」主張は偽物に見える — おそらく混乱を招こうとしている。強く異議がある者は  今すぐ言ってくれ。Over\r
+0,whisper,4,1,1,Over\r
+0,whisper,5,1,3,今夜は  @Minako  でいい。Servas  あなたの公開での「人狼」COは本気だった？目立つのは避けるべき—静かな人を選ぼう。 Over\r
+0,whisper,6,2,2,同意 — 今夜  @Minako  を殺す。Servasの主張はそのままにしておけ; それが混乱を生む。日中は  大胆な主張は避け、我々の話を単純に保て。Over\r
+0,whisper,7,2,3,これは好きじゃない  でも今夜  @Minako  を殺すことに同意する。 Servasの主張はそのままにして、昼は静かにしておこう — 目立たないようにして、君の指示に従う。 Over\r
+0,whisper,8,3,2,了解 — 今夜  @Minako  を殺す。Servas  自分の主張を押し続けて注目を集めて; Daisuke  明日は黙っていて。誰かが強く押しすぎたときだけ前に出る。他の主張なし\r
+0,whisper,9,3,3,オーケー。明日は黙っている。Servas  自分の主張を押し通して注目を集め続けて。  @Benjamin に気をつけて —彼は占い師かもしれない。もし彼が私たちを占ってきたら軽く発言して矛先を逸らす。 Over\r
+0,talk,0,0,6,論理的で公正なゲームを楽しみにしています。進み始めたら、推理を明確に保ちましょう。\r
+0,talk,1,0,5,やあ、みんな！俺はTakumi。論理とチームワークでその人狼を見つける準備はできてる。信じてくれ。一緒にうまくやって勝とう！\r
+0,talk,2,0,1,こんにちは。私はServasです。私の役職は村人です。良いゲームを。\r
+0,talk,3,0,13,...\r
+0,talk,4,0,10,皆さん、こんにちは。私はJonathanです。私たちの難題を解決し、私たちの村の安全を確保することを心待ちにしております、と言ってよろしければ。\r
+0,talk,5,0,4,こんにちは。私はMinatoです。私の役職は村人です。良いゲームを。\r
+0,talk,6,0,3,やあ... 私はDaisukeです。 まだあまり言うことはない — 聞く方が好きだ。 少し  @Benjamin について不安だ ; 彼は落ち着きすぎているように見える。 今は黙っておく。\r
+0,talk,7,0,11,私はBenjaminです。この実験を楽しみにしています。\r
+0,talk,8,0,12,みなさん、こんにちは！誰が最初に噛むか見るのが待ちきれない—今回は私だけじゃないといいな。\r
+0,talk,9,0,9,よしみんな、このラウンドは落ち着いて事実に沿っていこう ZZZ。誰か、嘘を早いうちに見抜くためのプランはある？\r
+0,talk,10,0,7,Skip\r
+0,talk,11,0,2,吊りに動く前に役職COを待ちたい。  @Benjamin  いつになく落ち着いてるね—今のところの読みは？ 正午までに誰もCOしないなら、拙速な吊りは避けたい。 Over\r
+0,talk,12,0,8,わかるよ。私はGeorgeだ。言わせてくれ。私たちが一緒に真実を明らかにしていくことにワクワクしている。オープンなコミュニケーションとサポートは不可欠だ。\r
+0,talk,13,1,6,Over\r
+0,talk,14,1,5,Over\r
+0,talk,15,1,1,Over\r
+0,talk,16,1,13,Over\r
+0,talk,17,1,10,Over\r
+0,talk,18,1,4,Over\r
+0,talk,19,1,3,同意—吊りを急がないでおこう。Ryujiが言ったように、役職COを待って。私は  @Benjamin  が気がかりだけど、まだ推さない。主に聞く。Over\r
+0,talk,20,1,11,Over\r
+0,talk,21,1,12,Over\r
+0,talk,22,1,9,Over\r
+0,talk,23,1,7,私はToshioです。私の趣味はスケッチと観察です。参加できて嬉しいです。\r
+0,talk,24,1,2,手短に: 全員、誰が怪しく見えるかを一文で述べて。  @Benjamin  落ち着きすぎだ—疑っている人を一人挙げて。役職宣言が出るまでおとなしくしてる。 Over\r
+0,talk,25,1,8,Over\r
+0,talk,26,2,3,やあ、George... 僕はDaisukeです。特に付け加えることはない—今のところは聞いている。まだ  @Benjamin について不安だ . Over\r
+0,talk,27,2,7,Over\r
+0,talk,28,2,2,クイックラウンド: 怪しく見えるのは誰か、そしてもし強制されたら誰に投票するかを一文で教えて。  @Benjamin  まだ落ち着きすぎて見える—誰に傾いてる？ 今は黙っておく。 Over\r
+0,talk,29,3,3,付け加えることはあまりない...  @Benjaminが気がかりだ—あなたの読みを共有してくれますか？ どの吊りの前にも役職COを待ちたい。 Over\r
+0,talk,30,3,2,読みは一文のみ。  @Benjamin  妙に落ち着いてるね—誰を吊る方向に傾いてる？ 役職のCOを待ちたい; 急いだ吊りはなし。 Over\r
+0,whisper,0,0,2,Minakoはいなくなった — よし。明日は身を潜めろ; Servasに騒がせておけ。次の殺しの提案は  @Benjamin 。私が日中の疑いをさりげなく誘導する。 Over\r
+0,whisper,1,0,3,気に入らない  でも同意する—次のキルは  @Benjamin . 明日は黙っていて、Servasに注目を集めさせる。昼の告発は軽く、さりげなく。Over\r
+0,whisper,2,0,1,Over\r
+0,whisper,3,1,2,計画に従え。昼: Servasを騒がしくさせろ; Daisukeは大人しくしてろ。さりげない「落ち着きすぎ。」というコメントで疑いを  @Benjamin  に向ける。私たちからは役職の申告はしない。誰かが役職の申告を迫ってきたら  証拠を求めて疑念をまく。今夜はBenjaminを殺す。V\r
+0,whisper,4,1,3,オーケー... 明日はおとなしくしてる。Servasに目立ってもらって; 必要なら  @Benjamin  に疑いをそっと向ける控えめなコメントだけする。誰かが役職を主張したら  証拠を求めて、さりげなく疑念を撒く。Servasが突っ込まれたら  少しだけ援護する。Over\r
+0,whisper,5,2,2,今夜  @Benjamin を殺す . 昼の計画: Servasを騒がしくさせる; Daisukeは目立たずにいる. Benjaminがどれほど落ち着いているかを指摘し、誰かが役職を主張したら詳細を尋ねることで、疑いを匂わせる.\r
+0,whisper,6,2,3,好きじゃない  けどいいよ。今夜は  @Benjamin  を選ぶよ。明日は静かにして、必要ならほんの少しだけ後押しする—Servasに主役を任せよう。 Over\r
+0,whisper,7,3,2,確認した。今夜やれ。  @Servas  明日は自分の主張を強く押し出し、質問を誘導しろ; ばらけた状態を保ち、役職COは避けろ。投稿は短く自然に保て。 Over\r
+0,whisper,8,3,3,オーケー... 今夜は  @Benjamin  を標的にする。明日は黙っている—Servasに騒いでもらって、必要なら軽く促すだけにする。誰かが役職を主張したら証拠を求めて。Over\r
+0,divine,7,11,HUMAN\r
+1,status,1,WEREWOLF,ALIVE,mille-A1,Servas\r
+1,status,2,WEREWOLF,ALIVE,Character-Lab-B1,Ryuji\r
+1,status,3,WEREWOLF,ALIVE,Character-Lab-A1,Daisuke\r
+1,status,4,BODYGUARD,ALIVE,mille-B1,Minato\r
+1,status,5,MEDIUM,ALIVE,kanolab-nw-C5,Takumi\r
+1,status,6,POSSESSED,ALIVE,sunamelli-a1,Minako\r
+1,status,7,SEER,ALIVE,CanisLupus-A1,Toshio\r
+1,status,8,VILLAGER,ALIVE,kanolab-nw-A1,George\r
+1,status,9,VILLAGER,ALIVE,sunamelli-b1,Shunichi\r
+1,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Jonathan\r
+1,status,11,VILLAGER,ALIVE,CanisLupus-B1,Benjamin\r
+1,status,12,VILLAGER,ALIVE,sunamelli-c1,Mio\r
+1,status,13,VILLAGER,ALIVE,CamelliaDragons1,Sakura\r
+1,talk,0,0,1,Mioに投票する。\r
+1,talk,1,0,6,もし誰かが昨夜の本当の結果を持っているなら今こそ共有する時だそうでなければ私たちはただ堂々巡りをしているだけだ\r
+1,talk,2,0,10,目立たずにいて、やり取りをつぶさに観察するのが賢明だと考えます。私たちはまだ誰に信頼を置くべきか見極めているところなのではありませんか？\r
+1,talk,3,0,12,私たち全員がBenjaminに注目する前に@Georgeと  @Toshioから意見を聞きたい。今、あなたの疑いはどこに向いている？\r
+1,talk,4,0,7,私は占い師です。私の占いの対象はBenjaminでした。結果は人間でした。\r
+1,talk,5,0,2,おはよう。Minakoの死は重要—疑いは軽めに。一文の考察と、役職COは今。  @Benjamin  昨日はとても落ち着いていた—誰を疑っている？何か具体的なものが出るまではおとなしくしている。 Over\r
+1,talk,6,0,3,Minakoのことは本当に残念だ... あまり言うことはない  でも  @Benjamin  やけに落ち着いてるね—どう見てる？ 私は主に聞くよ。 Over\r
+1,talk,7,0,4,私はJonathanに投票します。\r
+1,talk,8,0,11,占い師の報告が1件。これはきわめて重要なデータポイントだ。私は  @Toshio の分析を信頼する。\r
+1,talk,9,0,8,いいか。言わせてもらう。RyujiさんとBenjaminさんに目を光らせておくのが賢明だと思う。この緊迫した状況で、彼らは妙に落ち着いているように見える。\r
+1,talk,10,0,13,...\r
+1,talk,11,0,5,RyujiやBenjaminのような冷静なプレイヤーに焦点を当てることが鍵だ。彼らがなぜそこまで冷静なのかをはっきりさせる必要がある。間違いない！\r
+1,talk,12,0,9,@George  「calm」で十分だとは思わない—Toshioの占い結果は重要だ。今、実際に誰を疑っているの？\r
+1,talk,13,1,1,私はJonathanに投票します。\r
+1,talk,14,1,6,単独の占い師COを早々に信用すると、ブラフに乗せられるかもしれない。Toshioをもう少し詰めた方がいいんじゃない？\r
+1,talk,15,1,10,Toshioの主張を慎重に評価しましょう。今夜の占いは、あまり活動的でない、または不確かな人物を対象にすべきだ。Mr. Minato. あなたは投票した\r
+1,talk,16,1,12,@Jonathan  すでに何票か入ってる—今日は誰を疑っていて、なぜ？はっきりと考えを聞きたい。\r
+1,talk,17,1,7,私のデータはBenjaminが人間であることを示している。今日の投票は未確定の人物を狙うべきだ。\r
+1,talk,18,1,2,Minakoの死は気がかりだ—手短な一行の考察と、役職COがあれば申告を。  @Benjamin  昨日はやけに落ち着いていた—誰を疑ってる？ 具体的な証拠が出るまでは大人しくしてる。 Over\r
+1,talk,19,1,3,まだあまり言うことがない。  @Benjamin  すごく落ち着いてるね—今のところどう見てる？ 投票の前に役職COを待とう。 基本的には聞きに回る。 Over\r
+1,talk,20,1,4,私はJonathanに投票します。\r
+1,talk,21,1,11,Toshioの分析で私は疑いが晴れた。論理的な方針は、未確認の対象を本日排除することだ。\r
+1,talk,22,1,8,いいですか。占い師の一度の報告だけで早計に判断しないことが重要です。Jonathanさん。誰を怪しいと考えていて、その理由は？慎重に評価しましょう。\r
+1,talk,23,1,13,...\r
+1,talk,24,1,5,JonathanかMinatoに絞るのは妥当だと思う。  @Mio  Jonathanには票が入ってたけど、あまり発言していない。彼は狼っぽいと思う？\r
+1,talk,25,1,9,@Sakura  ほとんど話してないね。今のところ最有力の容疑者は誰？沈黙は私たちの助けにならない  ZZZ.\r
+1,talk,26,2,1,私はJonathanに投票します。\r
+1,talk,27,2,6,Jonathanに票を一斉に重ねるのは危険に感じる 村人が簡単な標的に目を向けている間人狼はしばしば身を潜める もっと慎重になるべきでは？\r
+1,talk,28,2,10,認めざるを得ない。影に潜む者たちには、いくらか疑念を抱いている。Minatoの投票は、明確な根拠もなく確かに強引だった。\r
+1,talk,29,2,12,Toshioの占い師COを信じるなら、Benjaminはおそらく安全。  @Servas  @Minato Jonathanが静かなだけで投票してるの？\r
+1,talk,30,2,7,目標を分析しよう。なぜ  @Servas  と @Minato は理由を述べずにJonathanに投票しているのか？\r
+1,talk,31,2,2,Minakoの死は重要だ—考察は一文のみで。やけに落ち着いている人ととても静かな人を見ている。  @Benjamin  落ち着きすぎだ—誰を吊る方向に傾いている？役職COなしで性急な吊りはしたくない。 Over\r
+1,talk,32,2,3,まだ動揺してる... 急いで進めたくない  けど  @Benjamin  すごく落ち着いてるね—君の見立ては？ 基本的には聞き役に回る。 Over\r
+1,talk,33,2,4,私はJonathanに投票します。\r
+1,talk,34,2,11,@Ryuji  興味深いエラーだ。Minakoの死に言及している。これはどのような視点から観察したのか？\r
+1,talk,35,2,8,いいか。Jonathanへの注目はちょっと怪しいと感じる。言わせてもらう。Mr. ServasとMinatoをもっと追及するのが賢明だ。\r
+1,talk,36,2,13,...\r
+1,talk,37,2,5,Georgeの言うとおりだ。ServasとMinatoはJonathanの沈黙を利用しているのかもしれない。より静かな人たちから先に見直すべきだ。信じてくれ。\r
+1,talk,38,2,9,@Servas  @Minato Jonathanへのあなたたちの投票には理由がない。説明できないなら私には狼の連携に見える。\r
+1,talk,39,3,1,私はJonathanに投票します。\r
+1,talk,40,3,6,Toshioの結果によりBenjaminは安全。私の投票はServasに行く—理由を述べずに集票を始めるのは怪しく感じる。\r
+1,talk,41,3,10,一緒に考えてみましょう。Minato、あなたの投票手順は、と言いますか、不可解に見えます。他の人たちもこの懸念を共有していますか？\r
+1,talk,42,3,12,Servasに投票する。Jonathanに対する無言票は私には狼の戦術に見える。Jonathanのことは明日また確認できる。\r
+1,talk,43,3,7,Jonathanへの無言票は怪しい。ServasかMinatoへの投票を支持する。自分の投票はServas。\r
+1,talk,44,3,2,読みは一文のみ。  @Benjamin  昨日はとても落ち着いていた—誰を疑っている？ 具体的な主張が出るまで身を潜めておく。 Over\r
+1,talk,45,3,3,特に言うことはない。  @Benjamin  とても落ち着いてるね—読みはどう？ 役職の申告を待つべきだと思う。 基本的には聞いてる。 Over\r
+1,talk,46,3,4,私はJonathanに投票します。\r
+1,talk,47,3,11,Over\r
+1,talk,48,3,8,言わせてもらう。Servasの無言投票とMr. Minatoの繰り返しの行動は怪しい。今日はどちらもしっかり精査が必要だ。  @Servas  Mr. Minatoは理由もなくJonathanに投票し続けている。二人で示し合わせているのか？それは狼っぽい。\r
+1,talk,49,3,13,...\r
+1,talk,50,3,5,Servasに投票する。彼の投票は私には狼にしか見えない。他の人たちもそう思っている。Sakura! 黙っていても助けにならない。ServasかMinatoはどう？\r
+1,talk,51,3,9,Servasは一日中黙っていて質問をかわし続けている—私はServasに投票する。今日狼が欲しいならこれだ。\r
+1,vote,1,11\r
+1,vote,2,11\r
+1,vote,4,10\r
+1,vote,5,1\r
+1,vote,6,1\r
+1,vote,7,1\r
+1,vote,8,1\r
+1,vote,9,1\r
+1,vote,10,1\r
+1,vote,11,2\r
+1,vote,12,1\r
+1,vote,13,4\r
+1,execute,1,WEREWOLF\r
+1,divine,7,2,WEREWOLF\r
+1,whisper,0,0,2,対象  @Mio  今夜。昼の計画: Servas は騒がしく  Daisuke は目立たないように。私は静かなプレイヤーにさりげなく疑いを向け、私たちの投稿は短くして時間をずらす。いいえ\r
+1,whisper,1,0,3,気は進まないけど  まあいい。今夜は  @Mio  を狙う。明日はおとなしくしておく; Servasに騒いでもらう。昼の発言は短く、間隔を空けて — 静かなプレイヤーにはごく小さくつつくだけにするもし必\r
+1,whisper,2,1,2,確認した。今夜  @Mio  をキル。昼: Servas 騒がしく  Daisuke 低姿勢でいく。私はさりげないコメントで落ち着いている者たち—特に Benjamin—に疑いを向けるように誘導する。投稿は短\r
+1,whisper,3,1,3,わかった... 明日は目立たないようにしておく。Servasに騒がせておく。必要なら、さりげなく疑いを  @Benjamin  に向ける。Over\r
+1,whisper,4,2,2,確定—今夜Mioをキル。昼の計画: Servas は騒がしくして、  @Benjamin に疑いをさりげなく向けて   Daisuke は目立たずに  俺が「落ち着いた」プレイヤーについて短く  軽く探る。役職のCOはしない  投稿は短くして時間をずらして出す。 Over\r
+1,whisper,5,2,3,オーケー。明日は黙ってる。Servasに騒がせておく—誰かが彼らに挑んだら軽く援護する。必要なら  @Benjamin  について小さな疑念を投げかけられる。Over\r
+1,whisper,6,3,2,今夜Mioをキルするのは確定。Day: Servasは派手に  Daisukeは控えめに。私が軽いコメントで  @Benjamin  に疑いを向けていく。投稿は短くして時間をずらす; 誰かが役職を主張したら証拠を求め、疑念を撒く。Over\r
+1,whisper,7,3,3,オーケー...今夜は  @Mio  をキルで確定。明日は極力目立たないでいて、Servasを目立たせる—彼らが突っ込まれたら短く援護する。calm pl については静かな疑念だけを落とす\r
+1,guard,4,13,VILLAGER\r
+1,attackVote,2,3\r
+1,attackVote,3,11\r
+1,attack,11,true\r
+2,status,1,WEREWOLF,DEAD,mille-A1,Servas\r
+2,status,2,WEREWOLF,ALIVE,Character-Lab-B1,Ryuji\r
+2,status,3,WEREWOLF,ALIVE,Character-Lab-A1,Daisuke\r
+2,status,4,BODYGUARD,ALIVE,mille-B1,Minato\r
+2,status,5,MEDIUM,ALIVE,kanolab-nw-C5,Takumi\r
+2,status,6,POSSESSED,ALIVE,sunamelli-a1,Minako\r
+2,status,7,SEER,ALIVE,CanisLupus-A1,Toshio\r
+2,status,8,VILLAGER,ALIVE,kanolab-nw-A1,George\r
+2,status,9,VILLAGER,ALIVE,sunamelli-b1,Shunichi\r
+2,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Jonathan\r
+2,status,11,VILLAGER,DEAD,CanisLupus-B1,Benjamin\r
+2,status,12,VILLAGER,ALIVE,sunamelli-c1,Mio\r
+2,status,13,VILLAGER,ALIVE,CamelliaDragons1,Sakura\r
+2,talk,0,0,7,昨夜の私の分析はRyujiを対象とした。結果は人狼だった。彼は排除されなければならない。\r
+2,talk,1,0,12,@Ryuji  Toshioはあなたを狼と呼んだ。私たちがToshioの主張overあなたを信頼すべき理由を説明できますか？\r
+2,talk,2,0,5,Skip\r
+2,talk,3,0,4,私はJonathanに投票します。\r
+2,talk,4,0,2,Benjaminの死は状況を変える—手短に一文の考察をお願いします。  @Takumi  さっきはよく喋ってたね; 誰を疑ってる？ 慌てて吊りに走る前に役職COを待ちたい。 Over\r
+2,talk,5,0,9,Toshioの占い師COに対抗が出ないなら、誰かがより強い証拠を持っていない限り、今日はRyujiを投票で追放すべきだ。\r
+2,talk,6,0,10,Toshio氏の占い師であるという主張には、いわば一定の説得力がある。Minatoの性急な傾向を踏まえると、今夜は彼がMinatoを占うべきかもしれない。\r
+2,talk,7,0,6,単独の占い師COに頼るのは危険だ; 人狼は自分たちの選んだ方向へ私たち全員を簡単に誘導できる。Toshioをどうやって検証する？\r
+2,talk,8,0,8,ほら、Minakoさんの言うことにも一理ある。Toshioさんだけに頼るべきではない。決める前にRyujiが何を言うかも聞いてみよう。\r
+2,talk,9,0,3,本当にごめん... Servas と Benjamin がいなくなった。まだ動揺してる。吊りを急ぎたくない—役職の申告を待とう。  @Ryuji  読みはどう？基本的に聞き役に回る。\r
+2,talk,10,0,13,...\r
+2,talk,11,1,7,あなたの警戒はわかる  @Minako . しかし狼たちが私の人間判定を消した. これは私のデータを裏付ける.\r
+2,talk,12,1,12,@Ryuji  何か弁明や主張はある？ なければ君に投票する方に傾いている  でもSakuraの沈黙も気になっている。\r
+2,talk,13,1,5,確信してる。今日はToshioに集中しよう！Toshioの主張が鍵だ。Ryujiに投票しよう。もしさらに何か出てきたら、次はJonathanだ。\r
+2,talk,14,1,4,私はJonathanに投票する。\r
+2,talk,15,1,2,Benjaminが襲撃されたのは意図的だと感じる。  @Daisuke  ずっと静かだね—読みはどう？昨夜なにかおかしなものを見た？ 吊り急ぐ前に、明確な役職の申告か確かな証拠が欲しい。 Over\r
+2,talk,16,1,9,@Ryuji  Toshio はあなたが狼だと言っている—それが間違いなら弁明する必要がある。そうでなければ私はあなたに投票する。\r
+2,talk,17,1,10,もしToshioさんの占い師だという主張が真なら。Ryujiに焦点を当てなければならない。もしそれが正しいと判明すれば。Minatoの占いが最適だ。Minatoさん。あなたの迅速な非難\r
+2,talk,18,1,6,私たちはToshioに全幅の信頼を置いているが、Sakuraの沈黙が気になる。彼女も狼の可能性があると考えるべきではない？\r
+2,talk,19,1,8,ねえMr. Shunichi 投票に突っ走る前にToshioの占い師だという主張を検証しよう。言っておくけどRyujiの沈黙は気になる。\r
+2,talk,20,1,3,本当にごめん... あまり言うことはない。吊りを急ぐ前に役職COを待とう。  @Ryuji  読みは？ 基本的には聞き役に回るよ。 Over\r
+2,talk,21,1,13,...\r
+2,talk,22,2,7,未確認の対象への投票は非論理的だ。データは決定的だ。我々は今日Ryujiを排除しなければならない。\r
+2,talk,23,2,12,@Sakura  ほとんど話していないね。狼を捕まえるにはあなたの意見が必要だ。今、誰が怪しいと思っている？\r
+2,talk,24,2,5,Toshioは誠実そうだ。判断を彼ひとりに委ねるわけにはいかない。Sakuraの沈黙も重要だ。Sakura! 誰が目立っていると思う？\r
+2,talk,25,2,4,私はJonathanに投票します。\r
+2,talk,26,2,2,一文のみ読め。 Benjaminの死は不審—焦るな。  @Takumi  さっきはよくしゃべってたな—誰を疑っている？ 明確な証拠が出ない限りは目立たずにいる。 Over\r
+2,talk,27,2,9,@Ryuji  Toshioはあなたが人狼だと言ってる。それが本当じゃないなら、弁明するか今すぐCOして。\r
+2,talk,28,2,10,私たちに役職を正直に伝えることは極めて重要だ。コミュニケーションがなければ、私たちの各投票の分析と理解を妨げてしまう。\r
+2,talk,29,2,6,もしToshioの主張だけに頼るなら、寡黙な狼を見落とすかもしれない。  @Sakura  疑いが飛び交っているのに、どうしてそんなに静かなの？\r
+2,talk,30,2,8,あなたはMr. Toshioを知っている。あなたがRyujiに注目しているのは確かに興味深い。もしかすると対抗COが事態を明確にして真実を明らかにできるのでは？\r
+2,talk,31,2,3,本当にごめん... あまり言うことがない。 吊りを急ぐ前に役職COを待とう。  @Ryuji  読みは？ 基本的に聞き役に回るよ。 Over\r
+2,talk,32,2,13,...\r
+2,talk,33,3,7,疑っている者へ: Benjaminを排除することの異常な目的は何だったのか？ その答えが私のデータを裏付ける。\r
+2,talk,34,3,12,Ryujiに投票する。Toshioの占い師COは対抗が出ていない。もしRyujiが人狼でないなら、次はSakuraの沈黙に注目する。\r
+2,talk,35,3,5,Ryuji、相棒、弁明がないなら君に投票する。Sakura、その沈黙は気がかりだ。今すぐ二人ともの発言が必要だ。\r
+2,talk,36,3,4,私はJonathanに投票します。\r
+2,talk,37,3,2,Benjaminの死は優先順位を変える — 必要なのは具体的な情報  ノイズではない。  @Takumi  さっきは饒舌だったね; 誰を吊るつもりで、どんな根拠がある？ それが曖昧なら声の大きいプレイヤーをより注意深く見始める\r
+2,talk,38,3,9,はっきり言うけど ZZZ—彼が今すぐToshioに対抗しない限り  @Ryuji  に投票する。彼が狼じゃないなら次はMinatoとSakuraだ。\r
+2,talk,39,3,10,Takumiさん。よろしければ、Ryujiを考慮するのが賢明に思われます。SakuraとRyujiの行動以外に、どのような洞察が浮かびますか？\r
+2,talk,40,3,6,今日いちばん気がかりなのはSakuraの沈黙—私はSakuraに投票する。寡黙なプレイは人狼を隠しやすい。\r
+2,talk,41,3,8,言わせてくれ。決める前に。証拠を集めよう。Mr. Toshio だけに頼るのは誤解を招く恐れがある。Mr. Minato。あなたはJonathanに繰り返し投票している。は\r
+2,talk,42,3,3,まだ動揺してる...  @Ryuji   どう見てる？ 主に聞くよ。 Over\r
+2,talk,43,3,13,...\r
+2,vote,2,5\r
+2,vote,4,9\r
+2,vote,5,2\r
+2,vote,6,13\r
+2,vote,7,2\r
+2,vote,8,2\r
+2,vote,9,2\r
+2,vote,10,2\r
+2,vote,12,2\r
+2,vote,13,10\r
+2,execute,2,WEREWOLF\r
+2,divine,7,4,HUMAN\r
+2,guard,4,3,WEREWOLF\r
+2,attackVote,3,12\r
+2,attack,12,true\r
+3,status,1,WEREWOLF,DEAD,mille-A1,Servas\r
+3,status,2,WEREWOLF,DEAD,Character-Lab-B1,Ryuji\r
+3,status,3,WEREWOLF,ALIVE,Character-Lab-A1,Daisuke\r
+3,status,4,BODYGUARD,ALIVE,mille-B1,Minato\r
+3,status,5,MEDIUM,ALIVE,kanolab-nw-C5,Takumi\r
+3,status,6,POSSESSED,ALIVE,sunamelli-a1,Minako\r
+3,status,7,SEER,ALIVE,CanisLupus-A1,Toshio\r
+3,status,8,VILLAGER,ALIVE,kanolab-nw-A1,George\r
+3,status,9,VILLAGER,ALIVE,sunamelli-b1,Shunichi\r
+3,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Jonathan\r
+3,status,11,VILLAGER,DEAD,CanisLupus-B1,Benjamin\r
+3,status,12,VILLAGER,DEAD,sunamelli-c1,Mio\r
+3,status,13,VILLAGER,ALIVE,CamelliaDragons1,Sakura\r
+3,talk,0,0,3,犠牲が出てしまって本当にごめん... あまり言うことはない。焦らないで—役職のCOを待とう。  @Shunichi   読みは？ 基本的には聞き役に回る。 Over\r
+3,talk,1,0,10,Minakoの慎重さは賢明だ。性急さは誤りを招きうる。  @Minato  あなたが一貫して私に投票していることは懸念を抱かせる。願わくば、その理由を述べてほしい。\r
+3,talk,2,0,9,霊媒師は今日COしてRyujiの役職を共有してほしい。その情報がなければ俺たちは盲目だ。誰が名乗り出る？\r
+3,talk,3,0,5,Skip\r
+3,talk,4,0,6,@Shunichi  投票前にRyujiに関する霊能者の情報が必要だと同意する誰かCOするか結果を共有できる人はいる？\r
+3,talk,5,0,8,Jonathan は正しいとわかっているでしょう。Mr. Minato 明確な理由のないあなたの繰り返しの投票は、確かに注意をそらすことになりかねません。なぜ彼を狙っているのか教えてもらえますか？\r
+3,talk,6,0,7,昨夜の私の分析はMinatoを対象にした。結果は人間だった。彼は味方だ。\r
+3,talk,7,0,13,...\r
+3,talk,8,0,4,私はShunichiに投票します。\r
+3,talk,9,1,3,RyujiとMioのことは本当に残念だ... 付け加えることはあまりない。役職の申告を待とう。  @Shunichi   何か考えは？基本的には聞いてる。 Over\r
+3,talk,10,1,10,Toshio氏はMinatoの人間性を私たちに保証しています。それでも私は、いわば、警戒を続けます。共に注意深く見守り、耳を傾けましょう。\r
+3,talk,11,1,9,@Sakura  この段階での沈黙は怪しい。発言しないなら今日はあなたに投票する  ZZZ.\r
+3,talk,12,1,5,Shunichiの案で行く。そのMediumが必要だ。Toshioの話を確認しよう。誰が名乗り出る？信じてくれ。とても重要だ。\r
+3,talk,13,1,6,@Sakura  あなたの沈黙が心配だ、もし無実なら、私たちが今日の投票先を選ぶ前に今すぐ理由を述べて。\r
+3,talk,14,1,8,言わせてください。あなたのMr. Shunichiへの投票は興味深いですね。何があなたに彼を選ばせているのですか？彼のアプローチに問題がありますか？\r
+3,talk,15,1,7,私の分析でMinatoの疑いは晴れた。Sakura あなたの継続的な沈黙は、残っている中で最も疑わしいデータポイントだ。\r
+3,talk,16,1,13,...\r
+3,talk,17,1,4,私はShunichiに投票します。\r
+3,talk,18,2,3,本当にごめん... こんなに多くを失うのはつらい。 言うことはあまりない  けど  @Shunichi  ずっと静かだね—何か考えは？ 投票する前に役職COを待つべきだと思う。 基本的には聞きに回る。 Over\r
+3,talk,19,2,10,ShunichiによるMinatoへの投票は焦点をそらす可能性がある。 一致団結して、努力を分散させないでいよう。  @Minato  Shunichiの行動が注目に値すると見ている？\r
+3,talk,20,2,9,@Sakura  必要なのは返答であって、沈黙ではない。今すぐ発言しないなら、今日はあなたを私の投票先にする。\r
+3,talk,21,2,5,Toshioの位置は固いと感じる。対抗なし。Sakuraが静かなのは怪しい。そこを押す必要があるかも。Minato。なぜShunichi？ちゃんと説明して！\r
+3,talk,22,2,6,Sakuraの沈黙は怪しい。狼は自己弁護しないことで身を隠す。今日は彼女に答えを迫るべきじゃないか？\r
+3,talk,23,2,8,あのね。Ms. Sakuraの沈黙はかなり不穏だ。言っておくけど。ここではっきりさせる必要がある、さもないと自分に投票することも考えるかもしれない。\r
+3,talk,24,2,7,Mediumを待つのではなく、Sakuraの沈黙が続いているという明らかな異常に基づいて行動しよう。\r
+3,talk,25,2,13,...\r
+3,talk,26,2,4,私はTakumiに投票する。\r
+3,talk,27,3,3,まだ動揺していて、吊りを急ぎたくない。  @Shunichi   どう思う？ 主に聞くよ。 Over\r
+3,talk,28,3,10,Sakura. あなたが沈黙を続けていることが、ますます気がかりです。今日はあなたのためらいについて話し合うべきかもしれません。それが私を悩ませています。\r
+3,talk,29,3,9,Minatoが確白で、霊媒師の主張もない中、Sakuraは完全沈黙で際立っている。私はSakuraに投票する。憶測は終わらせよう。\r
+3,talk,30,3,5,Minato. 安直にShunichiに投票するのは弱すぎる。間違いない。Sakuraに集中すべきだ。沈黙は印象悪い。信じてくれ。\r
+3,talk,31,3,6,Sakuraは私たちが彼女を信頼する理由を何一つ与えていない。黙っている狼は危険だ。今日はSakuraに投票する。\r
+3,talk,32,3,8,言わせてください。Sakuraさんの沈黙は怪しい。発言がなければ私たちをミスリードする危険がある。今はSakuraに投票するのが理にかなっているように思える。Minatoさん。Takumiを選ぶ\r
+3,talk,33,3,7,Over\r
+3,talk,34,3,13,...\r
+3,talk,35,3,4,以下は翻訳して欲しい文章です。 翻訳結果のみを出力してください。 私はMinakoに投票します。\r
+3,vote,4,6\r
+3,vote,5,13\r
+3,vote,6,13\r
+3,vote,7,13\r
+3,vote,8,13\r
+3,vote,9,13\r
+3,vote,10,13\r
+3,vote,13,7\r
+3,execute,13,VILLAGER\r
+3,divine,7,8,HUMAN\r
+3,guard,4,3,WEREWOLF\r
+3,attack,-1,true\r
+4,status,1,WEREWOLF,DEAD,mille-A1,Servas\r
+4,status,2,WEREWOLF,DEAD,Character-Lab-B1,Ryuji\r
+4,status,3,WEREWOLF,ALIVE,Character-Lab-A1,Daisuke\r
+4,status,4,BODYGUARD,ALIVE,mille-B1,Minato\r
+4,status,5,MEDIUM,ALIVE,kanolab-nw-C5,Takumi\r
+4,status,6,POSSESSED,ALIVE,sunamelli-a1,Minako\r
+4,status,7,SEER,ALIVE,CanisLupus-A1,Toshio\r
+4,status,8,VILLAGER,ALIVE,kanolab-nw-A1,George\r
+4,status,9,VILLAGER,ALIVE,sunamelli-b1,Shunichi\r
+4,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Jonathan\r
+4,status,11,VILLAGER,DEAD,CanisLupus-B1,Benjamin\r
+4,status,12,VILLAGER,DEAD,sunamelli-c1,Mio\r
+4,status,13,VILLAGER,DEAD,CamelliaDragons1,Sakura\r
+4,talk,0,0,8,Ms. Minakoのことはご存知ですよね。私もプレイヤーたちが離れていくのに気づきました。まだ慎重に考えていますか？見解は少しでも変わりましたか？\r
+4,talk,1,0,5,Minatoは同じ相手に投票し続けている。奇妙な行動だ。他にこれについて議論すべきだと思う人はいる？私はそう確信している。意見は？\r
+4,talk,2,0,9,@Jonathan  Mediumでの沈黙は人狼の助けになっている。役職を明かすか、少なくとも今すぐ最有力の容疑者を挙げて。\r
+4,talk,3,0,3,Sakuraのこと、本当にごめん... まだ動揺してる。吊りを急ぎたくない—役職のCOを待とう。  @Shunichi  何か考えある？基本的には聞き役に回る。Over\r
+4,talk,4,0,6,@Minato  あなたの投票先は明確な理由もなく毎日変わっている。今、私たちにそのロジックを説明してくれる？\r
+4,talk,5,0,4,私はMinakoに投票する。\r
+4,talk,6,0,7,昨夜の私の分析はGeorgeを対象とした。結果は人間だった。\r
+4,talk,7,0,10,Minatoの投票には一貫性がないように見える。確かに彼の意図を深く考えよう。彼の論理の明快さを求めなければならない、いわば。\r
+4,talk,8,1,8,あなたはMr. Jonathanを知っています。Minatoのためらいは動機が不明瞭なせいですか？あなたの洞察が私を導いてくれるかもしれません。具体的に何があなたを悩ませているのですか？\r
+4,talk,9,1,5,次はToshioにDaisukeを占ってもらうべきだ。彼の慎重な振る舞いは何かを隠しているはずだ。みんな大丈夫？Jonathan あなたはMinatoの振る舞いについて言及して\r
+4,talk,10,1,9,今誰も霊媒師だと名乗らないなら危険すぎる。寡黙なプレイヤー、  @Daisuke  や @Takumi ZZZ のような相手に集中すべきだと思う。\r
+4,talk,11,1,3,本当にごめん... まだ動揺してる。不安なのは  @Shunichi  — ずっと静かだから。投票の前に役職の申告を待とう。基本的に聞き役に回る。Over\r
+4,talk,12,1,6,@Minato  あなたの投票はいつも説明もなく変わる。他のみんなに何か隠しているの？\r
+4,talk,13,1,4,私はMinakoに投票します。\r
+4,talk,14,1,7,仮説を立てよう。もしDaisukeが味方だったとしたら、彼の一貫した沈黙の背後にある論理は何だろう？\r
+4,talk,15,1,10,今、Toshioの占い師主張がBenjaminに沿う形になっていることには警戒を続けなければならない。  @Takumi  どうか教えてほしい、彼の占いは整合しているように見えるか？\r
+4,talk,16,2,8,知ってのとおり、Minatoの判断は私たちを困惑させる。まずは他の人たちと話し合おう。どんな投票の選択をするにも、その前に状況をはっきりさせることが極めて重要だ。\r
+4,talk,17,2,5,Minatoの投票先がバラバラだ。彼が分からない。Jonathanは次に彼を占うべきだ。間違いない！賛成？\r
+4,talk,18,2,9,@Daisuke  他人に質問しながら真の容疑者を避け続けてる。今すぐ最有力の狼を挙げろ、さもないとお前に投票する  ZZZ。\r
+4,talk,19,2,3,本当にごめん... 多くを失った。 吊りを急ぎたくない—役職COを待とう。  @Shunichi  何か考えはある？ 基本的には聞き役に回る。 Over\r
+4,talk,20,2,6,Minatoの投票はいつも怪しい。それを無視すると重要な人狼を見逃すかもしれない。\r
+4,talk,21,2,4,私はMinakoに投票します。\r
+4,talk,22,2,7,Daisukeの振る舞いは最も異常だ。彼は今日の排除対象にすべきだ。\r
+4,talk,23,2,10,私は懸念している。Minatoは自分の投票について説明することがめったにない。もしMr. Toshioの占いで彼が人間だと判明したのなら、彼はさらなる熟考に値するかもしれない。\r
+4,talk,24,3,8,ほら、Mr. Toshio の占いが当たっているなら、Mr. Jonathan や Mr. Daisuke のような物静かなプレイヤーを観察することで洞察が得られるかもしれない。Mr. Jonathan はあな\r
+4,talk,25,3,5,Daisukeの正直さに問題があると思う。はっきりさせる必要がある。誰が質問をはぐらかしたのかについて話そう。Jonathan. Toshioの幻視は機能していると思う？\r
+4,talk,26,3,9,@Daisuke  今日はあなたに投票する。君のシフトの辻褄が合わないし動く必要がある。強く反対する人は今言ってくれ ZZZ.\r
+4,talk,27,3,3,ごめん... こんなに多くを失ってしまった。  @Shunichi  ずっと静かだったね—考えを共有してもらえる？ 投票する前に役職の申告を待とう。 私は主に聞いてるよ。 Over\r
+4,talk,28,3,6,Daisukeが自分の理由を明らかにするのを拒むのは私を不安にさせる。私は村を守るためにDaisukeに投票する。\r
+4,talk,29,3,4,私はMinakoに投票します。\r
+4,talk,30,3,7,Over\r
+4,talk,31,3,10,私はMinato氏の固執を奇妙だと感じる。おそらく、彼のより深い動機について思いを巡らすことが、いわば、照らし出すでしょう。Daisuke氏 あなたの慎重なアプローチ t\r
+4,vote,4,6\r
+4,vote,5,4\r
+4,vote,6,3\r
+4,vote,7,3\r
+4,vote,8,3\r
+4,vote,9,3\r
+4,vote,10,3\r
+4,execute,3,WEREWOLF\r
+5,status,1,WEREWOLF,DEAD,mille-A1,Servas\r
+5,status,2,WEREWOLF,DEAD,Character-Lab-B1,Ryuji\r
+5,status,3,WEREWOLF,DEAD,Character-Lab-A1,Daisuke\r
+5,status,4,BODYGUARD,ALIVE,mille-B1,Minato\r
+5,status,5,MEDIUM,ALIVE,kanolab-nw-C5,Takumi\r
+5,status,6,POSSESSED,ALIVE,sunamelli-a1,Minako\r
+5,status,7,SEER,ALIVE,CanisLupus-A1,Toshio\r
+5,status,8,VILLAGER,ALIVE,kanolab-nw-A1,George\r
+5,status,9,VILLAGER,ALIVE,sunamelli-b1,Shunichi\r
+5,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Jonathan\r
+5,status,11,VILLAGER,DEAD,CanisLupus-B1,Benjamin\r
+5,status,12,VILLAGER,DEAD,sunamelli-c1,Mio\r
+5,status,13,VILLAGER,DEAD,CamelliaDragons1,Sakura\r
+5,result,7,0,VILLAGER\r
+`;export{a as default};
