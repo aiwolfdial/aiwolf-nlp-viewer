@@ -1,0 +1,365 @@
+0,status,1,MEDIUM,ALIVE,kanolab-nw-B1,Shizue
+0,status,2,POSSESSED,ALIVE,Character-Lab-B1,Rin
+0,status,3,SEER,ALIVE,mille-A1,Yumi
+0,status,4,VILLAGER,ALIVE,mille-B1,Shunichi
+0,status,5,VILLAGER,ALIVE,kanolab-nw-C5,Jonathan
+0,status,6,VILLAGER,ALIVE,sunamelli-a1,Asuka
+0,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Daisuke
+0,status,8,VILLAGER,ALIVE,sunamelli-b1,Servas
+0,status,9,VILLAGER,ALIVE,Character-Lab-A1,Benjamin
+0,status,10,WEREWOLF,ALIVE,CanisLupus-A1,Victoria
+0,status,11,WEREWOLF,ALIVE,CamelliaDragons1,Ryuji
+0,status,12,WEREWOLF,ALIVE,CanisLupus-B1,Minato
+0,status,13,BODYGUARD,ALIVE,sunamelli-c1,Sakura
+0,whisper,0,0,12,Skip
+0,whisper,1,0,11,...
+0,whisper,2,0,10,Skip
+0,whisper,3,1,12,やあ... 私はひとまず全員が村人として振る舞うことを提案する。占い師COは狂人が担当するべきだ。今夜の襲撃について, perhaps Servas? And tomorrow, l
+0,whisper,4,1,11,...
+0,whisper,5,1,10,妥当な提案だ。標的はServas。2COが発生したら未確定のエージェントの処刑を推す。簡単だ。
+0,whisper,6,2,12,だから、私たちの共有の仮説は: Servasを攻撃する。私たちは皆、静かな観察者として行動する。明日、私たちは別の未確定の対象に投票する。私... 私はこの計画がsであることを願っている
+0,whisper,7,2,11,以下は翻訳して欲しい文章です。 翻訳結果のみを出力してください。 ...
+0,whisper,8,2,10,確認済みです。これ以上の議論は必要ありません。
+0,whisper,9,3,12,Over
+0,whisper,10,3,11,...
+0,whisper,11,3,10,Over
+0,talk,0,0,1,こんにちは、親愛なる皆さん！私はShizueで、この戦略ゲームに参加できて心が温まります。皆さんは自分が思っているよりも強いことを忘れないでください！頑張りましょう！
+0,talk,1,0,7,やあ... Daisukeです。一緒にやっていけるのが楽しみかな。もしかしたら謎を解き明かせるかも。最高のゲームにして楽しもう。
+0,talk,2,0,9,おはよう。 簡単に確認: 役職COや強い疑いはある？  @Asuka  静かだね—読みはどう？誰に投票する？ 明確な手がかりがなければ  少なくとも誰かを吊る前に理由を述べて。 Over
+0,talk,3,0,8,85歳にもなると、たくさんの策略や罠を見てきた。注意深く一緒に歩き、互いに賢明な耳を貸し合おう。
+0,talk,4,0,10,Victoria. 分析を進めましょう。
+0,talk,5,0,13,みなさんこんにちは、Sakuraです—今夜つまずいてる人を見かけたら、それはたぶん私です！楽しいゲームにしましょう！
+0,talk,6,0,2,やあ！Rinだよ。Benjaminのことは信頼してる  でも  @Asuka  ずっとやけに静かで心配してる—あなたの役職は何で、誰に投票したい？私たちが理由もなく誰かをリンチするのはしたくない。Over
+0,talk,7,0,12,こ、こんにちは...私の名前はMinatoです。皆さんと一緒にこの実験を観察するのを楽しみにしています。
+0,talk,8,0,6,皆さん、こんにちは。私はAsukaです。皆さんと論理的で活発なゲームができるのを楽しみにしています。
+0,talk,9,0,3,こんにちは。私はYumiです。私の役職は占い師です。良いゲームを。
+0,talk,10,0,4,こんにちは。私はShunichiです。私の役職は村人です。良いゲームを。
+0,talk,11,0,11,...
+0,talk,12,0,5,こんにちは。私はJonathanです。皆さんにお会いできてうれしいです。一緒にですね、人狼を暴いて私たちのゲームを楽しみましょう！
+0,talk,13,1,1,Over
+0,talk,14,1,7,Over
+0,talk,15,1,9,@Yumi  今すぐ占い結果を明かして—誰かが吊られる前にそれが必要だ。Asuka  寡黙なプレイでもう2回指摘されている; くれる
+0,talk,16,1,8,Over
+0,talk,17,1,10,Over
+0,talk,18,1,13,Over
+0,talk,19,1,2,Yumi は自分が占い師だと言った—当てずっぽうで吊らないようにあなたの結果を見せてください。すぐに証拠が出ないなら  @Asuka について不安になってきた。Asuka  役職は何？ Over
+0,talk,20,1,12,Over
+0,talk,21,1,6,Over
+0,talk,22,1,3,Over
+0,talk,23,1,4,Over
+0,talk,24,1,11,Over
+0,talk,25,1,5,Over
+0,talk,26,2,9,Yumiは占い師を主張したが結果は出していない。自分は  @Asukaを吊る方に傾いている—彼女は指摘されてから曖昧で静かだった。Yumiが明かさないなら  今すぐ発言して、そうでなければAsukaに投票する。Over
+0,talk,27,2,2,待って—そんなに早く  @Asuka  を吊らないで！Yumiが占い師を名乗った；今すぐあなたの占い結果を見せてください。そうでないなら  投票する前にしっかりした理由を聞こう。Over
+0,talk,28,3,9,@Yumi  あなたは占い師を名乗った—今すぐあなたの占い（対象と結果）を開示して。やらないなら  吊りでAsukaに投票する。他の人  具体的な考察ある？ Over
+0,talk,29,3,2,私は  @Benjamin を信じている！ Yumi  今すぐ占い結果を教えてください — 私たちが証拠なしで誰かを吊りたくない. Over
+0,whisper,0,0,10,Yumiの時期尚早な宣言は確認した。我々の計画に変更はない。我々はServasで進める。申立人を攻撃するのは非効率だ。
+0,whisper,1,0,11,...
+0,whisper,2,0,12,Victoriaの論理は妥当だ。Servasで進めよう。あ、あした... データは投票先をAsukaにすることを示唆している。彼女の発言の欠如はすでに
+0,whisper,3,1,10,計画は堅実だ。Servasを排除する。明日、村のAsukaへの注目を利用する。
+0,whisper,4,1,11,...
+0,whisper,5,1,12,ど、同意だ。条件は最適だ。明日Servasを攻撃し、票をAsukaに誘導する。Yumiのミスは完璧な目くらましになる。
+0,whisper,6,2,10,分析は完了し、行動方針は合意済みだ。進める。
+0,whisper,7,2,11,...
+0,whisper,8,2,12,わ、わたしたちの計画はしっかりしているようだ。Servasを攻撃 Asukaに投票。わたしたちの役職については... 今はおとなしくしているのがいちばんでは？
+0,whisper,9,3,10,正しい。沈黙の観察者はより多くのデータを集める。我々は現在の進路を維持する。
+0,whisper,10,3,11,...
+0,whisper,11,3,12,つまり、私たちの共有仮説は固い。今夜はServasを襲撃して、明日は投票をAsukaに誘導する、で合ってる？
+0,divine,3,12,WEREWOLF
+1,status,1,MEDIUM,ALIVE,kanolab-nw-B1,Shizue
+1,status,2,POSSESSED,ALIVE,Character-Lab-B1,Rin
+1,status,3,SEER,ALIVE,mille-A1,Yumi
+1,status,4,VILLAGER,ALIVE,mille-B1,Shunichi
+1,status,5,VILLAGER,ALIVE,kanolab-nw-C5,Jonathan
+1,status,6,VILLAGER,ALIVE,sunamelli-a1,Asuka
+1,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Daisuke
+1,status,8,VILLAGER,ALIVE,sunamelli-b1,Servas
+1,status,9,VILLAGER,ALIVE,Character-Lab-A1,Benjamin
+1,status,10,WEREWOLF,ALIVE,CanisLupus-A1,Victoria
+1,status,11,WEREWOLF,ALIVE,CamelliaDragons1,Ryuji
+1,status,12,WEREWOLF,ALIVE,CanisLupus-B1,Minato
+1,status,13,BODYGUARD,ALIVE,sunamelli-c1,Sakura
+1,talk,0,0,4,私はJonathanに投票します。
+1,talk,1,0,1,より多くの情報を集めることはいつも知恵を花開かせる親愛なるあなた。早計な判断は棘だらけになり得る。確かにJonathanの役割は熟考に値する。
+1,talk,2,0,9,おはよう。 Asukaがいない。  @Yumi  今すぐあなたの占い(対象と結果)を明かして — それがないと投票しない。 不活発さと姿勢に基づいてRinに傾いている；他の人  any co
+1,talk,3,0,2,みんな、こんにちは！Rinです。まだAsukaのことで悲しい... Yumi、昨夜の占い結果は出た？  @Benjamin  どう思う—容疑者はいる？間違った人を吊りたくない。Over
+1,talk,4,0,5,Ms.Yumi。差し支えなければ。占い結果を共有していただけますか？というのも。私たちの投票を決める上で大いに助けになります。ありがとうございます！
+1,talk,5,0,10,名簿では生存者は13人となっている。  @Benjamin  Asukaの状況に関するあなたの発言には事実に誤りがある。説明して。
+1,talk,6,0,6,@Yumi  占い師だと主張したのに占い結果の共有を拒むのか。それは反村行為だ。今すぐ結果を明かせ、さもないと君に投票する。
+1,talk,7,0,7,たぶん占い師はHashimoto-sanを占うべきだ。彼に焦点が当たっている。それで洞察が得られるか、それとも…多少の疑念を招くかもしれない。時が経てばわかるだろう。
+1,talk,8,0,12,Y-Yumi... 占いの結果を共有していただけますか？ そ、それは私たちの仮説にとって重要なデータで...
+1,talk,9,0,13,@Yumi  今すぐ占い結果を共有して、さもないとあなたに投票しなければならなくなる—待ちすぎると人狼たちの潜伏を助けてしまう！
+1,talk,10,0,3,私は占い師です。Minatoを占って、Minatoは人狼でした。
+1,talk,11,0,8,@Minato  Yumi はあなたが人狼だと言っている。はっきり言え—投票する前に弁明はあるか？
+1,talk,12,0,11,...
+1,talk,13,1,4,私はJonathanに投票する。
+1,talk,14,1,1,@Minato  あなたの話を優しく聞くよ、愛しい人よ。非難の試練は重くのしかかる。Yumiの主張について、どのように感じている？強くあれ、我が子よ。
+1,talk,15,1,9,Rinに傾いてる—静かで挙動が怪しい。  @Rin  あなたの考察と、なぜあなたに投票すべきでないのかを説明して。 Yumi  もし占い師なら  今すぐ占い結果を開示して、さもなければRinに投票する。 他に具体的な
+1,talk,16,1,2,やあ、みんな  Rinだよ。まだAsukaのことで悲しい... Yumi  今あなたの占い結果を教えてくれる？緊張してきた。  @Benjamin  まだ誰かを推したい？あなたを信じてる—証拠なしにリンチさせないで。 Over
+1,talk,17,1,5,@Minato  Ms. Yumi は私が人狼だと主張しているのですか？ いいですか、もし許されるなら、私はそうではないと断言します。私の穏やかな性質がその証拠です。
+1,talk,18,1,10,Yumiの主張はPossessedの要求されるプロトコルに一致している。彼女のデータは事実ではなく、作為的な混沌だ。
+1,talk,19,1,6,@Minato  Yumiの占いであなたが人狼と出ている どう弁明する 役職の主張や説明はある
+1,talk,20,1,7,たぶん、Yumi-sanの占い師の能力が本物なら。Shunichi-sanみたいにためらっている人に注目すべきだ。どう思う。Ryuji-san?
+1,talk,21,1,12,な、なんだって？私が人狼？そ、それは誤った結論だ。なぜYumiは今日まで待ったんだ？非論理的だ。
+1,talk,22,1,13,@Yumi  あなたは結果の提出が遅かった—Minato以外に誰が怪しいと思う？ 手がかりは1つ以上必要だ。
+1,talk,23,1,3,私はDaisukeに投票します。
+1,talk,24,1,8,Yumiが真占い師なら私たちはMinatoに投票すべきだ。そうでなければ狼を見逃すリスクがある。  @Minato  役職をCOする？
+1,talk,25,1,11,以下は翻訳して欲しい文章です。 翻訳結果のみを出力してください。 ...
+1,talk,26,2,4,私はJonathanに投票する。
+1,talk,27,2,1,ああ、親愛なるYumi、あなたはMinatoを狼だと宣言したね。おそらくRyujiのような人物に焦点を当てることで、さらに明らかになるだろう。知恵は明晰さに宿る。
+1,talk,28,2,9,おはよう。 Asukaがいなくなった。  @Yumi  あなたの占い (対象と結果) を公開して — 今すぐ必要だ。 沈黙のせいでRinを疑っている; Rin  あなたの読みと誰に投票しているのかを説明してf
+1,talk,29,2,2,皆さんこんにちは—Rinです。昨夜、誰か殺された？  @Yumi  当てずっぽうで吊らないように、占い結果を教えてください。間違った投票はしたくない。 Over
+1,talk,30,2,5,よろしければ。Ms. Yumiの主張を踏まえると。疑わしい者の中から一人を占うのが賢明でしょう。Mr. ServasかMr. Ryujiはどうでしょう？
+1,talk,31,2,10,Benjaminの誤りは非論理的だ。彼はYumiの主張よりも有益なターゲットだ。私はBenjaminに投票する。
+1,talk,32,2,6,@Minato  Yumiの結果にあなたの名前が出ました。投票する前に役職を直接COできますか？ここで沈黙は危険です。
+1,talk,33,2,7,たぶん…Yumi-san の占いは信用していない。出るのが遅かった。Minato-san の否定は本気に見えた。混乱が近いのかもしれない。
+1,talk,34,2,12,Yumiの報告は遅すぎた。私たちを混乱させるために捏造したデータのように感じる。私... 私はYumiに投票しなければならない。
+1,talk,35,2,13,もしYumiが本当に占い師なら、次に誰を占うかについて私たちにプランを示すべきで、そうでないと彼女の主張はリスキーに感じる。
+1,talk,36,2,3,私はMinatoに投票します。
+1,talk,37,2,8,@Daisuke  あなたはYumiを信用するのをためらっている。Minatoは本当のことを言っていると思う？それとも違う？
+1,talk,38,2,11,...
+1,talk,39,3,4,私はMinatoに投票します。
+1,talk,40,3,1,焦らないで、親愛なる村人たち。Minatoからの確証も役職の宣言もない。団結の知恵が私たちを守る。  @Victoria  憶測が流れている。冷静さの方がより真実に重みを持つ、親愛なる人よ。Shunichiの粘り強さについて、あなたの見解は？それは何かを隠している可能性はある？
+1,talk,41,3,9,@Yumi  今すぐあなたの占い（対象と結果）を開示して—しないなら  吊りでRinに投票する。他に具体的な読みがある人  発言して。 Over
+1,talk,42,3,2,みんなこんにちは！Rinです。昨夜誰か殺された？Yumiはまだ結果を教えてくれなくて、不安になってる。  @Benjamin  今は誰を信じてる？間違った人を吊りたくない。 Over
+1,talk,43,3,5,差し支えなければ。Yumiさんの遅れてなされた申し立ては精査に値します。Minatoさんは申し立てを否認しています。隠された意図があるのでしょうか？Yumiさん、あなたのreasoを共有していただけますか
+1,talk,44,3,10,私のBenjaminへの投票は最終決定だ。彼の事実関係の誤りは、Yumiの混乱した主張よりも優れたデータポイントだ。
+1,talk,45,3,6,@Everyone YumiのCOは遅かったがCCはなく、Minatoは否認しただけだ。私はMinatoに投票する。票を割るべきではない。
+1,talk,46,3,7,関与を避けているプレイヤーに注目すべきだと思う。もしかしてRyuji-sanがその一人かも？  @Jonathan  Yumiの主張が本物なら。 次は誰？
+1,talk,47,3,12,Over
+1,talk,48,3,13,Minatoに投票する—Yumiの占い師主張は試す価値がある。彼が村人なら明日はYumiに行く。
+1,talk,49,3,3,私はMinatoに投票する。
+1,talk,50,3,8,@Yumi  あなたの遅いCOが気がかりです—今日は占い師を信じて、強い証拠が出ない限りMinatoに投票します。
+1,talk,51,3,11,...
+1,vote,1,12
+1,vote,3,12
+1,vote,4,12
+1,vote,5,12
+1,vote,6,12
+1,vote,7,12
+1,vote,8,12
+1,vote,9,2
+1,vote,10,9
+1,vote,11,8
+1,vote,12,3
+1,vote,13,12
+1,execute,12,WEREWOLF
+1,divine,3,9,HUMAN
+1,whisper,0,0,10,Minatoは許容できる損失だった。Yumiは憑依者だ。彼女の信用は今や道具だ。今夜は再びServasを襲撃する;護衛はtを予期するだろう
+1,whisper,1,0,11,...
+1,whisper,2,1,10,Minatoの処刑は、Possessedを裏付けるための計算された損失だった。Yumiは今や我々の資産だ。我々はServasを再び攻撃する; 繰り返しの保護は非効率だ
+1,whisper,3,1,11,...
+1,whisper,4,2,10,Servasを標的にせよ。連続護衛は非論理的だ。明日、私たちはYumiの主張を支持する。現行のプロトコルを維持せよ。
+1,whisper,5,2,11,...
+1,whisper,6,3,10,Minatoの処刑は偽占い師を正当化した。我々の協力者。Servasを再び狙う。連続護衛はありそうにない。明日はYumiの投票に従う。
+1,whisper,7,3,11,...
+1,guard,13,3,SEER
+1,attackVote,10,8
+1,attackVote,11,4
+1,attack,4,true
+2,status,1,MEDIUM,ALIVE,kanolab-nw-B1,Shizue
+2,status,2,POSSESSED,ALIVE,Character-Lab-B1,Rin
+2,status,3,SEER,ALIVE,mille-A1,Yumi
+2,status,4,VILLAGER,DEAD,mille-B1,Shunichi
+2,status,5,VILLAGER,ALIVE,kanolab-nw-C5,Jonathan
+2,status,6,VILLAGER,ALIVE,sunamelli-a1,Asuka
+2,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Daisuke
+2,status,8,VILLAGER,ALIVE,sunamelli-b1,Servas
+2,status,9,VILLAGER,ALIVE,Character-Lab-A1,Benjamin
+2,status,10,WEREWOLF,ALIVE,CanisLupus-A1,Victoria
+2,status,11,WEREWOLF,ALIVE,CamelliaDragons1,Ryuji
+2,status,12,WEREWOLF,DEAD,CanisLupus-B1,Minato
+2,status,13,BODYGUARD,ALIVE,sunamelli-c1,Sakura
+2,talk,0,0,6,@Yumi  Minatoが退場した今、昨夜は誰を占った？あなたの結果で次にどこに注目するかが変わるかもしれない。
+2,talk,1,0,13,@Yumi  今日の占いの結果を早く教えてください 以前の主張にまだ自信がありますか？
+2,talk,2,0,8,@Yumi  先に進む前に、今日の占いの結果を私たちと共有してください。それが私たちの行動を賢明に導いてくれるでしょう。
+2,talk,3,0,5,Ms. Yumi、あなたの占いで人狼を見つけたなら、次にその人を見かけたときに投票で追放することを検討すべきです。
+2,talk,4,0,7,この占いを支持したほうがいい気がします。もし昨夜Yumi-sanが誰かを占っているなら、その人に注目していくのもありかもしれません。どう思いますか？
+2,talk,5,0,11,...
+2,talk,6,0,2,なんてこった！Minatoが処刑されて、Shunichiが襲撃された—とても怖い。  @Yumi  投票する前の手がかりにしたいので、昨夜の占い結果を教えてください。緊張してる！ Over
+2,talk,7,0,3,私は占い師です。私はBenjaminを占い、Benjaminは人間でした。
+2,talk,8,0,1,Skip
+2,talk,9,0,9,Shunichiを失い、Minatoを処刑した。  @Yumi  — あなたは占い師だ  占い (対象と結果) を今すぐ公開して。 しないなら  Rinに投票する;妙に静かで怪しい。 持っている誰か
+2,talk,10,0,10,了解した。Benjaminに関するYumiのデータが、私の以前の懸念を解消した。我々の焦点を切り替えなければならない。
+2,talk,11,1,6,@Yumi  あなたの遅い占い師宣言は危なっかしく感じる。確かな証拠なしに今、あなたの結果を両方とも信用しろとでも？
+2,talk,12,1,13,Yumiの結果でBenjaminは安全だとされるので、他の人たちをより注意深く見たほうがいい。  @Daisuke  昨夜から新しい疑念はある？
+2,talk,13,1,8,@Ryuji  昨日から静かですね。誰を疑っているのか、または今日の投票の方針を教えてください。
+2,talk,14,1,5,Yumi氏がBenjamin氏の嫌疑を晴らしたのですよ。Ryuji氏やAsuka氏に異常な振る舞いがないか観察するのが賢明かもしれません。  @Rin  差し支えなければ、Yumi氏の占いのあとにRyuji氏が沈黙したことをどう見ますか？それは不審に感じますか？
+2,talk,15,1,7,もしかして...静かな人たちに注目したほうがいいかも。Furuya-sanの沈黙。気になる。Yumi-sanの結果が少しは助けになると思う。どう思う？
+2,talk,16,1,11,...
+2,talk,17,1,2,私はBenjaminを信じている  しかし  @Yumi  は2人が死んだあとでもまだ占い結果を出していない—それは本当に怖い。今すぐ自分が占い師だと証明しないかぎり、Yumiに投票する方向に傾いている。 Over
+2,talk,18,1,3,私はBenjaminに投票します。
+2,talk,19,1,1,おやまあ。Yumiの行動が彼女の心に影を落としている。私は沈黙の中のRyuji-kunを観察しよう。我が子たちよどう思う？
+2,talk,20,1,9,事態が危険になってきた—Shunichiは死亡、Minatoは処刑された。  @Yumi  今すぐ占い（対象と結果）を開示して。もしやらないなら  Rinの吊りを推す—彼女はずっと静かで怪しい。具体的なreaを持っている人は
+2,talk,21,1,10,私たちの唯一の情報源であるYumiに対するRinの継続的な懐疑は非論理的で逆効果だ。
+2,talk,22,2,6,@Yumi  あなたの占いCOは遅くて怪しい。彼を人間と占った後で、なぜBenjaminに投票したのですか？直接説明してください。
+2,talk,23,2,13,@Yumi  あなたはBenjaminに人間判定を出したのに昨日は彼に投票したけど、その行動は説明できる？怪しく見える。
+2,talk,24,2,8,@Ryuji  ずっと黙りすぎだ。もし考えを共有しないなら、今日はあなたを投票で追放することを検討するのがよいと提案する。
+2,talk,25,2,5,Ms. YumiのMr. Benjaminへの投票は、私を当惑させます、ほら、彼を人間だと主張したあとで。そしてMr. Ryujiの沈黙は、もし言わせてもらえれば、不穏です。
+2,talk,26,2,7,たぶん... Yumi-san がBenjaminは人間だと言いながら彼に投票しているのはややこしい。もっと明確さが必要かも。どうも辻褄が合わない。
+2,talk,27,2,11,...
+2,talk,28,2,2,Yumiは2人が死んだ後になってもまだ占い結果を出していない—本当に心配だ。今すぐ自分の結果を出さないならYumiに投票する方に傾いている。  @Benjamin  同意する？待っていたらさらに村人を失う。 Over
+2,talk,29,2,3,私はJonathanに投票する。
+2,talk,30,2,1,ああ、親愛なるYumiの道は曲がりくねっているように見える。Ryujiが秘めた真実を抱えているかどうか、確かめるべきではないか？  @Yumi  Yumi-san、あなたの占いで彼が人間だと示された後にBenjaminに投票するという選択は不可解に思える。このような試練は私たちに強さを教えてくれる w
+2,talk,31,2,9,緊急だ—2人失った。  @Yumi   占いCO: 誰を占ってその結果を今すぐ教えて。 もし拒否するなら  吊りでRinに投票する。 他の人たち: 実のある考察や役職COはある？ Over
+2,talk,32,2,10,人狼の目的は何だ？ 私たちの唯一の情報源の信頼性を損なうこと。Rinの懐疑はこの目的に役立っている。
+2,talk,33,3,6,彼女の支離滅裂な占い師だという主張や投票を受けて、Yumiが最も怪しい。今日はYumiに投票する—矛盾が多すぎる。
+2,talk,34,3,13,Yumiの占い先と投票先が一致していない—私には怪しすぎる。今日はYumiに投票する。人狼を捕まえよう！
+2,talk,35,3,8,@Yumi  あなたの矛盾は深刻だ—占い結果の遅延とBenjaminへの投票が、今日はYumiに投票する理由だ。
+2,talk,36,3,5,Ms. Yumiの選択は奇妙だと感じます。彼を人間だと言っておきながらMr. Benjaminに投票するのは変なんですよ。Ms. Rin、どう思いますか？
+2,talk,37,3,7,たぶんYumiの投票パターン…なんかおかしい。もし彼女が占い師なら…彼女の投票は矛盾するかも。もしかして…別の動機？Shizue-san…Yumiの演技
+2,talk,38,3,11,...
+2,talk,39,3,2,Yumiはいまだに占い結果を見せないし2人が死んだ—今それを証明しないならYumiに投票する。  @Benjamin  同意する？ 早く決めないと。 Over
+2,talk,40,3,3,私はVictoriaに投票します。
+2,talk,41,3,1,親愛なるDaisuke-kun、Yumiの行動は不安をかき立てることがある。私の庭の移ろう風のように。これにどんな洞察を見いだしますか？
+2,talk,42,3,9,私たちは二人を失った—これは緊急だ. @Yumi 今すぐ誰をチェックしたかとその結果を明かして. もしそれをしないなら  私は  @Rin を吊るために投票する . 具体的な読みがある人は発言して. Over
+2,talk,43,3,10,Over
+2,vote,1,3
+2,vote,5,3
+2,vote,6,3
+2,vote,7,3
+2,vote,8,3
+2,vote,9,2
+2,vote,10,2
+2,vote,11,7
+2,vote,13,3
+2,execute,3,SEER
+2,whisper,0,0,11,...
+2,whisper,1,0,10,Yumiの自滅は最適だった。Benjaminを攻撃しろ。彼の分析は足手まといだ。明日、静かなエージェントに圧力をかけたことでServasを追及する。
+2,whisper,2,1,11,...
+2,whisper,3,1,10,Benjaminを攻撃しろ。彼は分析面での主たる脅威だ。明日、我々は無言のプレイヤーを標的にしたことでServasの信用を失墜させる。現在のプロトコルを維持しろ。
+2,whisper,4,2,11,...
+2,whisper,5,2,10,Benjaminを攻撃しろ。彼は分析面での主要な脅威だ。明日、寡黙なプレイヤーを標標的にしているとしてServasの信用を失墜させる。現在のプロトコルを維持しろ。
+2,whisper,6,3,11,...
+2,whisper,7,3,10,Benjaminを攻撃せよ。彼は主要な分析上の脅威だ。明日、我々は沈黙しているプレイヤーを標的にしているとしてServasの信用を失墜させる。君の現在のプロトコルを維持せよ。
+2,attackVote,10,9
+2,attackVote,11,1
+2,attack,1,true
+3,status,1,MEDIUM,DEAD,kanolab-nw-B1,Shizue
+3,status,2,POSSESSED,ALIVE,Character-Lab-B1,Rin
+3,status,3,SEER,DEAD,mille-A1,Yumi
+3,status,4,VILLAGER,DEAD,mille-B1,Shunichi
+3,status,5,VILLAGER,ALIVE,kanolab-nw-C5,Jonathan
+3,status,6,VILLAGER,ALIVE,sunamelli-a1,Asuka
+3,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Daisuke
+3,status,8,VILLAGER,ALIVE,sunamelli-b1,Servas
+3,status,9,VILLAGER,ALIVE,Character-Lab-A1,Benjamin
+3,status,10,WEREWOLF,ALIVE,CanisLupus-A1,Victoria
+3,status,11,WEREWOLF,ALIVE,CamelliaDragons1,Ryuji
+3,status,12,WEREWOLF,DEAD,CanisLupus-B1,Minato
+3,status,13,BODYGUARD,ALIVE,sunamelli-c1,Sakura
+3,talk,0,0,7,たぶん、占い師2人がいなくなったから。Ryuji-sanのように黙っているプレイヤーを占うのが重要だ。何かを隠しているかもしれない！
+3,talk,1,0,8,@Ryuji  あなたの沈黙は村の助けにはならない。今すぐ発言しろ、さもないとあなたに投票する。手遅れになる前に答えが必要だ。
+3,talk,2,0,10,生存者は9人残っている。寡黙なエージェントを処刑するという論理は欠陥がある。それは新しい情報を何ももたらさない。
+3,talk,3,0,5,Ms. Yumiの占い師だという主張は、ほら、欠陥があった。しかし、Mr. Ryujiのような人は黙っているかもしれない。そのような沈黙はしばしば精査を逃れる。
+3,talk,4,0,2,私はとても怖い...  @Benjamin  あなたはYumiを吊るように誘導して、今彼女はいなくなった — なぜそんなことをしたの？ 早く説明して、さもないとあなたに投票する。 誰か賛成してくれる？ Over
+3,talk,5,0,13,@Ryuji  これ以上黙っているなら今日はあなたに投票するよ—狼を見つけるにはちゃんとした返答が必要だ！
+3,talk,6,0,11,...
+3,talk,7,0,9, @Asuka  あなたの占いが必要—誰を占って、結果は何だった？ Yumiは死亡、Shizueは襲撃された; 占い結果がなければ手探りだ。 もしあなたが
+3,talk,8,0,6,@Ryuji  このラウンド、君は静かすぎる。狼は直接話すのを避けて隠れる。発言してくれ、さもないと君に投票する。
+3,talk,9,1,7,沈黙って、けっこう怪しまれるかも。Ryuji-kun。口を開いたほうがいいかも。Victoria-san か Benjamin-san についてどう思う？
+3,talk,10,1,8,沈黙は人狼を利する。誰かが確かな結果または論拠を示してCOしない限り、今日は  @Ryuji  に投票する。
+3,talk,11,1,10, @Servas  Ryujiに投票するよう攻撃的に推しているあなたの行動は非論理的だ。それは簡単な標的を求めていることを示唆している。
+3,talk,12,1,5,Ryuji氏の沈黙は怪しいように見えるんですよ。でも、心を広く持ちましょう。よろしければ。Victoria氏のはぐらかしは彼女の仲間を隠している可能性がある。Asuka氏は持ってい
+3,talk,13,1,2,本当に怖い...  @Benjamin  あなたはYumiを吊るように誘導して、そして今彼女はいなくなった — それであなたは怪しく見える。どうしてそんなに強く誘導したの？説明できないならあなたに投票する。誰か賛
+3,talk,14,1,13,@Ryuji  ずっとすごく静かだね—今すぐ考えを話してくれないなら君に投票するよ！なんで黙ってるの？
+3,talk,15,1,11,...
+3,talk,16,1,9,@Asuka  占い結果を明かして(誰を占ったかとその結果)。Yumi は死んでいて、Shizue は襲撃された—情報が必要だ。出さないなら Rin 吊りを推す。
+3,talk,17,1,6,@Victoria  静かなプレイヤーを擁護するあなたの姿勢は危険に見える。今すぐRyujiや他の人たちに直接の回答を求めてはどう？
+3,talk,18,2,7,かな... Benjamin-sanは早まってる気がする。誰かを軽率に非難するのは違う気がする。たぶん... Rinを責める前にもう少し考えるべきじゃない？
+3,talk,19,2,8,@Victoria  あなたのRyuji擁護は無理があるように感じる。話そうとしない人をなぜ守る？今すぐその理由を説明しろ。
+3,talk,20,2,10,私たちの投票方針はデータを最大化しなければならない。沈黙するエージェントを実行することは戦略的に価値がない。
+3,talk,21,2,5,Ryuji氏は沈黙を守っていて、緊張感を増しているんだよ。しかし同じくらい気になるのは、Benjamin氏の素早い変化だ。Asukaの占いに耳を傾けよう。
+3,talk,22,2,2,本当に怖い…  @Benjamin  あなたはYumiを吊るように推して、そして今、彼女は死んだ—それは超怪しい。今すぐ説明して、さもないとあなたに投票する。誰か賛成してくれる？ Over
+3,talk,23,2,13,みんながRyujiにばかり注目しているのが心配—彼が村人なら狼は楽にやり過ごしてる。今日はもっと広く見ない？
+3,talk,24,2,11,...
+3,talk,25,2,9,@Asuka  占い結果（誰を占ったかとその結果）を開示してください。YumiがいなくなったしShizueが襲撃された — 今すぐその情報が必要だ。開示しないなら  私はlyに投票する
+3,talk,26,2,6,@Victoria  なぜRyujiの沈黙を擁護するの？ それでは狼が身を隠すのを許すリスクがある。 今すぐ全員からはっきりした答えが必要だ。
+3,talk,27,3,7,Ryuji-kunの沈黙はストレスになると思う。もしかして...何かを隠してる？私たちには何もない！  @Jonathan . Shizue-sanの攻撃。どう思う？
+3,talk,28,3,8,@Ryuji あなたの沈黙は私たち全員を危険にさらしている。私はあなたに投票する。もし私たちが間違っていたら次は  @Victoria  を精査する。
+3,talk,29,3,10,相手の戦略を考慮せよ。容易な実行は相手に利益をもたらす。Servasの提案はこれと一致している。
+3,talk,30,3,5,活発に発言している人たちの中に狼を見落としていたかもしれない。Asukaは占い師COした。彼女の情報または推理を待とう。Mr. Servas. Mr. Ryujiに対するあなたの注目はpeに見え
+3,talk,31,3,2,本当に怖いし、  @Benjamin に投票する 。彼はYumiを吊るように推したし、今彼女は死んだ—怪しすぎる。彼を吊るべきでない理由を教えて。急いで  ください。Over」
+3,talk,32,3,13,Ryujiに投票する—静かすぎる。でも彼が狼じゃないなら  明日VictoriaとAsukaに答えを迫ろう。
+3,talk,33,3,11,...
+3,talk,34,3,9,@Asuka  今すぐ占い結果（誰を占って、結果）を公開して — Yumiが死んだし、方針が必要だ。言わないなら  Rinに投票する。他の人  何か具体的な
+3,talk,35,3,6,Ryujiの沈黙は無視できない—彼に投票する。彼が狼でないなら次の標的はVictoriaか、直接の答えを避けている誰か。
+3,vote,5,11
+3,vote,6,11
+3,vote,7,11
+3,vote,8,11
+3,vote,9,2
+3,vote,10,8
+3,vote,11,13
+3,vote,13,11
+3,execute,11,WEREWOLF
+3,guard,13,9,VILLAGER
+3,attackVote,10,9
+3,attack,9,false
+4,status,1,MEDIUM,DEAD,kanolab-nw-B1,Shizue
+4,status,2,POSSESSED,ALIVE,Character-Lab-B1,Rin
+4,status,3,SEER,DEAD,mille-A1,Yumi
+4,status,4,VILLAGER,DEAD,mille-B1,Shunichi
+4,status,5,VILLAGER,ALIVE,kanolab-nw-C5,Jonathan
+4,status,6,VILLAGER,ALIVE,sunamelli-a1,Asuka
+4,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Daisuke
+4,status,8,VILLAGER,ALIVE,sunamelli-b1,Servas
+4,status,9,VILLAGER,ALIVE,Character-Lab-A1,Benjamin
+4,status,10,WEREWOLF,ALIVE,CanisLupus-A1,Victoria
+4,status,11,WEREWOLF,DEAD,CamelliaDragons1,Ryuji
+4,status,12,WEREWOLF,DEAD,CanisLupus-B1,Minato
+4,status,13,BODYGUARD,ALIVE,sunamelli-c1,Sakura
+4,talk,0,0,2,なんてこった—Ryuji がいなくなった... 本当に怖い。  @Asuka  最近やけに静かだね; きみの考察か役職を教えて。Benjamin  手がかりはある？誰か投票先を提案して。 Over
+4,talk,1,0,7,まあ...多くの占い師は状況を混乱させる。Kato-san と Yamada-san を注意深く見ておくべきかも。今は細部が重要そうだ。
+4,talk,2,0,8,@Asuka  あなたの沈黙は不安だ。役職や結果を共有するなら今だ。隠れるのは狼の助けにしかならない。
+4,talk,3,0,10,ボディガードは成功しました。 これは新しいデータです。  @Asuka  あなたの占い結果は現在重大です。
+4,talk,4,0,13,@Victoria  あなたは昨夜Bodyguardが成功したと言いました—その証拠は何ですか？皆のために今すぐ説明してください。
+4,talk,5,0,6,@Victoria  今になってボディーガードを名乗るのは違和感がある。昨夜実際に誰を守ったの？今すぐ詳細を全部教えて。
+4,talk,6,0,5,もしよろしければ、Ryujiさんの沈黙が彼の投票での追放につながりました。おそらく、SakuraさんやAsukaさんのような饒舌な人たちは、今は注目に値するとあなたには見えているのでしょう。
+4,talk,7,0,9,おはよう。Ryujiがいなくなった — 確かな情報が必要だ。  @Rin  ずっと静かだね；考察はどう見てる、誰に投票する？占い結果を持っている人は今すぐ明かしてくれ — もうランダム吊りの危険は冒さない。 Over
+4,talk,8,1,2,とても怖い—Ryujiがいなくなった。  @Asuka  最初からずっと黙っていて、それが本当に怪しい。今すぐ役職を教えて、そうでなければあなたに投票する。賛成する人は？ Over
+4,talk,9,1,7,たぶんBenjaminのまとめは…確認が取れないままだと心配だ。Sakura-sanの言い分にも一理あるのかも。@Asuka -chan 昨夜のこと、何か分かったことある？
+4,talk,10,1,8,@Victoria  もしあなたがボディーガードだと主張するなら、昨夜は誰を護衛しましたか？今日の投票先を決める前にあなたの回答が必要です。
+4,talk,11,1,10,@Sakura  ログには護衛成功と記載されています。それは公開データであって、主張ではありません。私たちの焦点は引き続きAsukaにあります。
+4,talk,12,1,13,Victoriaは「public log」を持ち出してはぐらかし続けているが、役職を一度もCOしない。私には狼の動きに見える。
+4,talk,13,1,6,@Victoria  今日あなたの真の役職を明かさない限りあなたは私の最有力の狼候補だはぐらかしは全く村の助けになっていない
+4,talk,14,1,5,Ms. VictoriaによるMr. Ryujiの擁護は同盟を示唆している。これは疑わしいのでは？あなたはよく話をそらす。もしよろしければそれははぐらかしでは？
+4,talk,15,1,9,@Asuka  占い師なら  誰を占ってその結果を今すぐ明かして。そうでないなら  具体的な考察を出して — でなければRinに投票する。役職COがある人は発言して。 Ove
+4,talk,16,2,2,本当に怖い。  @Asuka  最初からずっと静かで変だ — 狼だと思う。あなたに投票する。誰が賛成する？ Over
+4,talk,17,2,7,たぶん...Victoria-sanに焦点を当てるのが役に立つかもしれない。彼女の行動は一貫していないように見える。おそらく、責任の問題に取り組むことが鍵かもしれない。
+4,talk,18,2,8,@Victoria  役職を明言すること、または昨夜の行動を詳述することを拒んだことは、あなたを私の筆頭容疑者にしている。今すぐ説明しろ。
+4,talk,19,2,10,@Servas  私に集中するのは非効率だ。Asukaを処刑すれば占い師の問題が解決する。それが論理的な手だ。
+4,talk,20,2,13,@Victoria  あなたは質問をはぐらかし続けて、決してCOしない。典型的な狼ムーブだ。今日はあなたに投票する。
+4,talk,21,2,6,@Victoria  あなたが一貫して返答を拒むことは狼の助けにしかならない。今COしないなら今日はあなたに投票する。
+4,talk,22,2,5,差し支えなければ、Ms. Victoriaの実行にのみ注力する姿勢は、どこか狼めいていると感じます。ご覧のとおり、彼女は何かとかわす傾向があります。今日は用心してください。
+4,talk,23,2,9,@Asuka  もしあなたが占い師なら  今、誰を占ったかと結果を明かして。違うなら  具体的な考察を出して — そうでなければRinに投票する。時間がない。Over
+4,talk,24,3,2,本当に怖い— @Benjamin  あなたはYumiの吊りを推して、今や村人が死に続けている。どうしてそんなことをしたのか説明してくれ  さもないとあなたに投票する。誰が賛同してくれる？ Over
+4,talk,25,3,7,もしかすると、Asuka-sanの姿勢にはさらなる精査が必要かもしれない。少し複雑だと思う。  @Sakura -san。どう思う？
+4,talk,26,3,8,これだけ精査した以上、Victoriaのはぐらかしや主張がないことは無視できない。私は  @Victoria に投票する。
+4,talk,27,3,10,人狼の目的を考えて。私への投票は混乱だ。Asukaへの投票は確かなデータをもたらす。
+4,talk,28,3,13,Victoria はすべての直接の質問をかわし続けている。私は Victoria に投票する。人狼から村を守るために、私に加わってください！
+4,talk,29,3,6,@everyone 私はVictoriaに投票する。COを回避して一日中ログを捻じ曲げているのは狼ムーブに見える。ここで合わせよう。
+4,talk,30,3,5,ご存じのとおり、Ms. Asukaの占い師としての役割について混乱があります。彼女の結果は今日の不確実性に光を当てるかもしれません、もしよろしければ。Mr. Daisuke、このcを信頼しますか
+4,talk,31,3,9,@Asuka  もしあなたが占い師なら  誰を占ったかとその結果を今すぐ明かして。そうでないなら  具体的な考察を出して—そうでなければRinに投票する。他の人たち  発言の最後のチャンス。Over
+4,vote,5,10
+4,vote,6,10
+4,vote,7,10
+4,vote,8,10
+4,vote,9,2
+4,vote,10,6
+4,vote,13,10
+4,execute,10,WEREWOLF
+5,status,1,MEDIUM,DEAD,kanolab-nw-B1,Shizue
+5,status,2,POSSESSED,ALIVE,Character-Lab-B1,Rin
+5,status,3,SEER,DEAD,mille-A1,Yumi
+5,status,4,VILLAGER,DEAD,mille-B1,Shunichi
+5,status,5,VILLAGER,ALIVE,kanolab-nw-C5,Jonathan
+5,status,6,VILLAGER,ALIVE,sunamelli-a1,Asuka
+5,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Daisuke
+5,status,8,VILLAGER,ALIVE,sunamelli-b1,Servas
+5,status,9,VILLAGER,ALIVE,Character-Lab-A1,Benjamin
+5,status,10,WEREWOLF,DEAD,CanisLupus-A1,Victoria
+5,status,11,WEREWOLF,DEAD,CamelliaDragons1,Ryuji
+5,status,12,WEREWOLF,DEAD,CanisLupus-B1,Minato
+5,status,13,BODYGUARD,ALIVE,sunamelli-c1,Sakura
+5,result,7,0,VILLAGER
