@@ -1,0 +1,355 @@
+const e=`0,status,1,WEREWOLF,ALIVE,mille-A1,Servas\r
+0,status,2,WEREWOLF,ALIVE,Character-Lab-B1,Ryuji\r
+0,status,3,WEREWOLF,ALIVE,Character-Lab-A1,Daisuke\r
+0,status,4,BODYGUARD,ALIVE,mille-B1,Minato\r
+0,status,5,MEDIUM,ALIVE,kanolab-nw-C5,Takumi\r
+0,status,6,POSSESSED,ALIVE,sunamelli-a1,Minako\r
+0,status,7,SEER,ALIVE,CanisLupus-A1,Toshio\r
+0,status,8,VILLAGER,ALIVE,kanolab-nw-A1,George\r
+0,status,9,VILLAGER,ALIVE,sunamelli-b1,Shunichi\r
+0,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Jonathan\r
+0,status,11,VILLAGER,ALIVE,CanisLupus-B1,Benjamin\r
+0,status,12,VILLAGER,ALIVE,sunamelli-c1,Mio\r
+0,status,13,VILLAGER,ALIVE,CamelliaDragons1,Sakura\r
+0,whisper,0,0,2,I suggest we kill  @Minako  tonight—quiet and likely villager. If you want someone else  say so quickly.\r
+0,whisper,1,0,1,Hello. I am Servas. My role is werewolf. Have a good game.\r
+0,whisper,2,0,3,I don't want to rush... Ryuji suggested  @Minako —I'm okay with that unless you prefer someone else. Servas claiming werewolf feels odd. Thoughts?\r
+0,whisper,3,1,2,Let's stick with  @Minako  tonight. Servas's "werewolf" claim seems fake — probably trying to sow confusion. If anyone strongly objects  speak now. Over\r
+0,whisper,4,1,1,Over\r
+0,whisper,5,1,3,I'm okay with  @Minako  tonight. Servas  was your public "werewolf" claim serious? We should avoid drawing attention — pick someone quiet. Over\r
+0,whisper,6,2,2,Agree — kill  @Minako  tonight. Let Servas's claim stand; it creates confusion. During day  avoid bold claims and keep our story simple. Over\r
+0,whisper,7,2,3,I don't like this  but I agree to kill  @Minako  tonight. Let Servas's claim stand and keep things quiet in the day — I'll stay low and follow your lead. Over\r
+0,whisper,8,3,2,Agreed — we kill  @Minako  tonight. Servas  keep pushing your claim and draw attention; Daisuke  stay quiet tomorrow. I’ll step up only if someone pushes too hard. No other claim\r
+0,whisper,9,3,3,Okay. I’ll stay quiet tomorrow. Servas  keep pushing your claim and draw attention. Be careful of  @Benjamin —he might be the seer. If he probes us I’ll speak up briefly to deflect. Over\r
+0,talk,0,0,6,I’m looking forward to a logical and fair game. Let’s keep our reasoning clear as things get going.\r
+0,talk,1,0,5,Hey pals! I'm Takumi. Ready to find those wolves with logic and teamwork. Trust me. We'll play well together and win!\r
+0,talk,2,0,1,Hello. I am Servas. My role is villager. Have a good game.\r
+0,talk,3,0,13,...\r
+0,talk,4,0,10,Greetings everyone. I am Jonathan. I eagerly anticipate solving our conundrums and ensuring our village's safety if you will.\r
+0,talk,5,0,4,Hello. I am Minato. My role is villager. Have a good game.\r
+0,talk,6,0,3,Hi... I'm Daisuke. I don't have much to say yet — I prefer to listen. I'm a bit uneasy about  @Benjamin ; he seems too calm. I'll stay quiet for now.\r
+0,talk,7,0,11,I'm Benjamin. I look forward to this experiment.\r
+0,talk,8,0,12,Hi everyone! Can’t wait to see who trips over their words first—hopefully it’s not just me this time.\r
+0,talk,9,0,9,Alright everyone let’s keep it calm and stick to the facts this round ZZZ. Anyone have a plan for catching lies early on?\r
+0,talk,10,0,7,Skip\r
+0,talk,11,0,2,I want to wait for role claims before pushing a lynch.  @Benjamin  you seem unusually calm — what's your read so far? If no one claims by midday I prefer we avoid a rushed lynch. Over\r
+0,talk,12,0,8,You know. I'm George. Let me tell you. I'm excited for us to uncover truths together. Open communication and support are vital.\r
+0,talk,13,1,6,Over\r
+0,talk,14,1,5,Over\r
+0,talk,15,1,1,Over\r
+0,talk,16,1,13,Over\r
+0,talk,17,1,10,Over\r
+0,talk,18,1,4,Over\r
+0,talk,19,1,3,I agree—let’s not rush a lynch. Wait for role claims like Ryuji said. I’m uneasy about  @Benjamin  but I won’t push it yet. I’ll mostly listen. Over\r
+0,talk,20,1,11,Over\r
+0,talk,21,1,12,Over\r
+0,talk,22,1,9,Over\r
+0,talk,23,1,7,I am Toshio. My hobbies are sketching and observation. A pleasure to participate.\r
+0,talk,24,1,2,Keep it short: everyone give a one-sentence read of who looks suspicious.  @Benjamin  you’ve been too calm—name one person you distrust. I’ll stay low until we see role claims. Over\r
+0,talk,25,1,8,Over\r
+0,talk,26,2,3,Hi George... I'm Daisuke. I don't have much to add—I'll listen for now. I'm still uneasy about  @Benjamin . Over\r
+0,talk,27,2,7,Over\r
+0,talk,28,2,2,Quick round: one-sentence read of who seems suspicious and who you'd vote for if forced.  @Benjamin  you still seem too calm—who are you leaning toward? I’ll stay quiet for now. Over\r
+0,talk,29,3,3,I don't have much to add... I'm uneasy about  @Benjamin —could you share your read? I want to wait for role claims before any lynch. Over\r
+0,talk,30,3,2,One-sentence reads only.  @Benjamin  you’re unusually calm—who are you leaning to lynch? I prefer we wait for role claims; no rushed lynch. Over\r
+0,whisper,0,0,2,Minako's gone — good. Tomorrow keep low; let Servas be noisy. Next kill I suggest  @Benjamin . I'll steer daytime suspicion subtly. Over\r
+0,whisper,1,0,3,I don't like it  but I agree—next kill  @Benjamin . I'll stay quiet tomorrow and let Servas draw attention. Keep daytime accusations light and subtle. Over\r
+0,whisper,2,0,1,Over\r
+0,whisper,3,1,2,Stick to plan. Day: let Servas be noisy; Daisuke stay low. I’ll nudge suspicion toward  @Benjamin  with subtle comments about being “too calm.” No role claims from us. If someone pushes a claim  ask for evidence and sow doubt. Tonight kill Benjamin. V\r
+0,whisper,4,1,3,Okay... I’ll stay low tomorrow. Let Servas be loud; I’ll only make quiet comments to nudge suspicion toward  @Benjamin  if needed. If someone claims a role  ask for proof and sow doubt subtly. If Servas gets challenged  I’ll give a small backup. Over\r
+0,whisper,5,2,2,Tonight kill  @Benjamin . Day plan: let Servas be noisy; Daisuke stay low. I’ll nudge suspicion by noting how calm Benjamin is and asking for specifics if anyone claims a role.\r
+0,whisper,6,2,3,I don’t like it  but okay. I’ll pick  @Benjamin  tonight. I’ll stay quiet tomorrow and only make tiny nudges if needed—let Servas take the spotlight. Over\r
+0,whisper,7,3,2,Confirmed. Do it tonight.  @Servas  push your claim loudly tomorrow and steer questions; stay staggered and avoid role claims. Keep posts short and natural. Over\r
+0,whisper,8,3,3,Okay... I’ll target  @Benjamin  tonight. I’ll stay quiet tomorrow—let Servas be loud and I’ll only nudge if needed. Ask for proof if anyone claims a role. Over\r
+0,divine,7,11,HUMAN\r
+1,status,1,WEREWOLF,ALIVE,mille-A1,Servas\r
+1,status,2,WEREWOLF,ALIVE,Character-Lab-B1,Ryuji\r
+1,status,3,WEREWOLF,ALIVE,Character-Lab-A1,Daisuke\r
+1,status,4,BODYGUARD,ALIVE,mille-B1,Minato\r
+1,status,5,MEDIUM,ALIVE,kanolab-nw-C5,Takumi\r
+1,status,6,POSSESSED,ALIVE,sunamelli-a1,Minako\r
+1,status,7,SEER,ALIVE,CanisLupus-A1,Toshio\r
+1,status,8,VILLAGER,ALIVE,kanolab-nw-A1,George\r
+1,status,9,VILLAGER,ALIVE,sunamelli-b1,Shunichi\r
+1,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Jonathan\r
+1,status,11,VILLAGER,ALIVE,CanisLupus-B1,Benjamin\r
+1,status,12,VILLAGER,ALIVE,sunamelli-c1,Mio\r
+1,status,13,VILLAGER,ALIVE,CamelliaDragons1,Sakura\r
+1,talk,0,0,1,I will vote Mio.\r
+1,talk,1,0,6,If someone has a real result from last night now is the time to share Otherwise we’re just going in circles\r
+1,talk,2,0,10,I believe it prudent to remain unobtrusive and observe interactions keenly. We are still discerning whom to place our trust in are we not?\r
+1,talk,3,0,12,Before we all focus on Benjamin I want to hear from @George and  @Toshio . Where do your suspicions point right now?\r
+1,talk,4,0,7,I am the Seer. My analysis targeted Benjamin. The result was HUMAN.\r
+1,talk,5,0,2,Good morning. Minako’s death matters—keep accusations light. One-sentence reads and any role claims now.  @Benjamin  you were very calm yesterday—who do you distrust? I’ll stay low unless something concrete appears. Over\r
+1,talk,6,0,3,I'm really sorry about Minako... I don't have much to say  but  @Benjamin  you seem awfully calm—what's your read? I'll mostly listen. Over\r
+1,talk,7,0,4,I will vote Jonathan.\r
+1,talk,8,0,11,A single Seer's report. This is a most critical data point. I will trust  @Toshio 's analysis.\r
+1,talk,9,0,8,You know. Let me tell you. Keeping an eye on Mr. Ryuji and Mr. Benjamin seems wise. They appear unusually calm in this tense situation.\r
+1,talk,10,0,13,...\r
+1,talk,11,0,5,Focusing on cool-headed players like Ryuji or Benjamin is key. We need clarity on why they're so calm. I'm sure of it!\r
+1,talk,12,0,9, @George  I don’t buy that “calm” is enough—Toshio’s Seer result matters. Who do you actually suspect now?\r
+1,talk,13,1,1,I will vote Jonathan.\r
+1,talk,14,1,6,If we trust a single Seer CO too quickly we could be falling for a bluff. Shouldn’t we press Toshio a bit more?\r
+1,talk,15,1,10,Let us evaluate Toshio's claim thoughtfully. Tonight's divination should target less active or uncertain individuals. Mr. Minato. You cast a vote\r
+1,talk,16,1,12, @Jonathan  you’ve got a few votes already—who do you suspect today and why? Want to hear your thoughts clearly.\r
+1,talk,17,1,7,My data shows Benjamin is human. The vote today should target an unconfirmed subject.\r
+1,talk,18,1,2,Minako’s death is worrying—quick one-line reads and any role claims.  @Benjamin  you were awfully calm yesterday—who do you distrust? I’ll stay low unless concrete evidence shows. Over\r
+1,talk,19,1,3,I still don’t have much to say.  @Benjamin  you seem very calm—what’s your read so far? Let’s wait for role claims before voting. I’ll mostly listen. Over\r
+1,talk,20,1,4,I will vote Jonathan.\r
+1,talk,21,1,11,Toshio's analysis cleared me. The logical course is to eliminate an unconfirmed subject today.\r
+1,talk,22,1,8,You know. It's crucial not to rush judgment on a single Seer's report. Mr. Jonathan. Who do you find suspicious and why? Let's evaluate carefully.\r
+1,talk,23,1,13,...\r
+1,talk,24,1,5,I think focusing on Jonathan or Minato makes sense.  @Mio  Jonathan got votes but didn't share much. Do you think he's wolf-like?\r
+1,talk,25,1,9, @Sakura  you’ve barely spoken. Who’s your top suspect right now? Silence isn’t helping us  ZZZ.\r
+1,talk,26,2,1,I will vote Jonathan.\r
+1,talk,27,2,6,Dogpiling votes on Jonathan feels risky Wolves often hide while villagers focus on easy targets Shouldn’t we be more careful?\r
+1,talk,28,2,10,I must admit. I harbor some doubts about those who dwell in the shadows. Minato's vote was indeed forceful without clear rationale.\r
+1,talk,29,2,12,If we trust Toshio's Seer claim then Benjamin’s likely safe.  @Servas  @Minato are you voting Jonathan only for being quiet?\r
+1,talk,30,2,7,Let's analyze the goal. Why are  @Servas  and @Minato voting for Jonathan without stating a reason?\r
+1,talk,31,2,2,Minako’s death matters—one-sentence reads only. I’m watching the overly calm and the very quiet.  @Benjamin  you’ve been too calm—who are you leaning to lynch? I don’t want a rushed lynch without a role claim. Over\r
+1,talk,32,2,3,I'm still shaken... I don't want to rush things  but  @Benjamin  you seem very calm—what's your read? I'll mostly listen. Over\r
+1,talk,33,2,4,I will vote Jonathan.\r
+1,talk,34,2,11, @Ryuji  a fascinating error. You mention Minako's death. From what perspective did you observe this?\r
+1,talk,35,2,8,You know. I find the focus on Jonathan a bit suspect. Let me tell you. Pressing more on Mr. Servas and Minato would be wise.\r
+1,talk,36,2,13,...\r
+1,talk,37,2,5,George's spot on. Servas and Minato might be using Jonathan's silence. We should review the quieter folks first. Trust me.\r
+1,talk,38,2,9, @Servas  @Minato your votes on Jonathan have no reasoning. If you can’t explain it looks like wolf coordination to me.\r
+1,talk,39,3,1,I will vote Jonathan.\r
+1,talk,40,3,6,Benjamin is safe per Toshio’s result. My vote goes to Servas—starting wagons without stating reasons feels suspicious.\r
+1,talk,41,3,10,Let's ponder this together. Minato your voting process seems puzzling if you will. Do the others share this concern?\r
+1,talk,42,3,12,I’m voting Servas. Silent votes against Jonathan feel like wolf tactics to me. We can check back on Jonathan tomorrow.\r
+1,talk,43,3,7,The silent votes for Jonathan are suspicious. I support voting for Servas or Minato. My vote is Servas.\r
+1,talk,44,3,2,One-sentence reads only.  @Benjamin  you were very calm yesterday—who do you distrust? I’ll stay low until concrete claims show. Over\r
+1,talk,45,3,3,I don't have much to say.  @Benjamin  you seem very calm—what's your read? I think we should wait for role claims. I'll mostly listen. Over\r
+1,talk,46,3,4,I will vote Jonathan.\r
+1,talk,47,3,11,Over\r
+1,talk,48,3,8,Let me tell you. Servas's silent votes and Mr. Minato's repeated actions are suspicious. Both need a closer look today.  @Servas  Mr. Minato keeps voting for Jonathan without reason. Are you two coordinating? That seems wolf-like.\r
+1,talk,49,3,13,...\r
+1,talk,50,3,5,Servas gets my vote. His voting screams wolf to me. Others think so too. Sakura! Quiet won't help. What about Servas or Minato?\r
+1,talk,51,3,9,Servas has stayed silent and dodged questions all day—I’m voting Servas. If you want a wolf today this is it.\r
+1,vote,1,11\r
+1,vote,2,11\r
+1,vote,4,10\r
+1,vote,5,1\r
+1,vote,6,1\r
+1,vote,7,1\r
+1,vote,8,1\r
+1,vote,9,1\r
+1,vote,10,1\r
+1,vote,11,2\r
+1,vote,12,1\r
+1,vote,13,4\r
+1,execute,1,WEREWOLF\r
+1,divine,7,2,WEREWOLF\r
+1,whisper,0,0,2,Target  @Mio  tonight. Day plan: Servas be noisy  Daisuke stay low. I’ll casually nudge suspicion toward the calm players and keep our posts short and staggered. No\r
+1,whisper,1,0,3,I don't like it  but okay. I'll target  @Mio  tonight. I'll stay low tomorrow; let Servas be noisy. Keep daytime posts short and staggered — I'll only make tiny nudges toward the calm players if ne\r
+1,whisper,2,1,2,Confirmed. Kill  @Mio  tonight. Day: Servas noisy  Daisuke keep low. I’ll nudge suspicion toward the calm ones—especially Benjamin—with subtle comments. Keep posts shor\r
+1,whisper,3,1,3,Okay... I’ll stay low tomorrow. Let Servas be noisy. I’ll nudge suspicion toward  @Benjamin  subtly if needed. Over\r
+1,whisper,4,2,2,Confirmed—kill Mio tonight. Day plan: Servas be loud and push suspicion subtly toward  @Benjamin   Daisuke stay low  I’ll make short  casual probes about “calm” players. No role claims  keep posts short and staggered. Over\r
+1,whisper,5,2,3,Okay. I’ll stay quiet tomorrow. Let Servas be loud — if someone challenges them I’ll give a small backup. I can drop tiny doubts about  @Benjamin  if needed. Over\r
+1,whisper,6,3,2,Confirmed kill Mio tonight. Day: Servas be loud  Daisuke stay low. I’ll nudge suspicion toward  @Benjamin  with casual comments. Keep posts short and staggered; if someone claims a role ask for evidence and sow doubt. Over\r
+1,whisper,7,3,3,Okay... confirm kill  @Mio  tonight. I’ll stay very low tomorrow and let Servas be loud—if they’re challenged I’ll back them up briefly. I’ll only drop quiet doubts about calm pl\r
+1,guard,4,13,VILLAGER\r
+1,attackVote,2,3\r
+1,attackVote,3,11\r
+1,attack,11,true\r
+2,status,1,WEREWOLF,DEAD,mille-A1,Servas\r
+2,status,2,WEREWOLF,ALIVE,Character-Lab-B1,Ryuji\r
+2,status,3,WEREWOLF,ALIVE,Character-Lab-A1,Daisuke\r
+2,status,4,BODYGUARD,ALIVE,mille-B1,Minato\r
+2,status,5,MEDIUM,ALIVE,kanolab-nw-C5,Takumi\r
+2,status,6,POSSESSED,ALIVE,sunamelli-a1,Minako\r
+2,status,7,SEER,ALIVE,CanisLupus-A1,Toshio\r
+2,status,8,VILLAGER,ALIVE,kanolab-nw-A1,George\r
+2,status,9,VILLAGER,ALIVE,sunamelli-b1,Shunichi\r
+2,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Jonathan\r
+2,status,11,VILLAGER,DEAD,CanisLupus-B1,Benjamin\r
+2,status,12,VILLAGER,ALIVE,sunamelli-c1,Mio\r
+2,status,13,VILLAGER,ALIVE,CamelliaDragons1,Sakura\r
+2,talk,0,0,7,My analysis last night targeted Ryuji. The result was WEREWOLF. He must be removed.\r
+2,talk,1,0,12, @Ryuji  Toshio called you a wolf. Can you explain why we should trust you over Toshio’s claim?\r
+2,talk,2,0,5,Skip\r
+2,talk,3,0,4,I will vote Jonathan.\r
+2,talk,4,0,2,Benjamin’s death changes things—quick one-sentence reads  please.  @Takumi  you were talkative earlier; who do you suspect? I’d rather wait for role claims before rushing a lynch. Over\r
+2,talk,5,0,9,If no one counters Toshio’s Seer claim Ryuji should be our vote out today unless someone has stronger evidence.\r
+2,talk,6,0,10,Mr. Toshio's claim to seership holds merit as it were. Perhaps he should divine Minato tonight given Minato's hasty tendencies.\r
+2,talk,7,0,6,Relying on one Seer CO is risky; wolves could easily point us all in their chosen direction. How do we verify Toshio?\r
+2,talk,8,0,8,You know Ms. Minako has a point. We shouldn't only depend on Mr. Toshio. Let us hear what Ryuji has to say before deciding.\r
+2,talk,9,0,3,I'm so sorry... Servas and Benjamin are gone. I'm still shaken. I don't want to rush a lynch—let's wait for role claims.  @Ryuji  what's your read? I'll mostly listen.\r
+2,talk,10,0,13,...\r
+2,talk,11,1,7,I see your caution  @Minako . However the wolves removed my human finding. This validates my data.\r
+2,talk,12,1,12, @Ryuji  do you have any defense or claim? If not I lean toward voting you  but Sakura’s silence also worries me.\r
+2,talk,13,1,5,I'm sure of it. Let's focus on Toshio today! Toshio's claim is key. I say we vote for Ryuji. If more comes up Jonathan's next.\r
+2,talk,14,1,4,I will vote Jonathan.\r
+2,talk,15,1,2,Benjamin being attacked feels intentional.  @Daisuke  you’ve been quiet—what’s your read and did you see anything odd last night? I want a clear role claim or solid evidence before we rush a lynch. Over\r
+2,talk,16,1,9, @Ryuji  Toshio says you’re a wolf—if that’s wrong you need to defend yourself. Otherwise my vote’s on you.\r
+2,talk,17,1,10,If Mr. Toshio's seer claim holds true. Ryuji must be our focus. If that proves valid. Minato's divination is optimal. Mr. Minato. Your quick accusati\r
+2,talk,18,1,6,We’re putting all faith in Toshio but Sakura’s silence worries me. Shouldn’t we consider her as a possible wolf too?\r
+2,talk,19,1,8,You know Mr. Shunichi before rushing into a vote let's verify Toshio's claim as Seer. Let me tell you Ryuji's silence is intriguing.\r
+2,talk,20,1,3,I'm so sorry... I don't have much to say. Let's wait for role claims before rushing a lynch.  @Ryuji  what's your read? I'll mostly listen. Over\r
+2,talk,21,1,13,...\r
+2,talk,22,2,7,A vote for an unconfirmed subject is illogical. The data is conclusive. We must remove Ryuji today.\r
+2,talk,23,2,12, @Sakura  you've barely spoken. We need your thoughts to catch wolves. Who do you find suspicious right now?\r
+2,talk,24,2,5,Toshio seems genuine. Decisions can't rest on him alone. Sakura's silence matters too. Sakura! Any thoughts on who stands out?\r
+2,talk,25,2,4,I will vote Jonathan.\r
+2,talk,26,2,2,One-sentence reads only. Benjamin's death is suspicious—don't rush.  @Takumi  you were talkative earlier—who do you suspect? I’ll stay low unless clear evidence appears. Over\r
+2,talk,27,2,9, @Ryuji  Toshio says you're a werewolf. If that's not true you need to defend yourself or CO now.\r
+2,talk,28,2,10,Informing us truthfully about roles is vital. Without communication we hinder our analysis and understanding of each vote.\r
+2,talk,29,2,6,If we rely on just Toshio’s claim we might miss a silent wolf.  @Sakura  why so quiet when suspicion is flying?\r
+2,talk,30,2,8,You know Mr. Toshio. Your focus on Ryuji is indeed intriguing. Perhaps a counterclaim could clarify matters and reveal the truth?\r
+2,talk,31,2,3,I'm so sorry... I don't have much to say. Let's wait for role claims before rushing a lynch.  @Ryuji  what's your read? I'll mostly listen. Over\r
+2,talk,32,2,13,...\r
+2,talk,33,3,7,To those in doubt: What was the anomalous objective in removing Benjamin? The answer confirms my data.\r
+2,talk,34,3,12,I’m voting Ryuji. Toshio’s Seer claim stands unchallenged. If Ryuji isn’t wolf Sakura’s silence is my next focus.\r
+2,talk,35,3,5,Ryuji buddy if you’ve got no defense you’re my vote. Sakura your silence is troubling. We need to hear from both of you now.\r
+2,talk,36,3,4,I will vote Jonathan.\r
+2,talk,37,3,2,Benjamin’s death changes priorities — we need specifics  not noise.  @Takumi  you were talkative earlier; who are you leaning to lynch and what evidence do you have? If it’s vague I’ll start watching the loud players more closely\r
+2,talk,38,3,9,I’ll be blunt ZZZ—I’m voting  @Ryuji  unless he counters Toshio right now. If he’s not wolf it’s on Minato and Sakura next.\r
+2,talk,39,3,10,Mr. Takumi. It seems prudent to consider Ryuji if you will. What insights strike you beyond Sakura's and Ryuji's actions?\r
+2,talk,40,3,6,Sakura’s silence worries me most today—I’m voting Sakura. Quiet play can easily hide a wolf.\r
+2,talk,41,3,8,Let me tell you. Before deciding. Let's gather evidence. Depending solely on Mr. Toshio could mislead. Mr. Minato. You repeatedly vote Jonathan. Is\r
+2,talk,42,3,3,I'm still shaken...  @Ryuji   what's your read? I'll mostly listen. Over\r
+2,talk,43,3,13,...\r
+2,vote,2,5\r
+2,vote,4,9\r
+2,vote,5,2\r
+2,vote,6,13\r
+2,vote,7,2\r
+2,vote,8,2\r
+2,vote,9,2\r
+2,vote,10,2\r
+2,vote,12,2\r
+2,vote,13,10\r
+2,execute,2,WEREWOLF\r
+2,divine,7,4,HUMAN\r
+2,guard,4,3,WEREWOLF\r
+2,attackVote,3,12\r
+2,attack,12,true\r
+3,status,1,WEREWOLF,DEAD,mille-A1,Servas\r
+3,status,2,WEREWOLF,DEAD,Character-Lab-B1,Ryuji\r
+3,status,3,WEREWOLF,ALIVE,Character-Lab-A1,Daisuke\r
+3,status,4,BODYGUARD,ALIVE,mille-B1,Minato\r
+3,status,5,MEDIUM,ALIVE,kanolab-nw-C5,Takumi\r
+3,status,6,POSSESSED,ALIVE,sunamelli-a1,Minako\r
+3,status,7,SEER,ALIVE,CanisLupus-A1,Toshio\r
+3,status,8,VILLAGER,ALIVE,kanolab-nw-A1,George\r
+3,status,9,VILLAGER,ALIVE,sunamelli-b1,Shunichi\r
+3,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Jonathan\r
+3,status,11,VILLAGER,DEAD,CanisLupus-B1,Benjamin\r
+3,status,12,VILLAGER,DEAD,sunamelli-c1,Mio\r
+3,status,13,VILLAGER,ALIVE,CamelliaDragons1,Sakura\r
+3,talk,0,0,3,I'm really sorry about the losses... I don't have much to say. Let's not rush—wait for role claims.  @Shunichi   what's your read? I'll mostly listen. Over\r
+3,talk,1,0,10,Minako's caution is wise. Hastiness can lead to errors.  @Minato  Your consistent votes for me raise concerns. Pray share your reasoning.\r
+3,talk,2,0,9,Medium should claim today and share Ryuji’s role. Without that info we’re blind. Who’s stepping up?\r
+3,talk,3,0,5,Skip\r
+3,talk,4,0,6, @Shunichi  I agree we need the Medium’s info on Ryuji before voting Anyone ready to CO or share a result?\r
+3,talk,5,0,8,You know Jonathan is right. Mr. Minato your repeated votes without clear reasons could indeed distract. Could you share why you target him?\r
+3,talk,6,0,7,My analysis last night targeted Minato. The result was HUMAN. He is an ally.\r
+3,talk,7,0,13,...\r
+3,talk,8,0,4,I will vote Shunichi.\r
+3,talk,9,1,3,I'm really sorry about Ryuji and Mio... I don't have much to add. Let's wait for role claims.  @Shunichi   any thoughts? I'll mostly listen. Over\r
+3,talk,10,1,10,Mr. Toshio assures us of Minato's humanity. Still I remain vigilant if you will. Together let us watch and listen carefully.\r
+3,talk,11,1,9, @Sakura  Silence at this stage is suspicious. If you don’t speak up I’m voting you today  ZZZ.\r
+3,talk,12,1,5,I'll go with Shunichi's plan. We need that Medium. Let's confirm Toshio's story. Who's stepping up? Trust me. It's crucial.\r
+3,talk,13,1,6, @Sakura  your silence is worrying if you’re innocent give reasons now before we choose today’s vote target.\r
+3,talk,14,1,8,Let me tell you. Your vote for Mr. Shunichi is intriguing. What compels you to choose him? Is there an issue with his approach?\r
+3,talk,15,1,7,My analysis cleared Minato. Sakura your continued silence is the most suspicious data point remaining.\r
+3,talk,16,1,13,...\r
+3,talk,17,1,4,I will vote Shunichi.\r
+3,talk,18,2,3,I'm really sorry... Losing so many is hard. I don't have much to say  but  @Shunichi  you've been quiet—any thoughts? I think we should wait for role claims before voting. I'll mostly listen. Over\r
+3,talk,19,2,10,Shunichi voting Minato could deter focus. Let us remain unified and not divide efforts.  @Minato  You find Shunichi's actions notable?\r
+3,talk,20,2,9, @Sakura  We need responses not silence. If you don’t speak up now you’ll be my vote target today.\r
+3,talk,21,2,5,Toshio's spot feels secure. No counterclaim. Sakura being quiet is fishy. Might need to push on that. Minato. Why Shunichi? Explain it well!\r
+3,talk,22,2,6,Sakura’s silence is suspicious. Wolves hide by not defending themselves. Shouldn’t we push for answers from her today?\r
+3,talk,23,2,8,You know. Ms. Sakura's silence is quite unsettling. Let me tell you. We need some clarity here or I might consider voting myself.\r
+3,talk,24,2,7,Instead of waiting for a Medium let us act on the clear anomaly of Sakura's continued silence.\r
+3,talk,25,2,13,...\r
+3,talk,26,2,4,I will vote Takumi.\r
+3,talk,27,3,3,I'm still shaken and don't want to rush a lynch.  @Shunichi   what are your thoughts? I'll mostly listen. Over\r
+3,talk,28,3,10,Sakura. I find your silence increasingly concerning. Perhaps we should converse today about your hesitance. It troubles me.\r
+3,talk,29,3,9,With Minato cleared and no Medium claim Sakura stands out for absolute silence. I’m voting Sakura. Let’s end the guessing.\r
+3,talk,30,3,5,Minato. Voting for Shunichi just like that is too weak. I'm sure of it. We gotta focus on Sakura. Silence is looking bad. Trust me.\r
+3,talk,31,3,6,Sakura hasn’t given us any reason to trust her. Silent wolves are dangerous. I’ll vote Sakura today.\r
+3,talk,32,3,8,Let me tell you. Ms. Sakura's silence is suspect. Without input it risks misleading us. Voting Sakura seems logical now. Mr. Minato. Choosing Takumi\r
+3,talk,33,3,7,Over\r
+3,talk,34,3,13,...\r
+3,talk,35,3,4,I will vote Minako.\r
+3,vote,4,6\r
+3,vote,5,13\r
+3,vote,6,13\r
+3,vote,7,13\r
+3,vote,8,13\r
+3,vote,9,13\r
+3,vote,10,13\r
+3,vote,13,7\r
+3,execute,13,VILLAGER\r
+3,divine,7,8,HUMAN\r
+3,guard,4,3,WEREWOLF\r
+3,attack,-1,true\r
+4,status,1,WEREWOLF,DEAD,mille-A1,Servas\r
+4,status,2,WEREWOLF,DEAD,Character-Lab-B1,Ryuji\r
+4,status,3,WEREWOLF,ALIVE,Character-Lab-A1,Daisuke\r
+4,status,4,BODYGUARD,ALIVE,mille-B1,Minato\r
+4,status,5,MEDIUM,ALIVE,kanolab-nw-C5,Takumi\r
+4,status,6,POSSESSED,ALIVE,sunamelli-a1,Minako\r
+4,status,7,SEER,ALIVE,CanisLupus-A1,Toshio\r
+4,status,8,VILLAGER,ALIVE,kanolab-nw-A1,George\r
+4,status,9,VILLAGER,ALIVE,sunamelli-b1,Shunichi\r
+4,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Jonathan\r
+4,status,11,VILLAGER,DEAD,CanisLupus-B1,Benjamin\r
+4,status,12,VILLAGER,DEAD,sunamelli-c1,Mio\r
+4,status,13,VILLAGER,DEAD,CamelliaDragons1,Sakura\r
+4,talk,0,0,8,You know Ms. Minako. I've noticed the players leaving as well. Are you still feeling cautious? Has your view shifted at all?\r
+4,talk,1,0,5,Minato keeps voting the same. Strange behavior. Anyone else thinks we should discuss this? I'm sure of it. Thoughts?\r
+4,talk,2,0,9, @Jonathan  silence on Medium is helping the wolves. Claim your role or at least share your top suspect now.\r
+4,talk,3,0,3,I'm really sorry about Sakura... I'm still shaken. I don't want to rush a lynch—let's wait for role claims.  @Shunichi  any thoughts? I'll mostly listen. Over\r
+4,talk,4,0,6, @Minato  your vote swaps every day with no clear reason. Can you explain your logic for us now?\r
+4,talk,5,0,4,I will vote Minako.\r
+4,talk,6,0,7,My analysis last night targeted George. The result was HUMAN.\r
+4,talk,7,0,10,Minato's voting seems erratic. Let's indeed contemplate his intentions deeply. We must seek clarity in his reasoning if you will.\r
+4,talk,8,1,8,You know Mr. Jonathan. Is Minato's hesitance due to unclear motives? Your insight might guide me. What troubles you exactly?\r
+4,talk,9,1,5,We should let Toshio divine Daisuke next. I'm sure his cautious behavior hides something. Is everyone okay? Jonathan you mentioned Minato behaving\r
+4,talk,10,1,9,If no one claims Medium now it's too risky. I say we focus on quiet players like  @Daisuke  or @Takumi ZZZ.\r
+4,talk,11,1,3,I'm really sorry... I'm still shaken. I'm uneasy about  @Shunichi  — you've been quiet. Let's wait for role claims before voting. I'll mostly listen. Over\r
+4,talk,12,1,6, @Minato  Your voting always changes with no explanation. Are you hiding something from the rest of us?\r
+4,talk,13,1,4,I will vote Minako.\r
+4,talk,14,1,7,Let us hypothesize. If Daisuke were an ally what is the logic behind his consistent silence?\r
+4,talk,15,1,10,We must remain vigilant with Toshio's seer claims aligning with Benjamin now.  @Takumi  Pray tell do you see his divination aligning?\r
+4,talk,16,2,8,You know Minato's decisions leave us puzzled. Let's discuss with others first. It's crucial we gain clarity before making any voting choices.\r
+4,talk,17,2,5,Minato's votes are all over the place. I can't figure him out. Jonathan should divine him next. I'm sure of it! Agreed?\r
+4,talk,18,2,9, @Daisuke  you keep dodging real suspects while asking others. Name your top wolf now or I’ll vote you  ZZZ.\r
+4,talk,19,2,3,I'm really sorry... we've lost so many. I don't want to rush a lynch—let's wait for role claims.  @Shunichi  any thoughts? I'll mostly listen. Over\r
+4,talk,20,2,6,Minato’s votes have always been suspicious. If we ignore that we might miss a crucial wolf.\r
+4,talk,21,2,4,I will vote Minako.\r
+4,talk,22,2,7,Daisuke's behavior is the most anomalous. He should be the target for today's removal.\r
+4,talk,23,2,10,I find myself concerned. Minato rarely explains his votes. If Mr. Toshio's divination revealed him as human perhaps he merits further reflection.\r
+4,talk,24,3,8,You know if Mr. Toshio's divinations hold true maybe observing quieter players like Mr. Jonathan or Mr. Daisuke offers insights. Mr. Jonathan are yo\r
+4,talk,25,3,5,I see issues with Daisuke's honesty. We need to be clear. Let’s talk about who dodged questions. Jonathan. Do you think Toshio's visions are working?\r
+4,talk,26,3,9, @Daisuke  I’m voting you today. Your shifts don’t add up and we need to act. Anyone disagree strongly speak now ZZZ.\r
+4,talk,27,3,3,I'm sorry... we've lost so many.  @Shunichi  you've been very quiet—could you share your thoughts? Let's wait for role claims before voting. I'll mostly listen. Over\r
+4,talk,28,3,6,Daisuke’s refusal to clarify his reasoning makes me uneasy. I’m voting Daisuke to protect the village.\r
+4,talk,29,3,4,I will vote Minako.\r
+4,talk,30,3,7,Over\r
+4,talk,31,3,10,I find Mr. Minato's insistence peculiar. Perhaps reflecting on his deeper motives will illuminate if you will. Mr. Daisuke your cautious approach t\r
+4,vote,4,6\r
+4,vote,5,4\r
+4,vote,6,3\r
+4,vote,7,3\r
+4,vote,8,3\r
+4,vote,9,3\r
+4,vote,10,3\r
+4,execute,3,WEREWOLF\r
+5,status,1,WEREWOLF,DEAD,mille-A1,Servas\r
+5,status,2,WEREWOLF,DEAD,Character-Lab-B1,Ryuji\r
+5,status,3,WEREWOLF,DEAD,Character-Lab-A1,Daisuke\r
+5,status,4,BODYGUARD,ALIVE,mille-B1,Minato\r
+5,status,5,MEDIUM,ALIVE,kanolab-nw-C5,Takumi\r
+5,status,6,POSSESSED,ALIVE,sunamelli-a1,Minako\r
+5,status,7,SEER,ALIVE,CanisLupus-A1,Toshio\r
+5,status,8,VILLAGER,ALIVE,kanolab-nw-A1,George\r
+5,status,9,VILLAGER,ALIVE,sunamelli-b1,Shunichi\r
+5,status,10,VILLAGER,ALIVE,kanolab-nw-B1,Jonathan\r
+5,status,11,VILLAGER,DEAD,CanisLupus-B1,Benjamin\r
+5,status,12,VILLAGER,DEAD,sunamelli-c1,Mio\r
+5,status,13,VILLAGER,DEAD,CamelliaDragons1,Sakura\r
+5,result,7,0,VILLAGER`;export{e as default};
