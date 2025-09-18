@@ -1,11 +1,13 @@
 <script lang="ts">
   import type { DayStatus } from "$lib/types/archive";
   import { getColorFromName } from "$lib/utils/archive";
+  import { hierarchicalDisplaySettings } from "$lib/stores/hierarchicalDisplaySettings";
   import { _, locale } from "svelte-i18n";
   import AgentName from "./AgentName.svelte";
   import FormatText from "./FormatText.svelte";
 
   const isEnglish = $derived($locale === "en");
+  const settings = $derived($hierarchicalDisplaySettings);
 
   let { dayIdx = "", dayStatus = {} as DayStatus } = $props();
 
@@ -62,7 +64,7 @@
       {/if}
     </h2>
     <div class="grow overflow-y-auto pr-4">
-      {#if Object.keys(dayStatus.agents).length > 0}
+      {#if settings.agents.visible && Object.keys(dayStatus.agents).length > 0}
         <div>
           <h3 class="text-lg font-bold my-2">{$_("archive.agents")}</h3>
           <ul>
@@ -72,16 +74,25 @@
                 style={`border-color: ${getColorFromName(status.gameName)}`}
                 class:opacity-25={status.status !== "ALIVE"}
               >
-                <AgentName text={status.gameName} key={status.gameName} />
-                {status.originalName}
-                {getRoleTranslation(status.role)} -
-                {getStatusTranslation(status.status)}
+                {#if settings.agents.fields?.gameName}
+                  <AgentName text={status.gameName} key={status.gameName} />
+                {/if}
+                {#if settings.agents.fields?.originalName}
+                  {status.originalName}
+                {/if}
+                {#if settings.agents.fields?.role}
+                  {getRoleTranslation(status.role)}
+                {/if}
+                {#if settings.agents.fields?.status}
+                  {#if settings.agents.fields?.role} - {/if}
+                  {getStatusTranslation(status.status)}
+                {/if}
               </li>
             {/each}
           </ul>
         </div>
       {/if}
-      {#if dayStatus.beforeWhisper.length > 0}
+      {#if settings.beforeWhisper.visible && dayStatus.beforeWhisper.length > 0}
         <div>
           <h3 class="text-lg font-bold my-2">{$_("archive.whispers")}</h3>
           <ul>
@@ -91,19 +102,29 @@
                 style={`border-color: ${getColorFromName(dayStatus.agents[whisper.agentIdx].gameName)}`}
                 class="p-2 my-2 border-4 rounded-md"
               >
-                <AgentName text={dayStatus.agents[whisper.agentIdx].gameName} />
-                <FormatText
-                  text={whisper.text}
-                  names={Object.values(dayStatus.agents).map(
-                    (agent) => agent.gameName
-                  )}
-                />
+                {#if settings.beforeWhisper.fields?.talkIdx}
+                  <span class="text-xs opacity-50">[{whisper.talkIdx}]</span>
+                {/if}
+                {#if settings.beforeWhisper.fields?.turnIdx}
+                  <span class="text-xs opacity-50">T{whisper.turnIdx}</span>
+                {/if}
+                {#if settings.beforeWhisper.fields?.agentName}
+                  <AgentName text={dayStatus.agents[whisper.agentIdx].gameName} />
+                {/if}
+                {#if settings.beforeWhisper.fields?.text}
+                  <FormatText
+                    text={whisper.text}
+                    names={Object.values(dayStatus.agents).map(
+                      (agent) => agent.gameName
+                    )}
+                  />
+                {/if}
               </li>
             {/each}
           </ul>
         </div>
       {/if}
-      {#if dayStatus.talks.length > 0}
+      {#if settings.talks.visible && dayStatus.talks.length > 0}
         <div>
           <h3 class="text-lg font-bold my-2">{$_("archive.talk")}</h3>
           <ul>
@@ -113,19 +134,29 @@
                 style={`border-color: ${getColorFromName(dayStatus.agents[talk.agentIdx].gameName)}`}
                 class="p-2 my-2 border-4 rounded-md"
               >
-                <AgentName text={dayStatus.agents[talk.agentIdx].gameName} />
-                <FormatText
-                  text={talk.text}
-                  names={Object.values(dayStatus.agents).map(
-                    (agent) => agent.gameName
-                  )}
-                />
+                {#if settings.talks.fields?.talkIdx}
+                  <span class="text-xs opacity-50">[{talk.talkIdx}]</span>
+                {/if}
+                {#if settings.talks.fields?.turnIdx}
+                  <span class="text-xs opacity-50">T{talk.turnIdx}</span>
+                {/if}
+                {#if settings.talks.fields?.agentName}
+                  <AgentName text={dayStatus.agents[talk.agentIdx].gameName} />
+                {/if}
+                {#if settings.talks.fields?.text}
+                  <FormatText
+                    text={talk.text}
+                    names={Object.values(dayStatus.agents).map(
+                      (agent) => agent.gameName
+                    )}
+                  />
+                {/if}
               </li>
             {/each}
           </ul>
         </div>
       {/if}
-      {#if dayStatus.votes.length > 0}
+      {#if settings.votes.visible && dayStatus.votes.length > 0}
         <div>
           <h3 class="text-lg font-bold my-2">{$_("archive.voting")}</h3>
           <ul>
@@ -135,19 +166,27 @@
                 style={`border-color: ${getColorFromName(dayStatus.agents[vote.agentIdx].gameName)}`}
               >
                 {#if isEnglish}
-                  <AgentName text={dayStatus.agents[vote.agentIdx].gameName} />
+                  {#if settings.votes.fields?.voterName}
+                    <AgentName text={dayStatus.agents[vote.agentIdx].gameName} />
+                  {/if}
                   {$_("archive.votedFor")}
-                  <AgentName
-                    text={dayStatus.agents[vote.targetIdx].gameName}
-                    highlight
-                  />
+                  {#if settings.votes.fields?.targetName}
+                    <AgentName
+                      text={dayStatus.agents[vote.targetIdx].gameName}
+                      highlight
+                    />
+                  {/if}
                 {:else}
-                  <AgentName text={dayStatus.agents[vote.agentIdx].gameName} />
+                  {#if settings.votes.fields?.voterName}
+                    <AgentName text={dayStatus.agents[vote.agentIdx].gameName} />
+                  {/if}
                   {$_("archive.particle")}
-                  <AgentName
-                    text={dayStatus.agents[vote.targetIdx].gameName}
-                    highlight
-                  />
+                  {#if settings.votes.fields?.targetName}
+                    <AgentName
+                      text={dayStatus.agents[vote.targetIdx].gameName}
+                      highlight
+                    />
+                  {/if}
                   {$_("archive.votedFor")}
                 {/if}
               </li>
@@ -155,48 +194,65 @@
           </ul>
         </div>
       {/if}
-      {#if dayStatus.execution}
+      {#if settings.execution.visible && dayStatus.execution}
         <div>
           <h3 class="text-lg font-bold my-2">{$_("archive.execute")}</h3>
           <p>
-            <AgentName
-              text={dayStatus.agents[dayStatus.execution.agentIdx].gameName}
-              highlight
-            />
+            {#if settings.execution.fields?.agentName}
+              <AgentName
+                text={dayStatus.agents[dayStatus.execution.agentIdx].gameName}
+                highlight
+              />
+            {/if}
             {$_("archive.wasExecuted")}
-          </p>
-        </div>
-      {/if}
-      {#if dayStatus.divine}
-        <div>
-          <h3 class="text-lg font-bold my-2">{$_("archive.divination")}</h3>
-          <p>
-            {#if isEnglish}
-              <AgentName
-                text={dayStatus.agents[dayStatus.divine.agentIdx].gameName}
-              />
-              {$_("archive.divined")}
-              <AgentName
-                text={dayStatus.agents[dayStatus.divine.targetIdx].gameName}
-                highlight
-              />
-              <strong>{getSpeciesTranslation(dayStatus.divine.result)}</strong>
-            {:else}
-              <AgentName
-                text={dayStatus.agents[dayStatus.divine.agentIdx].gameName}
-              />
-              {$_("archive.particle")}
-              <AgentName
-                text={dayStatus.agents[dayStatus.divine.targetIdx].gameName}
-                highlight
-              />
-              {$_("archive.divined")}
-              <strong>{getSpeciesTranslation(dayStatus.divine.result)}</strong>
+            {#if settings.execution.fields?.role}
+              ({getRoleTranslation(dayStatus.execution.role)})
             {/if}
           </p>
         </div>
       {/if}
-      {#if dayStatus.afterWhisper.length > 0}
+      {#if settings.divine.visible && dayStatus.divine}
+        <div>
+          <h3 class="text-lg font-bold my-2">{$_("archive.divination")}</h3>
+          <p>
+            {#if isEnglish}
+              {#if settings.divine.fields?.seerName}
+                <AgentName
+                  text={dayStatus.agents[dayStatus.divine.agentIdx].gameName}
+                />
+              {/if}
+              {$_("archive.divined")}
+              {#if settings.divine.fields?.targetName}
+                <AgentName
+                  text={dayStatus.agents[dayStatus.divine.targetIdx].gameName}
+                  highlight
+                />
+              {/if}
+              {#if settings.divine.fields?.result}
+                <strong>{getSpeciesTranslation(dayStatus.divine.result)}</strong>
+              {/if}
+            {:else}
+              {#if settings.divine.fields?.seerName}
+                <AgentName
+                  text={dayStatus.agents[dayStatus.divine.agentIdx].gameName}
+                />
+              {/if}
+              {$_("archive.particle")}
+              {#if settings.divine.fields?.targetName}
+                <AgentName
+                  text={dayStatus.agents[dayStatus.divine.targetIdx].gameName}
+                  highlight
+                />
+              {/if}
+              {$_("archive.divined")}
+              {#if settings.divine.fields?.result}
+                <strong>{getSpeciesTranslation(dayStatus.divine.result)}</strong>
+              {/if}
+            {/if}
+          </p>
+        </div>
+      {/if}
+      {#if settings.afterWhisper.visible && dayStatus.afterWhisper.length > 0}
         <div>
           <h3 class="text-lg font-bold my-2">{$_("archive.whispers")}</h3>
           <ul>
@@ -206,46 +262,70 @@
                 style={`border-color: ${getColorFromName(dayStatus.agents[whisper.agentIdx].gameName)}`}
                 class="p-2 my-2 border-4 rounded-md"
               >
-                <AgentName text={dayStatus.agents[whisper.agentIdx].gameName} />
-                <FormatText
-                  text={whisper.text}
-                  names={Object.values(dayStatus.agents).map(
-                    (agent) => agent.gameName
-                  )}
-                />
+                {#if settings.afterWhisper.fields?.talkIdx}
+                  <span class="text-xs opacity-50">[{whisper.talkIdx}]</span>
+                {/if}
+                {#if settings.afterWhisper.fields?.turnIdx}
+                  <span class="text-xs opacity-50">T{whisper.turnIdx}</span>
+                {/if}
+                {#if settings.afterWhisper.fields?.agentName}
+                  <AgentName text={dayStatus.agents[whisper.agentIdx].gameName} />
+                {/if}
+                {#if settings.afterWhisper.fields?.text}
+                  <FormatText
+                    text={whisper.text}
+                    names={Object.values(dayStatus.agents).map(
+                      (agent) => agent.gameName
+                    )}
+                  />
+                {/if}
               </li>
             {/each}
           </ul>
         </div>
       {/if}
-      {#if dayStatus.guard}
+      {#if settings.guard.visible && dayStatus.guard}
         <div>
           <h3 class="text-lg font-bold my-2">{$_("archive.guard")}</h3>
           <p>
             {#if isEnglish}
-              <AgentName
-                text={dayStatus.agents[dayStatus.guard.agentIdx].gameName}
-              />
+              {#if settings.guard.fields?.guardName}
+                <AgentName
+                  text={dayStatus.agents[dayStatus.guard.agentIdx].gameName}
+                />
+              {/if}
               {$_("archive.protected")}
-              <AgentName
-                text={dayStatus.agents[dayStatus.guard.targetIdx].gameName}
-                highlight
-              />
+              {#if settings.guard.fields?.targetName}
+                <AgentName
+                  text={dayStatus.agents[dayStatus.guard.targetIdx].gameName}
+                  highlight
+                />
+              {/if}
+              {#if settings.guard.fields?.result}
+                ({dayStatus.guard.result})
+              {/if}
             {:else}
-              <AgentName
-                text={dayStatus.agents[dayStatus.guard.agentIdx].gameName}
-              />
+              {#if settings.guard.fields?.guardName}
+                <AgentName
+                  text={dayStatus.agents[dayStatus.guard.agentIdx].gameName}
+                />
+              {/if}
               {$_("archive.particle")}
-              <AgentName
-                text={dayStatus.agents[dayStatus.guard.targetIdx].gameName}
-                highlight
-              />
+              {#if settings.guard.fields?.targetName}
+                <AgentName
+                  text={dayStatus.agents[dayStatus.guard.targetIdx].gameName}
+                  highlight
+                />
+              {/if}
               {$_("archive.protected")}
+              {#if settings.guard.fields?.result}
+                ({dayStatus.guard.result})
+              {/if}
             {/if}
           </p>
         </div>
       {/if}
-      {#if dayStatus.attackVotes.length > 0}
+      {#if settings.attackVotes.visible && dayStatus.attackVotes.length > 0}
         <div>
           <h3 class="text-lg font-bold my-2">{$_("archive.attackVotes")}</h3>
           <ul>
@@ -255,19 +335,27 @@
                 style={`border-color: ${getColorFromName(dayStatus.agents[vote.agentIdx].gameName)}`}
               >
                 {#if isEnglish}
-                  <AgentName text={dayStatus.agents[vote.agentIdx].gameName} />
+                  {#if settings.attackVotes.fields?.voterName}
+                    <AgentName text={dayStatus.agents[vote.agentIdx].gameName} />
+                  {/if}
                   {$_("archive.votedFor")}
-                  <AgentName
-                    text={dayStatus.agents[vote.targetIdx].gameName}
-                    highlight
-                  />
+                  {#if settings.attackVotes.fields?.targetName}
+                    <AgentName
+                      text={dayStatus.agents[vote.targetIdx].gameName}
+                      highlight
+                    />
+                  {/if}
                 {:else}
-                  <AgentName text={dayStatus.agents[vote.agentIdx].gameName} />
+                  {#if settings.attackVotes.fields?.voterName}
+                    <AgentName text={dayStatus.agents[vote.agentIdx].gameName} />
+                  {/if}
                   {$_("archive.particle")}
-                  <AgentName
-                    text={dayStatus.agents[vote.targetIdx].gameName}
-                    highlight
-                  />
+                  {#if settings.attackVotes.fields?.targetName}
+                    <AgentName
+                      text={dayStatus.agents[vote.targetIdx].gameName}
+                      highlight
+                    />
+                  {/if}
                   {$_("archive.votedFor")}
                 {/if}
               </li>
@@ -275,33 +363,45 @@
           </ul>
         </div>
       {/if}
-      {#if dayStatus.attack}
+      {#if settings.attack.visible && dayStatus.attack}
         <div>
           <h3 class="text-lg font-bold my-2">{$_("archive.attack")}</h3>
           {#if dayStatus.attack.targetIdx !== "-1"}
             <p>
-              <AgentName
-                text={dayStatus.agents[dayStatus.attack.targetIdx].gameName}
-                highlight
-              />
+              {#if settings.attack.fields?.targetName}
+                <AgentName
+                  text={dayStatus.agents[dayStatus.attack.targetIdx].gameName}
+                  highlight
+                />
+              {/if}
               {$_("archive.wasAttacked")}
-              <strong
-                >{dayStatus.attack.result
-                  ? $_("archive.success")
-                  : $_("archive.failure")}</strong
-              >
+              {#if settings.attack.fields?.result}
+                <strong
+                  >{dayStatus.attack.result
+                    ? $_("archive.success")
+                    : $_("archive.failure")}</strong
+                >
+              {/if}
             </p>
           {:else}
             <p>{$_("archive.noAttackTarget")}</p>
           {/if}
         </div>
       {/if}
-      {#if dayStatus.result}
+      {#if settings.result.visible && dayStatus.result}
         <div>
           <h3 class="text-lg font-bold my-2">{$_("archive.result")}</h3>
           <p>
-            <strong>{getTeamTranslation(dayStatus.result.winSide)}</strong>
-            {$_("archive.won")}
+            {#if settings.result.fields?.winSide}
+              <strong>{getTeamTranslation(dayStatus.result.winSide)}</strong>
+              {$_("archive.won")}
+            {/if}
+            {#if settings.result.fields?.villagers}
+              <br>村人: {dayStatus.result.villagers}
+            {/if}
+            {#if settings.result.fields?.werewolves}
+              <br>人狼: {dayStatus.result.werewolves}
+            {/if}
           </p>
         </div>
       {/if}

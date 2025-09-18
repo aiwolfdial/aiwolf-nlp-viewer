@@ -2,6 +2,7 @@
   import { base } from "$app/paths";
   import { page } from "$app/state";
   import LanguageSwitcher from "$lib/components/LanguageSwitcher.svelte";
+  import HierarchicalDisplaySettings from "$lib/components/HierarchicalDisplaySettings.svelte";
   import { onMount } from "svelte";
   import { _ } from "svelte-i18n";
 
@@ -136,6 +137,10 @@
         <h4 class="text-base font-bold mt-2">{$_("common.language")}</h4>
         <div class="my-2">
           <LanguageSwitcher />
+        </div>
+        <h4 class="text-base font-bold mt-4">{$_("displaySettings.title")}</h4>
+        <div class="my-2">
+          <HierarchicalDisplaySettings />
         </div>
       </div>
     </div>

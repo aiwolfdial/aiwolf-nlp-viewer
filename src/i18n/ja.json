@@ -137,6 +137,73 @@
     "close": "閉じる",
     "language": "言語"
   },
+  "displaySettings": {
+    "title": "表示項目設定",
+    "selectAll": "すべて選択",
+    "deselectAll": "すべて解除",
+    "reset": "リセット",
+    "before": "前",
+    "after": "後",
+    "allFields": "全項目",
+    "noFields": "非表示",
+    "fields": {
+      "agents": {
+        "gameName": "エージェント名",
+        "originalName": "元の名前",
+        "role": "役職",
+        "status": "状態"
+      },
+      "beforeWhisper": {
+        "agentName": "エージェント名",
+        "text": "テキスト",
+        "talkIdx": "トークID",
+        "turnIdx": "ターン"
+      },
+      "talks": {
+        "agentName": "エージェント名",
+        "text": "テキスト",
+        "talkIdx": "トークID",
+        "turnIdx": "ターン"
+      },
+      "votes": {
+        "voterName": "投票者",
+        "targetName": "投票先"
+      },
+      "execution": {
+        "agentName": "追放されたエージェント",
+        "role": "役職"
+      },
+      "divine": {
+        "seerName": "占い師",
+        "targetName": "占い先",
+        "result": "結果"
+      },
+      "afterWhisper": {
+        "agentName": "エージェント名",
+        "text": "テキスト",
+        "talkIdx": "トークID",
+        "turnIdx": "ターン"
+      },
+      "guard": {
+        "guardName": "護衛者",
+        "targetName": "護衛先",
+        "result": "結果"
+      },
+      "attackVotes": {
+        "voterName": "投票者",
+        "targetName": "襲撃候補"
+      },
+      "attack": {
+        "targetName": "襲撃対象",
+        "result": "結果"
+      },
+      "result": {
+        "winSide": "勝利陣営",
+        "villagers": "村人数",
+        "werewolves": "人狼数"
+      }
+    }
+  },
   "audio": {
     "play": "再生",
     "stop": "停止"

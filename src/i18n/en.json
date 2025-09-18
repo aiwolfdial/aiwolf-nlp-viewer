@@ -137,6 +137,73 @@
     "close": "Close",
     "language": "Language"
   },
+  "displaySettings": {
+    "title": "Display Item Settings",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "reset": "Reset",
+    "before": "Before",
+    "after": "After",
+    "allFields": "All Fields",
+    "noFields": "No Fields",
+    "fields": {
+      "agents": {
+        "gameName": "Agent Name",
+        "originalName": "Original Name",
+        "role": "Role",
+        "status": "Status"
+      },
+      "beforeWhisper": {
+        "agentName": "Agent Name",
+        "text": "Text",
+        "talkIdx": "Talk ID",
+        "turnIdx": "Turn"
+      },
+      "talks": {
+        "agentName": "Agent Name",
+        "text": "Text",
+        "talkIdx": "Talk ID",
+        "turnIdx": "Turn"
+      },
+      "votes": {
+        "voterName": "Voter",
+        "targetName": "Target"
+      },
+      "execution": {
+        "agentName": "Executed Agent",
+        "role": "Role"
+      },
+      "divine": {
+        "seerName": "Seer",
+        "targetName": "Target",
+        "result": "Result"
+      },
+      "afterWhisper": {
+        "agentName": "Agent Name",
+        "text": "Text",
+        "talkIdx": "Talk ID",
+        "turnIdx": "Turn"
+      },
+      "guard": {
+        "guardName": "Guard",
+        "targetName": "Target",
+        "result": "Result"
+      },
+      "attackVotes": {
+        "voterName": "Voter",
+        "targetName": "Target"
+      },
+      "attack": {
+        "targetName": "Target",
+        "result": "Result"
+      },
+      "result": {
+        "winSide": "Winning Side",
+        "villagers": "Villagers Count",
+        "werewolves": "Werewolves Count"
+      }
+    }
+  },
   "audio": {
     "play": "Play",
     "stop": "Stop"
