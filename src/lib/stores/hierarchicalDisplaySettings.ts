@@ -34,6 +34,7 @@ const defaultSettings: HierarchicalDisplaySettings = {
     visible: true,
     fields: {
       agentName: true,
+      originalName: false,
       text: true,
       talkIdx: false,
       turnIdx: false
@@ -43,6 +44,7 @@ const defaultSettings: HierarchicalDisplaySettings = {
     visible: true,
     fields: {
       agentName: true,
+      originalName: false,
       text: true,
       talkIdx: false,
       turnIdx: false
@@ -74,6 +76,7 @@ const defaultSettings: HierarchicalDisplaySettings = {
     visible: true,
     fields: {
       agentName: true,
+      originalName: false,
       text: true,
       talkIdx: false,
       turnIdx: false

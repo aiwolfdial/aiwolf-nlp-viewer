@@ -111,6 +111,9 @@
                 {#if settings.beforeWhisper.fields?.agentName}
                   <AgentName text={dayStatus.agents[whisper.agentIdx].gameName} />
                 {/if}
+                {#if settings.beforeWhisper.fields?.originalName && dayStatus.agents[whisper.agentIdx].originalName}
+                  <span class="text-sm opacity-75">({dayStatus.agents[whisper.agentIdx].originalName})</span>
+                {/if}
                 {#if settings.beforeWhisper.fields?.text}
                   <FormatText
                     text={whisper.text}
@@ -142,6 +145,9 @@
                 {/if}
                 {#if settings.talks.fields?.agentName}
                   <AgentName text={dayStatus.agents[talk.agentIdx].gameName} />
+                {/if}
+                {#if settings.talks.fields?.originalName && dayStatus.agents[talk.agentIdx].originalName}
+                  <span class="text-sm opacity-75">({dayStatus.agents[talk.agentIdx].originalName})</span>
                 {/if}
                 {#if settings.talks.fields?.text}
                   <FormatText
@@ -270,6 +276,9 @@
                 {/if}
                 {#if settings.afterWhisper.fields?.agentName}
                   <AgentName text={dayStatus.agents[whisper.agentIdx].gameName} />
+                {/if}
+                {#if settings.afterWhisper.fields?.originalName && dayStatus.agents[whisper.agentIdx].originalName}
+                  <span class="text-sm opacity-75">({dayStatus.agents[whisper.agentIdx].originalName})</span>
                 {/if}
                 {#if settings.afterWhisper.fields?.text}
                   <FormatText
