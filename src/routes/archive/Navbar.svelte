@@ -1,13 +1,13 @@
 <script lang="ts">
   import { base } from "$app/paths";
   import { page } from "$app/state";
-  import LanguageSwitcher from "$lib/components/LanguageSwitcher.svelte";
   import HierarchicalDisplaySettings from "$lib/components/HierarchicalDisplaySettings.svelte";
+  import LanguageSwitcher from "$lib/components/LanguageSwitcher.svelte";
   import { onMount } from "svelte";
   import { _ } from "svelte-i18n";
 
   const assetLogs = Object.entries(
-    import.meta.glob("/static/assets/**/*.log", { query: "?raw" })
+    import.meta.glob("/static/assets/**/*.log", { query: "?raw" }),
   ).reduce<Record<string, Record<string, string>>>((acc, [path, _]) => {
     const name = path.split("/").pop() || "";
     const folderPath = path

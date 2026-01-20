@@ -24,7 +24,7 @@
   async function generateToken(
     secret: string,
     role: "PLAYER" | "RECEIVER",
-    team: string
+    team: string,
   ) {
     if (!secret || !role) {
       state.token = "";

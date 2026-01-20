@@ -17,7 +17,7 @@
   let selectedFile: string = "";
 
   const assetCsvs = Object.entries(
-    import.meta.glob("/static/assets/*.csv", { query: "?raw" })
+    import.meta.glob("/static/assets/*.csv", { query: "?raw" }),
   ).reduce((acc, [path, _]) => {
     const name = path.split("/").pop() || "";
     return {

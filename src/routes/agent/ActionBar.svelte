@@ -1,11 +1,7 @@
 <script lang="ts">
   import { Status } from "$lib/constants/common";
   import { agentSettings } from "$lib/stores/agent-settings";
-  import {
-    Request,
-    type Info,
-    type Setting,
-  } from "$lib/types/agent";
+  import { Request, type Info, type Setting } from "$lib/types/agent";
   import type { AgentSettings } from "$lib/types/agent-settings";
   import { runes } from "runes2";
   import { onMount } from "svelte";
@@ -31,21 +27,21 @@
   let input = $state<HTMLInputElement | null>(null);
 
   const progressValue = $derived(
-    remain !== null ? (remain / (setting?.timeout.action ?? 60000)) * 100 : 0
+    remain !== null ? (remain / (setting?.timeout.action ?? 60000)) * 100 : 0,
   );
 
   const remainMinutes = $derived(
-    remain !== null ? Math.floor(remain / 60000) : 0
+    remain !== null ? Math.floor(remain / 60000) : 0,
   );
 
   const remainSeconds = $derived(
-    remain !== null ? Math.floor((remain % 60000) / 1000) : 0
+    remain !== null ? Math.floor((remain % 60000) / 1000) : 0,
   );
 
   const isTargetSelectionMode = $derived(
     [Request.VOTE, Request.DIVINE, Request.GUARD, Request.ATTACK].includes(
-      request as Request
-    )
+      request as Request,
+    ),
   );
 
   function calculateRemainingLength(currentMessage: string): number {
@@ -195,7 +191,7 @@
       {:else}
         <pre class="text-2xl bg-error text-error-content">{$_(
             "agent.exceededChars",
-            { values: { count: remainingLength * -1 } }
+            { values: { count: remainingLength * -1 } },
           )}</pre>
       {/if}
       <button
@@ -225,7 +221,7 @@
           style="--value:{Math.floor((remain ? remain % 60000 : 0) / 1000)};"
           aria-live="polite"
           aria-label={Math.floor(
-            (remain ? remain % 60000 : 0) / 1000
+            (remain ? remain % 60000 : 0) / 1000,
           ).toString()}>{Math.floor((remain ? remain % 60000 : 0) / 1000)}</span
         >s
       </span>
@@ -297,7 +293,7 @@
       {:else}
         <pre class="text-md bg-error text-error-content">{$_(
             "agent.exceededChars",
-            { values: { count: remainingLength * -1 } }
+            { values: { count: remainingLength * -1 } },
           )}</pre>
       {/if}
       <button

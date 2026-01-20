@@ -1,5 +1,5 @@
-import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
+import { writable } from 'svelte/store';
 
 export interface FieldSettings {
   visible: boolean;
@@ -116,9 +116,9 @@ const defaultSettings: HierarchicalDisplaySettings = {
 
 function createHierarchicalDisplaySettingsStore() {
   const STORAGE_KEY = 'aiwolf-hierarchical-display-settings';
-  
+
   let initialSettings = defaultSettings;
-  
+
   if (browser) {
     const storedSettings = localStorage.getItem(STORAGE_KEY);
     if (storedSettings) {
@@ -131,9 +131,9 @@ function createHierarchicalDisplaySettingsStore() {
       }
     }
   }
-  
+
   const { subscribe, set, update } = writable<HierarchicalDisplaySettings>(initialSettings);
-  
+
   return {
     subscribe,
     set: (settings: HierarchicalDisplaySettings) => {
@@ -193,7 +193,7 @@ function createHierarchicalDisplaySettingsStore() {
 
 function deepMerge(target: any, source: any): any {
   const result = { ...target };
-  
+
   for (const key in source) {
     if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
       result[key] = deepMerge(result[key] || {}, source[key]);
@@ -201,7 +201,7 @@ function deepMerge(target: any, source: any): any {
       result[key] = source[key];
     }
   }
-  
+
   return result;
 }
 

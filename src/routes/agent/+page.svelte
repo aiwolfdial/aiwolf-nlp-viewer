@@ -194,7 +194,7 @@
   {:else if settings?.display.largeScale}
     <div class="flex items-center justify-center h-full">
       <pre class="base-content text-9xl font-bold opacity-70 select-none">{$_(
-          "agent.notConnected"
+          "agent.notConnected",
         )}</pre>
     </div>
   {:else}

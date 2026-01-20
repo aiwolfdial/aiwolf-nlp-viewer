@@ -5,7 +5,10 @@
   import type { Packet } from "$lib/types/realtime";
   import type { RealtimeSettings } from "$lib/types/realtime-settings";
   import { IdxToCustomName, initializeAgents } from "$lib/utils/realtime";
-  import { realtimeSocketState, RealtimeConnectionStatus } from "$lib/utils/realtime-socket";
+  import {
+    RealtimeConnectionStatus,
+    realtimeSocketState,
+  } from "$lib/utils/realtime-socket";
   import { onDestroy, onMount } from "svelte";
   import { _ } from "svelte-i18n";
   import { writable } from "svelte/store";
@@ -122,12 +125,16 @@
 
     if (browser) {
       window.addEventListener("beforeunload", (e) => {
-        if ($realtimeSocketState.status === RealtimeConnectionStatus.CONNECTED) {
+        if (
+          $realtimeSocketState.status === RealtimeConnectionStatus.CONNECTED
+        ) {
           e.preventDefault();
         }
       });
       window.addEventListener("popstate", (e) => {
-        if ($realtimeSocketState.status === RealtimeConnectionStatus.CONNECTED) {
+        if (
+          $realtimeSocketState.status === RealtimeConnectionStatus.CONNECTED
+        ) {
           e.preventDefault();
         }
       });
@@ -225,7 +232,7 @@
                       {IdxToCustomName(
                         settings?.display.text,
                         packet,
-                        packet.bubble_idx
+                        packet.bubble_idx,
                       )}
                     </p>
                     <iconify-icon inline icon="mdi:skip-forward"></iconify-icon>
@@ -234,7 +241,7 @@
                       {IdxToCustomName(
                         settings?.display.text,
                         packet,
-                        packet.bubble_idx
+                        packet.bubble_idx,
                       )}
                     </p>
                     <iconify-icon inline icon="mdi:arrow-u-down-right-bold"
@@ -244,7 +251,7 @@
                       {IdxToCustomName(
                         settings?.display.text,
                         packet,
-                        packet.bubble_idx
+                        packet.bubble_idx,
                       ) +
                         "<" +
                         packet.message}
@@ -256,13 +263,13 @@
                       {IdxToCustomName(
                         settings?.display.text,
                         packet,
-                        packet.from_idx
+                        packet.from_idx,
                       )}
                     {:else if packet.event === "追放" || packet.event === "襲撃"}
                       {IdxToCustomName(
                         settings?.display.text,
                         packet,
-                        packet.to_idx
+                        packet.to_idx,
                       )}
                     {/if}
                     {$_(`realtime.eventTypes.${packet.event}`, {

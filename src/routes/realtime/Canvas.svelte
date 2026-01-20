@@ -32,7 +32,7 @@
           xor(
             focusIdx === undefined,
             packet.agents.find((agent) => agent.idx === focusIdx)?.role ===
-              "WEREWOLF"
+              "WEREWOLF",
           )
         ) {
           return packet.message;
@@ -45,12 +45,12 @@
               from: IdxToCustomName(
                 settings?.display.bubble,
                 packet,
-                packet.from_idx
+                packet.from_idx,
               ),
               to: IdxToCustomName(
                 settings?.display.bubble,
                 packet,
-                packet.to_idx
+                packet.to_idx,
               ),
             },
           });
@@ -63,12 +63,12 @@
               from: IdxToCustomName(
                 settings?.display.bubble,
                 packet,
-                packet.from_idx
+                packet.from_idx,
               ),
               to: IdxToCustomName(
                 settings?.display.bubble,
                 packet,
-                packet.to_idx
+                packet.to_idx,
               ),
             },
           });
@@ -78,7 +78,7 @@
             from: IdxToCustomName(
               settings?.display.bubble,
               packet,
-              packet.from_idx
+              packet.from_idx,
             ),
           },
         });
@@ -91,7 +91,7 @@
             target: IdxToCustomName(
               settings?.display.bubble,
               packet,
-              packet.to_idx
+              packet.to_idx,
             ),
           },
         });
@@ -105,7 +105,7 @@
               target: IdxToCustomName(
                 settings?.display.bubble,
                 packet,
-                packet.to_idx
+                packet.to_idx,
               ),
             },
           });
@@ -115,14 +115,14 @@
             target: IdxToCustomName(
               settings?.display.bubble,
               packet,
-              packet.to_idx
+              packet.to_idx,
             ),
           },
         });
       case "占い":
         if (xor(focusIdx === undefined, packet.from_idx === focusIdx)) {
           const targetRole = packet.agents.find(
-            (agent) => agent.idx === packet.to_idx
+            (agent) => agent.idx === packet.to_idx,
           )?.role;
           const species = targetRole
             ? RoleToSpecies[targetRole as keyof typeof RoleToSpecies]
@@ -132,12 +132,12 @@
               from: IdxToCustomName(
                 settings?.display.bubble,
                 packet,
-                packet.from_idx
+                packet.from_idx,
               ),
               to: IdxToCustomName(
                 settings?.display.bubble,
                 packet,
-                packet.to_idx
+                packet.to_idx,
               ),
               result: species ? $_(`game.species.${species}`) : "",
             },
@@ -151,12 +151,12 @@
               from: IdxToCustomName(
                 settings?.display.bubble,
                 packet,
-                packet.from_idx
+                packet.from_idx,
               ),
               to: IdxToCustomName(
                 settings?.display.bubble,
                 packet,
-                packet.to_idx
+                packet.to_idx,
               ),
             },
           });
@@ -239,7 +239,7 @@
         toRect.left + toRect.width / 2 - canvasRect.left,
         toRect.top + toRect.height / 2 - canvasRect.top,
         false,
-        getComputedStyle(arrowContainer).getPropertyValue("background-color")
+        getComputedStyle(arrowContainer).getPropertyValue("background-color"),
       );
     }
 
@@ -258,7 +258,7 @@
         bubbleX,
         bubbleY,
         true,
-        getComputedStyle(bubbleContainer).getPropertyValue("background-color")
+        getComputedStyle(bubbleContainer).getPropertyValue("background-color"),
       );
     }
   }
@@ -270,7 +270,7 @@
     x2: number,
     y2: number,
     isCenter: boolean,
-    color: string
+    color: string,
   ) {
     const arrowShape = isCenter ? [0, 0, 0, 0, 0, 30] : [0, 5, -20, 5, -20, 15];
 
@@ -316,12 +316,12 @@
       <pre
         class="base-content w-2/5 text-5xl font-bold opacity-70 absolute top-0 left-0 -mt-4 ml-8 select-none">{$_(
           "realtime.day",
-          { values: { day: packet.day } }
+          { values: { day: packet.day } },
         )}<br />{packet.is_day
           ? $_("realtime.daytime")
           : $_("realtime.nighttime")}<br />{$_(
           `realtime.eventTypes.${packet.event}`,
-          { default: packet.event }
+          { default: packet.event },
         )}</pre>
       <canvas
         bind:this={bubble}

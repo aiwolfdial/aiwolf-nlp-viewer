@@ -1,5 +1,5 @@
-import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
+import { writable } from 'svelte/store';
 
 export interface DisplaySettings {
   agents: boolean;
@@ -31,9 +31,9 @@ const defaultSettings: DisplaySettings = {
 
 function createDisplaySettingsStore() {
   const STORAGE_KEY = 'aiwolf-display-settings';
-  
+
   let initialSettings = defaultSettings;
-  
+
   if (browser) {
     const storedSettings = localStorage.getItem(STORAGE_KEY);
     if (storedSettings) {
@@ -44,9 +44,9 @@ function createDisplaySettingsStore() {
       }
     }
   }
-  
+
   const { subscribe, set, update } = writable<DisplaySettings>(initialSettings);
-  
+
   return {
     subscribe,
     set: (settings: DisplaySettings) => {

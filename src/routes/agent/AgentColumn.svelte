@@ -1,11 +1,7 @@
 <script lang="ts">
   import { Role, Species, Status } from "$lib/constants/common";
   import { agentSettings } from "$lib/stores/agent-settings";
-  import {
-    type Info,
-    type Judge,
-    type Request,
-  } from "$lib/types/agent";
+  import { type Info, type Judge, type Request } from "$lib/types/agent";
   import type { AgentSettings } from "$lib/types/agent-settings";
   import { onDestroy, onMount } from "svelte";
   import { _ } from "svelte-i18n";
@@ -59,7 +55,7 @@
         {#if request}
           <pre
             class="bg-primary text-primary-content text-3xl font-bold text-center my-2">{$_(
-              `game.request.${request}`
+              `game.request.${request}`,
             )}</pre>
         {/if}
         {#if profile}
@@ -73,7 +69,7 @@
                   ? $_(`game.role.${(info.role_map ?? {})[key]}`)
                   : ""}</pre>
               <pre class="text-2xl font-bold ml-auto">{$_(
-                  `game.status.${value}`
+                  `game.status.${value}`,
                 )}</pre>
             </div>
           {:else}
@@ -83,7 +79,7 @@
                   ? $_(`game.role.${(info.role_map ?? {})[key]}`)
                   : ""}</pre>
               <pre class="text-2xl font-bold ml-auto">{$_(
-                  `game.status.${value}`
+                  `game.status.${value}`,
                 )}{executedAgents.includes(key)
                   ? " (追放)"
                   : attackedAgents.includes(key)
@@ -100,7 +96,7 @@
                 <pre class="text-2xl font-bold">{target}</pre>
                 <pre class="text-2xl">({day}日目)</pre>
                 <pre class="text-2xl font-bold ml-auto">{$_(
-                    `game.species.${result}`
+                    `game.species.${result}`,
                   )}</pre>
               </div>
             {:else}
@@ -110,7 +106,7 @@
                 <pre class="text-2xl font-bold">{target}</pre>
                 <pre class="text-2xl">({day}日目)</pre>
                 <pre class="text-2xl font-bold ml-auto">{$_(
-                    `game.species.${result}`
+                    `game.species.${result}`,
                   )}</pre>
               </div>
             {/if}
@@ -124,7 +120,7 @@
                 <pre class="text-2xl font-bold">{target}</pre>
                 <pre class="text-2xl">({day}日目)</pre>
                 <pre class="text-2xl font-bold ml-auto">{$_(
-                    `game.species.${result}`
+                    `game.species.${result}`,
                   )}</pre>
               </div>
             {:else}
@@ -134,7 +130,7 @@
                 <pre class="text-2xl font-bold">{target}</pre>
                 <pre class="text-2xl">({day}日目)</pre>
                 <pre class="text-2xl font-bold ml-auto">{$_(
-                    `game.species.${result}`
+                    `game.species.${result}`,
                   )}</pre>
               </div>
             {/if}
@@ -164,7 +160,9 @@
           <div>
             <h2 class="text-lg font-bold text-center">リクエスト</h2>
             {#if request}
-              <pre class="text-lg text-center">{$_(`game.request.${request}`)}</pre>
+              <pre class="text-lg text-center">{$_(
+                  `game.request.${request}`,
+                )}</pre>
             {/if}
           </div>
         </div>
@@ -189,7 +187,7 @@
                   ? $_(`game.role.${(info.role_map ?? {})[key]}`)
                   : ""}</pre>
               <pre class="text-lg ml-auto">{$_(
-                  `game.status.${value}`
+                  `game.status.${value}`,
                 )}{executedAgents.includes(key)
                   ? " (追放)"
                   : attackedAgents.includes(key)
@@ -206,7 +204,7 @@
                 <pre class="text-lg">{target}</pre>
                 <pre class="text-lg">({day}日目)</pre>
                 <pre class="text-lg ml-auto">{$_(
-                    `game.species.${result}`
+                    `game.species.${result}`,
                   )}</pre>
               </div>
             {:else}
@@ -214,7 +212,7 @@
                 <pre class="text-lg">{target}</pre>
                 <pre class="text-lg">({day}日目)</pre>
                 <pre class="text-lg ml-auto">{$_(
-                    `game.species.${result}`
+                    `game.species.${result}`,
                   )}</pre>
               </div>
             {/if}
@@ -228,7 +226,7 @@
                 <pre class="text-lg">{target}</pre>
                 <pre class="text-lg">({day}日目)</pre>
                 <pre class="text-lg ml-auto">{$_(
-                    `game.species.${result}`
+                    `game.species.${result}`,
                   )}</pre>
               </div>
             {:else}
@@ -236,7 +234,7 @@
                 <pre class="text-lg">{target}</pre>
                 <pre class="text-lg">({day}日目)</pre>
                 <pre class="text-lg ml-auto">{$_(
-                    `game.species.${result}`
+                    `game.species.${result}`,
                   )}</pre>
               </div>
             {/if}

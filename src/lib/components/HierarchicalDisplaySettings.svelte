@@ -1,5 +1,8 @@
 <script lang="ts">
-  import { hierarchicalDisplaySettings, type HierarchicalDisplaySettings } from "$lib/stores/hierarchicalDisplaySettings";
+  import {
+    hierarchicalDisplaySettings,
+    type HierarchicalDisplaySettings,
+  } from "$lib/stores/hierarchicalDisplaySettings";
   import { _ } from "svelte-i18n";
 
   let settings = $state($hierarchicalDisplaySettings);
@@ -14,12 +17,15 @@
       ...settings,
       [key]: {
         ...settings[key],
-        visible: !settings[key].visible
-      }
+        visible: !settings[key].visible,
+      },
     };
   }
 
-  function toggleField(section: keyof HierarchicalDisplaySettings, field: string) {
+  function toggleField(
+    section: keyof HierarchicalDisplaySettings,
+    field: string,
+  ) {
     if (settings[section].fields) {
       settings = {
         ...settings,
@@ -27,9 +33,9 @@
           ...settings[section],
           fields: {
             ...settings[section].fields!,
-            [field]: !settings[section].fields![field]
-          }
-        }
+            [field]: !settings[section].fields![field],
+          },
+        },
       };
     }
   }
@@ -78,11 +84,14 @@
         [section]: {
           ...settings[section],
           visible: true,
-          fields: Object.keys(settings[section].fields!).reduce((acc, field) => {
-            acc[field] = true;
-            return acc;
-          }, {} as Record<string, boolean>)
-        }
+          fields: Object.keys(settings[section].fields!).reduce(
+            (acc, field) => {
+              acc[field] = true;
+              return acc;
+            },
+            {} as Record<string, boolean>,
+          ),
+        },
       };
     }
   }
@@ -94,27 +103,30 @@
         [section]: {
           ...settings[section],
           visible: false,
-          fields: Object.keys(settings[section].fields!).reduce((acc, field) => {
-            acc[field] = false;
-            return acc;
-          }, {} as Record<string, boolean>)
-        }
+          fields: Object.keys(settings[section].fields!).reduce(
+            (acc, field) => {
+              acc[field] = false;
+              return acc;
+            },
+            {} as Record<string, boolean>,
+          ),
+        },
       };
     }
   }
 
   const sections = [
-    { key: 'agents', icon: 'mdi:account-group' },
-    { key: 'beforeWhisper', icon: 'mdi:conversation-outline' },
-    { key: 'talks', icon: 'mdi:conversation' },
-    { key: 'votes', icon: 'mdi:vote' },
-    { key: 'execution', icon: 'mdi:exit-run' },
-    { key: 'divine', icon: 'mdi:eye' },
-    { key: 'afterWhisper', icon: 'mdi:conversation-outline' },
-    { key: 'guard', icon: 'mdi:shield-account' },
-    { key: 'attackVotes', icon: 'mdi:vote' },
-    { key: 'attack', icon: 'mdi:sword' },
-    { key: 'result', icon: 'mdi:trophy' }
+    { key: "agents", icon: "mdi:account-group" },
+    { key: "beforeWhisper", icon: "mdi:conversation-outline" },
+    { key: "talks", icon: "mdi:conversation" },
+    { key: "votes", icon: "mdi:vote" },
+    { key: "execution", icon: "mdi:exit-run" },
+    { key: "divine", icon: "mdi:eye" },
+    { key: "afterWhisper", icon: "mdi:conversation-outline" },
+    { key: "guard", icon: "mdi:shield-account" },
+    { key: "attackVotes", icon: "mdi:vote" },
+    { key: "attack", icon: "mdi:sword" },
+    { key: "result", icon: "mdi:trophy" },
   ] as const;
 </script>
 
@@ -130,7 +142,7 @@
       {$_("displaySettings.reset")}
     </button>
   </div>
-  
+
   <div class="space-y-2 max-h-96 overflow-y-auto pr-2">
     {#each sections as section}
       {@const sectionSettings = settings[section.key]}
@@ -142,27 +154,27 @@
             <label class="label cursor-pointer flex-1 p-0">
               <span class="label-text flex items-center gap-2">
                 <iconify-icon icon={section.icon} inline></iconify-icon>
-                {#if section.key === 'beforeWhisper'}
+                {#if section.key === "beforeWhisper"}
                   {$_("archive.whispers")} ({$_("displaySettings.before")})
-                {:else if section.key === 'afterWhisper'}
+                {:else if section.key === "afterWhisper"}
                   {$_("archive.whispers")} ({$_("displaySettings.after")})
-                {:else if section.key === 'talks'}
+                {:else if section.key === "talks"}
                   {$_("archive.talk")}
-                {:else if section.key === 'votes'}
+                {:else if section.key === "votes"}
                   {$_("archive.voting")}
-                {:else if section.key === 'execution'}
+                {:else if section.key === "execution"}
                   {$_("archive.execute")}
-                {:else if section.key === 'divine'}
+                {:else if section.key === "divine"}
                   {$_("archive.divination")}
-                {:else if section.key === 'guard'}
+                {:else if section.key === "guard"}
                   {$_("archive.guard")}
-                {:else if section.key === 'attackVotes'}
+                {:else if section.key === "attackVotes"}
                   {$_("archive.attackVotes")}
-                {:else if section.key === 'attack'}
+                {:else if section.key === "attack"}
                   {$_("archive.attack")}
-                {:else if section.key === 'result'}
+                {:else if section.key === "result"}
                   {$_("archive.result")}
-                {:else if section.key === 'agents'}
+                {:else if section.key === "agents"}
                   {$_("archive.agents")}
                 {:else}
                   {$_(`archive.${section.key}`)}
@@ -180,25 +192,25 @@
                 class="btn btn-ghost btn-xs"
                 onclick={() => toggleExpanded(section.key)}
               >
-                <iconify-icon 
-                  icon={isExpanded ? "mdi:chevron-up" : "mdi:chevron-down"} 
+                <iconify-icon
+                  icon={isExpanded ? "mdi:chevron-up" : "mdi:chevron-down"}
                   inline
                 ></iconify-icon>
               </button>
             {/if}
           </div>
-          
+
           <!-- Field settings (collapsible) -->
           {#if isExpanded && sectionSettings.fields}
             <div class="ml-4 mt-2 space-y-1 border-l-2 border-base-300 pl-4">
               <div class="flex gap-1 mb-1">
-                <button 
+                <button
                   class="btn btn-xs"
                   onclick={() => selectAllInSection(section.key)}
                 >
                   {$_("displaySettings.allFields")}
                 </button>
-                <button 
+                <button
                   class="btn btn-xs"
                   onclick={() => deselectAllInSection(section.key)}
                 >

@@ -14,7 +14,7 @@
   let settings = $state<AgentSettings>();
 
   let isDefaultProfile = agents.every((agent) =>
-    Object.keys(DefaultProfileAvatars).includes(agent)
+    Object.keys(DefaultProfileAvatars).includes(agent),
   );
 
   onMount(() => {
@@ -33,7 +33,7 @@
       <div class="grow overflow-y-auto pr-4">
         {#if talks.length > 0}
           {@const days = [...new Set(talks.map((t) => t.day))].sort(
-            (a, b) => b - a
+            (a, b) => b - a,
           )}
           <div class="tabs tabs-border">
             {#each days as day}
@@ -58,7 +58,7 @@
       <div class="grow overflow-y-auto pr-4">
         {#if talks.length > 0}
           {@const days = [...new Set(talks.map((t) => t.day))].sort(
-            (a, b) => b - a
+            (a, b) => b - a,
           )}
           <div class="tabs tabs-border">
             {#each days as day}
