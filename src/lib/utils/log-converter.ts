@@ -112,12 +112,13 @@ export function convertGameLogToPackets(text: string, gameId?: string): Packet[]
                     }
                 }
                 const text = textParts.join(',');
+                isDay = false;
                 idx++;
                 packets.push({
                     id,
                     idx,
                     day,
-                    is_day: isDay,
+                    is_day: false,
                     agents,
                     event: '囁き',
                     message: text,
