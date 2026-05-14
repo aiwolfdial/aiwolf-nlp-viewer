@@ -387,6 +387,8 @@ export function convertJSONLogToPackets(text: string): Packet[] {
     // Track which talk_history entries we've already emitted (by day+idx)
     const emittedTalks = new Set<string>();
     const emittedWhispers = new Set<string>();
+    const emittedExecutions = new Set<number>();
+    const emittedAttacks = new Set<number>();
 
     for (const entry of data.entries) {
         let request: any;
@@ -397,6 +399,45 @@ export function convertJSONLogToPackets(text: string): Packet[] {
         const day = info?.day ?? 0;
         const agentName = entry.agent;
         const agentIdx = resolveIdx(agentName);
+
+        // Extract execution and attack results from DAILY_INITIALIZE
+        if (requestType === 'DAILY_INITIALIZE' && day > 0) {
+            const prevDay = day - 1;
+            if (info.executed_agent && !emittedExecutions.has(prevDay)) {
+                emittedExecutions.add(prevDay);
+                const executedIdx = resolveIdx(info.executed_agent);
+                packetIdx++;
+                packets.push({
+                    id: data.game_id,
+                    idx: packetIdx,
+                    day: prevDay,
+                    is_day: true,
+                    agents: buildAgents(prevDay),
+                    event: '追放',
+                    message: undefined,
+                    from_idx: undefined,
+                    to_idx: executedIdx,
+                    bubble_idx: undefined,
+                });
+            }
+            if (info.attacked_agent && !emittedAttacks.has(prevDay)) {
+                emittedAttacks.add(prevDay);
+                const attackedIdx = resolveIdx(info.attacked_agent);
+                packetIdx++;
+                packets.push({
+                    id: data.game_id,
+                    idx: packetIdx,
+                    day: prevDay,
+                    is_day: false,
+                    agents: buildAgents(prevDay),
+                    event: '襲撃',
+                    message: undefined,
+                    from_idx: undefined,
+                    to_idx: attackedIdx,
+                    bubble_idx: undefined,
+                });
+            }
+        }
 
         switch (requestType) {
             case 'TALK': {
