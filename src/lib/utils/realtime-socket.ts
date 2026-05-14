@@ -1,7 +1,7 @@
 import { realtimeSettings } from '$lib/stores/realtime-settings';
 import type { Packet } from '$lib/types/realtime';
 import type { RealtimeSettings } from '$lib/types/realtime-settings';
-import { convertGameLogToPackets, convertJSONLogToPackets, detectLogFormat } from '$lib/utils/log-converter';
+import { convertGameLogToPackets, convertJSONLogToPackets, detectLogFormat, normalizeTimestamp } from '$lib/utils/log-converter';
 import { writable } from 'svelte/store';
 
 export const RealtimeConnectionStatus = {
@@ -338,6 +338,7 @@ function createRealtimeSocketState() {
             if (line) {
                 try {
                     const packet = JSON.parse(line) as Packet;
+                    packet.timestamp = normalizeTimestamp(packet.timestamp);
                     packets.push(packet);
                 } catch (e) {
                     console.error(`Line ${i + 1} is not valid JSON:`, line);

@@ -1,5 +1,11 @@
 import type { Agent, Packet } from '$lib/types/realtime';
 
+export function normalizeTimestamp(ts: number | undefined): number | undefined {
+    if (ts === undefined) return undefined;
+    if (ts < 1e12) return ts * 1000;
+    return ts;
+}
+
 interface GameLogAgent {
     idx: number;
     role: string;
@@ -69,6 +75,14 @@ export function convertGameLogToPackets(text: string, gameId?: string): Packet[]
                 break;
             case 'talk': {
                 const [, , agentIdx, ...textParts] = rest;
+                let talkTimestamp: number | undefined;
+                if (textParts.length > 1) {
+                    const lastPart = textParts[textParts.length - 1];
+                    if (/^\d{10,}$/.test(lastPart)) {
+                        talkTimestamp = parseInt(lastPart, 10);
+                        textParts.pop();
+                    }
+                }
                 const text = textParts.join(',');
                 isDay = true;
                 idx++;
@@ -83,11 +97,20 @@ export function convertGameLogToPackets(text: string, gameId?: string): Packet[]
                     from_idx: undefined,
                     to_idx: undefined,
                     bubble_idx: parseInt(agentIdx, 10),
+                    timestamp: normalizeTimestamp(talkTimestamp),
                 });
                 break;
             }
             case 'whisper': {
                 const [, , agentIdx, ...textParts] = rest;
+                let whisperTimestamp: number | undefined;
+                if (textParts.length > 1) {
+                    const lastPart = textParts[textParts.length - 1];
+                    if (/^\d{10,}$/.test(lastPart)) {
+                        whisperTimestamp = parseInt(lastPart, 10);
+                        textParts.pop();
+                    }
+                }
                 const text = textParts.join(',');
                 idx++;
                 packets.push({
@@ -101,6 +124,7 @@ export function convertGameLogToPackets(text: string, gameId?: string): Packet[]
                     from_idx: undefined,
                     to_idx: undefined,
                     bubble_idx: parseInt(agentIdx, 10),
+                    timestamp: normalizeTimestamp(whisperTimestamp),
                 });
                 break;
             }
@@ -274,6 +298,7 @@ interface TalkHistoryEntry {
     text: string;
     skip: boolean;
     over: boolean;
+    time?: number;
 }
 
 export function convertJSONLogToPackets(text: string): Packet[] {
@@ -455,6 +480,7 @@ export function convertJSONLogToPackets(text: string): Packet[] {
                     from_idx: undefined,
                     to_idx: undefined,
                     bubble_idx: agentIdx,
+                    timestamp: normalizeTimestamp(entry.response_timestamp),
                 });
                 break;
             }
@@ -473,6 +499,7 @@ export function convertJSONLogToPackets(text: string): Packet[] {
                     from_idx: undefined,
                     to_idx: undefined,
                     bubble_idx: agentIdx,
+                    timestamp: normalizeTimestamp(entry.response_timestamp),
                 });
                 break;
             }
@@ -496,6 +523,7 @@ export function convertJSONLogToPackets(text: string): Packet[] {
                         from_idx: undefined,
                         to_idx: undefined,
                         bubble_idx: talkAgentIdx,
+                        timestamp: normalizeTimestamp(talk.time),
                     });
                 }
                 const whisperHistory: TalkHistoryEntry[] = request.whisper_history || [];
@@ -516,6 +544,7 @@ export function convertJSONLogToPackets(text: string): Packet[] {
                         from_idx: undefined,
                         to_idx: undefined,
                         bubble_idx: whisperAgentIdx,
+                        timestamp: normalizeTimestamp(whisper.time),
                     });
                 }
                 break;
@@ -537,6 +566,7 @@ export function convertJSONLogToPackets(text: string): Packet[] {
                     from_idx: agentIdx,
                     to_idx: targetIdx,
                     bubble_idx: undefined,
+                    timestamp: normalizeTimestamp(entry.response_timestamp),
                 });
                 break;
             }
@@ -557,6 +587,7 @@ export function convertJSONLogToPackets(text: string): Packet[] {
                     from_idx: agentIdx,
                     to_idx: targetIdx,
                     bubble_idx: undefined,
+                    timestamp: normalizeTimestamp(entry.response_timestamp),
                 });
                 break;
             }
@@ -577,6 +608,7 @@ export function convertJSONLogToPackets(text: string): Packet[] {
                     from_idx: agentIdx,
                     to_idx: targetIdx,
                     bubble_idx: undefined,
+                    timestamp: normalizeTimestamp(entry.response_timestamp),
                 });
                 break;
             }
@@ -598,6 +630,7 @@ export function convertJSONLogToPackets(text: string): Packet[] {
                     from_idx: agentIdx,
                     to_idx: targetIdx,
                     bubble_idx: undefined,
+                    timestamp: normalizeTimestamp(entry.response_timestamp),
                 });
                 break;
             }
