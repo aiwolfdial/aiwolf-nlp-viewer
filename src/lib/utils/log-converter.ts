@@ -266,6 +266,16 @@ interface JSONLogData {
     entries: JSONLogEntry[];
 }
 
+interface TalkHistoryEntry {
+    idx: number;
+    day: number;
+    turn: number;
+    agent: string;
+    text: string;
+    skip: boolean;
+    over: boolean;
+}
+
 export function convertJSONLogToPackets(text: string): Packet[] {
     let data: JSONLogData;
     try {
@@ -277,44 +287,93 @@ export function convertJSONLogToPackets(text: string): Packet[] {
     if (!data.game_id || !data.agents || !data.entries) return [];
 
     const packets: Packet[] = [];
-    let idx = 0;
+    let packetIdx = 0;
 
-    const agentNameToIdx: Record<string, number> = {};
-    const agentIdxToRole: Record<number, string> = {};
-
-    for (const agent of data.agents) {
-        agentNameToIdx[agent.name] = agent.idx;
-        agentIdxToRole[agent.idx] = agent.role;
-    }
-
+    const gameNameToIdx: Record<string, number> = {};
+    const gameNameToRole: Record<string, string> = {};
     const statusByDay: Record<number, Record<number, boolean>> = {};
 
+    // First pass: build game_name → idx mapping from INITIALIZE entries
+    // The entries use "game names" (e.g. ダイスケ) while agents array uses original names (e.g. CamelliaDragons1)
+    // Match by role between INITIALIZE role_map and agents array
+    const roleToIdxQueue: Record<string, number[]> = {};
+    for (const agent of data.agents) {
+        if (!roleToIdxQueue[agent.role]) roleToIdxQueue[agent.role] = [];
+        roleToIdxQueue[agent.role].push(agent.idx);
+    }
+
+    const roleAssignIdx: Record<string, number> = {};
+    for (const entry of data.entries) {
+        let request: any;
+        try { request = JSON.parse(entry.request); } catch { continue; }
+        if (request.request !== 'INITIALIZE') continue;
+
+        const gameName = request.info?.agent;
+        const roleMap = request.info?.role_map;
+        if (!gameName || !roleMap) continue;
+
+        const role = roleMap[gameName];
+        if (!role) continue;
+
+        gameNameToRole[gameName] = role;
+        if (!roleAssignIdx[role]) roleAssignIdx[role] = 0;
+        const queue = roleToIdxQueue[role];
+        if (queue && roleAssignIdx[role] < queue.length) {
+            gameNameToIdx[gameName] = queue[roleAssignIdx[role]];
+            roleAssignIdx[role]++;
+        }
+    }
+
+    // Also map original agent names (for logs that use those directly)
+    for (const agent of data.agents) {
+        if (!gameNameToIdx[agent.name]) {
+            gameNameToIdx[agent.name] = agent.idx;
+        }
+    }
+
+    function resolveIdx(name: string): number | undefined {
+        return gameNameToIdx[name];
+    }
+
     function buildAgents(day: number): Agent[] {
-        return data.agents.map((a) => ({
-            idx: a.idx,
-            team: a.team,
-            name: a.name,
-            profile: undefined,
-            avatar: undefined,
-            role: a.role,
-            is_alive: statusByDay[day]?.[a.idx] ?? true,
-        }));
+        return data.agents.map((a) => {
+            const gameName = Object.entries(gameNameToIdx).find(([, idx]) => idx === a.idx)?.[0] ?? a.name;
+            return {
+                idx: a.idx,
+                team: a.team,
+                name: gameName,
+                profile: undefined,
+                avatar: undefined,
+                role: a.role,
+                is_alive: statusByDay[day]?.[a.idx] ?? true,
+            };
+        });
     }
 
     function parseStatusMap(statusMap: Record<string, string>, day: number) {
         if (!statusByDay[day]) statusByDay[day] = {};
         for (const [name, status] of Object.entries(statusMap)) {
-            const agentIdx = agentNameToIdx[name];
+            const agentIdx = resolveIdx(name);
             if (agentIdx !== undefined) {
                 statusByDay[day][agentIdx] = status === 'ALIVE';
             }
         }
     }
 
-    idx++;
+    // Second pass: parse status maps from all entries to build alive/dead state
+    for (const entry of data.entries) {
+        let request: any;
+        try { request = JSON.parse(entry.request); } catch { continue; }
+        const info = request.info;
+        if (info?.status_map) {
+            parseStatusMap(info.status_map, info.day ?? 0);
+        }
+    }
+
+    packetIdx++;
     packets.push({
         id: data.game_id,
-        idx,
+        idx: packetIdx,
         day: 0,
         is_day: true,
         agents: buildAgents(0),
@@ -325,32 +384,28 @@ export function convertJSONLogToPackets(text: string): Packet[] {
         bubble_idx: undefined,
     });
 
+    // Track which talk_history entries we've already emitted (by day+idx)
+    const emittedTalks = new Set<string>();
+    const emittedWhispers = new Set<string>();
+
     for (const entry of data.entries) {
         let request: any;
-        try {
-            request = JSON.parse(entry.request);
-        } catch {
-            continue;
-        }
+        try { request = JSON.parse(entry.request); } catch { continue; }
 
         const requestType = request.request;
         const info = request.info;
         const day = info?.day ?? 0;
         const agentName = entry.agent;
-        const agentIdx = agentNameToIdx[agentName];
-
-        if (info?.status_map) {
-            parseStatusMap(info.status_map, day);
-        }
+        const agentIdx = resolveIdx(agentName);
 
         switch (requestType) {
             case 'TALK': {
                 const response = entry.response;
                 if (!response) break;
-                idx++;
+                packetIdx++;
                 packets.push({
                     id: data.game_id,
-                    idx,
+                    idx: packetIdx,
                     day,
                     is_day: true,
                     agents: buildAgents(day),
@@ -365,10 +420,10 @@ export function convertJSONLogToPackets(text: string): Packet[] {
             case 'WHISPER': {
                 const response = entry.response;
                 if (!response) break;
-                idx++;
+                packetIdx++;
                 packets.push({
                     id: data.game_id,
-                    idx,
+                    idx: packetIdx,
                     day,
                     is_day: false,
                     agents: buildAgents(day),
@@ -380,15 +435,59 @@ export function convertJSONLogToPackets(text: string): Packet[] {
                 });
                 break;
             }
+            case 'DAILY_FINISH': {
+                // Extract talk_history and whisper_history
+                const talkHistory: TalkHistoryEntry[] = request.talk_history || [];
+                for (const talk of talkHistory) {
+                    const key = `${talk.day}-talk-${talk.idx}`;
+                    if (emittedTalks.has(key)) continue;
+                    emittedTalks.add(key);
+                    const talkAgentIdx = resolveIdx(talk.agent);
+                    packetIdx++;
+                    packets.push({
+                        id: data.game_id,
+                        idx: packetIdx,
+                        day: talk.day,
+                        is_day: true,
+                        agents: buildAgents(talk.day),
+                        event: 'トーク',
+                        message: talk.text,
+                        from_idx: undefined,
+                        to_idx: undefined,
+                        bubble_idx: talkAgentIdx,
+                    });
+                }
+                const whisperHistory: TalkHistoryEntry[] = request.whisper_history || [];
+                for (const whisper of whisperHistory) {
+                    const key = `${whisper.day}-whisper-${whisper.idx}`;
+                    if (emittedWhispers.has(key)) continue;
+                    emittedWhispers.add(key);
+                    const whisperAgentIdx = resolveIdx(whisper.agent);
+                    packetIdx++;
+                    packets.push({
+                        id: data.game_id,
+                        idx: packetIdx,
+                        day: whisper.day,
+                        is_day: false,
+                        agents: buildAgents(whisper.day),
+                        event: '囁き',
+                        message: whisper.text,
+                        from_idx: undefined,
+                        to_idx: undefined,
+                        bubble_idx: whisperAgentIdx,
+                    });
+                }
+                break;
+            }
             case 'VOTE': {
                 const response = entry.response;
                 if (!response) break;
-                const targetIdx = agentNameToIdx[response];
+                const targetIdx = resolveIdx(response);
                 if (targetIdx === undefined) break;
-                idx++;
+                packetIdx++;
                 packets.push({
                     id: data.game_id,
-                    idx,
+                    idx: packetIdx,
                     day,
                     is_day: true,
                     agents: buildAgents(day),
@@ -403,12 +502,12 @@ export function convertJSONLogToPackets(text: string): Packet[] {
             case 'DIVINE': {
                 const response = entry.response;
                 if (!response) break;
-                const targetIdx = agentNameToIdx[response];
+                const targetIdx = resolveIdx(response);
                 if (targetIdx === undefined) break;
-                idx++;
+                packetIdx++;
                 packets.push({
                     id: data.game_id,
-                    idx,
+                    idx: packetIdx,
                     day,
                     is_day: false,
                     agents: buildAgents(day),
@@ -423,12 +522,12 @@ export function convertJSONLogToPackets(text: string): Packet[] {
             case 'GUARD': {
                 const response = entry.response;
                 if (!response) break;
-                const targetIdx = agentNameToIdx[response];
+                const targetIdx = resolveIdx(response);
                 if (targetIdx === undefined) break;
-                idx++;
+                packetIdx++;
                 packets.push({
                     id: data.game_id,
-                    idx,
+                    idx: packetIdx,
                     day,
                     is_day: false,
                     agents: buildAgents(day),
@@ -440,15 +539,16 @@ export function convertJSONLogToPackets(text: string): Packet[] {
                 });
                 break;
             }
-            case 'ATTACK_VOTE': {
+            case 'ATTACK_VOTE':
+            case 'ATTACK': {
                 const response = entry.response;
                 if (!response) break;
-                const targetIdx = agentNameToIdx[response];
+                const targetIdx = resolveIdx(response);
                 if (targetIdx === undefined) break;
-                idx++;
+                packetIdx++;
                 packets.push({
                     id: data.game_id,
-                    idx,
+                    idx: packetIdx,
                     day,
                     is_day: false,
                     agents: buildAgents(day),
@@ -465,10 +565,10 @@ export function convertJSONLogToPackets(text: string): Packet[] {
 
     if (data.win_side && data.win_side !== 'T_NONE') {
         const lastDay = packets.length > 0 ? packets[packets.length - 1].day : 0;
-        idx++;
+        packetIdx++;
         packets.push({
             id: data.game_id,
-            idx,
+            idx: packetIdx,
             day: lastDay,
             is_day: true,
             agents: buildAgents(lastDay),
