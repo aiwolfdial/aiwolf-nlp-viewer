@@ -1,6 +1,7 @@
 import { realtimeSettings } from '$lib/stores/realtime-settings';
 import type { Packet } from '$lib/types/realtime';
 import type { RealtimeSettings } from '$lib/types/realtime-settings';
+import { convertGameLogToPackets, convertJSONLogToPackets, detectLogFormat } from '$lib/utils/log-converter';
 import { writable } from 'svelte/store';
 
 export const RealtimeConnectionStatus = {
@@ -260,12 +261,29 @@ function createRealtimeSocketState() {
         }
     }
 
-    async function loadFromText(text: string) {
+    async function loadFromText(text: string, filename?: string) {
         if (!text.trim()) {
             return;
         }
 
-        const packets = parseJSONLText(text);
+        const format = detectLogFormat(text);
+        let packets: Packet[];
+
+        switch (format) {
+            case 'jsonl':
+                packets = parseJSONLText(text);
+                break;
+            case 'json':
+                packets = convertJSONLogToPackets(text);
+                break;
+            case 'gamelog':
+                packets = convertGameLogToPackets(text, filename);
+                break;
+            default:
+                packets = parseJSONLText(text);
+                break;
+        }
+
         if (packets.length === 0) {
             console.error('No valid packets found');
             return;
@@ -297,7 +315,7 @@ function createRealtimeSocketState() {
             };
         });
 
-        console.log(`JSONL data loaded: ${packets.length} packets across ${Object.keys(newEntries).length} games`);
+        console.log(`Data loaded (${format}): ${packets.length} packets across ${Object.keys(newEntries).length} games`);
     }
 
     async function loadFromFiles(files: FileList) {
@@ -305,7 +323,7 @@ function createRealtimeSocketState() {
             const reader = new FileReader();
             reader.onload = async (e) => {
                 const text = e.target?.result as string;
-                await loadFromText(text);
+                await loadFromText(text, file.name);
             };
             reader.readAsText(file);
         }
