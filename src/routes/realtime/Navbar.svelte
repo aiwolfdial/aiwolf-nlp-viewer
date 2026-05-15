@@ -129,16 +129,6 @@
             />
           </label>
           <label class="label cursor-pointer">
-            <span class="label-text">{$_("realtime.teamName")}</span>
-            <input
-              type="checkbox"
-              checked={settings?.display.canvas.team}
-              onchange={(e) =>
-                updateSettings("display.canvas.team", e.currentTarget.checked)}
-              class="checkbox"
-            />
-          </label>
-          <label class="label cursor-pointer">
             <span class="label-text">{$_("realtime.role")}</span>
             <input
               type="checkbox"
@@ -164,16 +154,6 @@
             />
           </label>
           <label class="label cursor-pointer">
-            <span class="label-text">{$_("realtime.teamName")}</span>
-            <input
-              type="checkbox"
-              checked={settings?.display.bubble.team}
-              onchange={(e) =>
-                updateSettings("display.bubble.team", e.currentTarget.checked)}
-              class="checkbox"
-            />
-          </label>
-          <label class="label cursor-pointer">
             <span class="label-text">{$_("realtime.role")}</span>
             <input
               type="checkbox"
@@ -193,16 +173,6 @@
               checked={settings?.display.text.name}
               onchange={(e) =>
                 updateSettings("display.text.name", e.currentTarget.checked)}
-              class="checkbox"
-            />
-          </label>
-          <label class="label cursor-pointer">
-            <span class="label-text">{$_("realtime.teamName")}</span>
-            <input
-              type="checkbox"
-              checked={settings?.display.text.team}
-              onchange={(e) =>
-                updateSettings("display.text.team", e.currentTarget.checked)}
               class="checkbox"
             />
           </label>
