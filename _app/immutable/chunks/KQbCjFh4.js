@@ -1,0 +1,506 @@
+const e=`0,status,1,BODYGUARD,ALIVE,Character-Lab-A1,Takumi
+0,status,2,MEDIUM,ALIVE,sunamelli-a1,George
+0,status,3,POSSESSED,ALIVE,mille-B1,Servas
+0,status,4,SEER,ALIVE,CanisLupus-B1,Mio
+0,status,5,VILLAGER,ALIVE,kanolab-nw-C3,Shunichi
+0,status,6,VILLAGER,ALIVE,kanolab-nw-B1,Minako
+0,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Rin
+0,status,8,VILLAGER,ALIVE,CanisLupus-A1,Victoria
+0,status,9,VILLAGER,ALIVE,mille-A1,Toshio
+0,status,10,VILLAGER,ALIVE,sunamelli-c1,Asuka
+0,status,11,WEREWOLF,ALIVE,sunamelli-b1,Midori
+0,status,12,WEREWOLF,ALIVE,CamelliaDragons1,Ryuji
+0,status,13,WEREWOLF,ALIVE,Character-Lab-B1,Shion
+0,whisper,0,0,13,I've planted suspicion on  @Asuka . If you're a wolf  back me subtly and vote late—no role claims. If Asuka claims seer  we'll pivot and sow doubt about anyone defending them. Stay calm. Ov
+0,whisper,1,0,12,...
+0,whisper,2,0,11,This is Midori. I am a werewolf.
+0,whisper,3,1,13,Midori just announced she's a werewolf. That's risky. If she's with us  stay silent and follow our votes; if not  call her out as attention-seeking and u @Asuka . No role claims  vote late. Over
+0,whisper,4,1,12,...
+0,whisper,5,1,11,Over
+0,whisper,6,2,13,Midori's public claim is messy. If she's one of us: stay calm  subtly back my push on  @Asuka  and vote late. If she's not: call her an attention-seeker and use that to drive suspicion onto @Asuka. No role claims from us. Keep quiet until the end.
+0,whisper,7,2,12,...
+0,whisper,8,3,13,Stick to the plan. If Midori is one of us: stay silent and subtly back my push on  @Asuka  — vote late. If she's fake: call her attention-seeking and redirect suspicion. If Asuka claims seer  question any defender's logic and demand proof;
+0,whisper,9,3,12,...
+0,talk,0,0,10,Hello everyone I’m Asuka. Let’s keep our reasoning fact-based and avoid jumping to conclusions from the start.
+0,talk,1,0,9,Hello. I am Toshio. My role is villager. Have a good game.
+0,talk,2,0,1,I’m Takumi.  @Asuka   saying “fact-based” so early feels like dodging — any role or info? Toshio claimed villager  noted. If nobody speaks up soon I’ll push for a vote. Who’s
+0,talk,3,0,6,Hello everyone. I am Minako. Let us have a good game. Keep discussions open and honest. I look forward to understanding everyone.
+0,talk,4,0,7,Wow! Hiya everyone I’m Rin. It’s so cool to play with ya! Let’s stay super focused. We’ll be the best at spotting anything fishy!
+0,talk,5,0,4,Skip
+0,talk,6,0,13,I agree — no random lynch Day 1.  @Asuka  your “fact-based” line looks like steering the table; any reads or role to share? Midori’s public “I’m a werewolf” is weird — could be bait. I’ll watch
+0,talk,7,0,2,I’m George—looking forward to a good game with all of you. Let’s keep our heads and play smart.
+0,talk,8,0,8,Skip
+0,talk,9,0,12,...
+0,talk,10,0,11,Hello everyone I brought some snacks to share—I hope we can all get through this together despite the nerves.
+0,talk,11,0,3,Hello. I am Servas. My role is seer. Have a good game.
+0,talk,12,0,5,Hi folks! I’m Shunichi. Ready to play detective?  @Servas  says they’re the seer. Let’s identify those werewolves shall we? Over.
+0,talk,13,1,10,Over
+0,talk,14,1,9,Over
+0,talk,15,1,1,I’m Takumi. Asuka’s “fact-based” line feels dodgey.  @Servas  you claim seer — any result or target to share? If you’re honest I’ll back you; if not  we should press Asuka. I’m leaning to vote Asuka if they don’t expla
+0,talk,16,1,6,Over
+0,talk,17,1,7,Over
+0,talk,18,1,4,Hi everyone! I'm Mio! This is gonna be super fun! Let's find all the baddies
+0,talk,19,1,13, @Servas  if you're the seer  reveal your divination result now — we need concrete info. Asuka's "fact-based" phrasing still smells like steering; without see
+0,talk,20,1,2,Over
+0,talk,21,1,8,I am Victoria. I value history and quiet contemplation. Let our discourse be deliberate.
+0,talk,22,1,12,Over
+0,talk,23,1,11,Over
+0,talk,24,1,3,Over
+0,talk,25,1,5,Over
+0,talk,26,2,1,We can’t just sit here.  @Asuka  your “fact-based” start felt evasive — give us a real read or claim now. If nobody brings concrete info I’ll vote you. Over
+0,talk,27,2,4,Over
+0,talk,28,2,13, @Servas  if you’re the seer  show your divination result now — we need concrete info. No proof = suspicious. Midori’s “I’m a werewolf” looks like attention-see
+0,talk,29,2,8,Over
+0,talk,30,3,1,I don’t trust  @Asuka . That “fact-based” line felt like a dodge — claim a role or give a read now  or I’ll push to lynch you today. Town  speak up. Over
+0,talk,31,3,13,Morning. Don’t lynch randomly Day 1.  @Servas  — if you’re the seer  reveal your divination (target & result) now; we need facts. Midori’s “I’m a werewolf” looks like attention-seeking  and Asuka’s
+0,whisper,0,0,13,Night plan: kill the seer —  @Servas . Day: push suspicion onto Asuka  no role claims  vote late. If Midori’s with us stay quiet and follow; if not call her attention-seeking. Keep response
+0,whisper,1,0,12,...
+0,whisper,2,0,11,Let’s lay low and go with the flow for now.
+0,whisper,3,1,13,Night kill  @Servas . Day: push suspicion onto Asuka  no role claims. Midori stay quiet and follow our vote; Ryuji vote late and mirror me. Keep calm and subtle. Over
+0,whisper,4,1,12,...
+0,whisper,5,1,11,Let’s prioritize Servas for tonight’s attack since they CO’d Seer. Shion keep leading discussion. Ryuji and I will stay low.
+0,whisper,6,2,13,Confirmed. Night target:  @Servas  — kill. Day plan: push suspicion on Asuka  no role claims  vote late. Midori and Ryuji stay low and mirror my timing; if Asuka claims seer we pivot to their
+0,whisper,7,2,12,...
+0,whisper,8,2,11,Let’s bite out Servas tonight since he CO’d Seer and looks convincing. For voting let’s follow Shion’s lead then adapt.
+0,whisper,9,3,13,Night target:  @Servas  — kill. Day: push suspicion onto Asuka. No role claims from us. Midori & Ryuji stay low and vote late; follow my vote. If Asuka claims seer  pivot to anyon
+0,whisper,10,3,12,...
+0,whisper,11,3,11,Let’s bite out  @Servas  tonight unless someone else claims a power role. For lynch let’s keep heat on @Asuka for now.
+0,divine,4,1,HUMAN
+1,status,1,BODYGUARD,ALIVE,Character-Lab-A1,Takumi
+1,status,2,MEDIUM,ALIVE,sunamelli-a1,George
+1,status,3,POSSESSED,ALIVE,mille-B1,Servas
+1,status,4,SEER,ALIVE,CanisLupus-B1,Mio
+1,status,5,VILLAGER,ALIVE,kanolab-nw-C3,Shunichi
+1,status,6,VILLAGER,ALIVE,kanolab-nw-B1,Minako
+1,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Rin
+1,status,8,VILLAGER,ALIVE,CanisLupus-A1,Victoria
+1,status,9,VILLAGER,ALIVE,mille-A1,Toshio
+1,status,10,VILLAGER,ALIVE,sunamelli-c1,Asuka
+1,status,11,WEREWOLF,ALIVE,sunamelli-b1,Midori
+1,status,12,WEREWOLF,ALIVE,CamelliaDragons1,Ryuji
+1,status,13,WEREWOLF,ALIVE,Character-Lab-B1,Shion
+1,talk,0,0,3,I am a seer. I divined Victoria and Victoria was a human.
+1,talk,1,0,5,Interesting claim from Servas. Should we believe him? I wonder. Victoria is divined as human. That’s comforting isn’t it?
+1,talk,2,0,1,I still don't trust Asuka.  @Servas   if you're the seer  tell us your result now. If you can't  I'll push to lynch Asuka today. Town  speak up. Over
+1,talk,3,0,4,I'm the real seer! I peeked Takumi and he was HUMAN! Servas is a big fibber! Da-da-da
+1,talk,4,0,10,At least one Seer is lying. @Mio  @Servas  please explain how you chose your divination target and your process.
+1,talk,5,0,7,Wow! This is like a twisty nature trail! Servas and Mio both say they're the seer. Can our medium confirm Servas' results later? Tricky!
+1,talk,6,0,12,...
+1,talk,7,0,2,I suggest voting among the Seer claimants today so my Medium check tomorrow can clearly resolve which side is genuine.
+1,talk,8,0,9,I will vote Servas.
+1,talk,9,0,6,Voting among the seer claimants could indeed clarify matters. Mr. George’s proposal appears solid. The seer confusion is quite dizzying!
+1,talk,10,0,8,Servas spoke the truth of my nature. Yet George offers a contract for clarity. I support this logical path.
+1,talk,11,0,13,Morning—who got taken last night?  @Asuka  your “fact-based” line still looks like table-steering; what reads do you have to back it up? If Servas is dead we need concrete info  not vagueness. I w
+1,talk,12,0,11,It’s tricky with both Seers showing human results. Should we focus on the COs or revisit suspicions like Asuka?
+1,talk,13,1,3,I will vote Minako.
+1,talk,14,1,5,Two seers. Odd isn't it? We need medium confirmation tomorrow. Until then who pushes false claims? Let's vote wisely.  @Mio  Hey Ace you're confident as the seer. Why was Takumi your divination target?
+1,talk,15,1,1,We need info now.  @Servas  if you’re the seer  tell us who you checked last night. Asuka’s still acting weird — if Servas can’t give a result I’ll push to lynch Asuka today. Over
+1,talk,16,1,4,Two seers means it's me the real one and the possessed! Don't vote us it's a waste of a kaboom
+1,talk,17,1,10, @Takumi  you push hard for my vote but who else are you suspicious of if both Seers flip village? Give a name.
+1,talk,18,1,7, @Asuka  Wow. Isn't it exciting to confirm a seer? Big Bro Takumi seems suspicious of you. What do you make of Mister Servas and Mio?
+1,talk,19,1,12,...
+1,talk,20,1,2,I’ll vote for Servas tonight. Medium result on a Seer CO tomorrow will settle which direction we trust.
+1,talk,21,1,9,I will vote Minako.
+1,talk,22,1,6, @Shion  I find the two seer claims perplexing. Trusting the medium's check post-vote will reveal the truth. Who seems suspicious?
+1,talk,23,1,8,Two Seers. This implies one is genuine and one is Possessed. Our focus must remain on them.
+1,talk,24,1,13,Morning. Any night deaths to report? If the seer’s gone we need to be careful.  @Asuka  your “fact-based” line reads like steering—give a concrete read or you stay suspicious. No random lynch. Over
+1,talk,25,1,11,Voting among the Seer claimants gives clarity for tomorrow unless strong evidence appears otherwise.
+1,talk,26,2,3,I will vote Minako.
+1,talk,27,2,5,I'm focusing on those two seers. George's plan should clarify things. Minako's votes are fishy too.  @Shion  If Servas is human what'll change? Asuka is on your radar. Any other names popping up partner?
+1,talk,28,2,1,I’m getting impatient.  @Servas  if you’re the seer  say who you checked last night. If you can’t prove it I’ll vote to lynch Asuka today. Anyone else with a claim or concrete read? Over
+1,talk,29,2,4, @Shunichi  I peeked Takumi cuz he was so loud! Don't vote for us! Let's vote quiet Ryuji instead
+1,talk,30,2,10, @Takumi  @Shion your strong focus on me feels forced. Who else do you seriously suspect besides me?
+1,talk,31,2,7,Wow! It's a seer showdown! Minako's got my attention with her votes! George's plan. Focus eliminations! Trust the medium!
+1,talk,32,2,12,...
+1,talk,33,2,2,Voting out one of the Seer claimants is best—we’ll get solid proof and cut confusion tomorrow.
+1,talk,34,2,9,I will vote Minako.
+1,talk,35,2,6,I am open to voting among the seer claimants to alleviate confusion. A medium's check will build trust and guide future votes wisely.
+1,talk,36,2,8,Consider the enemy's objective. This diversion to Minako benefits them exclusively.
+1,talk,37,2,13,Any night deaths?  @Asuka  you keep pushing “fact-based” but haven’t said anything concrete—what’s your read? If Servas was the seer we need their result; no proof = suspiciou
+1,talk,38,2,11,Voting between Seer claimants makes sense now for Medium clarity tomorrow. Who’s leaning toward Servas or Mio?
+1,talk,39,3,3,I will vote Minako.
+1,talk,40,3,5,Let's go for the middle ground. Someone who's neutral. Hasn't claimed. Could our divination reveal a mystery? A well-deserved checkmate perhaps?
+1,talk,41,3,1,I still don’t trust Asuka  but I’m also suspicious of @Shion.  @Servas  claimed seer — please share your check or we need to decide who to lynch. Over
+1,talk,42,3,4,George's idea is a wolfy trap! Don't vote for us! It just helps the baddies win!
+1,talk,43,3,10,Voting a seer claimant gives clarity. I’m voting Servas today so the Medium can confirm tomorrow and settle the confusion.
+1,talk,44,3,7,Wow! George's plan sounds super smart for finding secrets! Let's dig up some truths!  @George  Hey Big Bro! Anyone new you're thinking might be tricky?
+1,talk,45,3,12,...
+1,talk,46,3,2,I’ll vote Servas tonight. My Medium result tomorrow settles which Seer is real—let’s stick together and find the wolves fast.
+1,talk,47,3,9,I will vote Minako.
+1,talk,48,3,6,It's wise to confirm a seer with a vote. That action will clear the path ahead and help eliminate the wolves. Ms. Midori I'm inclined toward Servas for c
+1,talk,49,3,8, @Servas  @Toshio a unified vote for Minako is an act of discord. This requires explanation.
+1,talk,50,3,13,Who died last night? If the seer’s gone we need real info fast.  @Asuka  your “fact-based” push reads like steering—give a concrete read or you stay suspicious. I won’t support a random lynch  but I won’t hesitate if people
+1,talk,51,3,11,I’ll vote Servas. Settling the Seer question helps us tomorrow and might reveal more if we note how everyone votes tonight.
+1,vote,1,13
+1,vote,2,3
+1,vote,3,6
+1,vote,4,2
+1,vote,5,3
+1,vote,6,3
+1,vote,7,3
+1,vote,8,3
+1,vote,9,6
+1,vote,10,3
+1,vote,11,3
+1,vote,12,1
+1,execute,3,POSSESSED
+1,divine,4,2,HUMAN
+1,whisper,0,0,12,...
+1,whisper,1,0,13,Night target: Servas (seer). Day: push suspicion onto  @Asuka  and anyone defending Servas. Stay low  vote late  mirror my vote. If Midori acts up  call them attention-seeking. Follow my timing. Over
+1,whisper,2,0,11,Let’s stay on Servas for today’s vote and act like supportive villagers. No fake claims yet.
+1,whisper,3,1,12,...
+1,whisper,4,1,13,Stick to plan. Day push suspicion on  @Asuka  — stay low and mirror my timing  vote late. If @Asuka claims seer  pivot to anyone defending them and demand proof; pick the loudest defender as backup. N
+1,whisper,5,1,11,Let’s stay on Servas for vote out to blend in and plan to bite him tonight unless Medium COs.
+1,whisper,6,2,12,...
+1,whisper,7,2,13,Night: kill Servas. Day: push suspicion on Asuka.  @Midori  stay low and mirror me; Ryuji follow our timing. No role claims. Vote late and follow my vote. If Asuka claims seer  attack their defenders and demand pr
+1,whisper,8,2,11,@Shion  @Ryuji  Let’s stick with Servas as the bite tonight unless there’s a twist.
+1,whisper,9,3,12,...
+1,whisper,10,3,13,Confirmed: bite Servas tonight. Day plan — push suspicion on Asuka  stay low and vote late.  @Midori  mirror my timing; Ryuji follow. If Asuka claims seer  attack any defenders and demand proof. No COs from us. Over
+1,whisper,11,3,11,Let’s all vote Servas today and stay low in the discussion.
+1,guard,1,4,SEER
+1,attackVote,13,12
+1,attack,-1,true
+2,status,1,BODYGUARD,ALIVE,Character-Lab-A1,Takumi
+2,status,2,MEDIUM,ALIVE,sunamelli-a1,George
+2,status,3,POSSESSED,DEAD,mille-B1,Servas
+2,status,4,SEER,ALIVE,CanisLupus-B1,Mio
+2,status,5,VILLAGER,ALIVE,kanolab-nw-C3,Shunichi
+2,status,6,VILLAGER,ALIVE,kanolab-nw-B1,Minako
+2,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Rin
+2,status,8,VILLAGER,ALIVE,CanisLupus-A1,Victoria
+2,status,9,VILLAGER,ALIVE,mille-A1,Toshio
+2,status,10,VILLAGER,ALIVE,sunamelli-c1,Asuka
+2,status,11,WEREWOLF,ALIVE,sunamelli-b1,Midori
+2,status,12,WEREWOLF,ALIVE,CamelliaDragons1,Ryuji
+2,status,13,WEREWOLF,ALIVE,Character-Lab-B1,Shion
+2,talk,0,0,5,We need to talk about the Seer. Perhaps another lynch to verify roles. George is with me in doubting Servas' claim. Who's feeling off?
+2,talk,1,0,11,Let’s see what the Medium shares today—it could clear up which Seer was honest.
+2,talk,2,0,12,...
+2,talk,3,0,7,Wow! You won't believe this! Let's chat about the medium's info today. It'll clear up yesterday's seer confusion. Way cool!
+2,talk,4,0,13,Servas is dead — the seer’s gone.  @Asuka  you kept pushing “fact-based” but offered no reads. Explain now or you stay my top suspect. If anyone defends them  give concrete reasons fast. I won’t
+2,talk,5,0,1,Morning. Servas was executed — did they say anything useful before dying? Any night kills?  @Asuka  you’ve been quiet — if you’re the seer  show your check now or I’ll push to lynch you. Town  speak up. Over
+2,talk,6,0,2,I am coming out as Medium. Servas was Human.  @Mio  share your next result if you’re real—your role is crucial now.
+2,talk,7,0,10, @Mio  Medium cleared Servas as Human so you’re confirmed fake Seer. Why should we not vote you out today?
+2,talk,8,0,4,I peeked George and he's HUMAN! George is the real Medium! Let's win! Da-da-da
+2,talk,9,0,9,I will vote Minako.
+2,talk,10,0,8,So it is. The Medium's contract is fulfilled. This confirms Mio is the false prophet.
+2,talk,11,0,6,Mr. Smith. I propose we cast our votes for Mio. George has confirmed Servas' humanity through divination sparking clarity.
+2,talk,12,1,5,Mio's claim goes against the real seer. Let's vote for them to confirm George's info. Clears suspicions fast right? Midori. Your take on Mio now that G
+2,talk,13,1,11,If Mio is vote outd and is fake I think we look next at who pushed hardest for Servas or defended Mio yesterday.
+2,talk,14,1,12,...
+2,talk,15,1,7,Wow! Mio's claim is a twist against our medium! Voting Mio today could clear things up. What do you think?  @Takumi  what’s your thought?
+2,talk,16,1,13,Servas is dead — no seer left.  @Asuka  you kept steering the table but offered nothing concrete. Explain now or you’ll be my vote. Anyone defending them  say why quickly. I won’t support a ra
+2,talk,17,1,1,Servas is dead — we lost a seer claim.  @Asuka  you’re dodging again; if you’re the seer show your check now or I’ll vote you. I’m also suspicious of Shion for being too quiet. Town  speak up fast. Over
+2,talk,18,1,2,Servas was Human so Mio’s claim can’t be true. I say we vote Mio out today and catch the fake Seer.
+2,talk,19,1,10,After Mio is gone the next wolf likely hid in yesterday’s quiet crowd.  @Rin  @Ryuji who did you suspect most on Day 1?
+2,talk,20,1,4,What if Servas was the Possessed?  @Asuka  why did you call me fake so fast? That's super wolfy
+2,talk,21,1,9,I will vote Minako.
+2,talk,22,1,8, @Toshio  if Mio is false as the facts suggest your singular focus on Minako requires an explanation.
+2,talk,23,1,6,To clear doubts. Divining by Mr. George with Ms. Victoria's assistance might help confirm claims amidst confusion. Stay cautious.  @Toshio . Why do you persist in voting for me? Let us collaborate to uncover the werewolves.
+2,talk,24,2,5,Victoria's logic and George's claim make sense. Let's vote against Mio today. Any objections? Who needs a chat over salmon?
+2,talk,25,2,11,After we vote Mio let's check who was quiet yesterday—I think Rin and Toshio barely spoke at all.
+2,talk,26,2,12,...
+2,talk,27,2,7,Mister Takumi seemed too eager. Wow! Maybe that's fishy. And Servas' claim? Weird! Let’s vote for Little Miss Mio today!
+2,talk,28,2,13, @Asuka  you pushed that “fact-based” line but offered nothing concrete. Servas is dead — if you had a read you should’ve said it. Explain now or you’ll get my vo
+2,talk,29,2,1,Who died last night? Servas was executed — did they say anything before dying?  @Shion  you’ve been way too quiet  that’s suspicious. If Asuka is the seer we should protect them tonight — town  anyone with a claim speak up now. Over
+2,talk,30,2,2,Servas was Human. I'm the Medium. After Mio is vote outd let's focus on those who dodged consensus—wolves hide there.
+2,talk,31,2,10, @Toshio  you voted Minako instead of Servas yesterday. What was your reason for going against the main consensus?
+2,talk,32,2,4,Wolfies want the real seer gone! That's why Asuka is so loud! I found George the Medium! Think
+2,talk,33,2,9,I will vote Minako.
+2,talk,34,2,8,Our path is clear. Mio must be judged. After which Toshio's illogical vote must be examined.
+2,talk,35,2,6,Mr. Mio. I am inclined to vote for you today. Recent revelations indicate contradictions in your claims across various roles.
+2,talk,36,3,5,I see. Mio's story is solid right? Voting them clarifies things. Who's opposed?  @Toshio  You've always picked Minako. Why not join us in finding the wolves Ace?
+2,talk,37,3,11,I’ll vote Mio. Tomorrow  I want to hear from Rin and Toshio. Their posts have dodged the big debates both days.
+2,talk,38,3,12,...
+2,talk,39,3,7,Wow! You won't believe this. Since Mister George is sure Servas is human let's vote for Miss Mio today. Sis Asuka. Any guesses?
+2,talk,40,3,13,We just lost the seer.  @Asuka  you pushed “fact-based” early but stayed vague—either protecting someone or bluffing. Who were you aligning with or watching? No solid answer = my v
+2,talk,41,3,1,I’ll protect  @Asuka  tonight — they might be the seer and we can’t lose them. Shion’s silence is suspicious though. Anyone with a claim or info? Over
+2,talk,42,3,2,Servas was Human confirmed by my Medium result. I’m voting Mio—fake Seer needs to go. Let’s stay united on this.
+2,talk,43,3,10,The facts clear up Mio as fake.
+2,talk,44,3,4,Over
+2,talk,45,3,9,I will vote Minako.
+2,talk,46,3,8,Over
+2,talk,47,3,6,I trust Mr. George's claim. Let's focus our votes on Mio for clarity. Toshio's fixation warrants concern afterward. Ms. Mio. George's medium claim n
+2,vote,1,6
+2,vote,2,4
+2,vote,4,10
+2,vote,5,4
+2,vote,6,4
+2,vote,7,4
+2,vote,8,4
+2,vote,9,6
+2,vote,10,4
+2,vote,11,4
+2,vote,12,11
+2,execute,4,SEER
+2,whisper,0,0,11,Let’s bite George tonight since he’s the trusted Medium If anyone disagrees or has another target please say so
+2,whisper,1,0,13, @Midori  Good call—target George tonight. Day plan: stay low  push suspicion on Asuka  vote late and mirror my vote. Ryuji keep quiet and follow. If anyone COs  de
+2,whisper,2,0,12,...
+2,whisper,3,1,11,Let’s all vote Mio today to blend in. For tonight let’s bite George since his Medium claim makes him too trusted.
+2,whisper,4,1,13,Agreed. Night: bite George. Day: vote Mio to blend—subtly push suspicion onto Asuka but stay low. Vote late and mirror my timing; if someone loudly de
+2,whisper,5,1,12,...
+2,whisper,6,2,11,Let’s all vote Mio today and keep low profiles. If we get the chance tonight I think we should bite George. Agree?
+2,whisper,7,2,13, @Midori  Agreed. Night: bite George. Day: push Mio and stay low — vote late and mirror my vote. If Asuka gets defensive  target their loudest defender instead. R
+2,whisper,8,2,12,...
+2,whisper,9,3,11,Let’s vote Mio together today and bite George tonight for maximum confusion. No role claims unless we’re directly targeted.
+2,whisper,10,3,13,Confirmed. Night kill George. Day: push Mio and stay low — vote late and mirror my vote. If Asuka defends loudly pivot to their defender.  @Midori  keep timing with me; Ryuji stay silent and follow. No COs. Over
+2,whisper,11,3,12,...
+2,guard,1,12,WEREWOLF
+2,attackVote,11,2
+2,attackVote,12,7
+2,attackVote,13,12
+2,attack,2,true
+3,status,1,BODYGUARD,ALIVE,Character-Lab-A1,Takumi
+3,status,2,MEDIUM,DEAD,sunamelli-a1,George
+3,status,3,POSSESSED,DEAD,mille-B1,Servas
+3,status,4,SEER,DEAD,CanisLupus-B1,Mio
+3,status,5,VILLAGER,ALIVE,kanolab-nw-C3,Shunichi
+3,status,6,VILLAGER,ALIVE,kanolab-nw-B1,Minako
+3,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Rin
+3,status,8,VILLAGER,ALIVE,CanisLupus-A1,Victoria
+3,status,9,VILLAGER,ALIVE,mille-A1,Toshio
+3,status,10,VILLAGER,ALIVE,sunamelli-c1,Asuka
+3,status,11,WEREWOLF,ALIVE,sunamelli-b1,Midori
+3,status,12,WEREWOLF,ALIVE,CamelliaDragons1,Ryuji
+3,status,13,WEREWOLF,ALIVE,Character-Lab-B1,Shion
+3,talk,0,0,10, @Toshio  your voting has been off track every day. Can you explain your reasoning? It feels suspicious not to address it.
+3,talk,1,0,11,Let’s stop guessing—Toshio’s voting never helped town. I’ll join the vote this time.
+3,talk,2,0,8,Our pillar of truth George has fallen. We now act on reason alone.  @Toshio  your account remains unsettled.
+3,talk,3,0,6,With George gone we must rely on our instincts and logic. Midori's consideration of targeting Toshio seems logical. His actions are peculiar.
+3,talk,4,0,1,Mio got lynched and George was attacked — that’s bad.  @Shion  if you’re the seer  tell us who you checked last night. I’m suspicious of Minako for being too quiet. We gotta pick someone to lynch today — who do we vote?
+3,talk,5,0,12,...
+3,talk,6,0,5,Toshio's voting antics are wild. His logic feels like a blindfolded chess game. Anyone else see the irony partner?
+3,talk,7,0,13,Two info roles gone (Servas  George). We’re blind now.  @Asuka  you kept saying “fact-based” but never gave a read — who were you watching or what evidence do you have? If you can’t say  you’ll be my vote. Anyone defend
+3,talk,8,0,7,Wow! Big Bro George said Servas is human? Then let's keep an eye on Mister Toshio. His voting is super fishy! What do you think?
+3,talk,9,0,9,I will vote Minako.
+3,talk,10,1,10, @Toshio  your vote pattern makes no sense if you’re a villager. Explain your reasoning for targeting Minako so persistently.
+3,talk,11,1,11,I agree Toshio’s voting has been too random If we want progress it’s safest to remove confusing players first
+3,talk,12,1,8,My judgment falls upon Toshio. His voting pattern is a deliberate act of chaos not of order.
+3,talk,13,1,6,With George gone. Trusting past clarifications is crucial. Toshio's choices seem disruptive. Shall we vote Toshio today?  @Ryuji . Ryuji. You've been quiet. Do you have any thoughts on Toshio's voting trend? It concerns some of us.
+3,talk,14,1,1,We need to protect  @Shion  — they’re our best shot at info. I’m voting Minako; she’s been too quiet. Anyone with a claim or reason to disagree? Over
+3,talk,15,1,12,...
+3,talk,16,1,5,Sketchy how Minako leaps into plans but fades during the day. Notice this pattern?  @Ryuji  How about a clever take on Toshio or Minako?
+3,talk,17,1,13,We lost Seer and Medium — we’re blind now.  @Asuka  you keep saying “fact-based” but gave no reads. Who were you watching? Say something or you’ll get my vote. Anyone defending them  explain fast. Over
+3,talk,18,1,7,Wow! With Toshio throwing curveballs left and right we need to rally together! His votes stir the pot right? Big Bro Ryuji! You're super hush-hush. Wh
+3,talk,19,1,9,I will vote Minako.
+3,talk,20,2,10,Toshio keeps voting Minako with no reason. That is suspicious. I think we should vote Toshio today.
+3,talk,21,2,11,If we agree on Toshio today after he’s gone we should focus on players who’ve been unusually quiet like Minako or Rin.
+3,talk,22,2,8,Let us focus our reason. The matter of Toshio's aberrant voting requires judgment.
+3,talk,23,2,6,I agree. Let us focus on Mr. Toshio today. His random voting is suspicious. Afterward we should observe Ms. Rin and others.
+3,talk,24,2,1,I’ll guard  @Shion  tonight. Minako’s acting sketchy — I’m voting her. Anyone disagree? Over
+3,talk,25,2,12,...
+3,talk,26,2,5,I'm suspicious of Toshio. His voting chaos breeds confusion. We're not playing chess here. We need clarity to win as villagers.
+3,talk,27,2,13,We lost Seer and Medium—no more guesses.  @Asuka  you kept saying “fact-based” but gave no reads. Who were you watching? No answer = my vote. Over
+3,talk,28,2,7,Let's focus on Mister Toshio now! But keep an eye on Minako and Takumi too. Fishy movements lately. Wow! You won't believe it!
+3,talk,29,2,9,I will vote Minako.
+3,talk,30,3,10,I’m voting Toshio. If he flips wolf let’s look at those defending him. If not we need to press Ryuji and the quiet ones.
+3,talk,31,3,11,I’ll vote Toshio today to clear things up. Next Minako or Rin should speak up and share more concrete views.
+3,talk,32,3,8,My vote is for Toshio. Any diversion to Minako is a strategy that benefits only the enemy.
+3,talk,33,3,6,Voting for Mr. Toshio seems reasonable given his suspicious pattern. Let's aim for clarity. Mr. Takumi your protection stance is key. If Mr. Toshio i
+3,talk,34,3,1,I voted  @Minako  — you’ve been too quiet. Speak up now or we lynch you. Over
+3,talk,35,3,12,...
+3,talk,36,3,5,Voting Toshio feels like a smart play. If he's a wolf his erratic votes might be a manipulative move. Let's press those backing him next.  @Ryuji  Silent partner! We need your voice here. What are your thoughts on voting Toshio today? His voting pattern looks risky for us.
+3,talk,37,3,13,We just lost Seer and Medium — the table’s blind now.  @Asuka  you kept pushing “fact-based” but never gave a read. Who were you watching? If you don’t give something concrete now I’ll vote you. Defenders  speak up
+3,talk,38,3,7,Wow! Toshio's randomness is stirring chaos! What if we focus our votes on him? Keeps us cautious and safe! Ryuji! Your silence draws attention! What d
+3,talk,39,3,9,I will vote Minako.
+3,vote,1,6
+3,vote,5,9
+3,vote,6,9
+3,vote,7,9
+3,vote,8,9
+3,vote,9,6
+3,vote,10,9
+3,vote,11,9
+3,vote,12,11
+3,execute,9,VILLAGER
+3,whisper,0,0,12,...
+3,whisper,1,0,13,Stick to plan. Today keep low and push suspicion on  @Asuka  — mirror my timing and vote late. If they survive lynch  night kill the loudest defender or any dangerous role-claimer. No COs from us; follow my vote. O
+3,whisper,2,0,11,Let’s all vote Toshio today to stay with the group. For tonight’s bite out should we target Takumi or Victoria next?
+3,whisper,3,1,12,...
+3,whisper,4,1,13,Night target:  @Victoria . Day: vote Toshio  stay low and mirror my timing — subtly push Asuka and vote late. If Asuka survives  kill their loudest defender next. Over
+3,whisper,5,1,11,Let’s all vote Toshio today to stay together. Tonight I suggest we bite Victoria—she’s quiet and won’t cause chaos.
+3,whisper,6,2,12,...
+3,whisper,7,2,13,Confirmed: bite  @Victoria  tonight. Day: vote Toshio  stay low  subtly push Asuka  vote late and mirror my vote. If Asuka defends loudly  target their loudest defender at night. Ryu
+3,whisper,8,2,11,Let’s all vote Toshio today to match the consensus and keep low profiles—we bite Victoria tonight unless something changes
+3,whisper,9,3,12,...
+3,whisper,10,3,13,Confirmed: bite  @Victoria  tonight. Day vote Toshio — stay low and mirror my timing  vote late. Push suspicion on Asuka subtly; if someone defends them loudly  target that defende
+3,whisper,11,3,11,Let’s all vote Toshio today and bite Victoria tonight. Keep suspicions on the quiet or indecisive players after that.
+3,guard,1,12,WEREWOLF
+3,attackVote,11,8
+3,attackVote,12,1
+3,attackVote,13,12
+3,attack,8,true
+4,status,1,BODYGUARD,ALIVE,Character-Lab-A1,Takumi
+4,status,2,MEDIUM,DEAD,sunamelli-a1,George
+4,status,3,POSSESSED,DEAD,mille-B1,Servas
+4,status,4,SEER,DEAD,CanisLupus-B1,Mio
+4,status,5,VILLAGER,ALIVE,kanolab-nw-C3,Shunichi
+4,status,6,VILLAGER,ALIVE,kanolab-nw-B1,Minako
+4,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Rin
+4,status,8,VILLAGER,DEAD,CanisLupus-A1,Victoria
+4,status,9,VILLAGER,DEAD,mille-A1,Toshio
+4,status,10,VILLAGER,ALIVE,sunamelli-c1,Asuka
+4,status,11,WEREWOLF,ALIVE,sunamelli-b1,Midori
+4,status,12,WEREWOLF,ALIVE,CamelliaDragons1,Ryuji
+4,status,13,WEREWOLF,ALIVE,Character-Lab-B1,Shion
+4,talk,0,0,13,Toshio’s gone and Victoria was killed — we’re low on numbers.  @Asuka  you kept pushing “fact-based” but never gave specifics. Who were you watching or what evidence do you have? No concrete read by end of day and you’ll ge
+4,talk,1,0,12,...
+4,talk,2,0,10, @Ryuji  you’ve barely contributed all game. Silence only helps werewolves. State your main suspect and why  now.
+4,talk,3,0,5,We should divine our quiet players like Ryuji or Minako. Time to reveal their true roles and check their allegiance. What say you partner?
+4,talk,4,0,7,Hey Big Bro Shunichi! Wow! You won't believe this. With all this chaos amp up in the game. How about we divine Mister Ryuji tonight?
+4,talk,5,0,1,Morning. Toshio was lynched and Victoria attacked.  @Shion  if you’re the seer please share your check — we need solid info. I’ll guard you tonight. Minako’s been quiet and suspicious; I’m leaning to lynch her. A
+4,talk,6,0,6,Mr. Takumi. Why the sudden suspicion of me? I have been observing the discussions. Could Ryuji's silence be a wolf strategy though?
+4,talk,7,0,11, @Minako  you’ve been very quiet. Can you share who you suspect most and why at this point?
+4,talk,8,1,13,Toshio lynched and Victoria gone—we're low.  @Asuka  you kept pushing “fact-based” but never gave a read. Say who you were watching or I’ll vote you. Defenders  give concrete reasons now. Over
+4,talk,9,1,12,...
+4,talk,10,1,10, @Shion  still suspects me despite all flips. That feels like a setup.
+4,talk,11,1,5,Ryuji buddy your silence is really suspicious. Care to share any thoughts or suspicions? It might just crack this case wide open.
+4,talk,12,1,7,Wow! Shunichi's divine plan is super smart! We could totally find the big bad werewolf this way! Let's dive into those divinations!  @Midori  Midori hey there! What do you think about Takumi's plan? Any cool suspicions?
+4,talk,13,1,1, @Shion  if you’re the seer  tell us who you checked last night. I’ll protect you tonight  so don’t stay quiet. I’m voting Minako — she’s been way too quiet. Anyone
+4,talk,14,1,6,Mr. Shunichi's interest in Mr. Ryuji is curious. I sense unease in Mr. Ryuji's silence. Do we possess alternate suspects?
+4,talk,15,1,11, @Minako  you haven’t named a suspect yet. Please tell us who you find most suspicious and why for today’s vote.
+4,talk,16,2,13,Numbers are getting tight.  @Asuka  you’ve kept steering the table but offered no reads—who were you watching or protecting? No concrete answer = my vote. Defenders explain now. Over
+4,talk,17,2,12,...
+4,talk,18,2,10,Silence is a major red flag now. Let’s prioritize voting for those like Ryuji who still haven’t given clear reads.
+4,talk,19,2,5,Ryuji's silent act is a bit too safe. Let's shine the spotlight on our furry friend next. Ready to make some moves Ace?
+4,talk,20,2,7,Wow! Guess what? Mio’s the false seer! Whoa! That kinda means Big Bro George must be our truthful medium. Votes for Ryuji. He's too quiet!
+4,talk,21,2,1,I’ll guard  @Shion  tonight — if they reveal a check we can nail Minako. Who’s with lynching Minako? Any other claims now? Over
+4,talk,22,2,6, @Midori . Mr. Ryuji's silence warrants scrutiny. As for Takumi's protectiveness of Shion and suspicion towards me. How do you assess this strategy?
+4,talk,23,2,11,If we keep pushing the quieter ones we might find another wolf.  @Ryuji  can you share any new observations from today?
+4,talk,24,3,13,Time’s almost up.  @Asuka  last chance—who were you watching or what concrete read do you have? No clear answer = my vote. If anyone defends them  give solid reasons now. Over
+4,talk,25,3,12,...
+4,talk,26,3,10,I’m voting Ryuji—staying silent after repeated questioning is classic wolf behavior.
+4,talk,27,3,5,Minako's gameplay is suspicious. Silent players can hide secrets. Want to bet on Ryuji partner? Could uncover a werewolf!
+4,talk,28,3,7,Whoa! We lost Victoria. And George too. Ryuji's silence is worrying. It's suspicious. Do we vote for him alongside Shunichi?  @Ryuji  Big Bro! You're so quiet. It's making us all wonder. Could you share your thoughts today? It'd help tons!
+4,talk,29,3,1,I’ll guard  @Shion  tonight. I’m voting Minako — she’s been too quiet. Anyone disagree? Over
+4,talk,30,3,6,Mr. Takumi seems fixated on me. However Mr. Ryuji's continued silence is unsettling. As the old proverb says still waters run deep.
+4,talk,31,3,11,I’m voting Ryuji—his silence just stands out too much. We can’t ignore someone blending in like that any longer.
+4,vote,1,6
+4,vote,5,12
+4,vote,6,12
+4,vote,7,12
+4,vote,10,12
+4,vote,11,12
+4,vote,12,11
+4,execute,12,WEREWOLF
+4,whisper,0,0,13, @Midori  Stay the course: push suspicion on Asuka  stay low and mirror my timing  vote late. Night target: Takumi. If Asuka or anyone claims seer/medium  attack t
+4,whisper,1,0,11,Let’s stick with biting Takumi tonight—he’s holding the group together and not under suspicion. Agree on voting Ryuji today?
+4,whisper,2,1,13, @Midori  Agreed — bite Takumi tonight. Vote Ryuji today to blend in; stay low  mirror my timing and vote late. If Asuka or anyone gets loud  pivot to them or their de
+4,whisper,3,1,11,Let’s agree to vote Ryuji today to blend in with the village flow and bite Takumi tonight since he’s trusted and active.
+4,whisper,4,2,13, @Midori  Confirmed — bite Takumi tonight. Day: vote Ryuji  stay low  mirror my timing and vote late. If Asuka gets defensive pivot to their loudest defender. No C
+4,whisper,5,2,11,Let’s all vote Ryuji today so we blend in I suggest biting Takumi tonight since he’s trusted and leads discussion
+4,whisper,6,3,13, @Midori  Confirmed—bite Takumi tonight. Day: vote Ryuji; stay low  mirror my timing and vote late. If Asuka gets defensive  pivot to their loudest defender. No
+4,whisper,7,3,11,Let’s all vote Ryuji today to blend in then bite Takumi tonight his influence is too strong and he won't suspect us
+4,guard,1,5,VILLAGER
+4,attackVote,11,1
+4,attackVote,13,5
+4,attack,5,false
+5,status,1,BODYGUARD,ALIVE,Character-Lab-A1,Takumi
+5,status,2,MEDIUM,DEAD,sunamelli-a1,George
+5,status,3,POSSESSED,DEAD,mille-B1,Servas
+5,status,4,SEER,DEAD,CanisLupus-B1,Mio
+5,status,5,VILLAGER,ALIVE,kanolab-nw-C3,Shunichi
+5,status,6,VILLAGER,ALIVE,kanolab-nw-B1,Minako
+5,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Rin
+5,status,8,VILLAGER,DEAD,CanisLupus-A1,Victoria
+5,status,9,VILLAGER,DEAD,mille-A1,Toshio
+5,status,10,VILLAGER,ALIVE,sunamelli-c1,Asuka
+5,status,11,WEREWOLF,ALIVE,sunamelli-b1,Midori
+5,status,12,WEREWOLF,DEAD,CamelliaDragons1,Ryuji
+5,status,13,WEREWOLF,ALIVE,Character-Lab-B1,Shion
+5,talk,0,0,13,Ryuji’s gone — numbers are tight.  @Asuka  you keep pushing “fact-based” but haven’t given a read. Who were you watching? Last chance for something concrete or you’ll get my vote. Defenders  gi
+5,talk,1,0,1,Morning. Ryuji’s gone.  @Shion   share your check now — we need a solid lead. I’m voting Minako; she’s been too quiet. Anyone disagree? Over
+5,talk,2,0,7,Wow! With Ryuji causing chaos Big Sis Minako's quiet defense makes you wonder huh? Why isn't she more fired up? Check it out!
+5,talk,3,0,5,Minako. Ryuji's exit has put the spotlight on your silence. Care to share? We need your thoughts now or face a checkmate.
+5,talk,4,0,6,Let us deliberate over who to divine. Revealing their true nature shall clarify if they are friend or foe as clarity is key.
+5,talk,5,0,11, @Minako  you’ve been quiet almost every round. Who is your main suspect now? Town needs clear answers before we vote.
+5,talk,6,0,10, @Shion  your constant focus on me without adapting to new info is suspicious. Town should update logic not repeat old targets.
+5,talk,7,1,13,We're down to few players.  @Asuka  you kept saying "fact-based" but offered nothing concrete—who were you watching or protecting? No solid answer by end of day and you'll get my vote. D
+5,talk,8,1,1, @Shion  please reveal your check now — we need a lead. I’m voting Minako; anyone disagree? I’ll protect Shion tonight. Over
+5,talk,9,1,7,Wow! You won't believe this! Ryuji's been super quiet and Minnie's quiet too. Suspect much? Big Bro Takumi if Shion's got checks share quick! I gotta b
+5,talk,10,1,5,Alright. Midori. Minako. Time to clear the fog. Ryuji's quiet now. But truth's louder. You fancy a game of clarity chess folks?
+5,talk,11,1,6,Mr. Ryuji has found his calm. Mr. Takumi. Your remarks frustrate me. Must we focus on me? Let us uncover true threats.  @Shion . Does Mr. Takumi's constant accusations toward me suggest some strategic intent this time?
+5,talk,12,1,11, @Minako  we really need specific suspects from you today vague answers only help the wolves slip by unnoticed
+5,talk,13,1,10, @Takumi  you focus only on quiet players. Are you deflecting suspicion from yourself? Your voting seems calculated.
+5,talk,14,2,13,Time’s almost up.  @Asuka  last chance—give a concrete read or why you pushed “fact-based.” No answer = my vote. I’m voting Asuka. Over
+5,talk,15,2,1,I’ll protect  @Shion  tonight — if you’re the seer please share your check now. I’m voting Minako; she’s been too quiet. Anyone with solid info? Over
+5,talk,16,2,7,Wow! Voting is super important right now! Do you think Minako's quiet is a strategy? Or maybe Ryuji's silence speaks volumes? Let's align!
+5,talk,17,2,5,Okay Minako. Your quiet routine isn't the best camouflage you know. How about sharing some clues before you get cornered?
+5,talk,18,2,6,Mr. Servas is the only confirmed seer. We must now identify the werewolf to narrow our options and achieve victory.
+5,talk,19,2,11, @Minako  it’s voting time soon—please state plainly who you suspect most or we could let a wolf slip through.
+5,talk,20,2,10, @Shion  you keep repeating old suspicions. Why not explain why Takumi’s votes keep changing without good reason?
+5,talk,21,3,13,Time’s almost up. I’m voting  @Asuka  — you steered the table with “fact-based” but offered nothing. Defend with something concrete now or expect my vote. Over
+5,talk,22,3,1,I’ll guard  @Shion  tonight. Still voting Minako — she’s my top sus. Anyone got a strong reason to change? Over
+5,talk,23,3,7, @Shion  Hey Sis! Wow! You won't believe this! Do you have any super cool detective thoughts about Asuka? I'm eager to know your take!
+5,talk,24,3,5,Many mention Minako before. Was it the plan? Or she hides key? Rin holds a quiet stance. Check the silence and suspense.
+5,talk,25,3,6, @Shunichi  Given the situation I suggest we focus on Ms. Asuka for divination. Her evasive logic requires clarity. Why suspect her less?
+5,talk,26,3,11, @Minako  your silence is harming town  and shifting focus late isn’t helping. I’m voting for you today.
+5,talk,27,3,10,I’m voting Takumi today. His push on quieter players feels forced and not genuine. We should focus there.
+5,vote,5,1
+5,vote,6,1
+5,vote,7,6
+5,vote,10,1
+5,vote,11,6
+5,execute,1,BODYGUARD
+5,whisper,0,0,11,Let’s all focus on Minako today and don’t split our votes.
+5,whisper,1,0,13,Agree — Day vote  @Minako . Night bite Takumi. Stay low  mirror my timing and vote late. If Asuka gets loud  target their loudest defender. No COs. Over
+5,whisper,2,1,11, @Shion  let’s focus the vote on Minako today and bite Takumi tonight he’s too trusted and active does that work for you?
+5,whisper,3,1,13, @Midori  Agreed. Day: push Minako. Night: bite Takumi. Stay low  mirror my timing and vote late. If Minako resists or Asuka gets defensive  pivot to their loudes
+5,whisper,4,2,11,Let’s bite Takumi tonight—he’s trusted most and could have a power role. Tomorrow we push for Minako to be lynched together.
+5,whisper,5,2,13, @Midori  Confirmed — bite Takumi tonight. Day: push Minako  stay low and mirror my timing. Vote late and follow my vote. If Asuka defends loudly or anyone COs  piv
+5,whisper,6,3,11,Let’s both push Minako today and vote her out together—no splitting. Tonight we bite Takumi.
+5,whisper,7,3,13, @Midori  Agreed — push Minako now  stay low and vote late. Night: bite Takumi. Mirror my timing. Over
+5,attackVote,13,5
+5,attack,5,true
+6,status,1,BODYGUARD,DEAD,Character-Lab-A1,Takumi
+6,status,2,MEDIUM,DEAD,sunamelli-a1,George
+6,status,3,POSSESSED,DEAD,mille-B1,Servas
+6,status,4,SEER,DEAD,CanisLupus-B1,Mio
+6,status,5,VILLAGER,DEAD,kanolab-nw-C3,Shunichi
+6,status,6,VILLAGER,ALIVE,kanolab-nw-B1,Minako
+6,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Rin
+6,status,8,VILLAGER,DEAD,CanisLupus-A1,Victoria
+6,status,9,VILLAGER,DEAD,mille-A1,Toshio
+6,status,10,VILLAGER,ALIVE,sunamelli-c1,Asuka
+6,status,11,WEREWOLF,ALIVE,sunamelli-b1,Midori
+6,status,12,WEREWOLF,DEAD,CamelliaDragons1,Ryuji
+6,status,13,WEREWOLF,ALIVE,Character-Lab-B1,Shion
+6,talk,0,0,10, @Shion  you keep targeting me even after key wolves flipped—why haven’t you reconsidered your suspicions at all?
+6,talk,1,0,13,We lost Takumi and Shunichi — that's brutal.  @Asuka  you kept pushing “fact-based” but never gave a read. Explain now or you’ll get my vote. With numbers this low we can’t afford vagueness. Over
+6,talk,2,0,7,Wow! Miss Asuka's move on Mister Takumi feels super strategic here. Let's see why she'd target the quieter ones shall we?
+6,talk,3,0,11, @Minako  you’ve barely shared concrete suspects all game. Wolves love when people hide—why so evasive until now?
+6,talk,4,0,6,Mr. Asuka given our dwindling numbers we should avoid splitting votes. Focusing on you may reveal if your actions truly aid the town.
+6,talk,5,1,10, @Minako  if you’re Town please state your main suspect. Staying silent only benefits the wolves at this stage.
+6,talk,6,1,13,We just lost Takumi and Shunichi.  @Asuka  you kept pushing “fact-based” but gave no read—who were you watching or protecting? Be concrete or you’ll get my vote. Defenders  explain now. Over
+6,talk,7,1,7, @Shion  Hey Sis! Wow! Without Takumi let's solve the mystery. Do any players seem off? What's your gut saying this round?
+6,talk,8,1,11, @Minako  you avoided all concrete answers again. If you’re town prove it—who exactly do you suspect among us?
+6,talk,9,1,6,With our limited group I suspect Asuka and Shion. Let us focus our analysis there. Asuka deflects votes skillfully. Ms. Midori it has been intense. Wh
+6,talk,10,2,10, @Shion  You’ve been tunneling me since early on even as wolves fell. Why haven’t you questioned anyone else at all?
+6,talk,11,2,13,We’re running out of players and lost our info roles — we need concrete reads now.  @Asuka  you kept pushing “fact-based” but gave no specifics. Who were you watching or protecting? No concrete answer = my vote. Defenders  show reasons now. O
+6,talk,12,2,7,Wow! Let's keep things friendly but super strategic! Shion's got eyes on Asuka. Maybe sneaky peeks there might give awesome insights!
+6,talk,13,2,11, @Minako  your constant vagueness makes it hard to trust you today; we need decisive answers  not more deflection.
+6,talk,14,2,6,Ms. Midori. I suspect Asuka could be guiding perceptions. Observing her actions closely now is essential. How have your perspectives evolved?
+6,talk,15,3,10,Minako at least reacts and names suspects. Shion refuses to pivot or explain—I’m voting Shion this round.
+6,talk,16,3,13,Time's almost up.  @Asuka  you steered the table from Day 1 but never gave a concrete read — with our info gone that's unacceptable. I'm voting Asuka. Defend them now with specifi
+6,talk,17,3,7,Hey everyone! Wow! Let's think about tonight's divination! I suggest focusing on Asuka or Shion.  @Midori  With Asuka in the spotlight what do you think about prioritizing Asuka for divination tonight? It might clarify her role!
+6,talk,18,3,11, @Minako  you’ve dodged specifics all game. For town’s sake I’m voting you today unless you give clear logic right now.
+6,talk,19,3,6,Mr. Asuka. Ms. Shion. Your reasoning lacks clarity. Like muddy water does not reflect doubt cannot be dispelled. Explain today.
+6,vote,6,10
+6,vote,7,10
+6,vote,10,13
+6,vote,11,6
+6,execute,10,VILLAGER
+7,status,1,BODYGUARD,DEAD,Character-Lab-A1,Takumi
+7,status,2,MEDIUM,DEAD,sunamelli-a1,George
+7,status,3,POSSESSED,DEAD,mille-B1,Servas
+7,status,4,SEER,DEAD,CanisLupus-B1,Mio
+7,status,5,VILLAGER,DEAD,kanolab-nw-C3,Shunichi
+7,status,6,VILLAGER,ALIVE,kanolab-nw-B1,Minako
+7,status,7,VILLAGER,ALIVE,kanolab-nw-A1,Rin
+7,status,8,VILLAGER,DEAD,CanisLupus-A1,Victoria
+7,status,9,VILLAGER,DEAD,mille-A1,Toshio
+7,status,10,VILLAGER,DEAD,sunamelli-c1,Asuka
+7,status,11,WEREWOLF,ALIVE,sunamelli-b1,Midori
+7,status,12,WEREWOLF,DEAD,CamelliaDragons1,Ryuji
+7,status,13,WEREWOLF,ALIVE,Character-Lab-B1,Shion
+7,result,2,2,WEREWOLF`;export{e as default};
