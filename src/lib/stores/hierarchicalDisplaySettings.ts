@@ -56,7 +56,8 @@ const defaultSettings: HierarchicalDisplaySettings = {
       originalName: false,
       text: true,
       talkIdx: false,
-      turnIdx: false
+      turnIdx: false,
+      timestamp: true
     }
   },
   talks: {
@@ -99,7 +100,8 @@ const defaultSettings: HierarchicalDisplaySettings = {
       originalName: false,
       text: true,
       talkIdx: false,
-      turnIdx: false
+      turnIdx: false,
+      timestamp: true
     }
   },
   guard: {

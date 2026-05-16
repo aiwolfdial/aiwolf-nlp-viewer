@@ -158,7 +158,8 @@
         "originalName": "元の名前",
         "text": "テキスト",
         "talkIdx": "トークID",
-        "turnIdx": "ターン"
+        "turnIdx": "ターン",
+        "timestamp": "タイムスタンプ"
       },
       "talks": {
         "agentName": "エージェント名",
@@ -186,7 +187,8 @@
         "originalName": "元の名前",
         "text": "テキスト",
         "talkIdx": "トークID",
-        "turnIdx": "ターン"
+        "turnIdx": "ターン",
+        "timestamp": "タイムスタンプ"
       },
       "guard": {
         "guardName": "護衛者",
