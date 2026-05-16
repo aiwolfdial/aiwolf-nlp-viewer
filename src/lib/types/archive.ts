@@ -12,6 +12,8 @@ export interface Talk {
     turnIdx: string;
     agentIdx: string;
     text: string;
+    // freeform用のタイムスタンプ列を保持するためのオプション
+    timestamp?: string;
 }
 
 export interface Vote {

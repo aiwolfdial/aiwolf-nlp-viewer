@@ -1,5 +1,5 @@
 import { IdxToName, Role, Species, Status, Teams } from '$lib/constants/common';
-import type { DayStatus } from '$lib/types/archive';
+import type { DayStatus, Talk } from '$lib/types/archive';
 
 
 export function processArchiveLog(data: string): Record<string, DayStatus> {
@@ -33,6 +33,36 @@ function initializeDayLog(): DayStatus {
     };
 }
 
+// ログにタイムスタンプが含まれているかどうかを判定する
+function looksLikeUnixTimestampToken(s: string): boolean {
+    return /^\d{10,13}$/.test(s);
+}
+
+// ログからTalkオブジェクトを解析する
+function parseTalkWithUnixTimestamp(data: string[]): Talk | null {
+    if (data.length < 4) return null;
+
+    const talkIdx = data[0];
+    const turnIdx = data[1];
+    const agentIdx = data[2];
+
+    if (data.length === 4) {
+        return { talkIdx, turnIdx, agentIdx, text: data[3] };
+    }
+
+    const last = data[data.length - 1];
+    if (looksLikeUnixTimestampToken(last)) {
+        return {
+            talkIdx,
+            turnIdx,
+            agentIdx,
+            text: data.slice(3, -1).join(","),
+            timestamp: last,
+        }
+    }
+    return { talkIdx, turnIdx, agentIdx, text: data[3] };
+}
+
 function processLogEntry(dayLog: DayStatus, type: string, data: string[]): void {
     const handlers = createLogHandlers(dayLog);
     const handler = handlers[type];
@@ -51,8 +81,10 @@ function createLogHandlers(dayLog: DayStatus): Record<string, (data: string[]) =
                 gameName: gameName || IdxToName(idx)
             };
         },
-        talk: ([talkIdx, turn, agentIdx, text]) => {
-            dayLog.talks.push({ talkIdx, turnIdx: turn, agentIdx, text });
+        talk: (data: string[]) => {
+            const talkEntry = parseTalkWithUnixTimestamp(data);
+            if (!talkEntry) return;
+            dayLog.talks.push(talkEntry);
         },
         vote: ([voteAgentIdx, targetAgentIdx]) => {
             dayLog.votes.push({ agentIdx: voteAgentIdx, targetIdx: targetAgentIdx });
@@ -70,8 +102,9 @@ function createLogHandlers(dayLog: DayStatus): Record<string, (data: string[]) =
                 result: Species[divineResult as keyof typeof Species],
             };
         },
-        whisper: ([talkIdx, turn, agentIdx, text]) => {
-            const whisperEntry = { talkIdx, turnIdx: turn, agentIdx, text };
+        whisper: (data: string[]) => {
+            const whisperEntry = parseTalkWithUnixTimestamp(data);
+            if (!whisperEntry) return;
             if (dayLog.talks.length > 0) {
                 dayLog.afterWhisper.push(whisperEntry);
             } else {

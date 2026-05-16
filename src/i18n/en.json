@@ -165,7 +165,8 @@
         "originalName": "Original Name",
         "text": "Text",
         "talkIdx": "Talk ID",
-        "turnIdx": "Turn"
+        "turnIdx": "Turn",
+        "timestamp": "Timestamp"
       },
       "votes": {
         "voterName": "Voter",
