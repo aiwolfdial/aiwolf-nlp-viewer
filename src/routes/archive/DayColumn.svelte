@@ -134,7 +134,7 @@
                 {#if settings.beforeWhisper.fields?.turnIdx}
                   <span class="text-xs opacity-50">T{whisper.turnIdx}</span>
                 {/if}
-                {#if whisper.timestamp}
+                {#if settings.beforeWhisper.fields?.timestamp && whisper.timestamp}
                   <span
                     class="text-xs opacity-50 tabular-nums whitespace-nowrap ml-1"
                     >{formatArchiveLineTimestamp(whisper.timestamp)}</span
@@ -179,7 +179,7 @@
                 {#if settings.talks.fields?.turnIdx}
                   <span class="text-xs opacity-50">T{talk.turnIdx}</span>
                 {/if}
-                {#if talk.timestamp}
+                {#if settings.talks.fields?.timestamp && talk.timestamp}
                   <span
                     class="text-xs opacity-50 tabular-nums whitespace-nowrap ml-1"
                     >{formatArchiveLineTimestamp(talk.timestamp)}</span
@@ -324,7 +324,7 @@
                 {#if settings.afterWhisper.fields?.turnIdx}
                   <span class="text-xs opacity-50">T{whisper.turnIdx}</span>
                 {/if}
-                {#if whisper.timestamp}
+                {#if settings.afterWhisper.fields?.timestamp && whisper.timestamp}
                   <span
                     class="text-xs opacity-50 tabular-nums whitespace-nowrap ml-1"
                     >{formatArchiveLineTimestamp(whisper.timestamp)}</span
