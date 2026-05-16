@@ -9,6 +9,7 @@ export interface Packet {
     from_idx: number | undefined;
     to_idx: number | undefined;
     bubble_idx: number | undefined;
+    timestamp?: number;
 }
 
 export interface Agent {
