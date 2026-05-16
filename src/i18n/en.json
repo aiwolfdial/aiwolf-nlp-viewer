@@ -158,7 +158,8 @@
         "originalName": "Original Name",
         "text": "Text",
         "talkIdx": "Talk ID",
-        "turnIdx": "Turn"
+        "turnIdx": "Turn",
+        "timestamp": "Timestamp"
       },
       "talks": {
         "agentName": "Agent Name",
@@ -186,7 +187,8 @@
         "originalName": "Original Name",
         "text": "Text",
         "talkIdx": "Talk ID",
-        "turnIdx": "Turn"
+        "turnIdx": "Turn",
+        "timestamp": "Timestamp"
       },
       "guard": {
         "guardName": "Guard",
