@@ -1,6 +1,7 @@
 <script lang="ts">
   import {
     hierarchicalDisplaySettings,
+    isFieldHidden,
     type HierarchicalDisplaySettings,
   } from "$lib/stores/hierarchicalDisplaySettings";
   import { _ } from "svelte-i18n";
@@ -217,7 +218,7 @@
                   {$_("displaySettings.noFields")}
                 </button>
               </div>
-              {#each Object.entries(sectionSettings.fields) as [field, value]}
+              {#each Object.entries(sectionSettings.fields).filter(([field]) => !isFieldHidden(section.key, field)) as [field, value]}
                 <label class="label cursor-pointer py-0">
                   <span class="label-text text-sm">
                     {$_(`displaySettings.fields.${section.key}.${field}`)}

@@ -1,5 +1,8 @@
 <script lang="ts">
-  import { hierarchicalDisplaySettings } from "$lib/stores/hierarchicalDisplaySettings";
+  import {
+    hierarchicalDisplaySettings,
+    isFieldHidden,
+  } from "$lib/stores/hierarchicalDisplaySettings";
   import type { DayStatus } from "$lib/types/archive";
   import { getColorFromName } from "$lib/utils/archive";
   import { _, locale } from "svelte-i18n";
@@ -77,7 +80,7 @@
                 {#if settings.agents.fields?.gameName}
                   <AgentName text={status.gameName} key={status.gameName} />
                 {/if}
-                {#if settings.agents.fields?.originalName}
+                {#if settings.agents.fields?.originalName && !isFieldHidden("agents", "originalName")}
                   {status.originalName}
                 {/if}
                 {#if settings.agents.fields?.role}
@@ -115,7 +118,7 @@
                     text={dayStatus.agents[whisper.agentIdx].gameName}
                   />
                 {/if}
-                {#if settings.beforeWhisper.fields?.originalName && dayStatus.agents[whisper.agentIdx].originalName}
+                {#if settings.beforeWhisper.fields?.originalName && !isFieldHidden("beforeWhisper", "originalName") && dayStatus.agents[whisper.agentIdx].originalName}
                   <span class="text-sm opacity-75"
                     >({dayStatus.agents[whisper.agentIdx].originalName})</span
                   >
@@ -152,7 +155,7 @@
                 {#if settings.talks.fields?.agentName}
                   <AgentName text={dayStatus.agents[talk.agentIdx].gameName} />
                 {/if}
-                {#if settings.talks.fields?.originalName && dayStatus.agents[talk.agentIdx].originalName}
+                {#if settings.talks.fields?.originalName && !isFieldHidden("talks", "originalName") && dayStatus.agents[talk.agentIdx].originalName}
                   <span class="text-sm opacity-75"
                     >({dayStatus.agents[talk.agentIdx].originalName})</span
                   >
@@ -293,7 +296,7 @@
                     text={dayStatus.agents[whisper.agentIdx].gameName}
                   />
                 {/if}
-                {#if settings.afterWhisper.fields?.originalName && dayStatus.agents[whisper.agentIdx].originalName}
+                {#if settings.afterWhisper.fields?.originalName && !isFieldHidden("afterWhisper", "originalName") && dayStatus.agents[whisper.agentIdx].originalName}
                   <span class="text-sm opacity-75"
                     >({dayStatus.agents[whisper.agentIdx].originalName})</span
                   >

@@ -20,6 +20,25 @@ export interface HierarchicalDisplaySettings {
   result: FieldSettings;
 }
 
+// UI 上で非表示にしたいフィールドをここで一元管理する。
+// ここに列挙されたフィールドは:
+//   - 設定パネルにチェックボックスが表示されない
+//   - DayColumn 等の表示でも非表示扱いになる (localStorage に true が残っていても無視)
+// 再び表示可能に戻したい場合は、対応するエントリを削除/コメントアウトするだけでよい。
+export const HIDDEN_FIELDS: Partial<Record<keyof HierarchicalDisplaySettings, readonly string[]>> = {
+  agents: ['originalName'],
+  beforeWhisper: ['originalName'],
+  talks: ['originalName'],
+  afterWhisper: ['originalName']
+};
+
+export function isFieldHidden(
+  section: keyof HierarchicalDisplaySettings,
+  field: string
+): boolean {
+  return HIDDEN_FIELDS[section]?.includes(field) ?? false;
+}
+
 const defaultSettings: HierarchicalDisplaySettings = {
   agents: {
     visible: true,
