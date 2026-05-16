@@ -165,7 +165,8 @@
         "originalName": "元の名前",
         "text": "テキスト",
         "talkIdx": "トークID",
-        "turnIdx": "ターン"
+        "turnIdx": "ターン",
+        "timestamp": "タイムスタンプ"
       },
       "votes": {
         "voterName": "投票者",
