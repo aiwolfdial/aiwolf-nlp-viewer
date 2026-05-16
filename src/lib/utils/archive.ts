@@ -33,10 +33,12 @@ function initializeDayLog(): DayStatus {
     };
 }
 
+// ログにタイムスタンプが含まれているかどうかを判定する
 function looksLikeUnixTimestampToken(s: string): boolean {
     return /^\d{10,13}$/.test(s);
 }
 
+// ログからTalkオブジェクトを解析する
 function parseTalkWithUnixTimestamp(data: string[]): Talk | null {
     if (data.length < 4) return null;
 
