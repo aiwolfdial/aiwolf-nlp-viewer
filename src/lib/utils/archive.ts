@@ -70,7 +70,8 @@ function parseTalkWithUnixTimestamp(data: string[]): Talk | null {
             timestamp: last,
         }
     }
-    return { talkIdx, turnIdx, agentIdx, text: data[3] };
+    // 発話文中のコンマで分割されているので結合して復元する
+    return { talkIdx, turnIdx, agentIdx, text: data.slice(3).join(",") };
 }
 
 function processLogEntry(dayLog: DayStatus, type: string, data: string[]): void {
