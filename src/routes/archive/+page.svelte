@@ -18,6 +18,7 @@
     selectedKey: "",
   });
   let errorMessage = $state("");
+  let isLoadingExternal = $state(false);
 
   function handleFileSelect(event: Event): void {
     const target = event.target as HTMLInputElement;
@@ -83,8 +84,11 @@
       return;
     }
 
+    isLoadingExternal = true;
     try {
-      const response = await fetch(url.href);
+      const response = await fetch(url.href, {
+        signal: AbortSignal.timeout(30000),
+      });
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
       }
@@ -101,7 +105,9 @@
       selectedKey = name;
     } catch (error) {
       console.error("Error loading external log:", error);
-      errorMessage = `${$_("archive.loadError")}: ${rawUrl}`;
+      errorMessage = `${$_("archive.loadError")}: ${rawUrl} (${String(error)})`;
+    } finally {
+      isLoadingExternal = false;
     }
   }
 
@@ -141,6 +147,12 @@
     ondrop={handleDrop}
     role="region"
   >
+    {#if isLoadingExternal}
+      <div class="alert m-4 w-fit shrink-0" role="status">
+        <span class="loading loading-spinner loading-sm"></span>
+        <span>{$_("archive.loading")}</span>
+      </div>
+    {/if}
     {#if errorMessage}
       <div class="alert alert-error m-4 w-fit shrink-0" role="alert">
         <iconify-icon icon="mdi:alert-circle"></iconify-icon>

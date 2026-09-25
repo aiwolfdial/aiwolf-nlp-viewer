@@ -108,7 +108,8 @@
     "incompleteLog": "このログは途中終了しています。試合が最後まで完走していない可能性があります。",
     "loadError": "ログの読み込みに失敗しました",
     "hostNotAllowed": "許可されていない配信元です",
-    "notParseable": "ログとして解釈できませんでした"
+    "notParseable": "ログとして解釈できませんでした",
+    "loading": "ログを読み込んでいます…"
   },
   "agent": {
     "talkHistory": "トーク履歴",
