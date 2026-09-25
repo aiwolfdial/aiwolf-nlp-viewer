@@ -3,6 +3,7 @@
     hierarchicalDisplaySettings,
     isFieldHidden,
   } from "$lib/stores/hierarchicalDisplaySettings";
+  import { IdxToName } from "$lib/constants/common";
   import type { DayStatus } from "$lib/types/archive";
   import { getColorFromName } from "$lib/utils/archive";
   import { _, locale } from "svelte-i18n";
@@ -13,6 +14,15 @@
   const settings = $derived($hierarchicalDisplaySettings);
 
   let { dayIdx = "", dayStatus = {} as DayStatus } = $props();
+
+  // 途中終了ログでは当日の status 行が無いことがあるため、欠損時は補完名を返す
+  function agentName(idx: string): string {
+    return dayStatus.agents[idx]?.gameName ?? IdxToName(idx);
+  }
+
+  function agentOriginalName(idx: string): string {
+    return dayStatus.agents[idx]?.originalName ?? "";
+  }
 
   function getRoleTranslation(role: string) {
     return $_("game.role." + role);
@@ -125,7 +135,7 @@
             {#each dayStatus.beforeWhisper as whisper}
               <li
                 class:opacity-25={whisper.text === "Over"}
-                style={`border-color: ${getColorFromName(dayStatus.agents[whisper.agentIdx].gameName)}`}
+                style={`border-color: ${getColorFromName(agentName(whisper.agentIdx))}`}
                 class="p-2 my-2 border-4 rounded-md"
               >
                 {#if settings.beforeWhisper.fields?.talkIdx}
@@ -142,12 +152,12 @@
                 {/if}
                 {#if settings.beforeWhisper.fields?.agentName}
                   <AgentName
-                    text={dayStatus.agents[whisper.agentIdx].gameName}
+                    text={agentName(whisper.agentIdx)}
                   />
                 {/if}
-                {#if settings.beforeWhisper.fields?.originalName && !isFieldHidden("beforeWhisper", "originalName") && dayStatus.agents[whisper.agentIdx].originalName}
+                {#if settings.beforeWhisper.fields?.originalName && !isFieldHidden("beforeWhisper", "originalName") && agentOriginalName(whisper.agentIdx)}
                   <span class="text-sm opacity-75"
-                    >({dayStatus.agents[whisper.agentIdx].originalName})</span
+                    >({agentOriginalName(whisper.agentIdx)})</span
                   >
                 {/if}
                 {#if settings.beforeWhisper.fields?.text}
@@ -170,7 +180,7 @@
             {#each dayStatus.talks as talk}
               <li
                 class:opacity-25={talk.text === "Over"}
-                style={`border-color: ${getColorFromName(dayStatus.agents[talk.agentIdx].gameName)}`}
+                style={`border-color: ${getColorFromName(agentName(talk.agentIdx))}`}
                 class="p-2 my-2 border-4 rounded-md"
               >
                 {#if settings.talks.fields?.talkIdx}
@@ -186,11 +196,11 @@
                   >
                 {/if}
                 {#if settings.talks.fields?.agentName}
-                  <AgentName text={dayStatus.agents[talk.agentIdx].gameName} />
+                  <AgentName text={agentName(talk.agentIdx)} />
                 {/if}
-                {#if settings.talks.fields?.originalName && !isFieldHidden("talks", "originalName") && dayStatus.agents[talk.agentIdx].originalName}
+                {#if settings.talks.fields?.originalName && !isFieldHidden("talks", "originalName") && agentOriginalName(talk.agentIdx)}
                   <span class="text-sm opacity-75"
-                    >({dayStatus.agents[talk.agentIdx].originalName})</span
+                    >({agentOriginalName(talk.agentIdx)})</span
                   >
                 {/if}
                 {#if settings.talks.fields?.text}
@@ -213,31 +223,31 @@
             {#each dayStatus.votes as vote}
               <li
                 class="p-2 my-2 border-4 rounded-md"
-                style={`border-color: ${getColorFromName(dayStatus.agents[vote.agentIdx].gameName)}`}
+                style={`border-color: ${getColorFromName(agentName(vote.agentIdx))}`}
               >
                 {#if isEnglish}
                   {#if settings.votes.fields?.voterName}
                     <AgentName
-                      text={dayStatus.agents[vote.agentIdx].gameName}
+                      text={agentName(vote.agentIdx)}
                     />
                   {/if}
                   {$_("archive.votedFor")}
                   {#if settings.votes.fields?.targetName}
                     <AgentName
-                      text={dayStatus.agents[vote.targetIdx].gameName}
+                      text={agentName(vote.targetIdx)}
                       highlight
                     />
                   {/if}
                 {:else}
                   {#if settings.votes.fields?.voterName}
                     <AgentName
-                      text={dayStatus.agents[vote.agentIdx].gameName}
+                      text={agentName(vote.agentIdx)}
                     />
                   {/if}
                   {$_("archive.particle")}
                   {#if settings.votes.fields?.targetName}
                     <AgentName
-                      text={dayStatus.agents[vote.targetIdx].gameName}
+                      text={agentName(vote.targetIdx)}
                       highlight
                     />
                   {/if}
@@ -254,7 +264,7 @@
           <p>
             {#if settings.execution.fields?.agentName}
               <AgentName
-                text={dayStatus.agents[dayStatus.execution.agentIdx].gameName}
+                text={agentName(dayStatus.execution.agentIdx)}
                 highlight
               />
             {/if}
@@ -272,13 +282,13 @@
             {#if isEnglish}
               {#if settings.divine.fields?.seerName}
                 <AgentName
-                  text={dayStatus.agents[dayStatus.divine.agentIdx].gameName}
+                  text={agentName(dayStatus.divine.agentIdx)}
                 />
               {/if}
               {$_("archive.divined")}
               {#if settings.divine.fields?.targetName}
                 <AgentName
-                  text={dayStatus.agents[dayStatus.divine.targetIdx].gameName}
+                  text={agentName(dayStatus.divine.targetIdx)}
                   highlight
                 />
               {/if}
@@ -289,13 +299,13 @@
             {:else}
               {#if settings.divine.fields?.seerName}
                 <AgentName
-                  text={dayStatus.agents[dayStatus.divine.agentIdx].gameName}
+                  text={agentName(dayStatus.divine.agentIdx)}
                 />
               {/if}
               {$_("archive.particle")}
               {#if settings.divine.fields?.targetName}
                 <AgentName
-                  text={dayStatus.agents[dayStatus.divine.targetIdx].gameName}
+                  text={agentName(dayStatus.divine.targetIdx)}
                   highlight
                 />
               {/if}
@@ -315,7 +325,7 @@
             {#each dayStatus.afterWhisper as whisper}
               <li
                 class:opacity-25={whisper.text === "Over"}
-                style={`border-color: ${getColorFromName(dayStatus.agents[whisper.agentIdx].gameName)}`}
+                style={`border-color: ${getColorFromName(agentName(whisper.agentIdx))}`}
                 class="p-2 my-2 border-4 rounded-md"
               >
                 {#if settings.afterWhisper.fields?.talkIdx}
@@ -332,12 +342,12 @@
                 {/if}
                 {#if settings.afterWhisper.fields?.agentName}
                   <AgentName
-                    text={dayStatus.agents[whisper.agentIdx].gameName}
+                    text={agentName(whisper.agentIdx)}
                   />
                 {/if}
-                {#if settings.afterWhisper.fields?.originalName && !isFieldHidden("afterWhisper", "originalName") && dayStatus.agents[whisper.agentIdx].originalName}
+                {#if settings.afterWhisper.fields?.originalName && !isFieldHidden("afterWhisper", "originalName") && agentOriginalName(whisper.agentIdx)}
                   <span class="text-sm opacity-75"
-                    >({dayStatus.agents[whisper.agentIdx].originalName})</span
+                    >({agentOriginalName(whisper.agentIdx)})</span
                   >
                 {/if}
                 {#if settings.afterWhisper.fields?.text}
@@ -360,13 +370,13 @@
             {#if isEnglish}
               {#if settings.guard.fields?.guardName}
                 <AgentName
-                  text={dayStatus.agents[dayStatus.guard.agentIdx].gameName}
+                  text={agentName(dayStatus.guard.agentIdx)}
                 />
               {/if}
               {$_("archive.protected")}
               {#if settings.guard.fields?.targetName}
                 <AgentName
-                  text={dayStatus.agents[dayStatus.guard.targetIdx].gameName}
+                  text={agentName(dayStatus.guard.targetIdx)}
                   highlight
                 />
               {/if}
@@ -376,13 +386,13 @@
             {:else}
               {#if settings.guard.fields?.guardName}
                 <AgentName
-                  text={dayStatus.agents[dayStatus.guard.agentIdx].gameName}
+                  text={agentName(dayStatus.guard.agentIdx)}
                 />
               {/if}
               {$_("archive.particle")}
               {#if settings.guard.fields?.targetName}
                 <AgentName
-                  text={dayStatus.agents[dayStatus.guard.targetIdx].gameName}
+                  text={agentName(dayStatus.guard.targetIdx)}
                   highlight
                 />
               {/if}
@@ -401,31 +411,31 @@
             {#each dayStatus.attackVotes as vote}
               <li
                 class="p-2 my-2 border-4 rounded-md"
-                style={`border-color: ${getColorFromName(dayStatus.agents[vote.agentIdx].gameName)}`}
+                style={`border-color: ${getColorFromName(agentName(vote.agentIdx))}`}
               >
                 {#if isEnglish}
                   {#if settings.attackVotes.fields?.voterName}
                     <AgentName
-                      text={dayStatus.agents[vote.agentIdx].gameName}
+                      text={agentName(vote.agentIdx)}
                     />
                   {/if}
                   {$_("archive.votedFor")}
                   {#if settings.attackVotes.fields?.targetName}
                     <AgentName
-                      text={dayStatus.agents[vote.targetIdx].gameName}
+                      text={agentName(vote.targetIdx)}
                       highlight
                     />
                   {/if}
                 {:else}
                   {#if settings.attackVotes.fields?.voterName}
                     <AgentName
-                      text={dayStatus.agents[vote.agentIdx].gameName}
+                      text={agentName(vote.agentIdx)}
                     />
                   {/if}
                   {$_("archive.particle")}
                   {#if settings.attackVotes.fields?.targetName}
                     <AgentName
-                      text={dayStatus.agents[vote.targetIdx].gameName}
+                      text={agentName(vote.targetIdx)}
                       highlight
                     />
                   {/if}
@@ -443,7 +453,7 @@
             <p>
               {#if settings.attack.fields?.targetName}
                 <AgentName
-                  text={dayStatus.agents[dayStatus.attack.targetIdx].gameName}
+                  text={agentName(dayStatus.attack.targetIdx)}
                   highlight
                 />
               {/if}

@@ -8,13 +8,23 @@ export function processArchiveLog(data: string): Record<string, DayStatus> {
 
     lines.forEach((log) => {
         const [day, type, ...rest] = log.split(",");
+        if (!day || !type) return;
         if (!result[day]) {
             result[day] = initializeDayLog();
         }
-        processLogEntry(result[day], type, rest);
+        try {
+            processLogEntry(result[day], type, rest);
+        } catch {
+            // 途中終了・破損ログの壊れた行はスキップして残りを表示する
+        }
     });
 
     return result;
+}
+
+// 完走したログは最終日に result 行を持つ
+export function isArchiveLogComplete(days: Record<string, DayStatus>): boolean {
+    return Object.values(days).some((day) => day.result !== null);
 }
 
 function initializeDayLog(): DayStatus {

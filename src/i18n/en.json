@@ -104,7 +104,11 @@
     "noAttackTarget": "No attack target",
     "result": "Result",
     "won": " won",
-    "particle": ""
+    "particle": "",
+    "incompleteLog": "This log ends partway through; the game may not have finished.",
+    "loadError": "Failed to load the log",
+    "hostNotAllowed": "This host is not allowed",
+    "notParseable": "Could not parse this file as a game log"
   },
   "agent": {
     "talkHistory": "Talk History",

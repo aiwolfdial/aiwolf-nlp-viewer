@@ -1,14 +1,23 @@
 <script lang="ts">
   import type { DayStatus } from "$lib/types/archive";
-  import { processArchiveLog } from "$lib/utils/archive";
+  import { isArchiveLogComplete, processArchiveLog } from "$lib/utils/archive";
+  import { _ } from "svelte-i18n";
   import "../../app.css";
   import DayColumn from "./DayColumn.svelte";
   import Navbar from "./Navbar.svelte";
+
+  // ?url= で読み込みを許可するログ配信元
+  const ALLOWED_EXTERNAL_HOSTS = [
+    "133.167.32.100",
+    "localhost",
+    "127.0.0.1",
+  ];
 
   let { records, selectedKey } = $state({
     records: {} as Record<string, Record<string, DayStatus>>,
     selectedKey: "",
   });
+  let errorMessage = $state("");
 
   function handleFileSelect(event: Event): void {
     const target = event.target as HTMLInputElement;
@@ -58,6 +67,44 @@
     }
   }
 
+  async function loadExternalLog(rawUrl: string) {
+    errorMessage = "";
+
+    let url: URL;
+    try {
+      url = new URL(rawUrl);
+    } catch {
+      errorMessage = `${$_("archive.loadError")}: ${rawUrl}`;
+      return;
+    }
+
+    if (!ALLOWED_EXTERNAL_HOSTS.includes(url.hostname)) {
+      errorMessage = `${$_("archive.hostNotAllowed")}: ${url.hostname}`;
+      return;
+    }
+
+    try {
+      const response = await fetch(url.href);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+      const data = await response.text();
+      const days = processArchiveLog(data);
+      if (Object.keys(days).length === 0) {
+        errorMessage = $_("archive.notParseable");
+        return;
+      }
+      const name = decodeURIComponent(
+        url.pathname.split("/").pop() || "external.log",
+      );
+      records[name] = days;
+      selectedKey = name;
+    } catch (error) {
+      console.error("Error loading external log:", error);
+      errorMessage = `${$_("archive.loadError")}: ${rawUrl}`;
+    }
+  }
+
   function handleDragOver(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
@@ -86,7 +133,7 @@
 </script>
 
 <main class="h-screen flex flex-col">
-  <Navbar {loadAssetLog} {loadClipboardLog} {handleFileSelect} />
+  <Navbar {loadAssetLog} {loadExternalLog} {loadClipboardLog} {handleFileSelect} />
 
   <div
     class="w-full h-full flex flex-col overflow-hidden bg-base-300"
@@ -94,6 +141,19 @@
     ondrop={handleDrop}
     role="region"
   >
+    {#if errorMessage}
+      <div class="alert alert-error m-4 w-fit shrink-0" role="alert">
+        <iconify-icon icon="mdi:alert-circle"></iconify-icon>
+        <span>{errorMessage}</span>
+        <button
+          class="btn btn-sm btn-ghost"
+          onclick={() => (errorMessage = "")}
+          aria-label="Close error"
+        >
+          <iconify-icon icon="mdi:close"></iconify-icon>
+        </button>
+      </div>
+    {/if}
     {#if Object.keys(records).length > 0}
       <div class="w-full shrink-0 overflow-x-auto flex gap-4 m-4">
         {#each Object.entries(records) as [key, value]}
@@ -115,6 +175,12 @@
           </div>
         {/each}
       </div>
+      {#if records[selectedKey] && !isArchiveLogComplete(records[selectedKey])}
+        <div class="alert alert-warning mx-4 w-fit shrink-0" role="alert">
+          <iconify-icon icon="mdi:alert"></iconify-icon>
+          <span>{$_("archive.incompleteLog")}</span>
+        </div>
+      {/if}
       <div class="overflow-y-hidden flex grow overflox-x-auto gap-4 p-4">
         {#each Object.entries(records[selectedKey]) as [day, dayLog]}
           <DayColumn dayIdx={day} dayStatus={dayLog} />

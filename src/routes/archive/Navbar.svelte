@@ -29,18 +29,26 @@
 
   let {
     loadAssetLog,
+    loadExternalLog,
     loadClipboardLog,
     handleFileSelect,
   }: {
     loadAssetLog: (path: string, name: string) => void;
+    loadExternalLog: (url: string) => void;
     loadClipboardLog: () => void;
     handleFileSelect: (event: Event) => void;
   } = $props();
 
   onMount(() => {
     const urlParams = page.url.searchParams;
+    const urlParam = urlParams.get("url");
     const folderParam = urlParams.get("folder");
     const logParam = urlParams.get("log");
+
+    if (urlParam) {
+      loadExternalLog(urlParam);
+      return;
+    }
 
     if (folderParam && assetLogs[folderParam]) {
       selectedFolder = folderParam;
@@ -73,6 +81,9 @@
 
   function updateURL() {
     const url = new URL(window.location.href);
+
+    // 同梱ログを選び直したら外部URL指定は解除する
+    url.searchParams.delete("url");
 
     if (selectedFolder) {
       url.searchParams.set("folder", selectedFolder);

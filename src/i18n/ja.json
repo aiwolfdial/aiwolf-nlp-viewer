@@ -104,7 +104,11 @@
     "noAttackTarget": "襲撃対象なし",
     "result": "結果",
     "won": "が勝利",
-    "particle": "が"
+    "particle": "が",
+    "incompleteLog": "このログは途中終了しています。試合が最後まで完走していない可能性があります。",
+    "loadError": "ログの読み込みに失敗しました",
+    "hostNotAllowed": "許可されていない配信元です",
+    "notParseable": "ログとして解釈できませんでした"
   },
   "agent": {
     "talkHistory": "トーク履歴",
