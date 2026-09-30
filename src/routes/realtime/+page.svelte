@@ -278,6 +278,14 @@
                   </p>
                 {/if}
               </button>
+              {#if (packet.event === "トーク" || packet.event === "囁き") && packet.timestamp != null}
+                {@const entries = $realtimeSocketState.entries[$realtimeSocketState.currentGameId]}
+                {#if idx + 1 < entries.length && (entries[idx + 1].event === "トーク" || entries[idx + 1].event === "囁き") && entries[idx + 1].timestamp != null}
+                  {@const diffMs = entries[idx + 1].timestamp! - packet.timestamp}
+                  {@const diffSec = (diffMs / 1000).toFixed(1)}
+                  <div class="text-xs text-center opacity-50">+{diffSec}s</div>
+                {/if}
+              {/if}
             {/each}
           {/if}
         </div>
